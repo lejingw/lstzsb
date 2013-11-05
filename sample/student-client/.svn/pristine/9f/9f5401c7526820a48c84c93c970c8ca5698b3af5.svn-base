@@ -1,0 +1,17 @@
+package org.konghao.student.ws.test;
+
+import org.junit.Test;
+import org.konghao.student.ws.Student;
+import org.konghao.student.ws.StudentWsService;
+import org.konghao.student.ws.IStudentWsService;
+
+public class TestStudent {
+
+	@Test
+	public void test01() {
+		IStudentWsService sws = new StudentWsService().getStudentWsServicePort();
+		Student stu = sws.getStudent("201110040137");
+		System.out.println(stu);
+		System.out.println(stu.getName());
+	}
+}

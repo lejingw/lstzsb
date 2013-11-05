@@ -1,0 +1,69 @@
+package org.konghao.student.ws;
+
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.jws.WebService;
+
+import org.konghao.student.model.RewardPunish;
+import org.konghao.student.model.Student;
+import org.konghao.student.service.IRewardPunishService;
+import org.konghao.student.service.IStudentService;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
+/**
+ * 直接启动不会被Spring所管理，所以所有的依赖注入都无效
+ * @author Administrator
+ */
+@WebService(endpointInterface="org.konghao.student.ws.IStudentWsService",
+			serviceName="StudentWsService",portName="StudentWsServicePort",
+			targetNamespace="http://ws.student.konghao.org",
+			wsdlLocation="META-INF/wsdl/student1.wsdl")
+public class StudentWsService implements IStudentWsService {
+	private IStudentService studentService;
+	private IRewardPunishService rewardPunishService;
+	
+	public StudentWsService() {
+		BeanFactory factory = new ClassPathXmlApplicationContext("beans.xml");
+		studentService = (IStudentService)factory.getBean("studentService");
+		rewardPunishService = (IRewardPunishService)factory.getBean("rewardPunishService");
+	}
+
+	public IRewardPunishService getRewardPunishService() {
+		return rewardPunishService;
+	}
+	//依赖注入无效
+	public void setRewardPunishService(IRewardPunishService rewardPunishService) {
+		this.rewardPunishService = rewardPunishService;
+	}
+	public IStudentService getStudentService() {
+		return studentService;
+	}
+	public void setStudentService(IStudentService studentService) {
+		this.studentService = studentService;
+	}
+
+	@Override
+	public Student getStudent(String xh) {
+		System.out.println(xh);
+		Student stu = studentService.getStudentByXh(xh);
+		return stu;
+	}
+
+	@Override
+	public List<RewardPunish> listRpByStu(String xh) {
+		return rewardPunishService.listRewardPunishByStuXh(xh);
+	}
+
+	@Override
+	public List<Student> listRewardStu(int year, String semester) {
+		return studentService.listRewardStu(year, semester);
+	}
+
+	@Override
+	public List<Student> listPunishStu(int year, String semester) {
+		return studentService.listPunishStu(year, semester);
+	}
+
+}

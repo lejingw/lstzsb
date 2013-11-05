@@ -1,0 +1,41 @@
+package org.konghao.student.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.konghao.student.model.Student;
+import org.konghao.student.service.IStudentService;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/beans.xml")
+public class TestStudent {
+	@Inject
+	private IStudentService studentService;
+	
+	@Test
+	public void testAdd() {
+		Student stu = new Student();
+		stu.setKsh("123");
+		stu.setName("张三");
+		stu.setSex("男");
+		stu.setStatus(0);
+		stu.setXh("22111");
+		List<Student> stus = new ArrayList<Student>();
+		stus.add(stu);
+		stu = new Student();
+		stu.setKsh("2222");
+		stu.setName("李四");
+		stu.setSex("女");
+		stu.setStatus(0);
+		stu.setXh("22222222");
+		stus.add(stu);
+		
+		studentService.addStus(stus);
+	}
+}
