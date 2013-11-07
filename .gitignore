@@ -1,6 +1,6 @@
 /target
 /.metadata
 /sample
-.settings
+/.settings
 WEB-INF/classes
 WEB-INF/lib
