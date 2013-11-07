@@ -6,7 +6,8 @@
 <pg:pager export="curPage=pageNumber" 
 	items="${param.totalRecord }" 
 	maxPageItems="<%=SystemContext.getPageSize() %>"
-	url="${param.url }">
+	url="${param.url }"
+	maxIndexPages="3">
 	<span style="float:right;padding:6px;">
 	共
 	<pg:last>
@@ -37,3 +38,17 @@
 	</pg:last>
 	</pg:pager>
 	</span>
+	每页显示
+<select name="pagesize" onchange="selectPagesize(this)" >
+<c:forEach begin="5" end="50" step="5" var="i">
+ <option value="${i}"
+ <c:if test="${ps eq i }">selected</c:if>
+ >${i}</option>
+</c:forEach>
+</select>行
+
+<script type="text/javascript">
+function selectPagesize(field){
+ document.location.href = document.all.firstpageurl.href + "&pagesize="+field.value;//得到用户从下拉列表选择的每页显示的行数，并刷新到转到首页
+}
+</script>

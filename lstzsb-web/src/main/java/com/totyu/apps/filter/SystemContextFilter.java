@@ -33,8 +33,8 @@ public class SystemContextFilter implements Filter {
 		try{
 			String offset = req.getParameter("pager.offset");
 			HttpServletRequest httpRequest = (HttpServletRequest)req;
-			System.out.println(httpRequest.getRequestURI());
-			System.out.println(httpRequest.getRequestURL());
+//			System.out.println(httpRequest.getRequestURI());
+//			System.out.println(httpRequest.getRequestURL());
 			int pageOffset = getSessionPagerOffset(httpRequest, offset);
 				
 			String sort = req.getParameter("sort");
