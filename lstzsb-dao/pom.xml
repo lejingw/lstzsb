@@ -15,4 +15,14 @@
   <url>http://www.totyu.com</url>
   
   
+	<dependencies>
+		<dependency>
+			<groupId>com.totyu.apps.common</groupId>
+			<artifactId>common-basic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>lstzsb-core</artifactId>
+		</dependency>
+	</dependencies>
 </project>

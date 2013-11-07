@@ -22,28 +22,54 @@
 			<artifactId>lstzsb-service</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.totyu.apps.common</groupId>
+			<artifactId>common-basic</artifactId>
+		</dependency>
 
 		<!-- WEB begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
+		<!-- servlet+jstl+jsp -->
+		<dependency>
+			<groupId>servletapi</groupId>
+			<artifactId>servletapi</artifactId>
+		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
 		</dependency>
-		<!-- WEB end -->
-		
-		
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>jsptags</groupId>
+			<artifactId>pager-taglib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
 		</dependency>
 	</dependencies>
 </project>
