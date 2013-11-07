@@ -9,8 +9,8 @@
 			<a href="${ctxPath}/edu/stu/list.do">学生列表页面</a>
 			<a href="${ctxPath}/edu/stu/import.do">导入学生信息</a>
 			<a href="${ctxPath}/edu/stu/export.do">导出学生信息</a>
-			<a href="${ctxPath}/edu/stu/punishs.do">查询所有处罚学生</a>
-			<a href="${ctxPath}/edu/stu/rewards.do">查询所有奖励学生</a>
+			<a href="${ctxPath}/edu/stu/listRewardPunish/0.do">查询所有处罚学生</a>
+			<a href="${ctxPath}/edu/stu/listRewardPunish/1.do">查询所有奖励学生</a>
 		</td></tr>
 	</table>
 	<br>
@@ -25,7 +25,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${stuList.datas}" var = "stu">
+		<c:forEach items="${stuPage.datas}" var = "stu">
 			<tr>
 				<td>${stu.xh}</td>
 				<td>${stu.name}</td>
@@ -48,7 +48,7 @@
 			<tr>
 				<td colspan='5'>
 					<jsp:include page="/jsp/pager.jsp">
-						<jsp:param name="totalRecord" value="${stuList.totalRecord}"/>
+						<jsp:param name="totalRecord" value="${stuPage.totalRecord}"/>
 						<jsp:param name="url" value="${ctxPath}/edu/stu/list.do"/>
 					</jsp:include>
 				</td>

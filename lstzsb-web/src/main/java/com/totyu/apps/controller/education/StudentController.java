@@ -25,7 +25,7 @@ public class StudentController {
 
 	@RequestMapping("/list")
 	public String index(Model model) {
-		model.addAttribute("stuList", studentService.getStudentPageData());
+		model.addAttribute("stuPage", studentService.getStudentPageData());
 		return "/edu/stu/listStudent";
 	}
 	
@@ -64,9 +64,14 @@ public class StudentController {
 	@RequestMapping(value="/addRewardPunish/{stuId}", method=RequestMethod.POST)
 	public String addRewardPunish(@PathVariable int stuId, int isReward, RewardPunish rewardPunish){
 //		rewardPunish.setIsReward(isReward);
-//		System.out.println(isReward);
-//		System.out.println(rewardPunish.getIsReward());
 		rewardPunishService.add(rewardPunish, stuId);
 		return "redirect:/edu/stu/list.do";
+	}
+	
+	@RequestMapping("/listRewardPunish/{isReward}")
+	public String listRewardPunish(@PathVariable int isReward, Model model){
+		model.addAttribute("isReward", isReward);
+		model.addAttribute("rewardPunishPage", rewardPunishService.findRewardPunish(isReward));
+		return "edu/stu/listRewardPunish";
 	}
 }

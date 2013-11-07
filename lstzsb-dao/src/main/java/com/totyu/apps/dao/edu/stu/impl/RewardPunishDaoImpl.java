@@ -13,13 +13,13 @@ public class RewardPunishDaoImpl extends BaseDaoImpl<RewardPunish> implements Re
 
 	@Override
 	public List<RewardPunish> listRewardByStu(int stuId) {
-		String hql = "select rp from RewardPunish rp where rp.student.id=? and isReward=1";
+		String hql = "select rp from RewardPunish rp where rp.student.id=? and rp.isReward=1";
 		return list(hql, stuId);
 	}
 
 	@Override
 	public List<RewardPunish> listPunishByStu(int stuId) {
-		String hql = "select rp from RewardPunish rp where rp.student.id=? and isReward=0";
+		String hql = "select rp from RewardPunish rp where rp.student.id=? and rp.isReward=0";
 		return list(hql, stuId);
 	}
 

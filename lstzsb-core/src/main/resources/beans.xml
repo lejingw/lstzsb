@@ -47,21 +47,19 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop><!-- none -->
 				<prop key="hibernate.format_sql">false</prop>
 			</props>
 		</property>
 	</bean>
 	
 	
-	<bean id="txManager" 
-            class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
     	<property name="sessionFactory" ref="sessionFactory"/>
   	</bean>
   	
 	<aop:config>
-	    <aop:pointcut id="myMethod" 
-	            expression="execution(* com.totyu.apps.service..*.*(..))"/>
+	    <aop:pointcut id="myMethod" expression="execution(* com.totyu.apps.service..*.*(..))"/>
 	    <aop:advisor advice-ref="txAdvice" pointcut-ref="myMethod"/>
 	</aop:config>
 	

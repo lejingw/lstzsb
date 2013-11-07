@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.totyu.apps.common.model.Pager;
 import com.totyu.apps.dao.edu.stu.RewardPunishDao;
 import com.totyu.apps.dao.edu.stu.StudentDao;
 import com.totyu.apps.model.edu.stu.RewardPunish;
@@ -42,6 +43,12 @@ public class RewardPunishServiceImpl implements RewardPunishService {
 		}
 		rewardPunish.setStudent(stu);
 		rewardPunishDao.add(rewardPunish);
+	}
+
+	@Override
+	public Pager<RewardPunish> findRewardPunish(int isReward) {
+		String hql = "select rp from RewardPunish rp left join fetch rp.student where rp.isReward=?";
+		return rewardPunishDao.find(hql, isReward);
 	}
 
 }
