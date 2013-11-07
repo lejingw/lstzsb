@@ -1,9 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<%@include file="/jsp/include.jsp"%>
 </head>
 <body>
 	<h2>添加${stu.name}的<c:if test='${type eq 1}'>奖励</c:if><c:if test='${type eq 0}'>处罚</c:if></h2>
@@ -21,7 +19,7 @@
 						<sf:option value="春季">春季</sf:option>
 					</sf:select><br/>
 			奖励原因:<sf:textarea path="cause"/><br/>
-		<input type="submit" value="设置奖励"/>
+			<input type="submit" value="设置奖励"/>
 		</c:if>
 		<c:if test='${type eq 0}'>
 			处罚情况:<sf:input path="situation"/><br/>

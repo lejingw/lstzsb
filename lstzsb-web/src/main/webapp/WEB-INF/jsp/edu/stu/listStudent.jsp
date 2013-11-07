@@ -1,17 +1,16 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<%@include file="/jsp/include.jsp"%>
 </head>
 <body>
 	<table align='center' border='1' width='1024'>
 		<tr><td>
-			<a href="${pageContext.request.contextPath}/edu/stu/list.do">学生列表页面</a>
-			<a href="${pageContext.request.contextPath}/edu/stu/import.do">导入学生信息</a>
-			<a href="${pageContext.request.contextPath}/edu/stu/export.do">导出学生信息</a>
-			<a href="${pageContext.request.contextPath}/edu/stu/punishs.do">查询所有处罚学生</a>
-			<a href="${pageContext.request.contextPath}/edu/stu/rewards.do">查询所有奖励学生</a>
+			<a href="${ctxPath}/edu/stu/list.do">学生列表页面</a>
+			<a href="${ctxPath}/edu/stu/import.do">导入学生信息</a>
+			<a href="${ctxPath}/edu/stu/export.do">导出学生信息</a>
+			<a href="${ctxPath}/edu/stu/punishs.do">查询所有处罚学生</a>
+			<a href="${ctxPath}/edu/stu/rewards.do">查询所有奖励学生</a>
 		</td></tr>
 	</table>
 	<br>
@@ -39,10 +38,10 @@
 					<c:if test="${stu.status eq 0}"><span style="font-weight:bold;color:#f00">离校</span></c:if>
 				</td>
 				<td>
-					<a href='${pageContext.request.contextPath}/edu/stu/rp/${stu.id}.do'>查询奖惩</a>
-					<a href='${pageContext.request.contextPath}/edu/stu/update/${stu.id}.do'>修改学生信息</a>
-					<a href='${pageContext.request.contextPath}/edu/stu/addRewardPunish/${stu.id}.do?isReward=1'>设置奖励</a>
-					<a href='${pageContext.request.contextPath}/edu/stu/addRewardPunish/${stu.id}.do?isReward=0'>设置处罚</a>
+					<a href='${ctxPath}/edu/stu/rp/${stu.id}.do'>查询奖惩</a>
+					<a href='${ctxPath}/edu/stu/update/${stu.id}.do'>修改学生信息</a>
+					<a href='${ctxPath}/edu/stu/addRewardPunish/${stu.id}.do?isReward=1'>设置奖励</a>
+					<a href='${ctxPath}/edu/stu/addRewardPunish/${stu.id}.do?isReward=0'>设置处罚</a>
 				</td>
 			</tr>
 		</c:forEach>
@@ -50,7 +49,7 @@
 				<td colspan='5'>
 					<jsp:include page="/jsp/pager.jsp">
 						<jsp:param name="totalRecord" value="${stuList.totalRecord}"/>
-						<jsp:param name="url" value="${pageContext.request.contextPath}/edu/stu/list.do"/>
+						<jsp:param name="url" value="${ctxPath}/edu/stu/list.do"/>
 					</jsp:include>
 				</td>
 			</tr>
