@@ -7,6 +7,15 @@
         <dependent-module archiveName="lstzsb-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lstzsb-service/lstzsb-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="lstzsb-dao-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lstzsb-dao/lstzsb-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lstzsb-core-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lstzsb-core/lstzsb-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-basic-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-basic/common-basic">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="lstzsb-web"/>
         <property name="java-output-path" value="/lstzsb-web/target/classes"/>
     </wb-module>

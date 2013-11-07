@@ -2,13 +2,12 @@ package com.totyu.apps.common.dao;
 
 import java.util.List;
 import java.util.Map;
+
 import com.totyu.apps.common.model.Pager;
 
 
 /**
  * 基于hibernate公共的数据库处理接口
- * @author Administrator
- *
  * @param <T>
  */
 public interface BaseDao<T> {
