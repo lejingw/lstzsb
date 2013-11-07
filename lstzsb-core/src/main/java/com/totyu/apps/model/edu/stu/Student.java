@@ -1,4 +1,4 @@
-package com.totyu.apps.model;
+package com.totyu.apps.model.edu.stu;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +13,9 @@ public class Student {
 	private int id;
 	private String name;
 	private String xh;
+	/**
+	 * 性别，1表示男，0表示女
+	 */
 	private String sex;
 	/**
 	 * 学生状态，0表示在校，1表示离校

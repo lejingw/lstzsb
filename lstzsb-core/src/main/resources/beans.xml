@@ -61,7 +61,7 @@
   	
 	<aop:config>
 	    <aop:pointcut id="myMethod" 
-	            expression="execution(* com.totyu.apps.service.*.*(..))"/>
+	            expression="execution(* com.totyu.apps.service..*.*(..))"/>
 	    <aop:advisor advice-ref="txAdvice" pointcut-ref="myMethod"/>
 	</aop:config>
 	

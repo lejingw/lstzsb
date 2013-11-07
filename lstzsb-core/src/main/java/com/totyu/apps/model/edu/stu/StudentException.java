@@ -1,4 +1,4 @@
-package com.totyu.apps.model;
+package com.totyu.apps.model.edu.stu;
 
 @SuppressWarnings("serial")
 public class StudentException extends RuntimeException{

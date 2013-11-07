@@ -1,4 +1,4 @@
-package com.totyu.apps.model;
+package com.totyu.apps.model.edu.stu;
 
 public class User {
 	private String username;

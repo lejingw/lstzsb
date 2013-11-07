@@ -1,4 +1,4 @@
-package com.totyu.apps.model;
+package com.totyu.apps.model.edu.stu;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
