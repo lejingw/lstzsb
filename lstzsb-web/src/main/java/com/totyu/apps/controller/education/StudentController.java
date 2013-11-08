@@ -25,7 +25,7 @@ public class StudentController {
 
 	@RequestMapping("/list")
 	public String index(Model model) {
-		model.addAttribute("stuPage", studentService.getStudentPageData());
+		model.addAttribute("pager", studentService.getStudentPageData());
 		return "/edu/stu/listStudent";
 	}
 	

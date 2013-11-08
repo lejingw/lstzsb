@@ -91,8 +91,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		Pager<T> pages = new Pager<T>();
 		String sort = SystemContext.getSort();
 		String order = SystemContext.getOrder();
-		int pageSize = SystemContext.getPageSize();
-		int pageOffset = SystemContext.getPageOffset();
+		int limit = SystemContext.getLimit();
+		int start = SystemContext.getStart();
 		String countHql = getCountHql(hql);
 		if (sort != null && !"".equals(sort.trim())) {
 			hql += " order by " + sort;
@@ -104,11 +104,11 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		}
 		Query query = setQuery(hql, args);
 		Query countQuery = setQuery(countHql, args);
-		List<T> datas = query.setFirstResult(pageOffset)
-				.setMaxResults(pageSize).list();
+		List<T> datas = query.setFirstResult(start)
+				.setMaxResults(limit).list();
 		pages.setDatas(datas);
-		pages.setOffset(pageOffset);
-		pages.setSize(pageSize);
+		pages.setStart(start);
+		pages.setLimit(limit);
 		Long totalRecord = (Long) countQuery.uniqueResult();
 		pages.setTotalRecord(totalRecord.intValue());
 		return pages;
@@ -194,8 +194,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		Pager<T> pages = new Pager<T>();
 		String sort = SystemContext.getSort();
 		String order = SystemContext.getOrder();
-		int pageSize = SystemContext.getPageSize();
-		int pageOffset = SystemContext.getPageOffset();
+		int start = SystemContext.getStart();
+		int limit = SystemContext.getLimit();
 		String countHql = getCountHql(hql);
 		if (sort != null && !"".equals(sort.trim())) {
 			hql += " order by " + sort;
@@ -209,11 +209,11 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		setAliasQuery(query, alias);
 		Query countQuery = setQuery(countHql, args);
 		setAliasQuery(countQuery, alias);
-		List<T> datas = query.setFirstResult(pageOffset)
-				.setMaxResults(pageSize).list();
+		List<T> datas = query.setFirstResult(start)
+				.setMaxResults(limit).list();
 		pages.setDatas(datas);
-		pages.setOffset(pageOffset);
-		pages.setSize(pageSize);
+		pages.setStart(start);
+		pages.setLimit(limit);
 		Long totalRecord = (Long) countQuery.uniqueResult();
 		pages.setTotalRecord(totalRecord.intValue());
 		return pages;

@@ -16,11 +16,11 @@ public class Pager<T> {
 	/**
 	 * 分页的第几个数据，从xx开始
 	 */
-	private int offset;
+	private int start;
 	/**
 	 * 分页的大小
 	 */
-	private int size;
+	private int limit;
 	/**
 	 * 当前页
 	 */
@@ -41,17 +41,17 @@ public class Pager<T> {
 	public void setDatas(List<T> datas) {
 		this.datas = datas;
 	}
-	public int getOffset() {
-		return offset;
+	public int getStart() {
+		return start;
 	}
-	public void setOffset(int offset) {
-		this.offset = offset;
+	public void setStart(int start) {
+		this.start = start;
 	}
-	public int getSize() {
-		return size;
+	public int getLimit() {
+		return limit;
 	}
-	public void setSize(int size) {
-		this.size = size;
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 	public int getIndex() {
 		return index;

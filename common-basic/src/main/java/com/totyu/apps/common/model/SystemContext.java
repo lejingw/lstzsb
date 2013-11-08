@@ -9,11 +9,11 @@ public class SystemContext {
 	/**
 	 * 分页的第几条数据
 	 */
-	private static ThreadLocal<Integer> pageOffset = new ThreadLocal<Integer>();
+	private static ThreadLocal<Integer> start = new ThreadLocal<Integer>();
 	/**
 	 * 分页的大小
 	 */
-	private static ThreadLocal<Integer> pageSize = new ThreadLocal<Integer>();
+	private static ThreadLocal<Integer> limit = new ThreadLocal<Integer>();
 	/**
 	 * 列表数据的排序字段
 	 */
@@ -25,28 +25,28 @@ public class SystemContext {
 	
 	private static ThreadLocal<String> realPath = new ThreadLocal<String>();
 	
-	public static Integer getPageOffset() {
-		return pageOffset.get();
+	public static Integer getStart() {
+		return start.get();
 	}
 	
-	public static void setPageOffset(int offset) {
-		pageOffset.set(offset);
+	public static void setStart(int s) {
+		start.set(s);
 	}
 	
-	public static void removePageOffset() {
-		pageOffset.remove();
+	public static void removeStart() {
+		start.remove();
 	}
 	
-	public static Integer getPageSize() {
-		return pageSize.get();
+	public static Integer getLimit() {
+		return limit.get();
 	}
 	
-	public static void setPageSize(int size) {
-		pageSize.set(size);
+	public static void setLimit(int l) {
+		limit.set(l);
 	}
 	
-	public static void removePageSize() {
-		pageSize.remove();
+	public static void removeLimit() {
+		limit.remove();
 	}
 	
 	public static String getSort() {
