@@ -1,16 +1,9 @@
-<%@page import="com.totyu.apps.common.model.SystemContext"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
 	<%@include file="/jsp/include.jsp"%>
-<script type="text/javascript">
-function test(){
-	alert('---');	
-}
-</script>
 </head>
 <body>
-	<form action="" id="fromId">
 	<table align='center' border='1' width='1024'>
 		<tr><td>
 			<a href="${ctxPath}/edu/stu/list.do">学生列表页面</a>
@@ -54,14 +47,14 @@ function test(){
 		</c:forEach>
 			<tr>
 				<td colspan='5'>
-<script>
-createPagingToolbar('formId', ${pager.start}, ${pager.limit}, ${pager.totalRecord});
-</script>
+					<jsp:include page="/jsp/pager.jsp">
+						<jsp:param name="totalRecord" value="${pager.totalRecord}"/>
+						<jsp:param name="url" value="${ctxPath}/edu/stu/list.do"/>
+					</jsp:include>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	</form>
 	<br>
 	<h1>${username}</h1>
 </body>

@@ -52,11 +52,7 @@
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>jsptags</groupId>
-			<artifactId>pager-taglib</artifactId>
-		</dependency>
+		
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
