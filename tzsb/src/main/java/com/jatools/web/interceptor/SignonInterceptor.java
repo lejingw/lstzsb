@@ -17,7 +17,7 @@ import com.jatools.web.util.StringUtil;
 public class SignonInterceptor extends HandlerInterceptorAdapter {
 	private final String mappingUrl = "^.*" + StringUtil.getContextPath() + "(/login.vm|/error.vm)$";
 	//private final String loginUrl = StringUtil.getContextPath() + "/login.vm?isLogin=false";
-	private final String loginUrl = "/login.vm?isLogin=false";
+	private final String loginUrl = "/login/false.do";
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 

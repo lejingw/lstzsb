@@ -7,18 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.stereotype.Service;
 
 import com.jatools.common.CommonUtil;
-import com.jatools.common.constant.DictConstant;
-import com.jatools.common.constant.ParameterConstant;
 import com.jatools.manager.move.MoveBillManager;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
-import com.jatools.web.cache.ParameterCache;
-import com.jatools.web.util.DateUtil;
 
 @Service
+@RemoteProxy(name="MoveBillDwr")
 public class MoveBillDwr {
 	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(MoveBillDwr.class);
