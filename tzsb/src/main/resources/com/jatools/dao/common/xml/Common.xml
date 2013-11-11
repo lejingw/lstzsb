@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Common">
+	<select id="Common.querySingleString" resultClass="string" parameterClass="string">
+		$value$
+	</select>
+	<!-- 获取当前特定单据编号的下标 -->
+	<select id="Common.getCurrentBillnoIndex" resultClass="java.util.HashMap" parameterClass="map">
+		select (select a.billno_rule from jat_basic_billno_rule a where a.bill_code = #billCode#) as "billnoRule",
+			(select to_char(c.biz_index) from jat_biz_index c where c.biz_type = #bizType# and c.biz_code = #bizCode# and c.biz_date = #bizDate#) as "bizIndex"
+		from dual
+	</select>
+	<insert id="Common.createIndex" parameterClass="map">
+		insert into jat_biz_index(biz_type, biz_code, biz_date, biz_index)values(#bizType#, #bizCode#, #bizDate#, #bizIndex#)
+	</insert>
+	<update id="Common.increaseIndex" parameterClass="map">
+		update jat_biz_index a set a.biz_index = a.biz_index + 1 where a.biz_type = #bizType# and a.biz_code = #bizCode# and a.biz_date = #bizDate#
+	</update>
+</sqlMap>

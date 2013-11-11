@@ -1,0 +1,158 @@
+#set($jsfiles = ["$StringUtil.getContextPath()/dwr/interface/MoveBillDwr.js"])
+
+#set($modelCode = '0803010101')
+#set($billCode = 'TB')
+	
+<form id="frm" action="moveBill.vm" method="post">
+	<input type='hidden' id='user_action' name='user_action' value=''/>
+    <table class="title">
+    	<tr>
+			<td>调拨单
+				#if(""!="$!{form.message}")
+					[<font color='red'>$!{form.message}</font>]
+				#end
+			</td>
+		</tr>
+    </table>
+    <table class="control">
+    	<tr>
+			<td>
+				<input type='button' value='新增' class='btn' id='btnAdd' $RightUtil.able($session, $modelCode,'1')>
+				<input type='button' value='修改/查看' class='btn' id='btnEdit' $RightUtil.able($session, $modelCode,'2')>
+				<input type='button' value='删除' class='btn' id="btnDelete" $RightUtil.able($session, $modelCode,'3')>
+				<input type='button' value='查询' class='btn' id="btnQueryShow" $RightUtil.able($session, $modelCode,'4')>
+				<input type='button' value='导出Excel' class='btn' id='exportToExcel' onclick="exportListToExcel()" $RightUtil.able($session, $modelCode,'5')>
+				<input type="checkbox" name='showAllFlag' #if("1" == "$!{form.condition.showAllFlag}") checked #end value='1' onclick="showAllBill('frm')">显示所有单据
+			</td>
+		</tr>
+    </table>
+	<div class="scroll">
+    <table class='list'>
+    	<thead>
+			<tr>
+                <th width='45px'><input type='checkbox' id='chkall'/></th>
+        		<th width='80px'>状态</th>
+                <th width='120px'>单据编号</th>
+                <th width='90px'>业务日期</th>
+                <th width='180px'>组织</th>
+				<th width='60px'>件数合计</th>
+				<th width='60px'>重量合计</th>
+        		<th width='120px'>创建时间</th>
+        		<th width='90px'>创建人</th>
+        		<th width='120px'>修改时间</th>
+        		<th width='90px'>修改人</th>
+            </tr>
+        </thead>
+        <tbody id="tbl">
+		#foreach($item in $form.pager.pageData)
+			<tr>
+				<td><input type='checkbox' name='chk' value='$!{item.headid}'/>
+				<input type="hidden" name="outOrgId" value="$!item.outOrgId"/>$velocityCounter</td>
+				<td><input type='hidden' name='status' value='$!{item.status}'/>$!DictUtil.getValue('status', $!item.status)</td>
+				<td><a href='javascript:toEditPage($!{item.headid});'>$!item.billno</a></td>
+				<td>$!item.dodate</td>
+				<td>$!BdCommon.getOrgName($!item.orgId)</td>
+				<td>$!item.sumCount</td>
+				<td>$!StringUtil.formatDouble($!item.sumWeight, 2)</td>
+				<td>$!item.createDate</td>
+				<td>$!BdCommon.getUserName($!item.createId)</td>
+				<td>$!item.updateDate</td>
+				<td>$!BdCommon.getUserName($!item.updateId)</td>
+			</tr>
+		#end
+    	</tbody>
+    </table>
+	</div>
+	<div id='_boxcontent' style='display:none;'>
+		<table class='list'>
+			<table class='list'>
+				<tr>
+					<td>单据编号</td>
+					<td><input type='text' name='_billno' value=''/></td>
+				</tr>
+			</table>
+		</table>
+	</div>
+<script>
+createPagingToolbar('frm', $!form.pager.start, $!form.pager.limit, $!form.pager.totalCount);
+</script>
+</form>
+<script>
+function exportListToExcel(){
+	jQuery("#user_action").val("exportExcel");
+	jQuery("#frm").submit();
+	jQuery("#user_action").val("");
+}
+jQuery(function(){
+	checkTable('tbl', 'chkall', 'chk', false, changeButtons, function(index){
+		window.location = "moveBill.vm?user_action=toEdit&headid=" + $n("chk")[index].value;
+	});
+	//初始化查询div common_query.js中定义默认已经引入
+	jQuery("#btnAdd").click(function(){
+		window.location = "moveBill.vm?user_action=toAdd";
+	});
+	jQuery("#btnEdit").click(function(){
+    	var index = getSelectIndex('chk');
+    	if(index<0){
+    		alert("请选择要修改/查看的记录");
+    		return ;
+    	}
+		window.location = "moveBill.vm?user_action=toEdit&headid=" + $n("chk")[index].value;
+	});
+	jQuery("#btnDelete").click(deleteMoveBill);
+	changeButtons(false, 0);
+	
+	jQuery("#btnQueryShow").click(function(){
+		jQuery.weeboxs.open('#_boxcontent', {
+			title:'查询',
+			boxid:'_boxQuery',
+			closeable:true,
+			modal:false,
+			okBtnName:"查询",
+			width:700,
+			height:200,
+			onok:function(box){		
+				jQuery("#frm").submit();
+				box.close();
+			},
+			oncancel:function(box){
+				box.close();
+			}
+		});
+	});
+});
+function showAllBill(formId){
+	jQuery("#" + formId).submit();
+}
+function changeButtons(checked, index){
+	jQuery("#btnEdit").attr("disabled", true);
+	jQuery("#btnDelete").attr("disabled", true);
+	
+	if(!checked)	return ;
+	jQuery("#btnEdit").attr("disabled", false);
+	if("1" == $n("status")[index].value){
+		jQuery("#btnDelete").attr("disabled", false);
+	}
+}
+function toEditPage(headid){
+	window.location = "moveBill.vm?user_action=toEdit&headid=" + headid;
+}
+function deleteMoveBill(){
+	var index = getSelectIndex('chk');
+	if(index<0){
+		alert("请选择要删除的记录");
+		return ;
+	}
+	confirm("确定删除?", function(){
+		MoveBillDwr.deleteMoveBill([$n("chk")[index].value], function(errMsg){
+			if(errMsg){
+				alert(errMsg);
+			}else{
+				alert("删除成功", function(){
+					jQuery("#frm").submit();
+				});
+			}
+		});
+	});
+}
+</script>
