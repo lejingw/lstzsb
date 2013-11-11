@@ -15,7 +15,6 @@ import com.jatools.common.constant.ParameterConstant;
 import com.jatools.web.cache.ParameterCache;
 import com.jatools.web.form.sys.AuthToken;
 import com.jatools.web.util.StringUtil;
-import com.jatools.web.view.BaseMultiActionController;
 
 public class CommonUtil {
 	private static Logger logger = Logger.getLogger(CommonUtil.class);

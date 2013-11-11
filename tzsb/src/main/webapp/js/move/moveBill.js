@@ -25,6 +25,7 @@ function getMaterActiveInfo(ornaCode){
 	if(!checkOrnaCodeExists(ornaCode))
 		return;
 	MoveBillDwr.getMaterActiveInfo(ornaCode, jQuery("#outOrgId").val(), function(data){
+		info(data);
 		addMoveRow(data);
 		calcSum();
 		jQuery("#ornaCode_in").val("");

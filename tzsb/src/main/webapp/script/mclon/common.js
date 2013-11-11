@@ -184,8 +184,8 @@ function getParameterValue(name){
 	return val;
 }
 /*
-#set($cssfiles = ["$StringUtil.getContextPath()/script/mclon/calendar/calendar.css"])
-#set($jsfiles = ["$StringUtil.getContextPath()/script/mclon/calendar/calendar.js"])
+#set($cssfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.css"])
+#set($jsfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.js"])
 */
 /**
  * 初始化日期控件
@@ -219,7 +219,7 @@ function initCalendar(inputId, config){
 /**
  * 初始化标签打印
  * 页面添加js文件引用url
- * "$StringUtil.getContextPath()/script/mclon/ZeroClipboard/ZeroClipboard.js",
+ * "${rc.contextPath}/script/mclon/ZeroClipboard/ZeroClipboard.js",
  * btnId		打印button的id
  * getUrlFunc	获取打印url，返回false或者null，则不执行打印
  */

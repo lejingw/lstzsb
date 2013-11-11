@@ -7,7 +7,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 public class Global {
 	public static WebApplicationContext springContext = null;
-	public static String				CONTEXT												= "";//应用上下文/lstzsb
+	
 	public static final String 			COOKIE_USER_NAME									= "zs_user_name";//账号密码 cookie名称
 	public static final String			COOKIE_USER_PASSWORD								= "zs_user_password";//账号密码 cookie名称
 	public static final int				COOKIE_MAX_AGE										= 36288000;//单位秒

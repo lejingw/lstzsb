@@ -1,4 +1,4 @@
-#set($jsfiles = ["$StringUtil.getContextPath()/dwr/interface/MoveSalecoefDwr.js"])
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/MoveSalecoefDwr.js"])
 #set($cond = $form.condition)
 <form id="frm" method="post">
 	<input type='hidden' name='entryType' value='$!form.entryType'/>

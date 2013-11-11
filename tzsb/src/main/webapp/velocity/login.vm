@@ -1,5 +1,5 @@
 #set($layout = "layout/noLoginLayout.vm")
-	<form name="" action="$!StringUtil.getContextPath()/login/doLogin.do" method="post" onsubmit="return checkSubmit();">
+	<form action="${rc.contextPath}/login/doLogin.do" method="post" onsubmit="return checkSubmit();">
 		<table>
 			<tr >
 				<td >
@@ -52,13 +52,11 @@ function checkSubmit(){
 		alert("请输入密码");
 		return false;
 	}
-	//var url = "login.vm?user_action=doLogin&username=" + username + "&password=" + password;
-	//window.open(url, "_self");
 	return true;
 }
 jQuery(document).ready(function(){
 	if(window != top){
-		top.location = "$!StringUtil.getContextPath()/login.vm/isLogin=false";
+		top.location = "${rc.contextPath}/login/false.do";
 	}
 });
 </script>

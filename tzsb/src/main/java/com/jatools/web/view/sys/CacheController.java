@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jatools.common.CommonUtil;
@@ -12,17 +14,12 @@ import com.jatools.web.cache.OrgCache;
 import com.jatools.web.cache.UserCache;
 import com.jatools.web.form.sys.CacheForm;
 import com.jatools.web.util.StringUtil;
-import com.jatools.web.view.BaseMultiActionController;
 
-public class CacheController extends BaseMultiActionController {
+@Controller
+@RequestMapping("/sys/cache")
+public class CacheController {
 	private static Logger logger = Logger.getLogger(CacheController.class);
-//	private WorkflowService workflowService;
-//	
-//	public void setWorkflowService(WorkflowService workflowService) {
-//		this.workflowService = workflowService;
-//	}
 
-	@Override
 	public ModelAndView doPerform(HttpServletRequest req, HttpServletResponse res) {
 		CacheForm form = new CacheForm();
 		form.setMessage("刷新缓存成功");

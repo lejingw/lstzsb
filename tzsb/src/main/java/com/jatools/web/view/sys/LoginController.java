@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -28,7 +29,7 @@ public class LoginController {
 	public UserManager userManager;
 	
 	@RequestMapping("/login/false")
-	public ModelAndView doPerform(HttpServletRequest req, HttpServletResponse res) {
+	public ModelAndView doPerform(HttpServletRequest req, Model model, HttpServletResponse res) {
 		LoginForm loginForm = new LoginForm();
 		loginForm.setSuccessfulFlag(false);
 		loginForm.setMessage("对不起，您还未登录，请先登录!");
@@ -46,7 +47,7 @@ public class LoginController {
 		return new ModelAndView("login", "loginForm", loginForm);
 	}
 	@RequestMapping("/login/doLogin")
-	public ModelAndView doLogin(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public String doLogin(Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String username	= req.getParameter("username");
 		String password	= req.getParameter("password");
 		String orgid		= req.getParameter("orgid");
@@ -62,8 +63,10 @@ public class LoginController {
 		if (StringUtil.isBlank(username) || StringUtil.isBlank(password)) {// 输入验证
 			loginForm.setSuccessfulFlag(false);
 			loginForm.setMessage("输入登陆参数不完整！");
-			return new ModelAndView("login", "loginForm", loginForm);
+			model.addAttribute("loginForm", loginForm);
+			return "login";
 		}
+		System.out.println("--");
 		loginForm.setUserip(getIpAddr(req));
 
 		User user = userManager.getUserInfo(loginForm.getUsername());
@@ -71,13 +74,14 @@ public class LoginController {
 			logger.error("无法根据用户名[" + loginForm.getUsername() + "]，获取登录用户信息");
 			loginForm.setSuccessfulFlag(false);
 			loginForm.setMessage("无法获取登录用户[" + loginForm.getUsername() + "]信息");
-			return new ModelAndView("login", "loginForm", loginForm);
+			model.addAttribute("loginForm", loginForm);
+			return "login";
 		}
 		loginForm.setSuccessfulFlag(true);
 		
 		CommonUtil.addSessionToken(req.getSession(), user.getUserid(), user.getUsername(), orgid);
 		
-		return new ModelAndView(new RedirectView(Global.CONTEXT + "/home.do"));
+		return "home";
 	}
 
 	@RequestMapping("/logout")
@@ -88,7 +92,7 @@ public class LoginController {
 			CommonUtil.logoutClearSession(session);
 			session.invalidate();
 		}
-		return "/login/false.do";
+		return "login";
 	}
 	/**
 	 * 获取远程机器IP

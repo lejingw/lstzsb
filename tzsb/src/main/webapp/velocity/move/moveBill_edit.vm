@@ -1,9 +1,8 @@
-#set($cssfiles = ["$StringUtil.getContextPath()/script/mclon/calendar/calendar.css"])
+#set($cssfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.css"])
 
-#set($jsfiles = ["$StringUtil.getContextPath()/script/mclon/calendar/calendar.js",
-	"$StringUtil.getContextPath()/js/move/moveBill.js?t=201208061307.js",
-	"$StringUtil.getContextPath()/dwr/interface/DictDwr.js",
-	"$StringUtil.getContextPath()/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
+#set($jsfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.js",
+	"${rc.contextPath}/js/move/moveBill.js",
+	"${rc.contextPath}/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
 
 #set($modelCode = '0803010102')
 
@@ -124,7 +123,7 @@ function saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, action){
 		showLayer(false);
     	alert(data?data:action+"成功", function(){
 			if(!data){
-        		window.location = "moveBill.vm";
+        		window.location = "${rc.contextPath}/move/moveBill/list.do";
 			}
     	});
     });
@@ -139,7 +138,7 @@ jQuery(function(){
 	
 	//返回列表
 	jQuery("#btnToList").click(function(){
-		forward("moveBill.vm");
+		forward("${rc.contextPath}/move/moveBill/list.do");
 	});
 	setEnterKey('ornaCode_in', function(){
 		getMaterActiveInfo(jQuery("#ornaCode_in").val());
@@ -151,10 +150,6 @@ jQuery(function(){
 });
 function setContent(){
 	initCalendar('dodate');
-	//添加调入组织
-	//DictDwr.getDictsForSlt('hqorgs', function(data){
-	//	addOptions("inOrgId", data, null, null, true, true, "$!{form.head.inOrgId}");
-	//});
 }
 function setValues(){
 	if(isNull(jQuery("#headid").val()))	return ;

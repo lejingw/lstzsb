@@ -19,6 +19,7 @@
 	    <property name="toolboxConfigLocation" value="WEB-INF/velocity-toolsbox.xml"></property>
   		<!-- 需要使用Spring 对 Velocity宏命令的支持, 将这个属性设为true  -->
   		<property name="exposeSpringMacroHelpers" value="true"/>
+  		<property name="requestContextAttribute" value="rc"/>
 	</bean>
 	
 	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">	

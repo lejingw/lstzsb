@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans default-autowire="byName">
+	<!-- 
 	<bean id="dictDwr" name="dictDwr" class="com.jatools.web.dwr.sys.DictDwr">
 		<property name="dictManager" ref="dictManager"></property>
 	</bean>
@@ -11,7 +12,6 @@
 	<bean id="bdCommonDwr" name="bdCommonDwr" class="com.jatools.web.dwr.bd.BdCommonDwr">
 		<property name="bdCommonManager" ref="bdCommonManager"></property>
 	</bean>
-	<!-- 
 	<bean id="moveBillDwr" name="moveBillDwr" class="com.jatools.web.dwr.move.MoveBillDwr">
 		<property name="moveBillManager" ref="moveBillManager"/>
 	</bean>

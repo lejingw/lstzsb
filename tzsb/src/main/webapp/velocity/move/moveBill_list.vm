@@ -1,9 +1,9 @@
-#set($jsfiles = ["$StringUtil.getContextPath()/dwr/interface/MoveBillDwr.js"])
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/MoveBillDwr.js"])
 
 #set($modelCode = '0803010101')
 #set($billCode = 'TB')
 	
-<form id="frm" action="moveBill.vm" method="post">
+<form id="frm" action="${rc.contextPath}/move/moveBill/list.do" method="post">
 	<input type='hidden' id='user_action' name='user_action' value=''/>
     <table class="title">
     	<tr>
@@ -85,11 +85,11 @@ function exportListToExcel(){
 }
 jQuery(function(){
 	checkTable('tbl', 'chkall', 'chk', false, changeButtons, function(index){
-		window.location = "moveBill.vm?user_action=toEdit&headid=" + $n("chk")[index].value;
+		window.location = "${rc.contextPath}/move/moveBill/toEdit.do?headid=" + $n("chk")[index].value;
 	});
 	//初始化查询div common_query.js中定义默认已经引入
 	jQuery("#btnAdd").click(function(){
-		window.location = "moveBill.vm?user_action=toAdd";
+		window.location = "${rc.contextPath}/move/moveBill/toAdd.do";
 	});
 	jQuery("#btnEdit").click(function(){
     	var index = getSelectIndex('chk');
@@ -97,7 +97,7 @@ jQuery(function(){
     		alert("请选择要修改/查看的记录");
     		return ;
     	}
-		window.location = "moveBill.vm?user_action=toEdit&headid=" + $n("chk")[index].value;
+		window.location = "${rc.contextPath}/move/moveBill/toEdit.do?headid=" + $n("chk")[index].value;
 	});
 	jQuery("#btnDelete").click(deleteMoveBill);
 	changeButtons(false, 0);
@@ -135,7 +135,7 @@ function changeButtons(checked, index){
 	}
 }
 function toEditPage(headid){
-	window.location = "moveBill.vm?user_action=toEdit&headid=" + headid;
+	window.location = "${rc.contextPath}/move/moveBill/toEdit.do?headid=" + headid;
 }
 function deleteMoveBill(){
 	var index = getSelectIndex('chk');
@@ -144,6 +144,7 @@ function deleteMoveBill(){
 		return ;
 	}
 	confirm("确定删除?", function(){
+	info($n("chk")[index].value);
 		MoveBillDwr.deleteMoveBill([$n("chk")[index].value], function(errMsg){
 			if(errMsg){
 				alert(errMsg);

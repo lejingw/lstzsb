@@ -21,13 +21,11 @@ import com.jatools.web.util.StringUtil;
 public class MoveBillManagerImpl extends BaseManager implements MoveBillManager {
 	@Autowired
 	private MoveBillDao moveBillDao;
+	@Autowired
 	private CommonDao commonDao;
 
 	public CommonDao getCommonDao() {
 		return commonDao;
-	}
-	public void setCommonDao(CommonDao commonDao) {
-		this.commonDao = commonDao;
 	}
 	/**
 	 * 获取调拨单分页数据

@@ -2,6 +2,9 @@ package com.jatools.manager.sys.impl;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jatools.common.Pager;
 import com.jatools.dao.sys.ParameterDao;
 import com.jatools.manager.sys.ParameterManager;
@@ -10,13 +13,10 @@ import com.jatools.web.cache.ParameterCache;
 import com.jatools.web.util.DateUtil;
 import com.jatools.web.util.StringUtil;
 
+@Service("parameterManager")
 public class ParameterManagerImpl implements ParameterManager {
-
+	@Autowired
 	private ParameterDao parameterDao;
-	
-	public void setParameterDao(ParameterDao parameterDao) {
-		this.parameterDao = parameterDao;
-	}
 
 	@Override
 	public Pager getParameterData(Map<String, String> condition) {

@@ -1,4 +1,4 @@
-#set($jsfiles = ["$StringUtil.getContextPath()/dwr/interface/BillnoRuleDwr.js"])
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/BillnoRuleDwr.js"])
 <form id="frm" method="post">
     <table class="title">
     	<tr><td>单号编码规则</td></tr>

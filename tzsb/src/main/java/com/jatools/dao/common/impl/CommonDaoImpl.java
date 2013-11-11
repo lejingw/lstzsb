@@ -4,13 +4,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.ibatis.sqlmap.client.SqlMapSession;
 import com.jatools.dao.BaseDao;
 import com.jatools.dao.common.CommonDao;
 import com.jatools.dao.common.TransactionAction;
 import com.jatools.web.util.DateUtil;
 
-@SuppressWarnings("unchecked")
+@Repository
 public class CommonDaoImpl extends BaseDao implements CommonDao {
 	private static final String BIZ_TYPE_BILLNO = "billNo";//单据编号
 	/**

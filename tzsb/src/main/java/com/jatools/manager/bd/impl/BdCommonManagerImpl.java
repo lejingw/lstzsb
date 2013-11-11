@@ -2,19 +2,19 @@ package com.jatools.manager.bd.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jatools.dao.bd.BdCommonDao;
 import com.jatools.manager.bd.BdCommonManager;
 import com.jatools.vo.basic.Org;
 import com.jatools.vo.sys.Parameter;
 
+@Service("bdCommonManager")
 public class BdCommonManagerImpl implements BdCommonManager {
-
+	@Autowired
 	private BdCommonDao bdCommonDao;
 	
-	public void setBdCommonDao(BdCommonDao bdCommonDao) {
-		this.bdCommonDao = bdCommonDao;
-	}
-
 	/**
 	 * 获取所有系统参数配置
 	 */

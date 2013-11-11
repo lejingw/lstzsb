@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jatools</groupId>
   <artifactId>tzsb</artifactId>
@@ -51,6 +52,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- SPRING end -->
@@ -137,7 +143,7 @@
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.3</version>
 		</dependency>
 		
 		<dependency>
@@ -217,7 +223,35 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<!-- jetty插件, 设定context path与spring profile -->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-dependency-plugin</artifactId>
+		        <version>2.8</version>
+				<executions>
+					<execution>
+			            <phase>compile</phase>
+			            <goals>
+			              <goal>copy-dependencies</goal>
+			            </goals>
+						<configuration>
+							<outputDirectory>src/main/webapp/WEB-INF/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/WEB-INF/lib</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<!-- jetty插件, 设定context path与spring profile
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -243,7 +277,28 @@
                         <logTimeZone>GMT+8:00</logTimeZone>  
                     </requestLog>
 				</configuration>
-			</plugin>
+			</plugin> -->
+			<!-- <plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<container>
+						<containerId>tomcat6x</containerId>
+						<home>E:\tomcats\tomcat8080</home>
+					</container>
+					<configuration>
+                        
+						<type>existing</type>
+                        <home>E:\tomcat\apache-tomcat-7.0.26</home>
+                        
+						<type>standalone</type>
+                        <home>${project.build.directory}/tomcat6x</home>
+						<properties>
+							<cargo.servlet.port>7676</cargo.servlet.port>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin> -->
   		</plugins>
   	</build>
 </project>

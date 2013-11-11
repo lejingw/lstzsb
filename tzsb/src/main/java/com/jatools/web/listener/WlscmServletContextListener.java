@@ -30,9 +30,12 @@ public class WlscmServletContextListener implements ServletContextListener {
         } catch (Exception e) {
             log.debug("加载属性文件出错:/global.properties", e);
         }
-    	if(StringUtil.isNotBlank(global.getProperty("system.contextpath"))){
-    		Global.CONTEXT = global.getProperty("system.contextpath", "lstzsb").trim();
-    	}
+//    	System.out.println("==="+event.getServletContext().getContext("/"));
+//    	log.debug("---------"+ event.getServletContext().getServletContextName());
+//    	if(StringUtil.isNotBlank(global.getProperty("system.contextpath"))){
+//    		Global.CONTEXT = event.getServletContext().getServletContextName();
+//    		//global.getProperty("system.contextpath", "lstzsb").trim();
+//    	}
         Global.springContext = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
     }
 }

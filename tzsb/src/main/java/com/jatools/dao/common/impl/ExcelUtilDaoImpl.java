@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.jatools.dao.BaseDao;
 import com.jatools.dao.common.ExcelUtilDao;
 import com.jatools.vo.util.ExcelRowData;
 
+@Repository
 public class ExcelUtilDaoImpl extends BaseDao implements ExcelUtilDao {
 
 	public String getexcelKey(){

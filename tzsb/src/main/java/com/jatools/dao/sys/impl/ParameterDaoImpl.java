@@ -2,11 +2,14 @@ package com.jatools.dao.sys.impl;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.jatools.common.Pager;
 import com.jatools.dao.BaseDao;
 import com.jatools.dao.sys.ParameterDao;
 import com.jatools.vo.sys.Parameter;
 
+@Repository
 public class ParameterDaoImpl extends BaseDao implements ParameterDao {
 
 	@Override

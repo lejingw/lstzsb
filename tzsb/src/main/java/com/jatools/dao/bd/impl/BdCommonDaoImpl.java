@@ -2,12 +2,14 @@ package com.jatools.dao.bd.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.jatools.dao.BaseDao;
 import com.jatools.dao.bd.BdCommonDao;
 import com.jatools.vo.basic.Org;
 import com.jatools.vo.sys.Parameter;
 
-@SuppressWarnings("unchecked")
+@Repository
 public class BdCommonDaoImpl extends BaseDao implements BdCommonDao {
 	/**
 	 * 获取所有系统参数配置

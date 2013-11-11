@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jatools.common.CommonUtil;
@@ -13,9 +15,10 @@ import com.jatools.common.Pager;
 import com.jatools.manager.bd.BillnoRuleManager;
 import com.jatools.vo.basic.BillnoRule;
 import com.jatools.web.form.basic.BillnoRuleForm;
-import com.jatools.web.view.BaseMultiActionController;
 
-public class BillnoRuleController extends BaseMultiActionController {
+@Controller
+@RequestMapping("/common/billno")
+public class BillnoRuleController {
 	private Logger logger = Logger.getLogger(BillnoRuleController.class);
 
 	private BillnoRuleManager billnoRuleManager;
@@ -23,8 +26,7 @@ public class BillnoRuleController extends BaseMultiActionController {
 	public void setBillnoRuleManager(BillnoRuleManager billnoRuleManager) {
 		this.billnoRuleManager = billnoRuleManager;
 	}
-
-	@Override
+	
 	public ModelAndView doPerform(HttpServletRequest req, HttpServletResponse res) {
 		BillnoRuleForm form = new BillnoRuleForm();
 		try {

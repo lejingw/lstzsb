@@ -1,5 +1,5 @@
-#set($jsfiles = ["$StringUtil.getContextPath()/js/sys/parameter.js", 
-	"$StringUtil.getContextPath()/dwr/interface/ParameterDwr.js"])
+#set($jsfiles = ["${rc.contextPath}/js/sys/parameter.js", 
+	"${rc.contextPath}/dwr/interface/ParameterDwr.js"])
 
 #set($parameter = $form.parameter)
 	

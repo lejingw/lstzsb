@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jatools.common.Pager;
 import com.jatools.dao.sys.DictDao;
 import com.jatools.manager.sys.DictManager;
@@ -11,12 +14,10 @@ import com.jatools.vo.sys.Dict;
 import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
 
+@Service("dictManager")
 public class DictManagerImpl implements DictManager {
+	@Autowired
 	private DictDao dictDao;
-	
-	public void setDictDao(DictDao dictDao) {
-		this.dictDao = dictDao;
-	}
 
 	/**
 	 * 获取所有数据字典项

@@ -1,7 +1,11 @@
 package com.jatools.dao.sys.impl;
 
 import java.util.List;
+
 import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
 import com.jatools.common.Pager;
 import com.jatools.common.constant.DictConstant;
 import com.jatools.dao.BaseDao;
@@ -11,6 +15,7 @@ import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
 import com.jatools.web.util.DateUtil;
 
+@Repository
 public class DictDaoImpl extends BaseDao implements DictDao {
 	/**
 	 * 获取所有数据字典项

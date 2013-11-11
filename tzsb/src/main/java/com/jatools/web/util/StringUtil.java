@@ -19,7 +19,7 @@ import com.jatools.web.cache.OrgCache;
 public class StringUtil extends StringUtils {
 
 	public static String getContextPath(){
-		return Global.CONTEXT;
+		return "xxxxxxxxxxxxxxxx";
 	}
 	
 	/**

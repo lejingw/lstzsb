@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,21 +32,23 @@ public class MoveBillController {
 	private MoveBillManager moveBillManager;
 	
 	@RequestMapping("/list")
-	public ModelAndView list(HttpServletRequest req, HttpServletResponse res) {
-		String pageUrl = "move/moveBill_list";
+	public String list(HttpServletRequest req, Model model, HttpServletResponse res) {
 		MoveBillForm form = new MoveBillForm();
 		Map<String, String> condition = CommonUtil.getConditionForPageSession(this, req, "showAllFlag", "_billno");
 		form.setCondition(condition);
 		Pager pager = moveBillManager.getMoveBillPageData(condition, CommonUtil.getSessionOrgId(req), CommonUtil.getSessionUserId(req));
 		form.setPager(pager);
-		return new ModelAndView(pageUrl, "form", form);
+		model.addAttribute("form", form);
+		return "move/moveBill_list";
 	}
-	public ModelAndView toAdd(HttpServletRequest req, HttpServletResponse res) {
-		String pageUrl = "move/moveBill_edit";
-		MoveBillForm form = new MoveBillForm();
-		return new ModelAndView(pageUrl, "form", form);
+	@RequestMapping("/toAdd")
+	public String toAdd(HttpServletRequest req, HttpServletResponse res) {
+//		MoveBillForm form = new MoveBillForm();
+//		return new ModelAndView(pageUrl, "form", form);
+		return "move/moveBill_edit";
 	}
-	
+
+	@RequestMapping("/toEdit")
 	public ModelAndView toEdit(HttpServletRequest req, HttpServletResponse res) {
 		String headid = CommonUtil.getParameterNull(req, "headid");
 		MoveBillForm form = new MoveBillForm();

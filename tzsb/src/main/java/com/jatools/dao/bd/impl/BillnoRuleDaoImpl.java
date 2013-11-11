@@ -3,6 +3,8 @@ package com.jatools.dao.bd.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.jatools.common.Pager;
 import com.jatools.dao.BaseDao;
 import com.jatools.dao.bd.BillnoRuleDao;
@@ -10,6 +12,7 @@ import com.jatools.vo.basic.BillnoRule;
 import com.jatools.vo.util.SelectorOption;
 import com.jatools.web.util.StringUtil;
 
+@Repository
 public class BillnoRuleDaoImpl extends BaseDao implements BillnoRuleDao{
 	/**
 	 * 获取分页数据

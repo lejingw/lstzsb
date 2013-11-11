@@ -1,8 +1,8 @@
 ##使用ztree
-#set($cssfiles = ["$StringUtil.getContextPath()/css/mclon/ztree/zTreeStyle.css"])
-#set($jsfiles = ["$StringUtil.getContextPath()/script/mclon/ztree/jquery.ztree.core-3.0.js",
-	"$StringUtil.getContextPath()/script/mclon/ztree/jquery.ztree.excheck-3.0.js",
-	"$StringUtil.getContextPath()/dwr/interface/BdCommonDwr.js"])
+#set($cssfiles = ["${rc.contextPath}/css/mclon/ztree/zTreeStyle.css"])
+#set($jsfiles = ["${rc.contextPath}/script/mclon/ztree/jquery.ztree.core-3.0.js",
+	"${rc.contextPath}/script/mclon/ztree/jquery.ztree.excheck-3.0.js",
+	"${rc.contextPath}/dwr/interface/BdCommonDwr.js"])
 ##$form.multiFlag
 <script>
 var start=1;

@@ -6,16 +6,16 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 	
-<link href="$!StringUtil.getContextPath()/css/mclon/tab/imgs/tab.css" rel="stylesheet" type="text/css">
+<link href="${rc.contextPath}/css/mclon/tab/imgs/tab.css" rel="stylesheet" type="text/css">
 #foreach($item in $!cssfiles)
 <link href="$item" type="text/css" rel="stylesheet" />
 #end
-<script language="javascript" type="text/javascript" src="$!StringUtil.getContextPath()/script/mclon/jquery-1.4.2.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="$!StringUtil.getContextPath()/script/mclon/TabView.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="$!StringUtil.getContextPath()/script/mclon/contextmenu/jquery.contextmenu.r2-debug.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/jquery-1.4.2.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/TabView.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/contextmenu/jquery.contextmenu.r2-debug.js" charset="UTF-8"></script>
 <!--
-<script language=javascript src='$!StringUtil.getContextPath()/dwr/engine.js'></script>
-<script language=javascript src='$!StringUtil.getContextPath()/dwr/util.js'></script>
+<script language=javascript src='${rc.contextPath}/dwr/engine.js'></script>
+<script language=javascript src='${rc.contextPath}/dwr/util.js'></script>
 -->
 #foreach($item in $!jsfiles)
 <script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>
@@ -50,7 +50,7 @@ h2 {
 <body>
 	<table width='100%'>
 		<tr>
-			<td colspan='2' align="right"><a href="$!StringUtil.getContextPath()/logout.do" target="_top">[退出]</a></a></td>
+			<td colspan='2' align="right"><a href="${rc.contextPath}/logout.do" target="_top">[退出]</a></a></td>
 		</tr>
 		<tr>
 			<td width='189px;' valign="top">$screen_content</td>

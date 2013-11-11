@@ -9,14 +9,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import com.jatools.common.CommonUtil;
 import com.jatools.manager.move.MoveBillManager;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
 
-@Service
+@Controller
 @RemoteProxy(name="MoveBillDwr")
 public class MoveBillDwr {
 	@SuppressWarnings("unused")
@@ -30,7 +30,7 @@ public class MoveBillDwr {
 	 * @param orgId
 	 * @return
 	 */
-	  @RemoteMethod
+	@RemoteMethod
 	public MoveBillLine getMaterActiveInfo(String ornaCode, String orgId){
 		try {
 			MoveBillLine line = moveBillManager.getMaterActiveInfo(ornaCode, orgId);
@@ -44,6 +44,7 @@ public class MoveBillDwr {
 	 * @param ornaCodeList
 	 * @return
 	 */
+	@RemoteMethod
 	public List<String> checkOrnaStatusAvail(List<String> ornaCodeList){
 		if(null == ornaCodeList || ornaCodeList.size()<1)
 			return null;
@@ -59,6 +60,7 @@ public class MoveBillDwr {
 	 * @param deleteOrnaCodeList 删除的行记录
 	 * @return
 	 */
+	@RemoteMethod
 	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, HttpSession session){
 		try {
 			moveBillManager.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, CommonUtil.getSessionUserId(session));
@@ -72,6 +74,7 @@ public class MoveBillDwr {
 	 * @param headid
 	 * @return
 	 */
+	@RemoteMethod
 	public String deleteMoveBill(List<String> headidList, HttpServletRequest req){
 		try{
 			moveBillManager.deleteMoveBill(headidList, CommonUtil.getSessionUserId(req));
@@ -80,6 +83,7 @@ public class MoveBillDwr {
 		}
 		return null;
 	}
+	@RemoteMethod
 	public String test(){
 		try {
 			Thread.sleep(500*1);

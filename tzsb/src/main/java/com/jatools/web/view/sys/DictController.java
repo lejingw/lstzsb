@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jatools.common.CommonUtil;
@@ -14,20 +16,17 @@ import com.jatools.manager.sys.DictManager;
 import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
 import com.jatools.web.form.sys.DictForm;
-import com.jatools.web.view.BaseMultiActionController;
 
-public class DictController extends BaseMultiActionController {
+@Controller
+@RequestMapping("/sys/dict")
+public class DictController {
 	private String listKey;
 	private DictManager dictManager;
 
 	public void setDictManager(DictManager dictManager) {
 		this.dictManager = dictManager;
 	}
-
-	public String getSessionKey(){
-		return super.getSessionKey() + listKey;
-	}
-	@Override
+	
 	public ModelAndView doPerform(HttpServletRequest req, HttpServletResponse res) {
 		String entryType = CommonUtil.getParameterEmpty(req, "entryType");
 		DictForm form = new DictForm();
