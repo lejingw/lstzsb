@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+	<!--  ***********************************************系统管理sys******************************************* -->
+	<bean id="commonDao"			class="com.jatools.dao.common.impl.CommonDaoImpl"				parent="sqlMapClientDao"/>
+	<bean id="excelUtilDao"			class="com.jatools.dao.common.impl.ExcelUtilDaoImpl"			parent="sqlMapClientDao"/>
+	<!-- 
+	<bean id="userDao"				class="com.jatools.dao.sys.impl.UserDaoImpl"				parent="sqlMapClientDao"/>
+	 -->
+	<bean id="dictDao"				class="com.jatools.dao.sys.impl.DictDaoImpl"				parent="sqlMapClientDao"/>
+	<bean id="parameterDao"			class="com.jatools.dao.sys.impl.ParameterDaoImpl"			parent="sqlMapClientDao"/>
+	
+	<bean id="bdCommonDao"			class="com.jatools.dao.bd.impl.BdCommonDaoImpl"				parent="sqlMapClientDao"/>
+	<bean id="billnoRuleDao"		class="com.jatools.dao.bd.impl.BillnoRuleDaoImpl"			parent="sqlMapClientDao"/>
+	<!-- 
+	<bean id="moveBillDao"			class="com.jatools.dao.move.impl.MoveBillDaoImpl"			parent="sqlMapClientDao"/>
+	 -->
+
+</beans>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName">
+<!-- 
+	<bean id="paraMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="user_action" />
+		<property name="defaultMethodName" value="doPerform" />
+	</bean>
+	
+	<bean name="errorController" class="com.jatools.web.view.sys.ErrorController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+ -->
+	<bean name="loginController" class="com.jatools.web.view.sys.LoginController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+		<property name="userManager" ref="userManager"></property>
+	</bean><!-- 
+	<bean name="homeController" class="com.jatools.web.view.sys.HomeController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	 -->
+	<bean name="helpController" class="com.jatools.web.view.sys.HelpController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	<bean name="cacheController" class="com.jatools.web.view.sys.CacheController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	
+	<bean name="dictController" class="com.jatools.web.view.sys.DictController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+		<property name="dictManager" ref="dictManager" />
+	</bean>
+	<bean name="parameterController" class="com.jatools.web.view.sys.ParameterController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	<bean name="billnoRuleController" class="com.jatools.web.view.bd.BillnoRuleController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	
+	
+	<!-- 调拨单
+	<bean name="moveBillController" class="com.jatools.web.view.move.MoveBillController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+	 -->
+	
+	<bean name="selectOrgController" class="com.jatools.web.view.common.SelectOrgController">
+		<property name="methodNameResolver" ref="paraMethodResolver" />
+	</bean>
+</beans>
