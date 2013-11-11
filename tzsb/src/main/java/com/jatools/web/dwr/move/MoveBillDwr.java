@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class MoveBillDwr {
 	 * @param orgId
 	 * @return
 	 */
+	  @RemoteMethod
 	public MoveBillLine getMaterActiveInfo(String ornaCode, String orgId){
 		try {
 			MoveBillLine line = moveBillManager.getMaterActiveInfo(ornaCode, orgId);
