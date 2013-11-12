@@ -48,7 +48,7 @@
                 <prop key="velocimacro.library.autoreload">true</prop>
 			</props>
 		</property>
-  	</bean>	
+  	</bean>
     
 	<!-- 
 	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>

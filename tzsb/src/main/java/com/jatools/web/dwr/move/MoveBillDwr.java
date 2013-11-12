@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.jatools.common.CommonUtil;
@@ -21,7 +22,7 @@ import com.jatools.vo.move.MoveBillLine;
 public class MoveBillDwr {
 	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(MoveBillDwr.class);
-	@Resource
+	@Autowired
 	private MoveBillManager moveBillManager;
 	
 	/**
@@ -95,7 +96,7 @@ public class MoveBillDwr {
 //				@Override
 //				public void run() {
 //					System.out.println(moveBillManager.getBillno("TB"));
-//					System.out.println(commonManager.getBillno("TB"));
+//					System.out.println(sysCommonManager.getBillno("TB"));
 //				}
 //			}).start();
 //		}

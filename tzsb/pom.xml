@@ -15,6 +15,23 @@
 		<jdk.version>1.6</jdk.version>
 		<jetty.version>8.1.4.v20120524</jetty.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<!-- Please consider setting up your own on-site repository proxy such 
+				as with Nexus and pointing the url element below at that instead -->
+			<id>oss-sonatype-snapshots</id>
+			<name>OSS Sonatype Snapshots Repository</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+  
   
   	<dependencies>
 		<!-- SPRING begin -->
@@ -78,12 +95,18 @@
             <artifactId>velocity-tools</artifactId>
             <version>2.0</version>
         </dependency>
-        
+        <!-- 
         <dependency> 
             <groupId>org.directwebremoting</groupId>
 			<artifactId>dwr</artifactId>
 			<version>3.0.M1</version>
         </dependency>
+         -->
+		<dependency>
+			<groupId>org.directwebremoting</groupId>
+			<artifactId>dwr</artifactId>
+			<version>3.0.0-rc3-SNAPSHOT</version>
+		</dependency>
        
 		<dependency>
 			<groupId>org.aspectj</groupId>

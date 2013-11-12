@@ -13,6 +13,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jatools.common.ExcelUtil;
 import com.jatools.common.excel.ExcelDbrefrenceCheck;
@@ -21,12 +23,11 @@ import com.jatools.manager.common.ExcelUtilManager;
 import com.jatools.vo.util.ExcelRowData;
 import com.jatools.web.util.StringUtil;
 
+@Service
 public class ExcelUtilManagerImpl implements ExcelUtilManager{
+	@Autowired
 	private ExcelUtilDao excelUtilDao;
 	
-	public void setExcelUtilDao(ExcelUtilDao excelUtilDao) {
-		this.excelUtilDao = excelUtilDao;
-	}
 
 	public String saveExcelData(HSSFWorkbook workbook) {
 		List<ExcelRowData> excelDataList = new ArrayList<ExcelRowData>();

@@ -8,14 +8,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.jatools.common.Global;
-import com.jatools.manager.bd.BdCommonManager;
+import com.jatools.manager.common.SysCommonManager;
 import com.jatools.vo.basic.Org;
 import com.jatools.web.util.DateUtil;
 import com.jatools.web.util.StringUtil;
 /**
  * 组织数据缓存
  * @author wanglj
- *
  */
 public class OrgCache implements CacheSingletonIntf {
 	private static Logger logger = Logger.getLogger(OrgCache.class);
@@ -42,7 +41,7 @@ public class OrgCache implements CacheSingletonIntf {
 		if (null == OrgCache.orgCache) {
 			logger.debug("初始化组织缓存数据...");
 			try {
-				BdCommonManager bdCommonManager = (BdCommonManager) Global.springContext.getBean("bdCommonManager");
+				SysCommonManager bdCommonManager = (SysCommonManager) Global.springContext.getBean("sysCommonManager");
 				if (null != bdCommonManager) {
 					logger.debug("初始化组织缓存数据...");
 					OrgCache.orgMap = new LinkedHashMap<String, Org>();

@@ -1,12 +1,12 @@
 package com.jatools.manager;
 
 import com.jatools.common.constant.DictConstant;
-import com.jatools.dao.common.CommonDao;
+import com.jatools.dao.common.SysCommonDao;
 import com.jatools.web.util.DictUtil;
 import com.jatools.web.util.StringUtil;
 
 public abstract class BaseManager {
-	public abstract CommonDao getCommonDao();
+	public abstract SysCommonDao getCommonDao();
 	/**
 	 * 获取单据状态
 	 * @return

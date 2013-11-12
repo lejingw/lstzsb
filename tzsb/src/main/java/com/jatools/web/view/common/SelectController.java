@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jatools.common.CommonUtil;
-import com.jatools.manager.common.CommonManager;
+import com.jatools.manager.common.SysCommonManager;
 import com.jatools.vo.basic.Org;
 import com.jatools.web.cache.OrgCache;
 import com.jatools.web.form.common.SelectorForm;
@@ -20,7 +20,7 @@ import com.jatools.web.form.common.SelectorForm;
 @RequestMapping("/common/select")
 public class SelectController{
 		@Autowired
-        private CommonManager commonManager;
+        private SysCommonManager sysCommonManager;
         
         @RequestMapping("/org")
         public String org(HttpServletRequest req, Model model, HttpServletResponse res) {

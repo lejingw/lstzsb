@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jatools.common.Pager;
 import com.jatools.common.constant.DictConstant;
 import com.jatools.common.constant.GlobalConstant;
-import com.jatools.dao.common.CommonDao;
+import com.jatools.dao.common.SysCommonDao;
 import com.jatools.dao.move.MoveBillDao;
 import com.jatools.manager.BaseManager;
 import com.jatools.manager.move.MoveBillManager;
@@ -22,10 +22,10 @@ public class MoveBillManagerImpl extends BaseManager implements MoveBillManager 
 	@Autowired
 	private MoveBillDao moveBillDao;
 	@Autowired
-	private CommonDao commonDao;
+	private SysCommonDao sysCommonDao;
 
-	public CommonDao getCommonDao() {
-		return commonDao;
+	public SysCommonDao getCommonDao() {
+		return sysCommonDao;
 	}
 	/**
 	 * 获取调拨单分页数据
@@ -74,7 +74,7 @@ public class MoveBillManagerImpl extends BaseManager implements MoveBillManager 
 		try {
 			String headid = moveHead.getHeadid();
 			if (StringUtil.isEmpty(headid)) {
-				moveHead.setBillno(commonDao.getBillno(GlobalConstant.BILL_CODE_DIAOBODAN));
+				moveHead.setBillno(sysCommonDao.getBillno(GlobalConstant.BILL_CODE_DIAOBODAN));
 				headid = moveBillDao.saveMoveBillHead(moveHead, userid);
 			} else {
 				asertStatus("jat_move_head", "headid", headid, "status", DictConstant.BILL_STATUS_SAVE);
@@ -111,7 +111,7 @@ public class MoveBillManagerImpl extends BaseManager implements MoveBillManager 
 		return moveBillDao.getMoveBillLine(headid);
 	}
 //	public String getBillno(String string){
-//		String str = commonDao.getBillno(string);
+//		String str = sysCommonDao.getBillno(string);
 //		long start = System.currentTimeMillis();
 //		int count = 0;
 //		for(int i=0;i<100000;i++){

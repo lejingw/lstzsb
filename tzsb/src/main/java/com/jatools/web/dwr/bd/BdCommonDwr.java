@@ -1,14 +1,18 @@
 package com.jatools.web.dwr.bd;
 
-import com.jatools.manager.bd.BdCommonManager;
+import org.directwebremoting.annotations.RemoteProxy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.jatools.manager.common.SysCommonManager;
 import com.jatools.web.cache.ParameterCache;
 
+@Controller
+@RemoteProxy(name="BdCommonDwr")
 public class BdCommonDwr {
-	private BdCommonManager bdCommonManager;
+	@Autowired
+	private SysCommonManager sysCommonManager;
 	
-	public void setBdCommonManager(BdCommonManager dbCommonManager) {
-		this.bdCommonManager = dbCommonManager;
-	}
 	/**
 	 * 获取系统参数配置值
 	 * @param name

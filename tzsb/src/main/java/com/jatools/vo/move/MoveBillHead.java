@@ -1,6 +1,8 @@
 package com.jatools.vo.move;
 
+import org.directwebremoting.annotations.DataTransferObject;
 
+@DataTransferObject
 public class MoveBillHead {
 	private String headid;
 	private String billno;

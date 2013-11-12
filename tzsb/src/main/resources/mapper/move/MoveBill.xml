@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MoveBill">
+	<sql id="MoveBill.getMoveBillPageDataCondition">
+		<isNotEmpty property="_billno">and a.billno like '%$_billno$%'</isNotEmpty>
+	</sql>
+	<select id="MoveBill.getMoveBillPageData" parameterClass="map" resultClass="com.jatools.vo.move.MoveBillHead">
+			select a.headid as "headid", a.billno as "billno", a.dodate as "dodate", a.out_org_id as "outOrgId", a.in_org_id as "inOrgId",
+				a.sum_count as "sumCount", a.sum_weight as "sumWeight",
+				a.create_id as "createId", a.create_date as "createDate", a.update_id as "updateId", a.update_date as "updateDate",
+				a.status as "status"
+			from jat_move_head a
+    		where a.status in (1,2) and a.create_id = #userId#
+			<include refid="MoveBill.getMoveBillPageDataCondition"/>
+			order by a.BILLNO desc
+			limit $start$, $limit$
+	</select>
+	<!-- 获取总条数 -->
+    <select id="MoveBill.getMoveBillTotalCount" parameterClass="map" resultClass="int">
+		select count(1) from jat_move_head a where a.status in (1,2)  and a.create_id = #userId#
+		<include refid="MoveBill.getMoveBillPageDataCondition"/>
+    </select>
+    <select id="MoveBill.getMaterActiveInfo" parameterClass="string" resultClass="com.jatools.vo.move.MoveBillLine">
+		select a.orna_code as "ornaCode",
+		       a.orna_dsc as "ornaDsc",
+		       a.weight as "weight",
+		       a.org_id as "orgId",
+		       a.status as "status"
+		  from jat_bd_orna a where a.orna_code = #ornaCode#
+    </select>
+    <select id="MoveBill.checkOrnaStatusAvail" parameterClass="string" resultClass="string">
+    	<![CDATA[select a.orna_code from jat_bd_orna a where a.status <> 1 and a.orna_code in ($value$)]]>
+    </select>
+    <!-- 保存调拨单 -->
+    <insert id="MoveBill.saveMoveBillHead" parameterClass="com.jatools.vo.move.MoveBillHead">
+    	insert into jat_move_head(billno, dodate, out_org_id, in_org_id, memo,
+			create_date, create_id, update_date, update_id, status)
+		values(#billno#, #dodate#, #outOrgId#, #inOrgId#, #memo#,
+			#createDate#, #createId#, #updateDate#, #updateId#, #status#)
+        <selectKey keyProperty="headid">
+        	SELECT last_insert_id() as headid
+        </selectKey>
+    </insert>
+    <update id="MoveBill.updateMoveBillHead" parameterClass="com.jatools.vo.move.MoveBillHead">
+    	update jat_move_head a set a.dodate = #dodate# , a.in_org_id = #inOrgId#, a.memo = #memo#, a.update_date = #updateDate#, a.update_id = #updateId#, a.status = #status#
+		where a.headid = #headid#
+    </update>
+    <!-- 保存调拨单行记录，只有billType=1即为调拨单时，才有 -->
+    <insert id="MoveBill.saveMoveBillLine" parameterClass="map">
+    	insert into jat_move_line(headid, orna_code, orna_dsc, weight,
+			create_date, create_id, update_date, update_id, status)
+		select #headid#, #ornaCode#, a.orna_dsc, a.weight,
+			#date#, #userid#, #date#, #userid#, #status#
+        from jat_bd_orna a where a.orna_code = #ornaCode#
+    </insert>
+    <update id="MoveBill.updateMoveBillSumNum" parameterClass="map">
+    	update jat_move_head a, jat_move_line set
+    		a.sum_count = ( select count(1) from jat_move_line b where a.headid = b.headid ),
+			a.sum_weight = ( select sum(b.weight) from jat_move_line b where a.headid = b.headid ),
+			a.update_date = #date#, a.update_id = #userid#
+		where a.headid = #headid#
+    </update>
+    
+    <delete id="MoveBill.deleteMoveBillLineByOrnaCode" parameterClass="map">
+		delete from jat_move_line where orna_code = #ornaCode# and headid = #headid#
+    </delete>
+    
+    <delete id="MoveBill.deleteMoveBillLine" parameterClass="string">
+		delete from jat_move_line where headid = #value#
+    </delete>
+    
+    <delete id="MoveBill.deleteMoveBillHead" parameterClass="string">
+    	delete from jat_move_head where headid = #value#
+    </delete>
+    
+    <select id="MoveBill.getMoveBillLine" parameterClass="map" resultClass="com.jatools.vo.move.MoveBillLine">
+    	select a.lineid as "lineid",
+		       a.orna_code as "ornaCode",
+		       a.orna_dsc as "ornaDsc",
+		       a.weight as "weight",
+		       a.status as "status",
+               substr(a.create_date, 1, 10) as "createDate"
+		  from jat_move_line a
+		  where a.headid = #headid#
+    	order by a.orna_dsc
+    </select>
+    
+    <select id="MoveBill.getMoveBillHead" parameterClass="string" resultClass="com.jatools.vo.move.MoveBillHead">
+    	select a.headid as "headid", a.billno as "billno", a.dodate as "dodate", a.create_id as "createId", a.status as "status", a.memo as "memo",
+		  a.out_org_id as "outOrgId", a.in_org_id as "inOrgId", a.sum_count as "sumCount", a.sum_weight as "sumWeight"
+		  from jat_move_head a where a.headid = #value#
+    </select>
+    
+    
+	
+	<!-- 
+	<procedure id="MoveBill.generateSaleEstimate" parameterMap="MoveBill.generateSaleEstimateMap">
+		<![CDATA[{call wl_jmt.jmsale_update(?,?,?,?,?)}]]>
+	</procedure> -->
+</sqlMap>

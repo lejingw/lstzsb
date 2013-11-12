@@ -3,16 +3,13 @@
     "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
-	<sqlMap resource="com/jatools/dao/common/xml/Common.xml"/>
-	<sqlMap resource="com/jatools/dao/common/xml/ExcelUtil.xml"/>
+	<sqlMap resource="mapper/common/SysCommon.xml"/>
+	<sqlMap resource="mapper/common/ExcelUtil.xml"/>
 	
-	<sqlMap resource="com/jatools/dao/sys/xml/User.xml"/>
-	<sqlMap resource="com/jatools/dao/sys/xml/Dict.xml"/>
-	<sqlMap resource="com/jatools/dao/sys/xml/Parameter.xml"/>
+	<sqlMap resource="mapper/sys/User.xml"/>
+	<sqlMap resource="mapper/sys/Dict.xml"/>
+	<sqlMap resource="mapper/sys/Parameter.xml"/>
 	
-	<sqlMap resource="com/jatools/dao/bd/xml/BdCommon.xml"/>
-	<sqlMap resource="com/jatools/dao/bd/xml/BillnoRule.xml"/>
-	
-	<sqlMap resource="com/jatools/dao/move/xml/MoveBill.xml"/>
+	<sqlMap resource="mapper/move/MoveBill.xml"/>
 
 </sqlMapConfig>

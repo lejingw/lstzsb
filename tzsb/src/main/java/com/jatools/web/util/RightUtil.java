@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.jatools.common.CommonUtil;
 import com.jatools.common.Global;
-import com.jatools.dao.common.CommonDao;
+import com.jatools.dao.common.SysCommonDao;
 
 public class RightUtil {
 	private static final String RIGHT_SESSION_KEY = "right_session_key";
@@ -26,8 +26,8 @@ public class RightUtil {
 			return false;
 		String flag = hasRight(session, toolbarCode, itemCode);
 		if("-1".equals(flag)){
-			CommonDao commonDao =  (CommonDao)Global.springContext.getBean("commonDao");
-			queryToolbarRight(session, toolbarCode, itemCode, commonDao);
+			SysCommonDao sysCommonDao =  (SysCommonDao)Global.springContext.getBean("sysCommonDao");
+			queryToolbarRight(session, toolbarCode, itemCode, sysCommonDao);
 			flag = hasRight(session, toolbarCode, itemCode);
 		}
 		return "1".equals(flag);
@@ -59,11 +59,11 @@ public class RightUtil {
 	 * @param session
 	 * @param toolbarCode
 	 * @param itemCode
-	 * @param commonDao
+	 * @param sysCommonDao
 	 */
-	private static void queryToolbarRight(HttpSession session, String toolbarCode, String itemCode, CommonDao commonDao) {
+	private static void queryToolbarRight(HttpSession session, String toolbarCode, String itemCode, SysCommonDao sysCommonDao) {
 		try {
-//			List<RightMapping> rightList = commonDao.getToolbarRight(toolbarCode, CommonUtil.getSessionOrgId(session), CommonUtil.getSessionUserId(session));
+//			List<RightMapping> rightList = sysCommonDao.getToolbarRight(toolbarCode, CommonUtil.getSessionOrgId(session), CommonUtil.getSessionUserId(session));
 			Map<String, String> map = getRightSessionMap(session);
 //			for(RightMapping rm : rightList){
 //				map.put(rm.getToolbarCode() + "$" + rm.getItemCode(), rm.getHasRight());

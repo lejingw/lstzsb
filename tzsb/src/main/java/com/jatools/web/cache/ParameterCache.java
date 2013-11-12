@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.jatools.common.Global;
-import com.jatools.manager.bd.BdCommonManager;
+import com.jatools.manager.common.SysCommonManager;
 import com.jatools.vo.sys.Parameter;
 import com.jatools.web.util.DateUtil;
 
@@ -37,10 +37,10 @@ public class ParameterCache implements CacheSingletonIntf {
 		if (null == ParameterCache.parameterCache) {
 			logger.debug("初始化配置参数缓存数据...");
 			try {
-				BdCommonManager bdCommonManager = (BdCommonManager) Global.springContext.getBean("bdCommonManager");
-				if (null != bdCommonManager) {
+				SysCommonManager sysCommonManager = (SysCommonManager) Global.springContext.getBean("sysCommonManager");
+				if (null != sysCommonManager) {
 					ParameterCache.parameterMap = new HashMap<String, String>();
-					List<Parameter> list = bdCommonManager.getAllParameters();
+					List<Parameter> list = sysCommonManager.getAllParameters();
 					for(Parameter parameter : list){
 						ParameterCache.parameterMap.put(parameter.getName(), parameter.getValue());
 					}

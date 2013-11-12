@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.annotations.RemoteProxy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.jatools.common.CommonUtil;
 import com.jatools.manager.sys.DictManager;
@@ -15,13 +18,15 @@ import com.jatools.vo.sys.DictItem;
 import com.jatools.vo.util.SelectorOption;
 import com.jatools.web.cache.DictCache;
 
+@Controller
+@RemoteProxy(name="DictDwr")
 public class DictDwr {
+	
 	private static Logger logger = Logger.getLogger(DictDwr.class);
+	
+	@Autowired
 	private DictManager dictManager;
 	
-	public void setDictManager(DictManager dictManager) {
-		this.dictManager = dictManager;
-	}
 	/**
 	 * 根据数据字典名称获取数据字典项
 	 */
