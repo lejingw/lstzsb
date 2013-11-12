@@ -30,36 +30,36 @@
 	<tool>
     	<key>DateUtil</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.DateUtil</class>
+    	<class>com.totyu.web.util.DateUtil</class>
 	</tool>
 	
 	<tool>
     	<key>StringUtil</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.StringUtil</class>
+    	<class>com.totyu.web.util.StringUtil</class>
 	</tool>
 	<!-- 数据字典实用类 -->
 	<tool>
     	<key>DictUtil</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.DictUtil</class>
+    	<class>com.totyu.web.util.DictUtil</class>
 	</tool>
 	<!-- 基础数据实用类 -->
 	<tool>
     	<key>BdCommon</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.BdCommon</class>
+    	<class>com.totyu.web.util.BdCommon</class>
 	</tool>
 	<!-- 权限判断实用类 -->
 	<tool>
     	<key>RightUtil</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.RightUtil</class>
+    	<class>com.totyu.web.util.RightUtil</class>
 	</tool>
 	<!-- HTML实用类 -->
 	<tool>
     	<key>HtmlUtil</key>
     	<scope>application</scope>
-    	<class>com.jatools.web.util.HtmlUtil</class>
+    	<class>com.totyu.web.util.HtmlUtil</class>
 	</tool>
 </toolbox>

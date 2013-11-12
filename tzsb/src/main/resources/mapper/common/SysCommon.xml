@@ -19,12 +19,12 @@
 	</update>
 	
 	<!-- 获取所有系统参数 -->
-	<select id="SysCommon.getAllParameters" resultClass="com.jatools.vo.sys.Parameter">
+	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.sys.Parameter">
 		select a.param_name as "name", a.param_value as "value", a.memo as "memo" from jat_sys_parameter a where a.status = '1' order by a.param_name
 	</select>
 	
 	<!-- 组织Org -->
-	<typeAlias alias="Org" type="com.jatools.vo.basic.Org" />
+	<typeAlias alias="Org" type="com.totyu.vo.basic.Org" />
 	<resultMap id="orgResult" class="Org">
 		<result property="orgId" column="org_id"/>
 		<result property="parentId" column="parent_id"/>

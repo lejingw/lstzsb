@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="User">
-	<typeAlias alias="User" type="com.jatools.vo.sys.User" />
+	<typeAlias alias="User" type="com.totyu.vo.sys.User" />
 	<resultMap id="userResult" class="User">
 		<result property="userid" column="userid" />
 		<result property="usercode" column="usercode" />

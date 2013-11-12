@@ -30,8 +30,12 @@ jQuery(document).ready(function(){
 				{id:'0102', pId:'01', name:'业务数据字典', tabname:'bizDict', tabUrl:'${rc.contextPath}/sys/dict/list.do?entryType=2'},
 				{id:'0103', pId:'01', name:'系统参数', tabname:'dict', tabUrl:'${rc.contextPath}/sys/parameter/list.do'},
 				{id:'0104', pId:'01', name:'刷新缓存', tabname:'dict', tabUrl:'${rc.contextPath}/sys/cache/list.do'},
-			{id:'05', pId:'0', name:'调拨模块', tabname:'move', open:false, isParent:true},
-				{id:'0504', pId:'05', name:'调拔单', tabname:'moveBill', tabUrl:'${rc.contextPath}/move/moveBill/list.do'},
+			{id:'02', pId:'0', name:'监察机构子系统', tabname:'move', open:true, isParent:true},
+				{id:'0201', pId:'02', name:'一级模块', tabname:'move', open:true, isParent:true},
+					{id:'020101', pId:'0201', name:'示例菜单', tabname:'moveBill', tabUrl:'${rc.contextPath}/jiancha/move/moveBill/list.do'},
+			{id:'03', pId:'0', name:'行业主管部门子系统', tabname:'move', open:true, isParent:true},
+			{id:'04', pId:'0', name:'乡镇机构子系统', tabname:'move', open:true, isParent:true},
+			{id:'05', pId:'0', name:'企业单位子系统', tabname:'move', open:true, isParent:true},
 			{id:'99', pId:'0', name:'退出', tabname:'', open:true, tabUrl:'${rc.contextPath}/logout.do'}
     	];
 	//初始化tree

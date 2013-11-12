@@ -5,7 +5,7 @@
 	<sql id="MoveBill.getMoveBillPageDataCondition">
 		<isNotEmpty property="_billno">and a.billno like '%$_billno$%'</isNotEmpty>
 	</sql>
-	<select id="MoveBill.getMoveBillPageData" parameterClass="map" resultClass="com.jatools.vo.move.MoveBillHead">
+	<select id="MoveBill.getMoveBillPageData" parameterClass="map" resultClass="com.totyu.vo.jiancha.move.MoveBillHead">
 			select a.headid as "headid", a.billno as "billno", a.dodate as "dodate", a.out_org_id as "outOrgId", a.in_org_id as "inOrgId",
 				a.sum_count as "sumCount", a.sum_weight as "sumWeight",
 				a.create_id as "createId", a.create_date as "createDate", a.update_id as "updateId", a.update_date as "updateDate",
@@ -21,7 +21,7 @@
 		select count(1) from jat_move_head a where a.status in (1,2)  and a.create_id = #userId#
 		<include refid="MoveBill.getMoveBillPageDataCondition"/>
     </select>
-    <select id="MoveBill.getMaterActiveInfo" parameterClass="string" resultClass="com.jatools.vo.move.MoveBillLine">
+    <select id="MoveBill.getMaterActiveInfo" parameterClass="string" resultClass="com.totyu.vo.jiancha.move.MoveBillLine">
 		select a.orna_code as "ornaCode",
 		       a.orna_dsc as "ornaDsc",
 		       a.weight as "weight",
@@ -33,7 +33,7 @@
     	<![CDATA[select a.orna_code from jat_bd_orna a where a.status <> 1 and a.orna_code in ($value$)]]>
     </select>
     <!-- 保存调拨单 -->
-    <insert id="MoveBill.saveMoveBillHead" parameterClass="com.jatools.vo.move.MoveBillHead">
+    <insert id="MoveBill.saveMoveBillHead" parameterClass="com.totyu.vo.jiancha.move.MoveBillHead">
     	insert into jat_move_head(billno, dodate, out_org_id, in_org_id, memo,
 			create_date, create_id, update_date, update_id, status)
 		values(#billno#, #dodate#, #outOrgId#, #inOrgId#, #memo#,
@@ -42,7 +42,7 @@
         	SELECT last_insert_id() as headid
         </selectKey>
     </insert>
-    <update id="MoveBill.updateMoveBillHead" parameterClass="com.jatools.vo.move.MoveBillHead">
+    <update id="MoveBill.updateMoveBillHead" parameterClass="com.totyu.vo.jiancha.move.MoveBillHead">
     	update jat_move_head a set a.dodate = #dodate# , a.in_org_id = #inOrgId#, a.memo = #memo#, a.update_date = #updateDate#, a.update_id = #updateId#, a.status = #status#
 		where a.headid = #headid#
     </update>
@@ -74,7 +74,7 @@
     	delete from jat_move_head where headid = #value#
     </delete>
     
-    <select id="MoveBill.getMoveBillLine" parameterClass="map" resultClass="com.jatools.vo.move.MoveBillLine">
+    <select id="MoveBill.getMoveBillLine" parameterClass="map" resultClass="com.totyu.vo.jiancha.move.MoveBillLine">
     	select a.lineid as "lineid",
 		       a.orna_code as "ornaCode",
 		       a.orna_dsc as "ornaDsc",
@@ -86,7 +86,7 @@
     	order by a.orna_dsc
     </select>
     
-    <select id="MoveBill.getMoveBillHead" parameterClass="string" resultClass="com.jatools.vo.move.MoveBillHead">
+    <select id="MoveBill.getMoveBillHead" parameterClass="string" resultClass="com.totyu.vo.jiancha.move.MoveBillHead">
     	select a.headid as "headid", a.billno as "billno", a.dodate as "dodate", a.create_id as "createId", a.status as "status", a.memo as "memo",
 		  a.out_org_id as "outOrgId", a.in_org_id as "inOrgId", a.sum_count as "sumCount", a.sum_weight as "sumWeight"
 		  from jat_move_head a where a.headid = #value#

@@ -22,9 +22,9 @@
 	
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<context:component-scan base-package="com.jatools.dao,com.jatools.service,com.jatools.controller,com.jatools.dwr"/>
+	<context:component-scan base-package="com.totyu.dao,com.totyu.service,com.totyu.controller,com.totyu.dwr"/>
 	<!-- 
-	<context:component-scan base-package="com.jatools" use-default-filters="false">
+	<context:component-scan base-package="com.totyu" use-default-filters="false">
    		<context:exclude-filter type="regex" expression=".dao..*.impl.*"/>
  		<context:exclude-filter type="regex" expression=".manager..*.impl.*"/>
  		<context:exclude-filter type="regex" expression=".web.view..*.*"/>
@@ -43,8 +43,8 @@
 	 <!-- 从这行往下是要添加的 -->
     <context:annotation-config />
 	<dwr:annotation-config id="dwrAnnotationConfig" />
-	<dwr:annotation-scan base-package="com.jatools.dwr" scanDataTransferObject="true" scanRemoteProxy="false" />
-	<dwr:annotation-scan base-package="com.jatools.vo" scanDataTransferObject="true" scanRemoteProxy="false" />
+	<dwr:annotation-scan base-package="com.totyu.dwr" scanDataTransferObject="true" scanRemoteProxy="false" />
+	<dwr:annotation-scan base-package="com.totyu.vo" scanDataTransferObject="true" scanRemoteProxy="false" />
     <dwr:url-mapping />
     <dwr:controller id="dwrController" debug="true">
         <dwr:config-param name="allowScriptTagRemoting" value="true" />
@@ -86,7 +86,7 @@
 	</bean>
 	
 	<!-- 3 、Spring对iBATIS DAO的支持 -->
-	<bean id="sqlMapClientDao" class="com.jatools.dao.BaseDao">
+	<bean id="sqlMapClientDao" class="com.totyu.dao.BaseDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
@@ -104,7 +104,7 @@
 	</tx:advice>
 	<!-- 5.2、配置切入点和方面 -->
 	<aop:config>
-		<aop:pointcut id="servicePointCut" expression="execution(* com.jatools.manager.*.impl.*Service*.*(..))"/>
+		<aop:pointcut id="servicePointCut" expression="execution(* com.totyu.manager.*.impl.*Service*.*(..))"/>
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	

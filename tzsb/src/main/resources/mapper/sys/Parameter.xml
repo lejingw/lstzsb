@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="Parameter">
-	<resultMap class="com.jatools.vo.sys.Parameter" id="Parameter.result">
+	<resultMap class="com.totyu.vo.sys.Parameter" id="Parameter.result">
 		<result property = "name"       column = "param_name"/>
 		<result property = "value"      column = "param_value"/>
 		<result property = "memo"       column = "memo"/>
@@ -36,7 +36,7 @@
 		where a.param_name = #value#
 	</select>
 	
-	<update id="Parameter.updateParameter" parameterClass="com.jatools.vo.sys.Parameter">
+	<update id="Parameter.updateParameter" parameterClass="com.totyu.vo.sys.Parameter">
 		update jat_sys_parameter a set 
 			a.param_value      = #value#,
 			a.memo			   = #memo#,

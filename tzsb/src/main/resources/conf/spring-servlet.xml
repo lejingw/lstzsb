@@ -51,8 +51,8 @@
 		</property>
   	</bean>
 	 
-	<bean id="signonInterceptor" class="com.jatools.web.interceptor.SignonInterceptor"/>
+	<bean id="signonInterceptor" class="com.totyu.web.interceptor.SignonInterceptor"/>
 	
-	<bean id="exceptionHandler" class="com.jatools.web.handler.ExceptionHandler"/>
+	<bean id="exceptionHandler" class="com.totyu.web.handler.ExceptionHandler"/>
 	
 </beans>
