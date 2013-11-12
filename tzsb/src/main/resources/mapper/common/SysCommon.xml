@@ -8,9 +8,8 @@
 	</select>
 	
 	<!-- 获取当前特定单据编号的下标 -->
-	<select id="SysCommon.getCurrentBillnoIndex" resultClass="java.util.HashMap" parameterClass="map">
-		select (select a.billno_rule from jat_sys_billno_rule a where a.bill_code = #billCode#) as "billnoRule",
-			(select concat(c.biz_index) from jat_sys_index c where c.biz_type = #bizType# and c.biz_code = #bizCode# and c.biz_date = #bizDate#) as "bizIndex"
+	<select id="SysCommon.getCurrentBillnoIndex" resultClass="string" parameterClass="map">
+		select concat(c.biz_index) as "bizIndex" from jat_sys_index c where c.biz_type = #bizType# and c.biz_code = #bizCode# and c.biz_date = #bizDate#
 	</select>
 	<insert id="SysCommon.createIndex" parameterClass="map">
 		insert into jat_sys_index(biz_type, biz_code, biz_date, biz_index)values(#bizType#, #bizCode#, #bizDate#, #bizIndex#)

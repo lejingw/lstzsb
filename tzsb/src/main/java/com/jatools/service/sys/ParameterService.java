@@ -1,11 +1,11 @@
-package com.jatools.manager.sys;
+package com.jatools.service.sys;
 
 import java.util.Map;
 
 import com.jatools.common.Pager;
 import com.jatools.vo.sys.Parameter;
 
-public interface ParameterManager {
+public interface ParameterService {
 
 	/**
 	 * 获取分页数据

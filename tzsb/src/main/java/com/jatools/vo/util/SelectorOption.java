@@ -1,5 +1,8 @@
 package com.jatools.vo.util;
 
+import org.directwebremoting.annotations.DataTransferObject;
+
+@DataTransferObject
 public class SelectorOption {
 	private String value;
 	private String text;

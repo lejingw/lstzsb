@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.jatools.common.Global;
-import com.jatools.manager.sys.DictManager;
+import com.jatools.service.sys.DictService;
 import com.jatools.vo.sys.Dict;
 import com.jatools.web.util.DateUtil;
 /**
@@ -43,10 +43,10 @@ public class DictCache {
 		if(null == DictCache.dictCache){
 			logger.debug("初始化数据字典缓存数据...");
 			try {
-				DictManager dictManager = (DictManager) Global.springContext.getBean("dictManager");
-				if(null != dictManager){
+				DictService dictService = (DictService) Global.springContext.getBean("dictService");
+				if(null != dictService){
 					DictCache.cacheDictMap = new HashMap<String, List<Dict>>();
-					List<Dict> dictItemList = dictManager.getAllDictItem();
+					List<Dict> dictItemList = dictService.getAllDictItem();
 					for(Dict item : dictItemList){
 						if(DictCache.cacheDictMap.containsKey(item.getEntryCode())){
 							List<Dict> items = DictCache.cacheDictMap.get(item.getEntryCode());

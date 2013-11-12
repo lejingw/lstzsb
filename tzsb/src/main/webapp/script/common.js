@@ -79,7 +79,7 @@ function showLayer(status) {
 				height: jQuery(document).height(),
 				background: '#AAA',
 				opacity: .5,
-				"background-image": "url('"+ctxPath+"/image/mclon/loading.gif')",
+				"background-image": "url('"+ctxPath+"/css/img/loading.gif')",
 				"background-repeat": "no-repeat",
 				"background-position": "center"
 			});
@@ -89,20 +89,6 @@ function showLayer(status) {
 		break;
 	}
 }
- */
-/**
- * 覆盖jQuery的click方法
- * 先将按钮失效，后同步执行回调方法，执行完成后，使按钮有效
-jQuery.fn.click = function(fn){
-	var _this = this;
-	return this.bind("click", function(){
-		_this.attr("disabled", true);
-		//startSync();
-		if(fn){try{fn();}catch(e){}}
-		//endSync();
-		_this.attr("disabled", false);
-	});
-};
  */
 window.confirm2 = function(msg, okBtnName, okfunc, cancelBtnName, cancelfunc){
 	jQuery.weeboxs.open(""+msg, {
@@ -179,13 +165,13 @@ function synExe(func, argumentArr){
 function getParameterValue(name){
 	var val = null;
 	startSync();
-	BdCommonDwr.getParameterValue(name, function(data){val = data;});
+	SysCommonDwr.getParameterValue(name, function(data){val = data;});
 	endSync();
 	return val;
 }
 /*
-#set($cssfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.css"])
-#set($jsfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.js"])
+#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css"])
+#set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js"])
 */
 /**
  * 初始化日期控件
@@ -216,66 +202,6 @@ function initCalendar(inputId, config){
 }
 //cal.selection.set(Calendar.dateToInt(new Date()) + 3);
 //jQuery("#date").val(cal.selection.print("%Y-%m-%d"));
-/**
- * 初始化标签打印
- * 页面添加js文件引用url
- * "${rc.contextPath}/script/mclon/ZeroClipboard/ZeroClipboard.js",
- * btnId		打印button的id
- * getUrlFunc	获取打印url，返回false或者null，则不执行打印
- */
-function initLabelPrint(btnId, getUrlFunc){
-	var win = null;
-	if(isIE()){
-		jQuery("#" + btnId).click(function(){
-			var url = getUrlFunc();
-			if(!url){
-				return ;
-			}
-			url += (url.indexOf("?")<0?"?":"&") + "_printflag=1";
-			win = showLabelPrint(url);
-		});
-	}else{
-		var clip = new ZeroClipboard.Client();
-		clip.setHandCursor(true);
-		clip.addEventListener('mouseDown', function(cb) {
-			if(jQuery("#" + btnId).attr("disabled")){
-				return ;
-			}
-			var url = getUrlFunc();
-			if(!url){
-				return ;
-			}
-			url += (url.indexOf("?")<0?"?":"&") + "_printflag=1";
-			cb.setText("");
-			cb.setText("mclonprint:/" + url);
-			//info("调用IE内核");
-			//showLabelPrint(url);
-		});
-		clip.glue(btnId);
-	}
-	return win;
-}
-/**
- * 显示标签打印窗口
- * @param url
- */
-function showLabelPrint(url){
-	var options = {
-		title : '打印标签',
-		contentType : 'iframe',
-		iframeId : "labelPrintFrm",
-		width : 800,
-		height : 400,
-		showOk : false,
-		cancelBtnName : '关闭',
-		closeable : true,
-		boxid : 'winDiv',
-		oncancel : function(box) {
-			box.close();
-		}
-	};
-	return jQuery.weeboxs.open(url, options);
-}
 /**
  * 添加回车键的响应
  * @param inputId 控件id，如编码或条码输入框
@@ -615,13 +541,13 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	document.write("<input type='hidden' id='start' name='start' value=''/>");
 	document.write("<input type='hidden' id='limit' name='limit' value=''/>");
 	document.write("<input type='hidden' id='_totalCount' value=''/>");
-	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/css/mclon/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
-	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/css/mclon/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
+	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/css/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
+	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/css/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
 	document.write("当前第<input type='text' id='_pageindex' style='width:25px;height:12px;text-align:center;' value=''>页&nbsp;");
 	document.write("共<input type='text' id='_totalPageCount' style='width:40px;height:12px;text-align:center;background-color:#EBEBEB;' value='' readonly>页&nbsp;");
-	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/css/mclon/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
-	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/css/mclon/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
-	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/css/mclon/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
+	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/css/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
+	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/css/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
+	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/css/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
 	
 	document.write("每页<input type='text' id='_pageCount' style='width:25px;height:12px;text-align:center;' value=''>条&nbsp;");
 	document.write("显示第 "+(start+1)+" 条到 "+(start + limit)+" 条记录，一共 "+totalCount+" 条");
@@ -635,15 +561,15 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	jQuery("#_totalCount").val(totalCount);
 	
 	if(parseInt(jQuery("#_pageindex").val())<=1){
-		jQuery("#_btnPre").attr('src', "" + ctxPath + "/css/mclon/img/page-prev-disabled.gif");
-		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/css/mclon/img/page-first-disabled.gif");
+		jQuery("#_btnPre").attr('src', "" + ctxPath + "/css/img/page-prev-disabled.gif");
+		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/css/img/page-first-disabled.gif");
 		
 		jQuery("#_btnPre").attr('disabled', true);
 		jQuery("#_btnFirst").attr("disabled", true);
 	}
 	if(parseInt(jQuery("#_pageindex").val())>=parseInt(jQuery("#_totalPageCount").val())){
-		jQuery("#_btnNext").attr('src', ctxPath + "/css/mclon/img/page-next-disabled.gif");
-		jQuery("#_btnLast").attr("src", ctxPath + "/css/mclon/img/page-last-disabled.gif");
+		jQuery("#_btnNext").attr('src', ctxPath + "/css/img/page-next-disabled.gif");
+		jQuery("#_btnLast").attr("src", ctxPath + "/css/img/page-last-disabled.gif");
 		
 		jQuery("#_btnNext").attr('disabled', true);
 		jQuery("#_btnLast").attr("disabled", true);
@@ -704,45 +630,6 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	jQuery("#_btnRefresh").click(function(){
     	jQuery("#"+formId).submit();
 	});
-}
-
-/**
- * 检查输入字符串是否符合正整数格式
- */
-function isNumber(s) {
-    var s1 = s + "";
-	var regu = "^[0-9]+$";
-	var re = new RegExp(regu);
-	if (s1.search(re) != -1) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/**
- * 检查输入对象的值是否符合整数格式
- */
-function isInteger(str) {
-	var regu = /^[-]{0,1}[0-9]{1,}$/;
-	return regu.test(str);
-}
-
-/**
- * 检查输入字符串是否是带小数的数字格式,可以是负数
- */
-function isDecimal(str) {
-	if (isInteger(str))
-		return true;
-//	var re = /^[-]{0,1}(\d+)[\.]{0,1}(\d+)$/;
-	var reg = /^((-?((0\.[0-9]+)|([1-9][0-9]*\.[0-9]+)|([1-9]+[0-9]*)))|0)$/;
-	if (reg.test(str)) {
-	//	if (RegExp.$1 == 0 && RegExp.$2 == 0)
-	//		return false;
-		return true;
-	} else {
-		return false;
-	}
 }
 
 /**
@@ -809,30 +696,6 @@ function floatDiv(arg1, arg2) {
 	}
 	return floatMul(Number(arg1.replace(".", "")) / Number(arg2.replace(".", "")), Math.pow(10, r2 - r1));
 }
-///**
-// * 检查单据页面是否审批
-// */
-//function checkReview(){
-//	var params = parseURLParam();
-//	if(params['reviewflag'] == '1'){
-//		jQuery(".control").hide();
-//		//按钮失效
-//		jQuery("input[type='button']").each(function(){
-//			jQuery(this).attr("disabled", true);
-//		});
-//		//文本框只读
-//		jQuery("input[type='text']").each(function(){
-//			jQuery(this).attr("readonly", true);
-//		});
-//		jQuery("input[type='checkbox']").each(function(){
-//			jQuery(this).attr("disabled", true);
-//		});
-//		//下拉框失效
-//		jQuery("select").each(function(){
-//			jQuery(this).attr("disabled", true);
-//		});
-//	}
-//}
 /**
  * 根据页面连接获取参数信息对象
  */
@@ -851,18 +714,6 @@ function parseURLParam() {
 	}
 	return ret;
 }
-/**
- * 取通过URL传过来的参数 (格式如 ?Param1=Value1&Param2=Value2)
-function getUrlParams() {
-    var urlParams = new Object() ;
-    var aParams = document.location.search.substr(1).split('&') ;
-    for (var i = 0; i < aParams.length; i++) {
-        var aParam = aParams[i].split('=') ;
-        urlParams[aParam[0]] = aParam[1];
-    }
-    return urlParams;
-}
- */
 jQuery.fn.clearForm = function(){
 	return this.each(function() {
             var type = this.type, tag = this.tagName.toLowerCase();
@@ -981,6 +832,42 @@ function isEmpty(strValue){
         return false;
 }
 /**
+ * 检查输入字符串是否符合正整数格式
+ */
+function isNumber(s) {
+    var s1 = s + "";
+	var regu = "^[0-9]+$";
+	var re = new RegExp(regu);
+	if (s1.search(re) != -1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+/**
+ * 检查输入对象的值是否符合整数格式
+ */
+function isInteger(str) {
+	var regu = /^[-]{0,1}[0-9]{1,}$/;
+	return regu.test(str);
+}
+/**
+ * 检查输入字符串是否是带小数的数字格式,可以是负数
+ */
+function isDecimal(str) {
+	if (isInteger(str))
+		return true;
+//	var re = /^[-]{0,1}(\d+)[\.]{0,1}(\d+)$/;
+	var reg = /^((-?((0\.[0-9]+)|([1-9][0-9]*\.[0-9]+)|([1-9]+[0-9]*)))|0)$/;
+	if (reg.test(str)) {
+	//	if (RegExp.$1 == 0 && RegExp.$2 == 0)
+	//		return false;
+		return true;
+	} else {
+		return false;
+	}
+}
+/**
  * 判断是否为数字
  */
 function isNumeric(strValue){
@@ -990,15 +877,14 @@ function isNumeric(strValue){
  * 判断是否为浮点数（不带正负号）
  */
 function isNumberFloat(strValue){
-    if (isEmpty(strValue)) return true;
+    if (isEmpty(strValue)) return false;
     return executeExp(/^\d+(\.\d+)?$/, strValue);
-    //return (!isNaN(parseFloat(strValue))) ? true : false;
 }
 /**
  * 判断是否是货币
  */
 function isMoney(strValue){
-    if (isEmpty(strValue)) return true;
+    if (isEmpty(strValue)) return false;
     return executeExp(/^[+-]?\d+(,\d{3})*(\.\d+)?$/g, strValue);
 }
 /**
@@ -1012,21 +898,21 @@ function isMobile(strValue){
  * 判断是否为电话
  */
 function isPhone(strValue){
-    if (isEmpty(strValue)) return true;
+    if (isEmpty(strValue)) return false;
     return executeExp(/(^\(\d{3,5}\)\d{6,8}(-\d{2,8})?$)|(^\d+-\d+$)|(^(130|131|132|133|134|135|136|137|138|139|150|151|152|153|154|155|156|157|158|159|180|181|182|183|184|185|186|187|188|189)\d{8}$)/g, strValue);
 }
 /**
  * 判断是否为邮政编码
  */
 function isPostalCode(strValue){
-	if (isEmpty(strValue)) return true;
+	if (isEmpty(strValue)) return false;
     return executeExp(/(^$)|(^\d{6}$)/gi, strValue);
 }
 /**
  * 判断是否为合法的URL
  */
 function isURL(strValue){
-    if (isEmpty(strValue)) return true;
+    if (isEmpty(strValue)) return false;
     var pattern = /^(http|https|ftp):\/\/(\w+\.)+[a-z]{2,3}(\/\w+)*(\/\w+\.\w+)*(\?\w+=\w*(&\w+=\w*)*)*/gi;
     return executeExp(pattern, strValue);
 }
@@ -1059,13 +945,6 @@ JSON.stringify = JSON.stringify || function (obj) {
         return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
     }
 };
-function printStyle(styleId, styleName, bigGraph){
-	if(isNull(bigGraph)){
-		return styleName;
-	}
-	return "<a href='javascript:viewStyle("+styleId+")'>" + styleName + "</a>";
-}
-
 function resetWinSize(){
 	var dw = jQuery(document).width();
 	var dw2 = jQuery(".list").width();
@@ -1079,16 +958,8 @@ function resetWinSize(){
 		}
 		jQuery(".list").css("width", dw+"px");
 	}
-	//info(dh+"-"+dh2);
-	//info(dh3);
 	jQuery(".scroll").css("height", newHeight+"px");
-	
 }
-
-function toComplete(){
-	info('待完成');
-}
-
 /**
  * 四舍五入 默认2位小数
  * @param {} decimal
@@ -1187,62 +1058,4 @@ function diffDate(date1, date2) {
     var dateObj1 = new Date().convertDate(date1);
     var dateObj2 = new Date().convertDate(date2);
     return dateObj1.dateDiff(dateObj2, 'd');
-}
-
-
-/**
- * 自定義map
- */
-function Map(){
-    this.size=0;
-    this.keys=new Array();
-    this.values=new Array();
-    this.get = function(key) {
-        for (var i = 0; i < this.size; i++) {
-            if (key == this.keys[i]) {
-                return this.values[i];
-            }
-        }
-    };
-    this.getValueByIndex = function(index) {
-        if (index > 0 && index < this.size) {
-            return this.values[index];
-        } else {
-            return null;
-        }
-    };
-    this.getKeyByIndex = function(index) {
-        if (index > 0 && index < this.size) {
-            return this.keys[index];
-        } else {
-            return null;
-        }
-    };
-    this.put = function(key, value) {
-        for (var i = 0; i < this.size; i++) {
-            if (key == this.keys[i]) {
-                alert("key is repeat");
-                return null;
-            }
-        }
-        this.keys[this.size] = key;
-        this.values[this.size] = value;
-        this.size++;
-    };
-    this.remove = function(key) {
-        for (var i = 0; i < this.size; i++) {
-            if (key == this.keys[i]) {
-                for (var j = i; j < this.size; j++) {
-                    this.keys[j] = this.keys[j + 1];
-                    this.values[j] = this.values[j + 1];
-                }
-                break;
-            }
-        }
-        this.size--;
-    };
-    this.removeAll = function() {
-        this.keys = new Array();
-        this.values = new Array();
-    };
 }

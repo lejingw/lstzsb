@@ -6,44 +6,36 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <title>SCM</title>
-#set($dateParam = '201211131505')
-<link href="${rc.contextPath}/css/mclon/jqueryUI/jquery-ui-1.8.18.custom.css" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/css/mclon/common.css?date=$!dateParam" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/css/mclon/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/css/mclon/weebox.css" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/script/mclon/calendar/calendar.css" type="text/css" rel="stylesheet" />
+#set($dateParam = '20131111')
+<link href="${rc.contextPath}/css/jqueryUI/jquery-ui-1.8.18.custom.css" type="text/css" rel="stylesheet" />
+<link href="${rc.contextPath}/css/common.css?date=$!dateParam" type="text/css" rel="stylesheet" />
+<link href="${rc.contextPath}/css/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
+<link href="${rc.contextPath}/css/weebox.css" type="text/css" rel="stylesheet" />
+<link href="${rc.contextPath}/script/calendar/calendar.css" type="text/css" rel="stylesheet" />
 #foreach($item in $!cssfiles)
 <link href="$item" type="text/css" rel="stylesheet" />
 #end
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/jquery-1.4.2-debug.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/bgiframe/jquery.bgiframe-2.1.2.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/jquery-ui-1.8.18.custom.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/weebox.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/formValidate.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/script/mclon/calendar/calendar.js' charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2-debug.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/bgiframe/jquery.bgiframe-2.1.2.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-ui-1.8.18.custom.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/weebox.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/formValidate.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src='${rc.contextPath}/script/calendar/calendar.js' charset="UTF-8"></script>
 
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/common.js?date=$!dateParam" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/commonSelector.js?date=$!dateParam" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonSelector.js?date=$!dateParam" charset="UTF-8"></script>
 
 <script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/engine.js?date=$!dateParam' charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/util.js?date=$!dateParam' charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/DictDwr.js?date=$!dateParam' charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/BdCommonDwr.js?date=$!dateParam' charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam' charset="UTF-8"></script>
 
 <script>
 var ctxPath = "${rc.contextPath}";
-var jmCtxPath = "/jmscm";
 dwr.engine.setTimeout(600000);
-dwr.engine.setErrorHandler(function(msg, err){
-	showLayer(false);//移除遮罩层
-	if("Timeout" == msg){
-		alert("系统执行超时...");
-	}else{
-    	alert(msg);
-	}
-});
+dwr.engine.setErrorHandler(function(msg, err){showLayer(false);if("Timeout" == msg){alert("系统执行超时...");}else{alert(msg);}});
 </script>
 #foreach($item in $!jsfiles)
 <script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>

@@ -1,4 +1,4 @@
-package com.jatools.manager.move.impl;
+package com.jatools.service.move.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -8,17 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.jatools.common.Pager;
 import com.jatools.common.constant.DictConstant;
-import com.jatools.common.constant.GlobalConstant;
 import com.jatools.dao.common.SysCommonDao;
 import com.jatools.dao.move.MoveBillDao;
-import com.jatools.manager.BaseManager;
-import com.jatools.manager.move.MoveBillManager;
+import com.jatools.service.BaseService;
+import com.jatools.service.move.MoveBillService;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
 import com.jatools.web.util.StringUtil;
 
 @Service
-public class MoveBillManagerImpl extends BaseManager implements MoveBillManager {
+public class MoveBillServiceImpl extends BaseService implements MoveBillService {
 	@Autowired
 	private MoveBillDao moveBillDao;
 	@Autowired
@@ -74,7 +73,7 @@ public class MoveBillManagerImpl extends BaseManager implements MoveBillManager 
 		try {
 			String headid = moveHead.getHeadid();
 			if (StringUtil.isEmpty(headid)) {
-				moveHead.setBillno(sysCommonDao.getBillno(GlobalConstant.BILL_CODE_DIAOBODAN));
+				moveHead.setBillno(sysCommonDao.getBillno(DictConstant.BILL_CODE_TIAOBODAN));
 				headid = moveBillDao.saveMoveBillHead(moveHead, userid);
 			} else {
 				asertStatus("jat_move_head", "headid", headid, "status", DictConstant.BILL_STATUS_SAVE);

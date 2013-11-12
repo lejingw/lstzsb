@@ -1,4 +1,4 @@
-package com.jatools.manager.sys.impl;
+package com.jatools.service.sys.impl;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jatools.dao.sys.UserDao;
-import com.jatools.manager.sys.UserManager;
+import com.jatools.service.sys.UserService;
 import com.jatools.vo.sys.User;
 
-@Service("userManager")
-public class UserManagerImpl implements UserManager{
+@Service("userService")
+public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao userDao;
 	

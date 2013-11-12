@@ -1,14 +1,14 @@
-package com.jatools.manager.common;
+package com.jatools.service.common;
 
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.jatools.common.excel.ExcelDbrefrenceCheck;
-import com.jatools.vo.util.ExcelRowData;
+import com.jatools.common.excel.ExcelRowData;
 
 
-public interface ExcelUtilManager {
+public interface ExcelUtilService {
 
 	public String saveExcelData(HSSFWorkbook workbook);
 

@@ -1,4 +1,4 @@
-package com.jatools.web.dwr.move;
+package com.jatools.dwr.move;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.jatools.common.CommonUtil;
-import com.jatools.manager.move.MoveBillManager;
+import com.jatools.service.move.MoveBillService;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
 
@@ -23,7 +23,7 @@ public class MoveBillDwr {
 	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(MoveBillDwr.class);
 	@Autowired
-	private MoveBillManager moveBillManager;
+	private MoveBillService moveBillService;
 	
 	/**
 	 * 获取饰品信息
@@ -34,7 +34,7 @@ public class MoveBillDwr {
 	@RemoteMethod
 	public MoveBillLine getMaterActiveInfo(String ornaCode, String orgId){
 		try {
-			MoveBillLine line = moveBillManager.getMaterActiveInfo(ornaCode, orgId);
+			MoveBillLine line = moveBillService.getMaterActiveInfo(ornaCode, orgId);
 			return line;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
@@ -49,7 +49,7 @@ public class MoveBillDwr {
 	public List<String> checkOrnaStatusAvail(List<String> ornaCodeList){
 		if(null == ornaCodeList || ornaCodeList.size()<1)
 			return null;
-		List<String> tmpList = moveBillManager.checkOrnaStatusAvail(ornaCodeList);
+		List<String> tmpList = moveBillService.checkOrnaStatusAvail(ornaCodeList);
 		if(null!=tmpList && tmpList.size()>0)
 			return tmpList;
 		return null;
@@ -64,7 +64,7 @@ public class MoveBillDwr {
 	@RemoteMethod
 	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, HttpSession session){
 		try {
-			moveBillManager.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, CommonUtil.getSessionUserId(session));
+			moveBillService.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, CommonUtil.getSessionUserId(session));
 		} catch (Exception e) {
 			return e.getMessage();
 		}
@@ -78,7 +78,7 @@ public class MoveBillDwr {
 	@RemoteMethod
 	public String deleteMoveBill(List<String> headidList, HttpServletRequest req){
 		try{
-			moveBillManager.deleteMoveBill(headidList, CommonUtil.getSessionUserId(req));
+			moveBillService.deleteMoveBill(headidList, CommonUtil.getSessionUserId(req));
 		} catch (Exception e) {
 			return e.getMessage();
 		}
@@ -87,7 +87,7 @@ public class MoveBillDwr {
 	@RemoteMethod
 	public String test(){
 		try {
-			Thread.sleep(500*1);
+			Thread.sleep(5000*1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -95,14 +95,14 @@ public class MoveBillDwr {
 //			new Thread(new Runnable() {
 //				@Override
 //				public void run() {
-//					System.out.println(moveBillManager.getBillno("TB"));
-//					System.out.println(sysCommonManager.getBillno("TB"));
+//					System.out.println(moveBillService.getBillno("TB"));
+//					System.out.println(sysCommonService.getBillno("TB"));
 //				}
 //			}).start();
 //		}
-		if(true){
-			throw new RuntimeException("xxxxxx打发啊打发");
-		}
+//		if(true){
+//			throw new RuntimeException("xxxxxx打发啊打发");
+//		}
 		return null;
 	}
 }

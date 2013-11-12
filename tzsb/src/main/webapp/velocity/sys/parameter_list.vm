@@ -1,13 +1,10 @@
-
 <form id="frm" name="frm" method="post">
-	<input type="hidden" id="user_action" name="user_action" value=""/>
     <table class="title">
-    	<tr><td>系统参数#if($!form.message)[<font color='red'>$!form.message</font>]#end</td></tr>
+    	<tr><td>系统参数#if($!message)[<font color='red'>$!message</font>]#end</td></tr>
     </table>
     <table class="control">
     	<tr>
-			<td>
-			</td>
+			<td></td>
 		</tr>
     </table>
 	<div class='scroll'>
@@ -24,7 +21,7 @@
             </tr>
         </thead>
         <tbody id="tbl">
-		#foreach($map in $form.pager.pageData)
+		#foreach($map in $pager.pageData)
 			<tr>
 				<td><input type='checkbox' name='chk' value="$!{map.name}"/></td>
 				<td><a href='javascript:toEditPage("$!map.name")'>$!map.name</a></td>
@@ -42,7 +39,7 @@
     </table>
     </div>
 <script>
-createPagingToolbar('frm', $!form.pager.start, $!form.pager.limit, $!form.pager.totalCount);
+createPagingToolbar('frm', $!pager.start, $!pager.limit, $!pager.totalCount);
 </script>
 </form>
 <script>
@@ -57,35 +54,10 @@ function disableDeleteBtn(checked, index){
 
 jQuery(function(){
 	checkTable('tbl', 'chkall', 'chk', false, disableDeleteBtn, function(index){
-		window.location = "parameter.vm?user_action=toEdit&name=" + $n("chk")[index].value;
-	});
-	
-	jQuery("#btnAdd").click(function(){
-		window.location = "parameter.vm?user_action=toEdit";
-	});
-	jQuery("#btnDelete").click(deleteRow);
-	jQuery("#btnSearch").click(function(){
-		jQuery("#frm").submit();
+		window.location = "${rc.contextPath}/sys/parameter/toEdit.do?name=" + $n("chk")[index].value;
 	});
 });
-
-function deleteRow(){
-	var idx = getSelectIndex("chk");
-	if(idx == -1){
-		alert("尚未选择要删除的行");
-	} else {
-		confirm("确定删除?", function(){
-    		window.location = "parameter.vm?user_action=delete&name=" + $n("status_name")[idx].value;
-    	});
-	}
-}
 function toEditPage(name){
-	window.location = "parameter.vm?user_action=toEdit&name=" + name;
-}
-
-function exportListToExcel(){
-	jQuery("#user_action").val("exportExcel");
-	jQuery("#frm").submit();
-	jQuery("#user_action").val("");
+	window.location = "${rc.contextPath}/sys/parameter/toEdit.do?name=" + name;
 }
 </script>

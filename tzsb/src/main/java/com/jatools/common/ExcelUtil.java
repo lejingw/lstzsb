@@ -27,15 +27,15 @@ import org.apache.poi.hssf.util.HSSFColor;
 import com.jatools.common.excel.ExcelCheckMode;
 import com.jatools.common.excel.ExcelColumnEnum;
 import com.jatools.common.excel.ExcelDbrefrenceCheck;
+import com.jatools.common.excel.ExcelRowData;
 import com.jatools.common.excel.ExcelSelfDefinedCheck;
-import com.jatools.manager.common.ExcelUtilManager;
-import com.jatools.vo.util.ExcelRowData;
+import com.jatools.service.common.ExcelUtilService;
 import com.jatools.web.util.DateUtil;
 
 public class ExcelUtil {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	private ExcelUtilManager excelUtilManager;
+	private ExcelUtilService excelUtilService;
 	private String seqId;
 	private List<ExcelRowData> excelDataList;
 	private int startCheckIndex = 1;
@@ -49,10 +49,10 @@ public class ExcelUtil {
 		return seqId;
 	}
 
-	public ExcelUtil(HttpServletRequest request, HttpServletResponse response, ExcelUtilManager excelUtilManager) {
+	public ExcelUtil(HttpServletRequest request, HttpServletResponse response, ExcelUtilService excelUtilService) {
 		this.request = request;
 		this.response = response;
-		this.excelUtilManager = excelUtilManager;
+		this.excelUtilService = excelUtilService;
 	}
 	
 	public void setStartCheckIndex(int startCheckIndex) {
@@ -76,7 +76,7 @@ public class ExcelUtil {
 				if (!fis.isFormField() && fis.getName().length() > 0 && fieldName.equals(fis.getFieldName())) {
 					//过滤掉表单中非文件域
 					HSSFWorkbook wb = new HSSFWorkbook(fis.openStream());
-					seqId = excelUtilManager.saveExcelData(wb);
+					seqId = excelUtilService.saveExcelData(wb);
 					return ;
 				}
 			}
@@ -90,7 +90,7 @@ public class ExcelUtil {
 	
 	public boolean checkExcelData(ExcelCheckMode[] excelCheckModes) {
 		this.excelCheckModes = excelCheckModes;
-		excelDataList = excelUtilManager.getExcelData(seqId);
+		excelDataList = excelUtilService.getExcelData(seqId);
 		for(ExcelCheckMode checkMode : excelCheckModes){
 			if(1 == checkMode.getCheckWay()){
 				//类型检查
@@ -111,13 +111,13 @@ public class ExcelUtil {
 		return true;
 	}
 	public void convertDbrefrenceToId() {
-		excelUtilManager.deleteTitleRows(seqId, this.startCheckIndex);
+		excelUtilService.deleteTitleRows(seqId, this.startCheckIndex);
 		for(ExcelCheckMode checkMode : excelCheckModes){
 			if(2 == checkMode.getCheckWay() && checkMode.isConvertToIdFlag()){
-				excelUtilManager.convertDbrefrenceToId(seqId, checkMode.getSheetIndex(), startCheckIndex, checkMode.getColumnIndex(), checkMode.getDbrefrence());
+				excelUtilService.convertDbrefrenceToId(seqId, checkMode.getSheetIndex(), startCheckIndex, checkMode.getColumnIndex(), checkMode.getDbrefrence());
 			}
 		}
-//		excelUtilManager.printExcelData(seqId);
+//		excelUtilService.printExcelData(seqId);
 	}
 	/**
 	 * 自定义检查
@@ -148,7 +148,7 @@ public class ExcelUtil {
 	 */
 	public void checkRowDbrefrence(ExcelCheckMode checkMode){
 		ExcelDbrefrenceCheck dbrefrence = checkMode.getDbrefrence();
-		List<ExcelRowData> checkResultList = excelUtilManager.getCheckDbrefrenceResult(seqId, checkMode.getSheetIndex(), startCheckIndex, checkMode.getColumnIndex(), dbrefrence);
+		List<ExcelRowData> checkResultList = excelUtilService.getCheckDbrefrenceResult(seqId, checkMode.getSheetIndex(), startCheckIndex, checkMode.getColumnIndex(), dbrefrence);
 		for(ExcelRowData rowData : checkResultList){
 			String val = rowData.getResult();
 			if(null == val){

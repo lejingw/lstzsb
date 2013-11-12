@@ -1,4 +1,4 @@
-package com.jatools.manager.move;
+package com.jatools.service.move;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ import com.jatools.common.Pager;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
 
-public interface MoveBillManager {
+public interface MoveBillService {
 
 	/**
 	 * 获取调拨单分页数据

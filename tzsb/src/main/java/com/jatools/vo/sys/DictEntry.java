@@ -1,5 +1,8 @@
 package com.jatools.vo.sys;
 
+import org.directwebremoting.annotations.DataTransferObject;
+
+@DataTransferObject
 public class DictEntry {
 
 	private String entryCode;

@@ -1,12 +1,8 @@
-#set($jsfiles = ["${rc.contextPath}/js/sys/parameter.js", 
-	"${rc.contextPath}/dwr/interface/ParameterDwr.js"])
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/ParameterDwr.js"])
 
-#set($parameter = $form.parameter)
+#set($parameter = $parameter)
 	
-<form id='frm' action="charge.vm" method="post">
-	
-	<input type="hidden" id="user_action" name="user_action" value=""/>
-	<input type="hidden" id="param_name" name="param_name" value="$!{parameter.name}"/>
+<form id='frm' action="" method="post">
     <table class="title">
     	<tr><td>系统参数</td></tr>
     </table>
@@ -20,11 +16,11 @@
     	<tr>
 			<td class='body1'>键</td>	
 			<td class='body2'>
-				<input type='text' id="name" name='name' value="$!parameter.name" readonly disabled style="width:90%;"/>
+				<input type='text' id="name" name='name' readonly value="$!parameter.name" style="width:90%;"/>
 			</td>
 			<td class='body1'>值</td>	
 			<td class='body2'>
-				<input type='text' id="value" name='value' value="$!parameter.value">
+				<input type='text' id="value" name='value' value="$!parameter.value" style="width:90%;">
 			</td>
 			<td class='body1'>状态</td>
 			<td class='body2'>
@@ -40,12 +36,38 @@
     </table>
 </form>
 <script>
+//检查表单有效性
+function checkForm(){
+	if(!Validator.Validate($("frm"),3))
+		return false;
+	return true;
+}
+//保存
+function saveform(){
+	if(!checkForm()){
+		return ;
+	}
+	var param = {
+			name:jQuery("#name").val(),
+			value:jQuery("#value").val(),
+			memo:jQuery("#memo").val(),
+			status:"1"
+	};
+	ParameterDwr.updateParameter(param, function(data){
+		if(data){
+			alert(data);
+		} else {
+			alert("保存成功", function(){
+		        window.location = ctxPath + "/sys/parameter/list.do";
+			});
+		}
+	});	
+}
 jQuery(function(){
 	jQuery("#btnSave").click(saveform);
 	
 	jQuery("#btnToList").click(function(){
-		window.location = "parameter.vm";
+        window.location = "${rc.contextPath}/sys/parameter/list.do";
 	});
 })
-
 </script>

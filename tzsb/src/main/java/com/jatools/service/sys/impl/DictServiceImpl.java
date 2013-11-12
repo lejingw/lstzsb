@@ -1,4 +1,4 @@
-package com.jatools.manager.sys.impl;
+package com.jatools.service.sys.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.jatools.common.Pager;
 import com.jatools.dao.sys.DictDao;
-import com.jatools.manager.sys.DictManager;
+import com.jatools.service.sys.DictService;
 import com.jatools.vo.sys.Dict;
 import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
 
-@Service("dictManager")
-public class DictManagerImpl implements DictManager {
+@Service("dictService")
+public class DictServiceImpl implements DictService {
 	@Autowired
 	private DictDao dictDao;
 

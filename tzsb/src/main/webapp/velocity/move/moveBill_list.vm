@@ -7,8 +7,8 @@
     <table class="title">
     	<tr>
 			<td>调拨单
-				#if(""!="$!{form.message}")
-					[<font color='red'>$!{form.message}</font>]
+				#if(""!="$!{message}")
+					[<font color='red'>$!{message}</font>]
 				#end
 			</td>
 		</tr>
@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody id="tbl">
-		#foreach($item in $form.pager.pageData)
+		#foreach($item in $pager.pageData)
 			<tr>
 				<td><input type='checkbox' name='chk' value='$!{item.headid}'/>
 				<input type="hidden" name="outOrgId" value="$!item.outOrgId"/>$velocityCounter</td>
@@ -74,7 +74,7 @@
 		</table>
 	</div>
 <script>
-createPagingToolbar('frm', $!form.pager.start, $!form.pager.limit, $!form.pager.totalCount);
+createPagingToolbar('frm', $!pager.start, $!pager.limit, $!pager.totalCount);
 </script>
 </form>
 <script>
@@ -138,6 +138,14 @@ function toEditPage(headid){
 	window.location = "${rc.contextPath}/move/moveBill/toEdit.do?headid=" + headid;
 }
 function deleteMoveBill(){
+/*
+	showLayer(true);
+	MoveBillDwr.test(function(errMsg){
+		showLayer(false);
+		alert(errMsg);
+	});
+	return ;
+*/
 	var index = getSelectIndex('chk');
 	if(index<0){
 		alert("请选择要删除的记录");

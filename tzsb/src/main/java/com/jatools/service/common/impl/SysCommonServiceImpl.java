@@ -1,4 +1,4 @@
-package com.jatools.manager.common.impl;
+package com.jatools.service.common.impl;
 
 import java.util.List;
 
@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jatools.dao.common.SysCommonDao;
-import com.jatools.manager.common.SysCommonManager;
+import com.jatools.service.common.SysCommonService;
 import com.jatools.vo.basic.Org;
 import com.jatools.vo.sys.Parameter;
 
-@Service("sysCommonManager")
-public class SysCommonManagerImpl implements SysCommonManager {
+@Service("sysCommonService")
+public class SysCommonServiceImpl implements SysCommonService {
 	@Autowired
 	private SysCommonDao sysCommonDao;
 	/**

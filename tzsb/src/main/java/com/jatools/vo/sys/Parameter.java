@@ -1,5 +1,8 @@
 package com.jatools.vo.sys;
 
+import org.directwebremoting.annotations.DataTransferObject;
+
+@DataTransferObject
 public class Parameter {
 	private String name;
 	private String value;

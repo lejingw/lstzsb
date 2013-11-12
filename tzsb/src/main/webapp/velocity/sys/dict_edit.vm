@@ -1,6 +1,6 @@
 <form id='frm' action="" method="post">
     <table class="title">
-    	<tr><td>#if($!form.entryType=='2')业务 #else 系统 #end 数据字典 #if($!form.message)[<font color='red'>$!form.message</font>]#end</td></tr>
+    	<tr><td>#if($!entryType=='2')业务 #else 系统 #end 数据字典 #if($!message)[<font color='red'>$!message</font>]#end</td></tr>
     </table>
     <table class="control">
     	<tr><td>
@@ -13,17 +13,17 @@
     	<tr>
 			<td class='body1' width="12%">编码</td>
 			<td class='body2' width="13%">
-				<input type='text' id='entryCode' dataType="Require" msg="不能为空" value="$!form.entry.entryCode">
+				<input type='text' id='entryCode' dataType="Require" msg="不能为空" value="$!entry.entryCode">
 				$StringUtil.star()
 			</td>
 			<td class='body1' width="12%">名称</td>
 			<td class='body2' width="13%">
-				<input type='text' id='entryName' dataType="Require" msg="不能为空" value="$!form.entry.entryName">
+				<input type='text' id='entryName' dataType="Require" msg="不能为空" value="$!entry.entryName">
 				$StringUtil.star()
 			</td>
 			<td class='body1' width="12%">说明</td>
 			<td class='body2' colspan="3">
-				<input type='text' id='memo' value="$!form.entry.memo" style="width:98%">
+				<input type='text' id='memo' value="$!entry.memo" style="width:98%">
 			</td>
 		</tr>
     </table>
@@ -37,8 +37,8 @@
 			</tr>
 		</thead>
 		<tbody id='tbl'>
-	#if("update" == "$!form.action")
-		#foreach($item in $form.list)
+	#if("update" == "$!action")
+		#foreach($item in $list)
 			<tr>
 				<td><input type='text' name='itemKey' value='$!item.itemKey'></td>
 				<td><input type='text' name='itemValue' value='$!item.itemValue'></td>
@@ -78,7 +78,7 @@ function saveform(){
 		var entry = {
 			entryCode:jQuery("#entryCode").val(),
 			entryName:jQuery("#entryName").val(),
-			entryType:"$!form.entryType",
+			entryType:"$!entryType",
 			memo:jQuery("#memo").val()
 		};
 		var itemArr = [];
@@ -90,11 +90,11 @@ function saveform(){
 				itemOrder:$n("itemOrder")[i].value
 			});
 		}
-    	if("update" == "$!form.action"){
+    	if("update" == "$!action"){
 			DictDwr.updateDictEntry(entry, itemArr, function(data){
 				if(!data){
 					alert('保存成功', function(){
-						window.location = "dict.vm?entryType=$!form.entryType";
+						window.location = "${rc.contextPath}/sys/dict/list.do?entryType=$!entryType";
 					});
 				}else{
 					alert(data);
@@ -104,7 +104,7 @@ function saveform(){
 			DictDwr.saveDictEntry(entry, itemArr, function(data){
 				if(!data){
 					alert('保存成功', function(){
-						window.location = "dict.vm?entryType=$!form.entryType";
+						window.location = "${rc.contextPath}/sys/dict/list.do?entryType=$!entryType";
 					});
 				}else{
 					alert(data);
@@ -131,9 +131,9 @@ jQuery(function(){
 	jQuery("#btnSave").click(saveform);
 	//返回列表
 	jQuery("#btnToList").click(function(){
-		window.location = "dict.vm?entryType=$!form.entryType";
+		window.location = "${rc.contextPath}/sys/dict/list.do?entryType=$!entryType";
 	});
-	if("update" == "$!form.action"){
+	if("update" == "$!action"){
 		jQuery("#entryCode").attr("readonly", true);
 	}
 });

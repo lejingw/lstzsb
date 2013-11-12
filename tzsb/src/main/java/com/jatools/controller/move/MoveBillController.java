@@ -1,4 +1,4 @@
-package com.jatools.web.view.move;
+package com.jatools.controller.move;
 
 import java.util.List;
 import java.util.Map;
@@ -10,36 +10,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jatools.common.CommonUtil;
 import com.jatools.common.Pager;
 import com.jatools.common.constant.DictConstant;
-import com.jatools.manager.move.MoveBillManager;
+import com.jatools.common.excel.ExcelData;
+import com.jatools.service.move.MoveBillService;
 import com.jatools.vo.move.MoveBillHead;
 import com.jatools.vo.move.MoveBillLine;
-import com.jatools.vo.util.ExcelData;
 import com.jatools.web.cache.CacheSingletonIntf;
 import com.jatools.web.cache.DictCache;
 import com.jatools.web.cache.OrgCache;
 import com.jatools.web.cache.UserCache;
-import com.jatools.web.form.move.MoveBillForm;
 import com.jatools.web.util.ExportExcelUtil;
 
 @Controller
 @RequestMapping("/move/moveBill")
 public class MoveBillController {
 	@Autowired
-	private MoveBillManager moveBillManager;
+	private MoveBillService moveBillService;
 	
 	@RequestMapping("/list")
 	public String list(Model model, HttpServletRequest req, HttpServletResponse res) {
-		MoveBillForm form = new MoveBillForm();
 		Map<String, String> condition = CommonUtil.getConditionForPageSession(this, req, "_billno");
-		form.setCondition(condition);
-		Pager pager = moveBillManager.getMoveBillPageData(condition, CommonUtil.getSessionOrgId(req), CommonUtil.getSessionUserId(req));
-		form.setPager(pager);
-		model.addAttribute("form", form);
+		Pager pager = moveBillService.getMoveBillPageData(condition, CommonUtil.getSessionOrgId(req), CommonUtil.getSessionUserId(req));
+		model.addAttribute("pager", pager);
 		return "move/moveBill_list";
 	}
 	@RequestMapping("/toAdd")
@@ -50,19 +45,17 @@ public class MoveBillController {
 	@RequestMapping("/toEdit")
 	public String toEdit(Model model, HttpServletRequest req, HttpServletResponse res) {
 		String headid = CommonUtil.getParameterNull(req, "headid");
-		MoveBillForm form = new MoveBillForm();
-		MoveBillHead head = moveBillManager.getMoveBillHead(headid);
-		form.setHead(head);
-		List<MoveBillLine> lineList = moveBillManager.getMoveBillLine(headid);
-		form.setLineList(lineList);
-		model.addAttribute("form", form);
+		MoveBillHead head = moveBillService.getMoveBillHead(headid);
+		List<MoveBillLine> lineList = moveBillService.getMoveBillLine(headid);
+		model.addAttribute("head", head);
+		model.addAttribute("lineList", lineList);
 		return "move/moveBill_edit";
 	}
 
 	@RequestMapping("/exportExcel")
 	public String exportExcel(HttpServletRequest req, HttpServletResponse res) {
 		Map<String, String> condition = CommonUtil.getConditionForPageSession(this, req);
-		Pager pager = moveBillManager.getMoveBillPageData(condition, CommonUtil.getSessionOrgId(req), CommonUtil.getSessionUserId(req));
+		Pager pager = moveBillService.getMoveBillPageData(condition, CommonUtil.getSessionOrgId(req), CommonUtil.getSessionUserId(req));
 		
 		ExcelData excelData = new ExcelData();
 		excelData.setTitle(DictCache.getInstance().getValue(DictConstant.BILL_CODE, DictConstant.BILL_CODE_TIAOBODAN));

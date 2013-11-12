@@ -16,17 +16,18 @@
 	    <property name="numberToolAttribute">
       		<value>numberTool</value>
 	    </property>
-	    <property name="toolboxConfigLocation" value="WEB-INF/velocity-toolsbox.xml"></property>
+	    <property name="toolboxConfigLocation" value="WEB-INF/velocity-toolbox.xml"></property>
   		<!-- 需要使用Spring 对 Velocity宏命令的支持, 将这个属性设为true  -->
   		<property name="exposeSpringMacroHelpers" value="true"/>
   		<property name="requestContextAttribute" value="rc"/>
 	</bean>
 	
 	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">	
-	    <!-- <property name="resourceLoaderPath">
+	    <!--
+	    <property name="resourceLoaderPath">
       		<value>/WEB-INF/velocity/</value>
-    	</property>-->
-    	  
+    	</property>
+    	-->
 	    <property name="velocityProperties">
 	    	<props>
 				<prop key="directive.foreach.counter.name">velocityCounter</prop>
@@ -49,38 +50,6 @@
 			</props>
 		</property>
   	</bean>
-    
-	<!-- 
-	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
-	 -->
-	<!-- 
-	<bean id="urlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="signonInterceptor"/>
-			</list>
-		</property>
-		<property name="mappings"> 
-			<props>
-				<prop key="/error.vm">errorController</prop>
-                <prop key="/login.vm">loginController</prop>
-                <prop key="/home.vm">homeController</prop>
-				<prop key="/logOff.vm">logOffController</prop>
-                <prop key="/help.vm">helpController</prop>
-                <prop key="/sys/refreshCache.vm">cacheController</prop>
-                
-                <prop key="/sys/dict.vm">dictController</prop>
-                <prop key="/sys/parameter.vm">parameterController</prop>
-                
-                <prop key="/bd/billnoRule.vm">billnoRuleController</prop>
-                
-                <prop key="/move/moveBill.vm">moveBillController</prop>
-                <prop key="/common/SelectOrg.vm">selectOrgController</prop>
-                
-            </props> 
-		</property>
-	</bean>
-	 -->
 	 
 	<bean id="signonInterceptor" class="com.jatools.web.interceptor.SignonInterceptor"/>
 	

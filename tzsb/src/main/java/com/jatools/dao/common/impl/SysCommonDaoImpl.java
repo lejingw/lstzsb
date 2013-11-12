@@ -39,12 +39,7 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 				map.put("bizDate", bizDate);
 				map.put("billCode", billCode);
 				
-				Map<String, Object> resultMap = (Map<String, Object>) session.queryForObject("SysCommon.getCurrentBillnoIndex", map);
-				if(null == resultMap){
-					throw new RuntimeException("单据[编码:"+billCode+"]未配置单据编码规则");
-				}
-				String billnoRule  = (String)resultMap.get("billnoRule");
-				String bizIndex = (String)resultMap.get("bizIndex");
+				String bizIndex = (String) session.queryForObject("SysCommon.getCurrentBillnoIndex", map);
 				if (null == bizIndex) {
 					map.put("bizIndex", "1");
 					session.insert("SysCommon.createIndex", map);
@@ -52,15 +47,9 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 				} else {
 					session.update("SysCommon.increaseIndex", map);
 				}
-				return billnoRule + bizDate + formatNum(Integer.valueOf(bizIndex) + 1);
+				return billCode + bizDate + String.format("%04d", Integer.valueOf(bizIndex) + 1);
 			}
 		});
-	}
-	/**
-	 * 格式化数字
-	 */
-	private String formatNum(int seq) {
-		return String.format("%04d", seq);
 	}
 	
 	/**

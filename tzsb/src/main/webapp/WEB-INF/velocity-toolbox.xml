@@ -25,13 +25,8 @@
      	<scope>request</scope>
      	<class>org.apache.velocity.tools.view.tools.CookieTool</class>
 	</tool>
-	<!-- 自定义页面控制工具 类  -->
-	<tool>
-     	<key>EnumUtil</key>
-     	<scope>application</scope>
-     	<class>com.jatools.web.util.EnumUtil</class>
-	</tool>
 	
+	<!-- 自定义页面控制工具 类  -->
 	<tool>
     	<key>DateUtil</key>
     	<scope>application</scope>

@@ -3,7 +3,7 @@ package com.jatools.dao.common;
 import java.util.List;
 import java.util.Map;
 
-import com.jatools.vo.util.ExcelRowData;
+import com.jatools.common.excel.ExcelRowData;
 
 
 public interface ExcelUtilDao {

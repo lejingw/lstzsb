@@ -1,4 +1,4 @@
-package com.jatools.manager.sys;
+package com.jatools.service.sys;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import com.jatools.vo.sys.Dict;
 import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
 
-public interface DictManager {
+public interface DictService {
 
 	/**
 	 * 获取所有数据字典项

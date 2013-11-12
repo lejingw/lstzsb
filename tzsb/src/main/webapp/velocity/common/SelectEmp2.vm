@@ -1,9 +1,9 @@
 ##使用ztree
-#set($cssfiles = ["${rc.contextPath}/css/mclon/ztree/zTreeStyle.css"])
-#set($jsfiles = ["${rc.contextPath}/script/mclon/ztree/jquery.ztree.core-3.0.js",
-	"${rc.contextPath}/script/mclon/ztree/jquery.ztree.excheck-3.0.js",
-	"${rc.contextPath}/dwr/interface/BdCommonDwr.js"])
-##$form.multiFlag
+#set($cssfiles = ["${rc.contextPath}/css/ztree/zTreeStyle.css"])
+#set($jsfiles = ["${rc.contextPath}/script/ztree/jquery.ztree.core-3.0.js",
+	"${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.0.js",
+	"${rc.contextPath}/dwr/interface/SysCommonDwr.js"])
+##$multiFlag
 <script>
 var start=1;
 var limit=10;
@@ -122,7 +122,7 @@ function loadStylePage(s, l){
 	for(var i=$("tb11").rows.length-1;i>=0;i--){
 		$("tb11").deleteRow(i);
 	}
-	BdCommonDwr.getExeOrgEmp(SELECTED_ORG_ID, s, l, function(datas){
+	SysCommonDwr.getExeOrgEmp(SELECTED_ORG_ID, s, l, function(datas){
 		var data = datas.pager.pageData;
     	for(var i=0;i<data.length;i++){
     		var f1 = "<input type='hidden' name='empId' value='" + data[i].value + "'/><input type='checkbox' name='chk' " + (isChecked(data[i].value)?"checked":"") + ">";
@@ -137,7 +137,7 @@ function loadStylePage(s, l){
 	});
 }
 function isChecked(empid){
-	var selectedValues = "$!form.selectedValues".split(",");
+	var selectedValues = "$!selectedValues".split(",");
 	for(var i=0;i<selectedValues.length;i++){
 		if(selectedValues[i] == empid){
 			return true;
@@ -176,8 +176,8 @@ jQuery(document).ready(function(){
     };
 	//静态数据
     var nodeDataArr =[
-    	#foreach($param in ${form.dataMap.keySet()})
-    		{id:$param, pId:${form.dataMap.get($param).parentId}, name:'${form.dataMap.get($param).orgName}' #if(0 == ${form.dataMap.get($param).parentId}), open: true #end},
+    	#foreach($param in ${dataMap.keySet()})
+    		{id:$param, pId:${dataMap.get($param).parentId}, name:'${dataMap.get($param).orgName}' #if(0 == ${dataMap.get($param).parentId}), open: true #end},
         #end
 		null
     ];
@@ -186,7 +186,7 @@ jQuery(document).ready(function(){
 	jQuery.fn.zTree.init(jQuery("#myZTree"), setting, nodeDataArr);
 	
 	//勾选上次已经选择的数据
-	var selectedValues = "$!form.selectedValues".split(",");
+	var selectedValues = "$!selectedValues".split(",");
 	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
 	for(var i=0;i<selectedValues.length;i++){
 		if(selectedValues[i]){

@@ -2,8 +2,8 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="Dict">
-	<typeAlias alias="Dict" type="com.jatools.vo.sys.Dict" />
-	<resultMap id="result" class="Dict">
+
+	<resultMap id="result" class="com.jatools.vo.sys.Dict">
 		<result property="entryCode" column="entry_code"/>
 		<result property="entryName" column="entry_name"/>
 		<result property="entryType" column="entry_type"/>
@@ -39,32 +39,25 @@
 		<result property="updateDate" 	column="update_date"/>
 		<result property="status" 		column="status"/>
 	</resultMap>
-	<sql id="DictEntry.columnall">
+	<sql id="Dict.columnall">
 		entry_code, entry_name, entry_type, memo, create_id, create_date, update_id, update_date, status
     </sql>
 
-    <sql id="Dict.getDictCondition">
-        where a.entry_type = #entryType#
-        <isNotEmpty property="_q_sql">$_q_sql$</isNotEmpty>
-        and a.status = 1
-    </sql>
     <!-- 获取分页数据 -->
 	<select id="Dict.getDictEntryPageData" resultMap="dictEntryResult" parameterClass="map">
-		select * from (select rownum rownum_ , AA.* from (
-			select <include refid="DictEntry.columnall"/>
-			from jat_sys_dict_entry a
-        <include refid="Dict.getDictCondition" />
+		select <include refid="Dict.columnall"/> from jat_sys_dict_entry a
+        where a.entry_type = #entryType# and a.status = 1
          order by a.entry_code, a.entry_name
-		) AA ) where <![CDATA[rownum_ >= $start$]]> and <![CDATA[rownum <= $limit$]]>
+			limit $start$, $limit$
 	</select>
 	<!-- 获取总条数 -->
     <select id="Dict.getDictEntryTotalCount" resultClass="int" parameterClass="map">
 		select count(1) from jat_sys_dict_entry a
-        <include refid="Dict.getDictCondition" />
+        where a.entry_type = #entryType# and a.status = 1
     </select>
     
     <select id="Dict.getDictEntry" resultMap="dictEntryResult" parameterClass="string">
-    	select <include refid="DictEntry.columnall"/> from jat_sys_dict_entry a where a.entry_code = #entryCode# order by a.entry_code
+    	select <include refid="Dict.columnall"/> from jat_sys_dict_entry a where a.entry_code = #entryCode# order by a.entry_code
     </select>
     <select id="Dict.getDictItemByEntryCode" resultMap="dictItemResult" parameterClass="string">
     	select entry_code, item_key, item_value, item_order, create_id, create_date, update_id, update_date, status
@@ -87,6 +80,6 @@
     	where a.entry_code = #entryCode# and a.item_key = #itemKey# and a.status = 1
     </update>
     <delete id="Dict.deleteInvalidDictItem" parameterClass="string">
-    	delete jat_sys_dict_item a where a.entry_code = #value# and a.status = 0
+    	delete from jat_sys_dict_item where entry_code = #value# and status = 0
     </delete>
 </sqlMap>

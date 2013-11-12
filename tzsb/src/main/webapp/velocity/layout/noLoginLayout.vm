@@ -7,7 +7,7 @@
 	<META HTTP-EQUIV="Expires" CONTENT="0">
 	
 	<title>SCM</title>
-	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/jquery-1.4.2.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
 </HEAD>
 <body>
 	<div class="login-main">

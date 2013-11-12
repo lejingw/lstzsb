@@ -1,4 +1,4 @@
-package com.jatools.web.view.common;
+package com.jatools.controller.common;
 
 import java.util.Map;
 
@@ -11,25 +11,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jatools.common.CommonUtil;
-import com.jatools.manager.common.SysCommonManager;
+import com.jatools.service.common.SysCommonService;
 import com.jatools.vo.basic.Org;
 import com.jatools.web.cache.OrgCache;
-import com.jatools.web.form.common.SelectorForm;
 
 @Controller
 @RequestMapping("/common/select")
 public class SelectController{
 		@Autowired
-        private SysCommonManager sysCommonManager;
+        private SysCommonService sysCommonService;
         
         @RequestMapping("/org")
-        public String org(HttpServletRequest req, Model model, HttpServletResponse res) {
+        public String org(Model model, HttpServletRequest req, HttpServletResponse res) {
             String multiFlag = CommonUtil.getParameterEmpty(req, "multiFlag");
             String selectedValues = CommonUtil.getParameterEmpty(req, "selectedValues");
             Map<String, Org> dataMap = OrgCache.getInstance().getOrgTree();
-            SelectorForm form = new SelectorForm("true".equals(multiFlag), selectedValues);
-            form.setDataMap(dataMap);
-            model.addAttribute("form", form);
+            model.addAttribute("multiFlag", "true".equals(multiFlag));
+            model.addAttribute("dataMap", dataMap);
+            model.addAttribute("selectedValues", selectedValues);
             return "common/SelectOrg";
         }
         

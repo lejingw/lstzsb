@@ -50,17 +50,4 @@ public class HtmlUtil {
 		}
 		return printOptions(values, texts, showEmptyOption, selectValue);
 	}
-	/**
-	 * 显示款式名称超链接
-	 * @param styleId
-	 * @param styleName
-	 * @param bigGraph
-	 * @return
-	 */
-	public static String printStyle(String styleId, String styleName, String bigGraph){
-		if(StringUtils.isNotEmpty(bigGraph)){
-			return "<a href='javascript:viewStyle("+styleId+")'>" + styleName + "</a>";
-		}
-		return styleName;
-	}
 }

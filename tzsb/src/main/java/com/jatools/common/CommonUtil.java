@@ -12,8 +12,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 
 import com.jatools.common.constant.ParameterConstant;
+import com.jatools.vo.sys.AuthToken;
 import com.jatools.web.cache.ParameterCache;
-import com.jatools.web.form.sys.AuthToken;
 import com.jatools.web.util.StringUtil;
 
 public class CommonUtil {

@@ -2,8 +2,6 @@ package com.jatools.common.excel;
 
 import java.util.List;
 
-import com.jatools.vo.util.ExcelRowData;
-
 public interface ExcelSelfDefinedCheck {
 	/**
 	 * 检查字段有效性

@@ -6,13 +6,13 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 	
-<link href="${rc.contextPath}/css/mclon/tab/imgs/tab.css" rel="stylesheet" type="text/css">
+<link href="${rc.contextPath}/css/tab/imgs/tab.css" rel="stylesheet" type="text/css">
 #foreach($item in $!cssfiles)
 <link href="$item" type="text/css" rel="stylesheet" />
 #end
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/jquery-1.4.2.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/TabView.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/mclon/contextmenu/jquery.contextmenu.r2-debug.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/TabView.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/contextmenu/jquery.contextmenu.r2-debug.js" charset="UTF-8"></script>
 <!--
 <script language=javascript src='${rc.contextPath}/dwr/engine.js'></script>
 <script language=javascript src='${rc.contextPath}/dwr/util.js'></script>
@@ -89,7 +89,6 @@ jQuery(document).ready(function() {
 });
 var index=1;
 function addTab(tabtitle, taburl, fixed){
-	//alert($("#hiddentitles").val());
 	var ishave = -1;//$("#hiddentitles").val().indexOf(tabtitle + ",");
 	if(ishave == -1){
 		var tabid = "tab_index_" + index;
@@ -111,8 +110,6 @@ function addContextMenu(queryItem){
 	$(queryItem).contextMenu('pageitem', {
 			//点击所有Span标签都会弹出右键菜单
 			onShowMenu: function(e, menu) {
-				//alert(e.target);
-    			//alert($(e.target).attr('id'));
     			return menu;
     		},
     		bindings: {

@@ -1,16 +1,13 @@
-#set($jsfiles = ["${rc.contextPath}/dwr/interface/MoveSalecoefDwr.js"])
-#set($cond = $form.condition)
 <form id="frm" method="post">
-	<input type='hidden' name='entryType' value='$!form.entryType'/>
+	<input type='hidden' name='entryType' value='$!entryType'/>
     <table class="title">
-    	<tr><td>#if($!form.entryType=='2')业务 #else 系统 #end 数据字典 #if($!form.message)[<font color='red'>$!form.message</font>]#end</td></tr>
+    	<tr><td>#if($!entryType=='2')业务 #else 系统 #end 数据字典 #if($!message)[<font color='red'>$!message</font>]#end</td></tr>
     </table>
     <table class="control">
     	<tr>
 			<td>
 				<input type='button' value='新增' class='btn' id='btnAdd'>
 				<input type='button' value='删除' class='btn' onclick="deleteBillnoRule()">
-				<input type='button' value='查询' class='btn' id='btnQuery'>
 			</td>
 		</tr>
     </table>
@@ -30,7 +27,7 @@
             </tr>
         </thead>
         <tbody id="tbl">
-		#foreach($map in $form.pager.pageData)
+		#foreach($map in $pager.pageData)
 			<tr>
 				<td><input type='checkbox' name='chk' value='$!{map.entryCode}'/></td>
 				<td>$!DictUtil.getValue('status',$!{map.status})</td>
@@ -47,23 +44,21 @@
     </table>
 	</div>
 <script>
-createPagingToolbar('frm', $!form.pager.start, $!form.pager.limit, $!form.pager.totalCount);
+createPagingToolbar('frm', $!pager.start, $!pager.limit, $!pager.totalCount);
 </script>
 </form>
 <script>
 jQuery(function(){
 	checkTable('tbl', 'chkall', 'chk', false,null,function(index){
-		window.location = "dict.vm?user_action=toEdit&entryType=$!{form.entryType}&entryCode=" + $n("chk")[index].value;
+		window.location = "${rc.contextPath}/sys/dict/toEdit.do?entryType=$!{entryType}&entryCode=" + $n("chk")[index].value;
 	});
-	//初始化查询div common_query.js中定义默认已经引入
-    initQuery2("DICT01", "frm", "btnQuery");
 	
 	jQuery("#btnAdd").click(function(){
-		window.location = "dict.vm?user_action=toAdd&entryType=$!{form.entryType}";
+		window.location = "${rc.contextPath}/sys/dict/toAdd.do?entryType=$!{entryType}";
 	});
 });
 function toEditPage(entryCode){
-	window.location = "dict.vm?user_action=toEdit&entryType=$!{form.entryType}&entryCode=" + entryCode;
+	window.location = "${rc.contextPath}/sys/dict/toEdit.do?entryType=$!{entryType}&entryCode=" + entryCode;
 }
 function deleteBillnoRule(){
 	var index = getSelectIndex('chk');
@@ -78,7 +73,7 @@ function deleteBillnoRule(){
 				alert(errMsg);
 			}else{
 				alert("删除成功", function(){
-        			window.location = "dict.vm?entryType=$!form.entryType";
+        			window.location = "${rc.contextPath}/sys/dict/list.do?entryType=$!{entryType}";
 				});
 			}
 		});

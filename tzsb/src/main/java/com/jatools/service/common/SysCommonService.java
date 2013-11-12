@@ -1,4 +1,4 @@
-package com.jatools.manager.common;
+package com.jatools.service.common;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.jatools.vo.basic.Org;
 import com.jatools.vo.sys.Parameter;
 
 
-public interface SysCommonManager {
+public interface SysCommonService {
 
 	/**
 	 * 获取单据编号

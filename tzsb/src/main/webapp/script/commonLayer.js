@@ -56,7 +56,7 @@ function initStartWait() {
 		}
 		// 滚动条图片
 		if (jQuery("#wait_dialog_img") == null || jQuery("#wait_dialog_img")[0] == null) {
-			var _startWait_img = '<img src="' + ctxPath + '/image/mclon/loading.gif"/>';
+			var _startWait_img = '<img src="' + ctxPath + '/css/img/loading.gif"/>';
 			var wait_dialog_img = jQuery('<div id="wait_dialog_img">' + _startWait_img + '</div>');
 			jQuery(wait_dialog_img).appendTo(jQuery(wait_dialog)).css({
 				"text-align" : "center"

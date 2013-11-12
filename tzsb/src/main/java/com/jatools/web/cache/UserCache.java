@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.jatools.common.Global;
-import com.jatools.manager.sys.UserManager;
+import com.jatools.service.sys.UserService;
 import com.jatools.vo.sys.User;
 import com.jatools.web.util.DateUtil;
 import com.jatools.web.util.StringUtil;
@@ -44,11 +44,11 @@ public class UserCache implements CacheSingletonIntf {
 		if (null == UserCache.userCache) {
 			logger.debug("初始化用户缓存数据...");
 			try {
-				UserManager userManager = (UserManager) Global.springContext.getBean("userManager");
-				if (null != userManager) {
+				UserService userService = (UserService) Global.springContext.getBean("userService");
+				if (null != userService) {
 					UserCache.userMap = new HashMap<String, User>();
 					UserCache.userMap2 = new HashMap<String, User>();
-					List<User> list = userManager.getAllUser();
+					List<User> list = userService.getAllUser();
 					for(User user : list){
 						UserCache.userMap.put(user.getUserid(), user);
 						UserCache.userMap2.put(user.getUsercode(), user);

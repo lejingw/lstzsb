@@ -1,13 +1,13 @@
-#set($cssfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.css"])
+#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css"])
 
-#set($jsfiles = ["${rc.contextPath}/script/mclon/calendar/calendar.js",
+#set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js",
 	"${rc.contextPath}/js/move/moveBill.js",
 	"${rc.contextPath}/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
 
 #set($modelCode = '0803010102')
 
 <form id='frm' action="" method="post">
-	<input type='hidden' id='headid' value='$!{form.head.headid}'/>
+	<input type='hidden' id='headid' value='$!{head.headid}'/>
     <table class="title">
     	<tr><td>调拨单</td></tr>
     </table>
@@ -37,12 +37,12 @@
 				<input type='hidden' id='inOrgId'>
 				<input type='text' id='inOrgName' readonly class='target' ondblclick="showInOrgWin()" dataType="Require" msg="不能为空">
             </td>
-			<td class='body1'>件数合计</td><td class='body2'><input type='text' readonly id='sumCount' value='$!{form.head.sumCount}'/></td>
-			<td class='body1'>重量合计</td><td class='body2'><input type='text' readonly id='sumWeight' value='$!{form.head.sumWeight}'/></td>
+			<td class='body1'>件数合计</td><td class='body2'><input type='text' readonly id='sumCount' value='$!{head.sumCount}'/></td>
+			<td class='body1'>重量合计</td><td class='body2'><input type='text' readonly id='sumWeight' value='$!{head.sumWeight}'/></td>
 		</tr>
     	<tr>
 			<td class='body1'>编码</td><td class='body2'><input type='text' id='ornaCode_in' value='0001'/></td>
-			<td class='body1'>备注</td><td class='body2' colspan="5"><input type='text' id='memo' value='$!{form.head.memo}' style="width:95%;"/></td>
+			<td class='body1'>备注</td><td class='body2' colspan="5"><input type='text' id='memo' value='$!{head.memo}' style="width:95%;"/></td>
 		</tr>
     </table>
 	<table class='list'>
@@ -57,7 +57,7 @@
 			</tr>
 		</thead>
 		<tbody id='tbl'>
-		#foreach($item in $form.lineList)
+		#foreach($item in $lineList)
 			<tr>
 				<td>
 					<input type='checkbox' name='chk'/>
@@ -153,16 +153,16 @@ function setContent(){
 }
 function setValues(){
 	if(isNull(jQuery("#headid").val()))	return ;
-	jQuery("#billno").val("$!{form.head.billno}");
-	jQuery("#status").val("$!DictUtil.getValue('status', $!{form.head.status})");
-	jQuery("#dodate").val("$!{form.head.dodate}");
-	jQuery("#createName").val("$!BdCommon.getUserName($!{form.head.createId})");
+	jQuery("#billno").val("$!{head.billno}");
+	jQuery("#status").val("$!DictUtil.getValue('status', $!{head.status})");
+	jQuery("#dodate").val("$!{head.dodate}");
+	jQuery("#createName").val("$!BdCommon.getUserName($!{head.createId})");
 	
-	jQuery("#outOrgId").val("$!{form.head.outOrgId}");
-	jQuery("#outOrgName").val("$!BdCommon.getOrgName($!{form.head.outOrgId})");
+	jQuery("#outOrgId").val("$!{head.outOrgId}");
+	jQuery("#outOrgName").val("$!BdCommon.getOrgName($!{head.outOrgId})");
 	
-	jQuery("#inOrgId").val("$!{form.head.inOrgId}");
-	jQuery("#inOrgName").val("$!BdCommon.getOrgName($!{form.head.inOrgId})");
+	jQuery("#inOrgId").val("$!{head.inOrgId}");
+	jQuery("#inOrgName").val("$!BdCommon.getOrgName($!{head.inOrgId})");
 	
 	calcSum();
 }
@@ -176,7 +176,7 @@ function changeButtons(){
 	jQuery("#btnSave").attr("disabled", true);
 	jQuery("#btnMark").attr("disabled", true);
 	
-	if(("1" == "$!{form.head.status}" || isNull("$!{form.head.status}"))){
+	if(("1" == "$!{head.status}" || isNull("$!{head.status}"))){
     	jQuery("#btnSave").attr("disabled", false);
     	jQuery("#btnMark").attr("disabled", false);
 	}

@@ -1,11 +1,11 @@
-package com.jatools.manager;
+package com.jatools.service;
 
 import com.jatools.common.constant.DictConstant;
 import com.jatools.dao.common.SysCommonDao;
 import com.jatools.web.util.DictUtil;
 import com.jatools.web.util.StringUtil;
 
-public abstract class BaseManager {
+public abstract class BaseService {
 	public abstract SysCommonDao getCommonDao();
 	/**
 	 * 获取单据状态

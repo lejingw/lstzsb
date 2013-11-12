@@ -4,23 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
-
 import com.jatools.common.CommonUtil;
-import com.jatools.common.Global;
 import com.jatools.web.cache.OrgCache;
 
-/**
- * 
- */
 public class StringUtil extends StringUtils {
-
-	public static String getContextPath(){
-		return "xxxxxxxxxxxxxxxx";
-	}
 	
 	/**
 	 * 对于必输字段，在字段空间尾部显示红色星号

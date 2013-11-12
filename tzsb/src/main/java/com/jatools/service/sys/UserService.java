@@ -1,10 +1,10 @@
-package com.jatools.manager.sys;
+package com.jatools.service.sys;
 
 import java.util.List;
 
 import com.jatools.vo.sys.User;
 
-public interface UserManager {
+public interface UserService {
 
 	/**
 	 * 获取用户信息

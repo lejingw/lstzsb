@@ -1,4 +1,4 @@
-package com.jatools.web.view.sys;
+package com.jatools.controller.sys;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.jatools.common.CommonUtil;
 import com.jatools.common.CookieUtil;
 import com.jatools.common.Global;
-import com.jatools.manager.sys.UserManager;
+import com.jatools.service.sys.UserService;
 import com.jatools.vo.sys.User;
-import com.jatools.web.form.sys.LoginForm;
 import com.jatools.web.util.StringUtil;
 
 @Controller
@@ -26,26 +23,26 @@ public class LoginController {
 	private static Logger logger = Logger.getLogger(LoginController.class);
 
 	@Autowired
-	public UserManager userManager;
+	public UserService userService;
 	
 	@RequestMapping("/login/false")
-	public ModelAndView doPerform(HttpServletRequest req, Model model, HttpServletResponse res) {
-		LoginForm loginForm = new LoginForm();
-		loginForm.setSuccessfulFlag(false);
-		loginForm.setMessage("对不起，您还未登录，请先登录!");
+	public String doPerform(Model model, HttpServletRequest req, HttpServletResponse res) {
+		model.addAttribute("successfulFlag", false);
+		model.addAttribute("message", "您还未登录，请先登录!");
 
 		// 从Cookie 中获取账户
 		Cookie cookieUserName = CookieUtil.getCookieByName(req, Global.COOKIE_USER_NAME);
 		Cookie cookiePassword = CookieUtil.getCookieByName(req, Global.COOKIE_USER_PASSWORD);
 		if (cookieUserName != null) {
-			loginForm.setUsername(cookieUserName.getValue());
+			model.addAttribute("username", cookieUserName.getValue());
 			if(null != cookiePassword){
-				loginForm.setPassword(cookiePassword.getValue());
+				model.addAttribute("password", cookiePassword.getValue());
 			}
 			logger.debug("从cookie中获取用户名,为：" + cookieUserName.getValue());
 		}
-		return new ModelAndView("login", "loginForm", loginForm);
+		return "login";
 	}
+	
 	@RequestMapping("/login/doLogin")
 	public String doLogin(Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String username	= req.getParameter("username");
@@ -57,27 +54,23 @@ public class LoginController {
 			CookieUtil.addCookie(res, Global.COOKIE_USER_NAME, username, Global.COOKIE_MAX_AGE);
 			CookieUtil.addCookie(res, Global.COOKIE_USER_PASSWORD, password, Global.COOKIE_MAX_AGE);
 		}
-		LoginForm loginForm = new LoginForm();
-		loginForm.setUsername(username);
-		loginForm.setPassword(password);
+		model.addAttribute("username", username);
+		model.addAttribute("password", password);
 		if (StringUtil.isBlank(username) || StringUtil.isBlank(password)) {// 输入验证
-			loginForm.setSuccessfulFlag(false);
-			loginForm.setMessage("输入登陆参数不完整！");
-			model.addAttribute("loginForm", loginForm);
+			model.addAttribute("successfulFlag", false);
+			model.addAttribute("message", "输入登陆参数不完整！");
 			return "login";
 		}
-		System.out.println("--");
-		loginForm.setUserip(getIpAddr(req));
+		model.addAttribute("userip", getIpAddr(req));
 
-		User user = userManager.getUserInfo(loginForm.getUsername());
+		User user = userService.getUserInfo(username);
 		if (null == user) {
-			logger.error("无法根据用户名[" + loginForm.getUsername() + "]，获取登录用户信息");
-			loginForm.setSuccessfulFlag(false);
-			loginForm.setMessage("无法获取登录用户[" + loginForm.getUsername() + "]信息");
-			model.addAttribute("loginForm", loginForm);
+			logger.error("无法根据用户名[" + username + "]，获取登录用户信息");
+			model.addAttribute("successfulFlag", false);
+			model.addAttribute("message", "无法获取登录用户[" + username + "]信息");
 			return "login";
 		}
-		loginForm.setSuccessfulFlag(true);
+		model.addAttribute("successfulFlag", true);
 		
 		CommonUtil.addSessionToken(req.getSession(), user.getUserid(), user.getUsername(), orgid);
 		

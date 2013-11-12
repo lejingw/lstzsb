@@ -1,4 +1,4 @@
-package com.jatools.web.form.sys;
+package com.jatools.vo.sys;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.jatools.web.dwr.sys;
+package com.jatools.dwr.sys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.jatools.common.CommonUtil;
-import com.jatools.manager.sys.DictManager;
+import com.jatools.service.sys.DictService;
 import com.jatools.vo.sys.Dict;
 import com.jatools.vo.sys.DictEntry;
 import com.jatools.vo.sys.DictItem;
@@ -25,11 +26,12 @@ public class DictDwr {
 	private static Logger logger = Logger.getLogger(DictDwr.class);
 	
 	@Autowired
-	private DictManager dictManager;
+	private DictService dictService;
 	
 	/**
 	 * 根据数据字典名称获取数据字典项
 	 */
+	@RemoteMethod
 	public List<SelectorOption> getDictsForSlt(String name){
 		List<Dict> dictList = DictCache.getInstance().getDicts(name);
 		if(null == dictList || dictList.size()<1)
@@ -46,10 +48,11 @@ public class DictDwr {
 	 * @param req
 	 * @return
 	 */
+	@RemoteMethod
 	public String deleteDictEntry(String entryCode, HttpServletRequest req){
 		try {
 			String userid = CommonUtil.getSessionUserId(req);
-			dictManager.deleteDictEntry(entryCode, userid);
+			dictService.deleteDictEntry(entryCode, userid);
 			DictCache.getInstance().refresh();
 		} catch (Exception e) {
 			logger.error(e);
@@ -64,9 +67,10 @@ public class DictDwr {
 	 * @param req
 	 * @return
 	 */
+	@RemoteMethod
 	public String updateDictEntry(DictEntry entry, List<DictItem> list, HttpServletRequest req){
 		String userid = CommonUtil.getSessionUserId(req);
-		dictManager.updateDictEntry(entry, list, userid);
+		dictService.updateDictEntry(entry, list, userid);
 		DictCache.getInstance().refresh();
 		return null;
 	}
@@ -77,9 +81,10 @@ public class DictDwr {
 	 * @param req
 	 * @return
 	 */
+	@RemoteMethod
 	public String saveDictEntry(DictEntry entry, List<DictItem> list, HttpServletRequest req){
 		String userid = CommonUtil.getSessionUserId(req);
-		dictManager.saveDictEntry(entry, list, userid);
+		dictService.saveDictEntry(entry, list, userid);
 		DictCache.getInstance().refresh();
 		return null;
 	}

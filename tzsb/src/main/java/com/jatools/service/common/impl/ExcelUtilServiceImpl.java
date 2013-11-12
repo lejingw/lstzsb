@@ -1,4 +1,4 @@
-package com.jatools.manager.common.impl;
+package com.jatools.service.common.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jatools.common.excel.ExcelDbrefrenceCheck2;
+import com.jatools.common.excel.ExcelRowData;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -19,12 +20,11 @@ import org.springframework.stereotype.Service;
 import com.jatools.common.ExcelUtil;
 import com.jatools.common.excel.ExcelDbrefrenceCheck;
 import com.jatools.dao.common.ExcelUtilDao;
-import com.jatools.manager.common.ExcelUtilManager;
-import com.jatools.vo.util.ExcelRowData;
+import com.jatools.service.common.ExcelUtilService;
 import com.jatools.web.util.StringUtil;
 
 @Service
-public class ExcelUtilManagerImpl implements ExcelUtilManager{
+public class ExcelUtilServiceImpl implements ExcelUtilService{
 	@Autowired
 	private ExcelUtilDao excelUtilDao;
 	

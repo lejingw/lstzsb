@@ -1,19 +1,19 @@
 ##使用ztree
-#set($cssfiles = ["${rc.contextPath}/css/mclon/ztree/zTreeStyle.css"])
-#set($jsfiles = ["${rc.contextPath}/script/mclon/ztree/jquery.ztree.core-3.0.js", "${rc.contextPath}/script/mclon/ztree/jquery.ztree.excheck-3.0.js"])
+#set($cssfiles = ["${rc.contextPath}/css/ztree/zTreeStyle.css"])
+#set($jsfiles = ["${rc.contextPath}/script/ztree/jquery.ztree.core-3.0.js", "${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.0.js"])
 
 <form id='frm' action="" method="post">
-	<input type='hidden' name='orgId' value="$!{form.orgId}">
-	<input type='hidden' name='multiFlag' value="$!{form.multiFlag}">
-	<input type='hidden' name='selectedValues' value="$!{form.selectedValues}">
+	<input type='hidden' name='orgId' value="$!{orgId}">
+	<input type='hidden' name='multiFlag' value="$!{multiFlag}">
+	<input type='hidden' name='selectedValues' value="$!{selectedValues}">
 	<table class='control'>
 		<tr>
     		<tb>
-                #if($form.multiFlag)
+                #if($multiFlag)
                 <input type="button" value="全选" class='btn' onclick="checkAllNodes(true)"/>
                 #end
                 <input type="button" value="清空" class='btn' onclick="checkAllNodes(false)"/>
-                <input type="text" id='vender' name="vender" value="$!{form.vender}">
+                <input type="text" id='vender' name="vender" value="$!{vender}">
                 <input type="button" value="查询" class='btn' onclick="queryVendor()"/>
 			</tb>
 		</tr>
@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
     var radioCheckCfg = {enable:true, chkboxType:{'Y':'','N':''},chkStyle:'radio',radioType:'all'};
     var setting = {
     	view: {selectedMulti: false},
-    	check: $!form.multiFlag?checkCfg:radioCheckCfg,//多选和单选采用不同的配置
+    	check: $!multiFlag?checkCfg:radioCheckCfg,//多选和单选采用不同的配置
     	data: {simpleData: {enable: true}},
 		callback: {//当单据树节点时，选中或取消勾选状态
 			"onClick": function(event, treeId, treeNode){
@@ -58,8 +58,8 @@ jQuery(document).ready(function(){
     };
 	//静态数据
     var nodeDataArr =[
-    	#foreach($param in ${form.dataMap.keySet()})
-    		{id:$param, pId:0, name:'${form.dataMap.get($param)}', open: true},
+    	#foreach($param in ${dataMap.keySet()})
+    		{id:$param, pId:0, name:'${dataMap.get($param)}', open: true},
         #end
 		null
     ];
@@ -68,7 +68,7 @@ jQuery(document).ready(function(){
 	jQuery.fn.zTree.init(jQuery("#myZTree"), setting, nodeDataArr);
 	
 	//勾选上次已经选择的数据
-	var selectedValues = "$!form.selectedValues".split(",");
+	var selectedValues = "$!selectedValues".split(",");
 	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
 	for(var i=0;i<selectedValues.length;i++){
 		if(selectedValues[i]){

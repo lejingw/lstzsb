@@ -22,7 +22,7 @@
 	
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<context:component-scan base-package="com.jatools"/>
+	<context:component-scan base-package="com.jatools.dao,com.jatools.service,com.jatools.controller,com.jatools.dwr"/>
 	<!-- 
 	<context:component-scan base-package="com.jatools" use-default-filters="false">
    		<context:exclude-filter type="regex" expression=".dao..*.impl.*"/>
@@ -42,15 +42,17 @@
 	 
 	 <!-- 从这行往下是要添加的 -->
     <context:annotation-config />
-    <dwr:configuration />
 	<dwr:annotation-config id="dwrAnnotationConfig" />
-	<dwr:annotation-scan base-package="com.jatools" scanDataTransferObject="true" scanRemoteProxy="false" />
+	<dwr:annotation-scan base-package="com.jatools.dwr" scanDataTransferObject="true" scanRemoteProxy="false" />
+	<dwr:annotation-scan base-package="com.jatools.vo" scanDataTransferObject="true" scanRemoteProxy="false" />
     <dwr:url-mapping />
     <dwr:controller id="dwrController" debug="true">
         <dwr:config-param name="allowScriptTagRemoting" value="true" />
         <dwr:config-param name="crossDomainSessionSecurity" value="false" />
     </dwr:controller>
-    
+    <dwr:configuration>
+    	<dwr:convert type="exception" class="java.lang.RuntimeException"></dwr:convert>
+    </dwr:configuration>
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="order" value="1" />
     </bean>
@@ -80,7 +82,7 @@
 	<!-- 2 、Spring对iBATIS的支持 -->
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="/WEB-INF/sql-map-config.xml"/>
+		<property name="configLocation" value="classpath:mapper/sql-map-config.xml"/>
 	</bean>
 	
 	<!-- 3 、Spring对iBATIS DAO的支持 -->
@@ -102,7 +104,7 @@
 	</tx:advice>
 	<!-- 5.2、配置切入点和方面 -->
 	<aop:config>
-		<aop:pointcut id="servicePointCut" expression="execution(* com.jatools.manager.*.impl.*Manager*.*(..))"/>
+		<aop:pointcut id="servicePointCut" expression="execution(* com.jatools.manager.*.impl.*Service*.*(..))"/>
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	

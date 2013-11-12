@@ -1,5 +1,8 @@
 package com.jatools.vo.sys;
 
+import org.directwebremoting.annotations.DataTransferObject;
+
+@DataTransferObject
 public class DictItem {
 	private String entryCode;
 	private String itemKey;
