@@ -13,7 +13,7 @@
 			from jat_move_head a
     		where a.status in (1,2) and a.create_id = #userId#
 			<include refid="MoveBill.getMoveBillPageDataCondition"/>
-			order by a.BILLNO desc
+			order by a.headid desc
 			limit $start$, $limit$
 	</select>
 	<!-- 获取总条数 -->

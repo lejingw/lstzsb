@@ -10,6 +10,7 @@
 	<sqlMap resource="mapper/sys/Dict.xml"/>
 	<sqlMap resource="mapper/sys/Parameter.xml"/>
 	
-	<sqlMap resource="mapper/move/MoveBill.xml"/>
+	<!-- 监察机构 -->
+	<sqlMap resource="mapper/jiancha/move/MoveBill.xml"/>
 
 </sqlMapConfig>
