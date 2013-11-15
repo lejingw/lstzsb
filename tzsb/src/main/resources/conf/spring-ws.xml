@@ -8,14 +8,26 @@
         http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
         http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
     
-    <wss:binding url="/HelloService">
+    
+    <wss:binding url="/Hello2Service">
         <wss:service>
-            <ws:service bean="#helloWsService">
-            	<ws:metadata><value>/WEB-INF/wsdl/hello.xsd</value></ws:metadata>
+            <ws:service bean="#hello2WsService">
+            	<ws:metadata><value>/WEB-INF/wsdl2/Hello2WsService_schema1.xsd</value></ws:metadata>
             </ws:service>
         </wss:service>
     </wss:binding>
 
-    <bean id="helloWsService" class="com.lejingw.apps.ws.HelloWsService" />
+    <bean id="hello2WsService" class="com.lejingw.apps.ws2.Hello2WsService" />
+    
+    
+    <wss:binding url="/Hello3Service">
+        <wss:service>
+            <ws:service bean="#hello3WsService">
+            	<ws:metadata><value>/WEB-INF/wsdl31/hello3.xsd</value></ws:metadata>
+            </ws:service>
+        </wss:service>
+    </wss:binding>
+
+    <bean id="hello3WsService" class="com.lejingw.apps.ws31.Hello3WsService" />
 
 </beans>

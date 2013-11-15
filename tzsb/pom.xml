@@ -343,15 +343,58 @@
 					</configuration>
 				</configuration>
 			</plugin> -->
+				<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
+	       		<executions>
+	       			<execution>
+	       				<phase>compile</phase>
+	       				<goals>
+	       					<goal>wsgen</goal>
+	       				</goals>
+	       			</execution>
+	       		</executions>
 				<configuration>
-					<wsdlDirectory>src/main/resources/META-INF/wsdl</wsdlDirectory>
-					<wsdlFiles>
-						<wsdlFile>hello2.wsdl</wsdlFile>
-					</wsdlFiles>
+					<genWsdl>true</genWsdl>
+					<resourceDestDir>src/main/resources/META-INF/wsdl2</resourceDestDir>
+					<portname>HelloWsServicePort2</portname>
+					<sei>com.lejingw.apps.ws2.Hello2WsService</sei>
+					<servicename>HelloWsService2</servicename>
+					<keep>true</keep>
+					<verbose>true</verbose>
+					<xnocompile>true</xnocompile>
 				</configuration>
+			</plugin>
+				 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+	       		<artifactId>jaxws-maven-plugin</artifactId>
+	       		<executions>
+	       			<execution>
+	       				<phase>compile</phase>
+	       				<goals>
+	       					<goal>wsimport</goal>
+	       				</goals>
+	       			</execution>
+	       		</executions>
+	       		<configuration>
+	       			<wsdlDirectory>src/main/resources/META-INF/wsdl3</wsdlDirectory>
+	       		 	<wsdlFiles>
+	       		 		<wsdlFile>hello3.wsdl</wsdlFile>
+	       		 	</wsdlFiles>
+	       		<!-- 
+	       		 	<wsdlLocation>http://example.com/mywebservices/*</wsdlLocation>
+	       			<wsdlUrls>
+	       				<wsdlUrl>http://localhost:8080/lstzsb/Hello2Service?wsdl</wsdlUrl>
+	       			</wsdlUrls>
+	       			<packageName>com.lejingw.apps.ws3</packageName>
+	       		 -->
+	       			<keep>true</keep>
+	       			<sourceDestDir>src/main/java</sourceDestDir>
+	       			<verbose>true</verbose>
+	       			<xnocompile>true</xnocompile>
+	       		</configuration>
 			</plugin>
   		</plugins>
   	</build>

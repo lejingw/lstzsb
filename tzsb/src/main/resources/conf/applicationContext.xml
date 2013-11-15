@@ -108,6 +108,5 @@
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	
-	<import resource="classpath:conf/spring-service.xml" />
 	<import resource="classpath:conf/spring-ws.xml" />
 </beans>
