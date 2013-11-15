@@ -34,6 +34,25 @@
   
   
   	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jax-ws-commons.spring</groupId>
+			<artifactId>jaxws-spring</artifactId>
+			<version>1.8</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.2.6</version>
+		</dependency>
+			
+			
 		<!-- SPRING begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -246,6 +265,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-dependency-plugin</artifactId>
@@ -274,6 +294,7 @@
 					</filesets>
 				</configuration>
 			</plugin>
+			 -->
 			<!-- jetty插件, 设定context path与spring profile
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -322,6 +343,16 @@
 					</configuration>
 				</configuration>
 			</plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<configuration>
+					<wsdlDirectory>src/main/resources/META-INF/wsdl</wsdlDirectory>
+					<wsdlFiles>
+						<wsdlFile>hello2.wsdl</wsdlFile>
+					</wsdlFiles>
+				</configuration>
+			</plugin>
   		</plugins>
   	</build>
 </project>

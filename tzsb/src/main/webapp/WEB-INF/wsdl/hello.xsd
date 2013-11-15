@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://ws.apps.lejingw.com"
+    xmlns:tns="http://ws.apps.lejingw.com"
+    elementFormDefault="unqualified">
+    
+    <xsd:element name="sayHello" type="tns:sayHello"/>
+    <xsd:element name="sayHelloResponse" type="tns:sayHelloResponse"/>
+    <xsd:element name="getPager" type="tns:getPager"/>
+    <xsd:element name="getPagerResponse" type="tns:getPagerResponse"/>
+    <xsd:element name="getPagerStr" type="tns:getPagerStr"/>
+    <xsd:element name="getPagerStrResponse" type="tns:getPagerStrResponse"/>
+    
+    <xsd:element name="pager" type="tns:pager"/>
+    
+    <xsd:complexType name="sayHello">
+   		<xsd:sequence>
+   			<xsd:element name="name" type="xsd:string"/>
+   		</xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="sayHelloResponse">
+    	<xsd:sequence>
+    		<xsd:element name="str" type="xsd:string"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="getPager">
+    	<xsd:sequence>
+    		<xsd:element name="start" type="xsd:int"/>
+    		<xsd:element name="limit" type="xsd:int"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPagerResponse">
+    	<xsd:sequence>
+    		<xsd:element name="pager" type="tns:pager"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="getPagerStr">
+    	<xsd:sequence>
+    		<xsd:element name="pager" type="tns:pager"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPagerStrResponse">
+    	<xsd:sequence>
+    		<xsd:element name="str" type="xsd:string"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="pager">
+    	<xsd:sequence>
+    		<xsd:element name="start" type="xsd:int"/>
+    		<xsd:element name="limit" type="xsd:int"/>
+    	</xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

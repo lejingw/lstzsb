@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://ws.apps.lejingw.com"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HelloWsService"
+	targetNamespace="http://ws.apps.lejingw.com">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://ws.apps.lejingw.com">
+    	<!-- <xsd:include schemaLocation="hello.xsd"/> -->
+    	
+	    <xsd:element name="sayHello" type="tns:sayHello"/>
+	    <xsd:element name="sayHelloResponse" type="tns:sayHelloResponse"/>
+	    <xsd:element name="getPager" type="tns:getPager"/>
+	    <xsd:element name="getPagerResponse" type="tns:getPagerResponse"/>
+	    <xsd:element name="getPagerStr" type="tns:getPagerStr"/>
+	    <xsd:element name="getPagerStrResponse" type="tns:getPagerStrResponse"/>
+	    
+	    <xsd:element name="pager" type="tns:pager"/>
+	    
+	    <xsd:complexType name="sayHello">
+	   		<xsd:sequence>
+	   			<xsd:element name="name" type="xsd:string"/>
+	   		</xsd:sequence>
+	    </xsd:complexType>
+	    <xsd:complexType name="sayHelloResponse">
+	    	<xsd:sequence>
+	    		<xsd:element name="str" type="xsd:string"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+	    
+	    <xsd:complexType name="getPager">
+	    	<xsd:sequence>
+	    		<xsd:element name="start" type="xsd:int"/>
+	    		<xsd:element name="limit" type="xsd:int"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+	    <xsd:complexType name="getPagerResponse">
+	    	<xsd:sequence>
+	    		<xsd:element name="pager" type="tns:pager"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+	    
+	    <xsd:complexType name="getPagerStr">
+	    	<xsd:sequence>
+	    		<xsd:element name="pager" type="tns:pager"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+	    <xsd:complexType name="getPagerStrResponse">
+	    	<xsd:sequence>
+	    		<xsd:element name="str" type="xsd:string"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+	    
+	    <xsd:complexType name="pager">
+	    	<xsd:sequence>
+	    		<xsd:element name="start" type="xsd:int"/>
+	    		<xsd:element name="limit" type="xsd:int"/>
+	    	</xsd:sequence>
+	    </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  
+  
+  <wsdl:message name="sayHello">
+    <wsdl:part name="parameters" element="tns:sayHello"/>
+  </wsdl:message>
+  <wsdl:message name="sayHelloResponse">
+    <wsdl:part name="parameters" element="tns:sayHelloResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPager">
+  	<wsdl:part name="parameters" element="tns:getPager"/>
+  </wsdl:message>
+  <wsdl:message name="getPagerResponse">
+    <wsdl:part name="parameters" element="tns:getPagerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPagerStr">
+  	<wsdl:part name="parameters" element="tns:getPagerStr"/>
+  </wsdl:message>
+  <wsdl:message name="getPagerStrResponse">
+  	<wsdl:part name="parameters" element="tns:getPagerStrResponse"/>
+  </wsdl:message>
+  
+  
+  <wsdl:portType name="IHelloWsService">
+    <wsdl:operation name="sayHello">
+      <wsdl:input message="tns:sayHello"/>
+      <wsdl:output message="tns:sayHelloResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPager">
+      <wsdl:input message="tns:getPager"/>
+      <wsdl:output message="tns:getPagerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPagerStr">
+      <wsdl:input message="tns:getPagerStr"/>
+      <wsdl:output message="tns:getPagerStrResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="helloWsSOAP" type="tns:IHelloWsService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sayHello">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPager">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPagerStr">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloWsService">
+    <wsdl:port binding="tns:helloWsSOAP" name="HelloWsServicePort">
+      <soap:address location="http://localhost:8888/ss"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
