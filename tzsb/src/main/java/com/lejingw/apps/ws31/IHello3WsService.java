@@ -30,12 +30,12 @@ public interface IHello3WsService {
      *     returns java.lang.String
      */
     @WebMethod
-    @WebResult(name = "str", targetNamespace = "http://ws3.apps.lejingw.com")
+    @WebResult(name = "str", targetNamespace = "")
     @RequestWrapper(localName = "sayHello", targetNamespace = "http://ws3.apps.lejingw.com")
     @ResponseWrapper(localName = "sayHelloResponse", targetNamespace = "http://ws3.apps.lejingw.com")
     public String sayHello(
-        @WebParam(name = "name", targetNamespace = "http://ws3.apps.lejingw.com")
-        String name);
+        @WebParam(name = "name", targetNamespace = "")
+        String name, @WebParam(name="licenseInfo", header=true) String licenseInfo);
 
     /**
      * 
@@ -45,13 +45,13 @@ public interface IHello3WsService {
      *     returns java.util.List<com.lejingw.apps.ws3.Pager>
      */
     @WebMethod
-    @WebResult(name = "pager", targetNamespace = "http://ws3.apps.lejingw.com")
+    @WebResult(name = "pager", targetNamespace = "")
     @RequestWrapper(localName = "getPagerList", targetNamespace = "http://ws3.apps.lejingw.com")
     @ResponseWrapper(localName = "getPagerListResponse", targetNamespace = "http://ws3.apps.lejingw.com")
     public List<Pager> getPagerList(
-        @WebParam(name = "start", targetNamespace = "http://ws3.apps.lejingw.com")
+        @WebParam(name = "start", targetNamespace = "")
         int start,
-        @WebParam(name = "limit", targetNamespace = "http://ws3.apps.lejingw.com")
+        @WebParam(name = "limit", targetNamespace = "")
         int limit);
 
     /**
@@ -61,11 +61,11 @@ public interface IHello3WsService {
      *     returns java.lang.String
      */
     @WebMethod
-    @WebResult(name = "str", targetNamespace = "http://ws3.apps.lejingw.com")
+    @WebResult(name = "str", targetNamespace = "")
     @RequestWrapper(localName = "getPagerStr", targetNamespace = "http://ws3.apps.lejingw.com")
     @ResponseWrapper(localName = "getPagerStrResponse", targetNamespace = "http://ws3.apps.lejingw.com")
     public String getPagerStr(
-        @WebParam(name = "pager", targetNamespace = "http://ws3.apps.lejingw.com")
+        @WebParam(name = "pager", targetNamespace = "")
         Pager pager);
 
 }

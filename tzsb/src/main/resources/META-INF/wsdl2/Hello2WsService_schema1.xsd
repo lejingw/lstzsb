@@ -9,6 +9,14 @@
 
   <xs:element name="getPagerResponse" type="tns:getPagerResponse"/>
 
+  <xs:element name="getPagerStr" type="tns:getPagerStr"/>
+
+  <xs:element name="getPagerStrResponse" type="tns:getPagerStrResponse"/>
+
+  <xs:element name="savaPicData2" type="tns:savaPicData2"/>
+
+  <xs:element name="savaPicData2Response" type="tns:savaPicData2Response"/>
+
   <xs:element name="sayHello" type="tns:sayHello"/>
 
   <xs:element name="sayHelloResponse" type="tns:sayHelloResponse"/>
@@ -32,6 +40,28 @@
       <xs:element name="pageData" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="start" type="xs:int"/>
       <xs:element name="totalCount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="savaPicData2">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="savaPicData2Response">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getPagerStr">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:pager" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPagerStrResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

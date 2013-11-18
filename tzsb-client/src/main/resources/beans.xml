@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xmlns:aop="http://www.springframework.org/schema/aop"
+	    xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!-- 使用spring来注入一个ws的client -->
+	<bean id="hello2WsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.lejingw.apps.ws2.Hello2WsService"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/Hello2Service?wsdl"/>
+	    <property name="namespaceUri" value="http://ws2.apps.lejingw.com"/>
+	    <property name="serviceName" value="Hello2WsService"/>
+	    <property name="portName" value="Hello2WsServicePort"/>
+	</bean>
+	
+	<bean id="hello3WsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.lejingw.apps.ws31.IHello3WsService"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/Hello3Service?wsdl"/>
+	    <property name="namespaceUri" value="http://ws3.apps.lejingw.com"/>
+	    <property name="serviceName" value="Hello3WsService"/>
+	    <property name="portName" value="Hello3WsServicePort"/>
+	</bean>
+</beans>

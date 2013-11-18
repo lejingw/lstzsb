@@ -16,8 +16,9 @@ wsdlLocation="/WEB-INF/wsdl31/hello3.wsdl"
 public class Hello3WsService implements IHello3WsService {
 
 	@Override
-	public String sayHello(String name) {
-		System.out.println("==:hello " + name + "!");
+	public String sayHello(String name, String licenseInfo) {
+		System.out.println("==:sayHello");
+		System.out.println("hello " + name + "---"+licenseInfo);
 		return "hello " + name;
 	}
 
@@ -31,8 +32,8 @@ public class Hello3WsService implements IHello3WsService {
 		list.add(pager);
 		
 		Pager pager2 = new Pager();
-		pager2.setStart(1);
-		pager2.setLimit(100);
+		pager2.setStart(13);
+		pager2.setLimit(33333333);
 		list.add(pager2);
 		return list;
 	}

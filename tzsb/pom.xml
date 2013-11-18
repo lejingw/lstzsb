@@ -133,6 +133,20 @@
 			<version>1.6.11</version>
 		</dependency>
 		
+		<!-- 
+		<dependency>
+		    <groupId>org.apache.ws.commons.axiom</groupId>
+		    <artifactId>axiom-api</artifactId>
+		    <version>1.2.14</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.ws.commons.axiom</groupId>
+		    <artifactId>axiom-impl</artifactId>
+		    <version>1.2.14</version>
+		    <scope>runtime</scope>
+		</dependency>
+		 -->
+		
 		<!-- database start -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -358,44 +372,28 @@
 				<configuration>
 					<genWsdl>true</genWsdl>
 					<resourceDestDir>src/main/resources/META-INF/wsdl2</resourceDestDir>
-					<portname>HelloWsServicePort2</portname>
 					<sei>com.lejingw.apps.ws2.Hello2WsService</sei>
-					<servicename>HelloWsService2</servicename>
 					<keep>true</keep>
 					<verbose>true</verbose>
 					<xnocompile>true</xnocompile>
 				</configuration>
 			</plugin>
 				 -->
+	       		<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 	       		<artifactId>jaxws-maven-plugin</artifactId>
-	       		<executions>
-	       			<execution>
-	       				<phase>compile</phase>
-	       				<goals>
-	       					<goal>wsimport</goal>
-	       				</goals>
-	       			</execution>
-	       		</executions>
 	       		<configuration>
-	       			<wsdlDirectory>src/main/resources/META-INF/wsdl3</wsdlDirectory>
+	       			<wsdlDirectory>src/main/resources/META-INF/wsdl31</wsdlDirectory>
 	       		 	<wsdlFiles>
 	       		 		<wsdlFile>hello3.wsdl</wsdlFile>
 	       		 	</wsdlFiles>
-	       		<!-- 
-	       		 	<wsdlLocation>http://example.com/mywebservices/*</wsdlLocation>
-	       			<wsdlUrls>
-	       				<wsdlUrl>http://localhost:8080/lstzsb/Hello2Service?wsdl</wsdlUrl>
-	       			</wsdlUrls>
-	       			<packageName>com.lejingw.apps.ws3</packageName>
-	       		 -->
 	       			<keep>true</keep>
-	       			<sourceDestDir>src/main/java</sourceDestDir>
 	       			<verbose>true</verbose>
 	       			<xnocompile>true</xnocompile>
 	       		</configuration>
 			</plugin>
+	       		 -->
   		</plugins>
   	</build>
 </project>

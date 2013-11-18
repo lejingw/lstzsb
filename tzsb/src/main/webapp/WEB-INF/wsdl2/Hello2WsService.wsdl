@@ -6,7 +6,6 @@
       <xsd:import namespace="http://ws2.apps.lejingw.com" schemaLocation="Hello2WsService_schema1.xsd"/>
     </xsd:schema>
   </types>
-  <!-- test2 -->
   <message name="sayHello">
     <part name="parameters" element="tns:sayHello"/>
   </message>
@@ -19,11 +18,23 @@
   <message name="getPagerResponse">
     <part name="parameters" element="tns:getPagerResponse"/>
   </message>
+  <message name="getPagerStr">
+    <part name="parameters" element="tns:getPagerStr"/>
+  </message>
+  <message name="getPagerStrResponse">
+    <part name="parameters" element="tns:getPagerStrResponse"/>
+  </message>
   <message name="getPagerList">
     <part name="parameters" element="tns:getPagerList"/>
   </message>
   <message name="getPagerListResponse">
     <part name="parameters" element="tns:getPagerListResponse"/>
+  </message>
+  <message name="savaPicData2">
+    <part name="parameters" element="tns:savaPicData2"/>
+  </message>
+  <message name="savaPicData2Response">
+    <part name="parameters" element="tns:savaPicData2Response"/>
   </message>
   <portType name="Hello2WsService">
     <operation name="sayHello">
@@ -34,9 +45,17 @@
       <input message="tns:getPager"/>
       <output message="tns:getPagerResponse"/>
     </operation>
+    <operation name="getPagerStr">
+      <input message="tns:getPagerStr"/>
+      <output message="tns:getPagerStrResponse"/>
+    </operation>
     <operation name="getPagerList">
       <input message="tns:getPagerList"/>
       <output message="tns:getPagerListResponse"/>
+    </operation>
+    <operation name="savaPicData2">
+      <input message="tns:savaPicData2"/>
+      <output message="tns:savaPicData2Response"/>
     </operation>
   </portType>
   <binding name="Hello2WsServicePortBinding" type="tns:Hello2WsService">
@@ -59,7 +78,25 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="getPagerStr">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="getPagerList">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="savaPicData2">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

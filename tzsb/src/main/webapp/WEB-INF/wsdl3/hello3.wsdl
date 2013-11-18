@@ -10,7 +10,7 @@
     </xsd:schema>
   </wsdl:types>
   
-  <!-- test -->
+  <!-- test3 -->
   <wsdl:message name="sayHello">
     <wsdl:part name="parameters" element="tns:sayHello"/>
   </wsdl:message>

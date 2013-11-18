@@ -7,12 +7,16 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://ws3.apps.lejingw.com">
     	<xsd:include schemaLocation="hello3.xsd"/>
+    	<xsd:element name="licenseInfo" type="xsd:string"/>
     </xsd:schema>
   </wsdl:types>
   
   
   <wsdl:message name="sayHello">
     <wsdl:part name="parameters" element="tns:sayHello"/>
+  </wsdl:message>
+  <wsdl:message name="licenseInfo">
+  	<wsdl:part name="licenseInfo" element="tns:licenseInfo"/>
   </wsdl:message>
   <wsdl:message name="sayHelloResponse">
     <wsdl:part name="parameters" element="tns:sayHelloResponse"/>
@@ -51,6 +55,7 @@
     <wsdl:operation name="sayHello">
       <wsdl:input>
         <soap:body use="literal"/>
+        <soap:header use="literal" part="licenseInfo" message="tns:licenseInfo"/>
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal"/>
