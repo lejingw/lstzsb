@@ -44,5 +44,5 @@
 			</ws:service>
 		</wss:service>
 	</wss:binding>
-	<bean id="hello4WsService" class="com.lejingw.apps.ws4.Hello4WsService" />
+	<bean id="hello4WsService" class="com.lejingw.apps.ws4.Hello4WsServiceImpl" />
 </beans>
