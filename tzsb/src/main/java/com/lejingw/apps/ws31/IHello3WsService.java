@@ -35,7 +35,7 @@ public interface IHello3WsService {
     @ResponseWrapper(localName = "sayHelloResponse", targetNamespace = "http://ws3.apps.lejingw.com")
     public String sayHello(
         @WebParam(name = "name", targetNamespace = "")
-        String name, @WebParam(name="licenseInfo", header=true) String licenseInfo);
+        String name, @WebParam(name="licenseInfo", header=true) String licenseInfo) throws Hello3WsException;
 
     /**
      * 

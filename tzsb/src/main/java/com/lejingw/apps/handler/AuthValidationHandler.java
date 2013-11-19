@@ -3,7 +3,6 @@ package com.lejingw.apps.handler;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.namespace.QName;
 import javax.xml.soap.Node;
 import javax.xml.soap.SOAPBody;
@@ -19,7 +18,6 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import javax.xml.ws.soap.SOAPFaultException;
 
 public class AuthValidationHandler implements SOAPHandler<SOAPMessageContext> {
-	private final String HTTP_REQUEST = "httpRequest";
 	public Set<QName> getHeaders() {
 		return null;
 	}
@@ -32,41 +30,45 @@ public class AuthValidationHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleMessage(SOAPMessageContext context) {
-		System.out.println("====handleMessage");
-//		HttpServletRequest request = (HttpServletRequest) context.get(AbstractHTTPDestination.HTTP_REQUEST);
-		HttpServletRequest request = (HttpServletRequest) context.get(HTTP_REQUEST);
-		//
-		if (request != null) {
-			System.out.println("Client IP：" + request.getRemoteAddr());
-		} else {
-			System.out.println("get client ip is null>>>>>>>>>");
-		}
-
-		Boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
-		if (!outbound.booleanValue()) {
-			SOAPMessage soapMessage = context.getMessage();
-			try {
+//		HttpServletRequest request = (HttpServletRequest) context.get(SOAPMessageContext.SERVLET_REQUEST);
+//		if (request != null) {
+//			System.out.println("Client IP：" + request.getRemoteAddr());
+//		} else {
+//			System.out.println("get client ip is null>>>>>>>>>");
+//		}
+		try {
+			Boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+			System.out.println("====handleMessage===="+outbound);
+			if (!outbound.booleanValue()) {
+				SOAPMessage soapMessage = context.getMessage();
 				SOAPEnvelope soapEnvelope = soapMessage.getSOAPPart().getEnvelope();
-				SOAPHeader soapHeader = soapEnvelope.getHeader();
-
-				if (soapHeader == null){
+				
+				SOAPBody body = soapEnvelope.getBody();
+				String name = body.getFirstChild().getLocalName();
+				if(!"sayHello".equals(name)){
+					return true;
+				}
+				
+				SOAPHeader header = soapEnvelope.getHeader();
+				if (header == null){
 					generateSoapFault(soapMessage, "No Message Header...");
 				}
-				Iterator it = soapHeader.extractHeaderElements(SOAPConstants.URI_SOAP_1_2_ROLE_NEXT);
-				if (it == null || !it.hasNext())
+				QName qname = new QName("http://ws3.apps.lejingw.com", "licenseInfo", "ns");
+//				Iterator iter = header.extractHeaderElements(SOAPConstants.URI_SOAP_1_2_ROLE_NEXT);
+				Iterator iter = header.getChildElements(qname);
+				if (iter == null || !iter.hasNext()){
 					generateSoapFault(soapMessage, "No Header block for role next");
-				Node node = (Node) it.next();
-				String value = node == null ? null : node.getValue();
-				if (value == null){
+				}
+				Node node = (Node)iter.next();
+				if(null == node || null == node.getValue()){
 					generateSoapFault(soapMessage, "No authation info in header blocks");
 				}
-				String[] infos = value.split("&");
+				String[] infos = node.getValue().split("_");
 				return authValidate(infos[0], infos[1]);
-
-			} catch (SOAPException e) {
-				e.printStackTrace();
 			}
+			return true;
+		} catch (SOAPException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -75,7 +77,7 @@ public class AuthValidationHandler implements SOAPHandler<SOAPMessageContext> {
 		if (userName == null || password == null) {
 			return false;
 		}
-		if ("admin".equals(userName) && "admin".equals(password)) {
+		if ("admin123".equals(userName) && "111111".equals(password)) {
 			return true;
 		}
 		return false;

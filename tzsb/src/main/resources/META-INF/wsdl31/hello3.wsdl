@@ -8,10 +8,18 @@
     <xsd:schema targetNamespace="http://ws3.apps.lejingw.com">
     	<xsd:include schemaLocation="hello3.xsd"/>
     	<xsd:element name="licenseInfo" type="xsd:string"/>
+    	<xsd:element name="Hello3WsException" type="tns:Hello3WsException"/>
+    	<xsd:complexType name="Hello3WsException">
+    		<xsd:sequence>
+    			<xsd:element name="message" type="xsd:string"/>
+    		</xsd:sequence>
+    	</xsd:complexType>
     </xsd:schema>
   </wsdl:types>
   
-  
+  <wsdl:message name="Hello3WsException">
+  	<wsdl:part name="fault" element="tns:Hello3WsException"/>
+  </wsdl:message>
   <wsdl:message name="sayHello">
     <wsdl:part name="parameters" element="tns:sayHello"/>
   </wsdl:message>
@@ -39,6 +47,7 @@
     <wsdl:operation name="sayHello">
       <wsdl:input message="tns:sayHello"/>
       <wsdl:output message="tns:sayHelloResponse"/>
+      <wsdl:fault name="Hello3WsException" message="tns:Hello3WsException"/>
     </wsdl:operation>
     <wsdl:operation name="getPagerList">
       <wsdl:input message="tns:getPagerList"/>
@@ -60,6 +69,9 @@
       <wsdl:output>
         <soap:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="Hello3WsException">
+      	<soap:fault name="Hello3WsException" use="literal"/>
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getPagerList">
       <wsdl:input>

@@ -8,5 +8,8 @@
 </head>
 <body>
 <h2>${str}</h2>
+<form action="" method="post">
+<input type="submit">
+</form>
 </body>
 </html>

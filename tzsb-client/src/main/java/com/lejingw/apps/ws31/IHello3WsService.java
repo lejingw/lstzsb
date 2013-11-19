@@ -29,6 +29,7 @@ public interface IHello3WsService {
      * @param name
      * @return
      *     returns java.lang.String
+     * @throws Hello3WsException_Exception
      */
     @WebMethod
     @WebResult(name = "str", targetNamespace = "")
@@ -36,7 +37,9 @@ public interface IHello3WsService {
     @ResponseWrapper(localName = "sayHelloResponse", targetNamespace = "http://ws3.apps.lejingw.com", className = "com.lejingw.apps.ws31.SayHelloResponse")
     public String sayHello(
         @WebParam(name = "name", targetNamespace = "")
-        String name);
+        String name)
+        throws Hello3WsException_Exception
+    ;
 
     /**
      * 
