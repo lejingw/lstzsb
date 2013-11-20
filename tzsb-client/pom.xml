@@ -143,12 +143,12 @@
 	       		<artifactId>jaxws-maven-plugin</artifactId>
 	       		<configuration>
 	       			<wsdlUrls>
-	       				<wsdlUrl>http://localhost:8080/lstzsb/Hello3Service?wsdl</wsdlUrl>
+	       				<wsdlUrl>http://localhost:8080/lstzsb/Hello4Service?wsdl</wsdlUrl>
 	       			</wsdlUrls>
 	       			<keep>true</keep>
 	       			<verbose>true</verbose>
 	       			<xnocompile>true</xnocompile>
-	       			<packageName>com.lejingw.apps.ws31</packageName>
+	       			<packageName>com.lejingw.apps.ws4</packageName>
 	       			<!-- 
 					<bindingDirectory>src/main/resources/META-INF/wsdl2</bindingDirectory>
 					<bindingFiles>
