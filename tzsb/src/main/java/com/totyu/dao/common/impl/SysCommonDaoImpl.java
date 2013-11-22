@@ -13,6 +13,7 @@ import com.totyu.dao.common.SysCommonDao;
 import com.totyu.dao.common.TransactionAction;
 import com.totyu.vo.basic.Org;
 import com.totyu.vo.sys.Parameter;
+import com.totyu.vo.sys.UploadFile;
 import com.totyu.web.util.DateUtil;
 
 @Repository
@@ -65,6 +66,20 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 	 */
 	public List<Org> getOrgTree(){
 		return executeQueryForList("SysCommon.getOrgTree", null);
+	}
+	/**
+	 * 保存附件信息
+	 */
+	public void saveUploadFile(List<UploadFile> uploadFileList){
+		executeBatchInsert("SysCommon.saveUploadFile", uploadFileList);
+	}
+	/**
+	 * 根据 id 获取上传文件信息
+	 * @param id
+	 * @return
+	 */
+	public UploadFile getUploadFile(String id){
+		return (UploadFile)executeQueryForObject("SysCommon.getUploadFile", id);
 	}
 
 	/**

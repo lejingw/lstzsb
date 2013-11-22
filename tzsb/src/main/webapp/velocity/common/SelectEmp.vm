@@ -1,5 +1,5 @@
 ##使用ztree
-#set($cssfiles = ["${rc.contextPath}/css/ztree/zTreeStyle.css"])
+#set($cssfiles = ["${rc.contextPath}/style/ztree/zTreeStyle.css"])
 #set($jsfiles = ["${rc.contextPath}/script/ztree/jquery.ztree.core-3.0.js", "${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.0.js"])
 
 <form id='frm' action="" method="post">

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.totyu.vo.basic.Org;
 import com.totyu.vo.sys.Parameter;
+import com.totyu.vo.sys.UploadFile;
 
 
 public interface SysCommonDao {
@@ -26,4 +27,14 @@ public interface SysCommonDao {
 	 * @return
 	 */
 	List<Org> getOrgTree();
+	/**
+	 * 保存附件信息
+	 */
+	void saveUploadFile(List<UploadFile> uploadFileList);
+	/**
+	 * 根据 id 获取上传文件信息
+	 * @param id
+	 * @return
+	 */
+	UploadFile getUploadFile(String id);
 }

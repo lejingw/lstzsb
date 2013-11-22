@@ -1,79 +1,22 @@
-##使用ztree
-#set($cssfiles = ["${rc.contextPath}/css/ztree/zTreeStyle.css"])
-#set($jsfiles = ["${rc.contextPath}/script/ztree/jquery.ztree.core-3.0.js", "${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.0.js"])
-
-#if($multiFlag)
-<input type="button" value="全选" class='btn' onclick="checkAllNodes(true)"/>
-#end
-<input type="button" value="清空" class='btn' onclick="checkAllNodes(false)"/>
-<div id="myZTree" class="ztree"></div>
+#set($layout = "layout/selectTreeLayout.vm")
 <script>
-//供外部调用的取值方法
-function getValues(){
-	var idArr = [], nameArr = [];
+callbackFn = function(nodeArr){
 	var objArr = [];
-	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
-	var nodes = zTree.getCheckedNodes(true);
-	for(var i=0;i<nodes.length;i++){
-		idArr.push(nodes[i].id);
-		nameArr.push(nodes[i].name);
-		objArr.push({orgId:nodes[i].id, orgName:nodes[i].name});
+	for(var i=0;i<nodeArr.length;i++){
+		objArr.push({orgId:nodeArr[i].id, orgName:nodeArr[i].name});
 	}
-	return [idArr, nameArr, objArr];
-}
+	return objArr;
+};
 jQuery(document).ready(function(){
-	//checkbox多选时，采用的配置
-    var checkCfg = {enable:true, chkboxType:{'Y':'','N':''}};
-	//radiobox单选时，采用的配置
-    var radioCheckCfg = {enable:true, chkboxType:{'Y':'','N':''},chkStyle:'radio',radioType:'all'};
-    var setting = {
-    	view: {selectedMulti: false},
-    	check: $!multiFlag?checkCfg:radioCheckCfg,//多选和单选采用不同的配置
-    	data: {simpleData: {enable: true}},
-		callback: {//当单据树节点时，选中或取消勾选状态
-			"onClick": function(event, treeId, treeNode){
-				var flag = treeNode.checked;
-				if(!$!multiFlag){
-					checkAllNodes(false);
-				}
-    			jQuery.fn.zTree.getZTreeObj(treeId).checkNode(treeNode, !flag);
-			}
-		}
-    };
-	//静态数据
-    var nodeDataArr =[
+	//数据
+    var dataArr =[
     	#foreach($param in ${dataMap.keySet()})
     		{id:$param, pId:${dataMap.get($param).parentId}, name:'${dataMap.get($param).orgName}' #if(0 == ${dataMap.get($param).parentId}), open: true #end #if(1 == ${dataMap.get($param).nocheck}), nocheck:true #end},
         #end
 		null
     ];
-	nodeDataArr.pop();
-	//初始化tree
-	jQuery.fn.zTree.init(jQuery("#myZTree"), setting, nodeDataArr);
+	dataArr.pop();//删除最后一个null项
 	
-	//勾选上次已经选择的数据
-	var selectedValues = "$!selectedValues".split(",");
-	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
-	for(var i=0;i<selectedValues.length;i++){
-		if(selectedValues[i]){
-    		var node = zTree.getNodeByParam("id", selectedValues[i]);
-			zTree.checkNode(node, true);
-		}
-	}
+	initTree(dataArr, $!multiFlag, "$!selectedValues");
 });
-function checkSubNodes(tree, node, flag){
-	tree.checkNode(node, flag);
-	var childs = node.childs;
-	if(!childs)	return ;
-	for(var i=0;i<childs.length;i++){
-		 checkSubNodes(tree, childs[i], flag);
-	}
-}
-function checkAllNodes(flag){
-	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
-	var allNodes = zTree.getNodes();
-	for(var i=0;i<allNodes.length;i++){
-		checkSubNodes(zTree, allNodes[i], flag);
-	}
-}
 </script>

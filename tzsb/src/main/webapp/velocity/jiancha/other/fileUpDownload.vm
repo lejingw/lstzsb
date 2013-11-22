@@ -1,0 +1,70 @@
+#set($cssfiles = [])
+
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/FileUpDownloadDwr.js"])
+
+<form id='frm' action="" method="post">
+	<input type='hidden' id='headid' value='$!{head.headid}'/>
+    <table class="title">
+    	<tr><td>上传下载演示</td></tr>
+    </table>
+    <table class="control">
+    	<tr>
+			<td>
+				<input type='button' value='上传' class='btn' id='btnUpload' onclick="uploadFiles()">
+			</td>
+		</tr>
+    </table>
+    <table class='content'>
+    	<tr>
+			<td class='body1'>字段1</td><td class='body2'><input type='text' id='field1' value='1'/></td>
+			<td class='body1'>字段2</td><td class='body2'><input type='text' id='field2' value='a'/></td>
+			<td class='body1'>字段3</td><td class='body2'><input type='text' id='field3' value=''/></td>
+			<td class='body1'>字段4</td><td class='body2'><input type='text' id='field4' value=''/></td>
+		</tr>
+    	<tr>
+			<td class='body1'>上传文件1</td>
+			<td class='body2'>
+				<input type="file" id="file1" />
+			</td>
+			<td class='body1'>上传文件2</td>
+			<td class='body2'>
+				<input type="file" id="file2" />
+			</td>
+			<td class='body1'>上传文件3</td>
+			<td class='body2'>
+				<input type="file" id="file3" />
+			</td>
+		</tr>
+		<tr>
+			<td>下载</td>
+			<td>
+				<a href="${rc.contextPath}/common/download.do?id=2">aaa.jpg</a>
+			</td>
+			<td>下载</td>
+			<td colspan='5'>
+				<button onclick="downloadPdfFile2()">Download</button>
+			</td>
+		</tr>
+    </table>
+</form>
+<script>
+function downloadPdfFile2() {
+	FileUpDownloadDwr.downloadPdfFile(function(data) {
+		dwr.engine.openInDownload(data);
+	});
+}
+
+function uploadFiles() {
+	var file3 = dwr.util.getValue('file3');
+	FileUpDownloadDwr.uploadFiles(file3, function(data) {
+		if(!data){
+			alert("上传成功");
+		}else{
+    		alert(data);
+		}
+	});
+}
+jQuery(function(){
+	//jQuery("#btnUpload").click(uploadFiles);
+});
+</script>

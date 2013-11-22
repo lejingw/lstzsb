@@ -2,6 +2,7 @@ package com.totyu.common;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 
 import com.totyu.common.constant.ParameterConstant;
+import com.totyu.controller.common.QuerySessionKeyIntf;
 import com.totyu.vo.sys.AuthToken;
 import com.totyu.web.cache.ParameterCache;
 import com.totyu.web.util.StringUtil;
@@ -217,19 +219,19 @@ public class CommonUtil {
 	 * @param keys
 	 * @return
 	 */
-	private static String[] addStartLimitKey(String[] keys, boolean flag){
+	private static String[] addStartLimitKey(String[] keys){
 		if(null == keys){
 			keys = new String[0];
 		}
-		String[] pageKeys = new String[flag?keys.length+3:keys.length + 2];
-		for(int i=0;i<keys.length;i++){
-			pageKeys[i] = keys[i];
-		}
+	    String[] pageKeys = Arrays.copyOf(keys, keys.length + 2);
+//	    System.arraycopy(cs, 0, newElements, len, cs.length);
+	    
+//		String[] pageKeys = new String[keys.length + 2];
+//		for(int i=0;i<keys.length;i++){
+//			pageKeys[i] = keys[i];
+//		}
 		pageKeys[keys.length] = "start";
 		pageKeys[keys.length + 1] = "limit";
-		if(flag){
-			pageKeys[keys.length + 2] = "_q_sql";
-		}
 		return pageKeys;
 	}
 	
@@ -246,9 +248,7 @@ public class CommonUtil {
 		try {
 			for(String key : keys){
 				String tmp = getParameterNull(req, key);
-				if("_q_sql".equals(key) && StringUtil.isNotEmpty(tmp)){
-					condition.put(key, tmp);
-				}else if(null != tmp){
+				if(null != tmp){
 					condition.put(key, new String(tmp.getBytes("ISO-8859-1"),"utf-8"));
 				}
 			}
@@ -258,6 +258,7 @@ public class CommonUtil {
 			logger.error(e);
 		}
 	}
+	
 	private static void setDefaultStartLimit(Map<String, String> condition, String startDefaultValue, String limitDefaultValue) {
 		if(StringUtil.isEmpty(condition.get("start"))){
 			condition.put("start", startDefaultValue);
@@ -273,7 +274,7 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static Map<String, String> getConditionForPage(HttpServletRequest req, String... keys) {
-		keys = addStartLimitKey(keys, false);
+		keys = addStartLimitKey(keys);
 		Map<String, String> condition = new HashMap<String, String>();
 		getRequestParameter(req, condition, keys);
 		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
@@ -286,27 +287,52 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static Map<String, String> getConditionForPageSession(Object controller, HttpServletRequest req, String... keys) {
-		keys = addStartLimitKey(keys, true);
+		keys = addStartLimitKey(keys);
 		Map<String, String> condition = new HashMap<String, String>();
 		getRequestParameter(req, condition, keys);
-		//QueryConditionUtil.getSessionParameter(controller, req, condition, keys);
+		getSessionParameter(controller, req, condition, keys);
 		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
 		return condition;
 	}
+	private static String getConditionSessionKey(Object controller){
+		if(controller instanceof QuerySessionKeyIntf){
+			return "query_key_" + controller.getClass().getName() + "_" + ((QuerySessionKeyIntf)controller).getKey();
+		}else{
+			return "query_key_" + controller.getClass().getName();
+		}
+	}
+	private static boolean isUnQuerys(Map<String, String> condition){
+         if(StringUtil.isNotEmpty(condition.get("start")) || StringUtil.isNotEmpty(condition.get("limit"))){
+                 return false;
+         }
+         return true;
+	}
 	
 	/**
-	 * 从request获取查询条件，包含start（默认为0）、limit（默认10）参数
-	 * @param req
-	 * @param strings
-	 * @return
-	 */
-	public static Map<String, String> getConditionForPage2(HttpServletRequest req, String... keys) {
-		keys = addStartLimitKey(keys, false);
-		Map<String, String> condition = new HashMap<String, String>();
-		getRequestParameter(req, condition, keys);
-		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT_WIN);
-		return condition;
+     * 从session获取值
+     * @param req
+     * @param condition
+     * @param keys
+     */
+	public static void getSessionParameter(Object controller, HttpServletRequest req, Map<String, String> condition, String... keys) {
+		if (null == keys || keys.length < 1) {
+			return;
+		}
+		String conditionSessionKey = getConditionSessionKey(controller);
+		// 检查是否进行页面查询
+		HttpSession session = req.getSession();
+		if (isUnQuerys(condition)) {// 显示页面，从session获取查询条件
+			Object obj = session.getAttribute(conditionSessionKey);
+			if (null != obj && obj instanceof Map) {
+				Map<String, String> ssnCondition = (Map<String, String>) obj;
+				for (String key : ssnCondition.keySet()) {
+					condition.put(key, ssnCondition.get(key));
+				}
+			}
+		}
+		session.setAttribute(conditionSessionKey, condition);
 	}
+	
 	/**
 	 * 获取图片根目录
 	 * @return

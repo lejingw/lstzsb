@@ -79,7 +79,7 @@ function showLayer(status) {
 				height: jQuery(document).height(),
 				background: '#AAA',
 				opacity: .5,
-				"background-image": "url('"+ctxPath+"/css/img/loading.gif')",
+				"background-image": "url('"+ctxPath+"/style/img/loading.gif')",
 				"background-repeat": "no-repeat",
 				"background-position": "center"
 			});
@@ -541,13 +541,13 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	document.write("<input type='hidden' id='start' name='start' value=''/>");
 	document.write("<input type='hidden' id='limit' name='limit' value=''/>");
 	document.write("<input type='hidden' id='_totalCount' value=''/>");
-	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/css/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
-	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/css/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
+	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/style/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
+	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/style/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
 	document.write("当前第<input type='text' id='_pageindex' style='width:25px;height:12px;text-align:center;' value=''>页&nbsp;");
 	document.write("共<input type='text' id='_totalPageCount' style='width:40px;height:12px;text-align:center;background-color:#EBEBEB;' value='' readonly>页&nbsp;");
-	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/css/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
-	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/css/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
-	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/css/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
+	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/style/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
+	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/style/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
+	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/style/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
 	
 	document.write("每页<input type='text' id='_pageCount' style='width:25px;height:12px;text-align:center;' value=''>条&nbsp;");
 	document.write("显示第 "+(start+1)+" 条到 "+(start + limit)+" 条记录，一共 "+totalCount+" 条");
@@ -561,15 +561,15 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	jQuery("#_totalCount").val(totalCount);
 	
 	if(parseInt(jQuery("#_pageindex").val())<=1){
-		jQuery("#_btnPre").attr('src', "" + ctxPath + "/css/img/page-prev-disabled.gif");
-		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/css/img/page-first-disabled.gif");
+		jQuery("#_btnPre").attr('src', "" + ctxPath + "/style/img/page-prev-disabled.gif");
+		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/style/img/page-first-disabled.gif");
 		
 		jQuery("#_btnPre").attr('disabled', true);
 		jQuery("#_btnFirst").attr("disabled", true);
 	}
 	if(parseInt(jQuery("#_pageindex").val())>=parseInt(jQuery("#_totalPageCount").val())){
-		jQuery("#_btnNext").attr('src', ctxPath + "/css/img/page-next-disabled.gif");
-		jQuery("#_btnLast").attr("src", ctxPath + "/css/img/page-last-disabled.gif");
+		jQuery("#_btnNext").attr('src', ctxPath + "/style/img/page-next-disabled.gif");
+		jQuery("#_btnLast").attr("src", ctxPath + "/style/img/page-last-disabled.gif");
 		
 		jQuery("#_btnNext").attr('disabled', true);
 		jQuery("#_btnLast").attr("disabled", true);

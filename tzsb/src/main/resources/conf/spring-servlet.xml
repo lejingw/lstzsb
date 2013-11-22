@@ -50,9 +50,5 @@
 			</props>
 		</property>
   	</bean>
-	 
-	<bean id="signonInterceptor" class="com.totyu.web.interceptor.SignonInterceptor"/>
-	
-	<bean id="exceptionHandler" class="com.totyu.web.handler.ExceptionHandler"/>
 	
 </beans>

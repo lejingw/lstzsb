@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" targetNamespace="http://ws4.apps.lejingw.com"
-	xmlns:tns="http://ws4.apps.lejingw.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema version="1.0" targetNamespace="http://ws4.apps.lejingw.com" xmlns:tns="http://ws4.apps.lejingw.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<xs:element name="Customer" type="tns:customer" />
+  <xs:element name="Customer" type="tns:customer"/>
 
-	<xs:complexType name="customer">
-		<xs:sequence>
-			<xs:element name="id" type="xs:long" />
-			<xs:element name="name" type="xs:string" minOccurs="0" />
-			<xs:element name="myPhoto" ns1:expectedContentTypes="application/octet-stream"
-				type="xs:base64Binary" minOccurs="0" xmlns:ns1="http://www.w3.org/2005/05/xmlmime" />
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="customer">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="myPhoto" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary" minOccurs="0" xmlns:ns1="http://www.w3.org/2005/05/xmlmime"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
 
