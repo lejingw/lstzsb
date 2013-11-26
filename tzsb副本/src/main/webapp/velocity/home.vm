@@ -1,0 +1,45 @@
+#set($layout = "layout/homeLayout.vm")
+##使用ztree
+#set($cssfiles = ["${rc.contextPath}/style/ztree/zTreeStyle.css"])
+#set($jsfiles = ["${rc.contextPath}/script/ztree/jquery.ztree.core-3.5.js", "${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.5.js"])
+
+<div id="myZTree" class="ztree"></div>
+<script>
+function beforeClick(treeId, treeNode, clickFlag) {
+	if(treeNode.tabUrl)
+		return true;
+	return false;
+}
+function onClick(event, treeId, treeNode, clickFlag) {
+	addTab(treeNode.name,treeNode.tabUrl)
+}
+jQuery(document).ready(function(){
+    var setting = {
+			data: {
+				simpleData: {enable: true}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick
+			}
+		};
+	//静态数据
+    var nodeDataArr =[
+    		{id:'01', pId:'0', name:'系统管理', tabname:'sys', open:false, isParent:true},
+				{id:'0101', pId:'01', name:'系统数据字典', tabname:'dict', tabUrl:'${rc.contextPath}/sys/dict/list.do?entryType=1'},
+				{id:'0102', pId:'01', name:'业务数据字典', tabname:'bizDict', tabUrl:'${rc.contextPath}/sys/dict/list.do?entryType=2'},
+				{id:'0103', pId:'01', name:'系统参数', tabname:'dict', tabUrl:'${rc.contextPath}/sys/parameter/list.do'},
+				{id:'0104', pId:'01', name:'刷新缓存', tabname:'dict', tabUrl:'${rc.contextPath}/sys/cache/list.do'},
+			{id:'02', pId:'0', name:'监察机构子系统', tabname:'move', open:true, isParent:true},
+				{id:'0201', pId:'02', name:'一级模块', tabname:'move', open:true, isParent:true},
+					{id:'020101', pId:'0201', name:'示例菜单-头行结构表单', tabname:'moveBill', tabUrl:'${rc.contextPath}/jiancha/move/moveBill/list.do'},
+					{id:'020102', pId:'0201', name:'示例菜单-文件上传下载', tabname:'moveBill', tabUrl:'${rc.contextPath}/jiancha/other/FileUpDownload/list.do'},
+			{id:'03', pId:'0', name:'行业主管部门子系统', tabname:'move', open:true, isParent:true},
+			{id:'04', pId:'0', name:'乡镇机构子系统', tabname:'move', open:true, isParent:true},
+			{id:'05', pId:'0', name:'企业单位子系统', tabname:'move', open:true, isParent:true},
+			{id:'99', pId:'0', name:'退出', tabname:'', open:true, tabUrl:'${rc.contextPath}/logout.do'}
+    	];
+	//初始化tree
+	jQuery.fn.zTree.init(jQuery("#myZTree"), setting, nodeDataArr);
+});
+</script>
