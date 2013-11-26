@@ -100,8 +100,8 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 				//file_types : "*.jpg;*.gif;*.png",
 				file_types : "*.*",
 				file_types_description : "all type files",
-				file_upload_limit : 10, //允许上传的文件个数
-				file_queue_limit : 10, //上传文件的队列大小
+				file_upload_limit : 0, //允许上传的文件个数
+				file_queue_limit : 0, //上传文件的队列大小
 				button_cursor : SWFUpload.CURSOR.HAND,
 //				custom_settings : {
 //					progressTarget : "uploadProgressTblId"
@@ -159,15 +159,6 @@ function FileProgress(file, ufObj){
 			$(targetID).deleteRow(rowIndex);
 			ufObj.cancelUpload(file.id);
 		};
-		/**
-		 * 删除列表行
-		 * @param tblId tbody的id
-		 * @param index
-		 */
-		function deleteRowByIndex(index, tblId){
-			$(tblId).deleteRow(index);
-			ufObj.cancelUpload(file.id);
-		};
 		this.deleteTD.appendChild(di);
 		//this.deleteTD.innerHTML = "<input type='button' value='删除' onclick=\"deleteRow(this,'"+targetID+"')\">";
 
@@ -180,10 +171,10 @@ function FileProgress(file, ufObj){
 		this.fileProgressID = file.id;
 		document.getElementById(targetID).appendChild(this.fileProgressTR);
 	}
+	this.setProgress = function (msg, percentage) {
+		this.fileProgressTR.childNodes[1].innerHTML = "<div style='font-size:1;margin-top:2px;background-color:#FFDD99;height:14px;width:"+percentage+"%;'>"+msg+"</div>";
+	};
+	this.setStatus = function (status) {
+		this.fileProgressTR.childNodes[1].innerHTML = status;
+	};
 }
-FileProgress.prototype.setProgress = function (msg, percentage) {
-	this.fileProgressTR.childNodes[1].innerHTML = "<div style='font-size:1;margin-top:2px;background-color:#FFDD99;height:14px;width:"+percentage+"%;'>"+msg+"</div>";
-};
-FileProgress.prototype.setStatus = function (status) {
-	this.fileProgressTR.childNodes[1].innerHTML = status;
-};
