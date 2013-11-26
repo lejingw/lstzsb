@@ -16,7 +16,16 @@ import org.apache.commons.fileupload.servlet.FileCleanerCleanup;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileCleaningTracker;
 
+import com.totyu.common.Global;
+import com.totyu.service.common.SysCommonService;
+
 public class UploadServlet extends HttpServlet {
+	private SysCommonService sysCommonService;
+	
+	public UploadServlet(){
+		super();
+		this.sysCommonService = Global.springContext.getBean(SysCommonService.class);
+	}
 
 	/**
 	 * 
@@ -32,10 +41,8 @@ public class UploadServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
-
 		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 		if (!isMultipart) {
 			System.out.println(">> This wasn't a file upload request!");
@@ -50,10 +57,9 @@ public class UploadServlet extends HttpServlet {
 		DiskFileItemFactory factory = new DiskFileItemFactory(
 				DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, tmpDir);
 		factory.setFileCleaningTracker(tracker);
-
-		// save upload file to disk
-		ServletFileUpload upload = new ServletFileUpload(factory);
+		
 		try {
+			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = upload.parseRequest(req);
 			String fileName = null;
 			File savefile = null;
@@ -63,14 +69,15 @@ public class UploadServlet extends HttpServlet {
 					fileName = item.getName();
 					savefile = new File(getBaseDir() + "/upload/" + fileName);
 					item.write(savefile);
-					System.out.println(">> [save] "
-							+ savefile.getAbsolutePath());
-
+					System.out.println(">> [save] " + savefile.getAbsolutePath());
 					// to client info
 					out.print("fileId=" + savefile.getAbsolutePath());
 					out.flush();
 				}
 			}
+			System.out.println("======"+req.getAttribute("billCode"));
+			System.out.println("======"+req.getParameter("headid"));
+//			sysCommonService.uploadFile(billCode, headid, ftList, userid);
 		} catch (Exception e) {
 			System.out.println(">> " + e.getMessage());
 			throw new IOException(e.getMessage());

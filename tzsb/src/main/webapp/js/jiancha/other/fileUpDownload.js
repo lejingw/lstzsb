@@ -126,6 +126,10 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 				upload_success_handler : uploadSuccess
 		};
 		obj.swfu = new SWFUpload(settings_object);
+		info("0")
+		obj.swfu.addPostParam("billCode", "fuck...");
+		obj.swfu.addPostParam("headid", "again...");
+		obj.swfu.setPostParams({"billCode":"aaaaa", "headid":"bbbbb"});
 	};
 	var createFileTable = function(){
 		jQuery("#"+btnPlaceHolder).after("<table style='width:600px;'><tbody id='"+obj.uploadProgressTblId+"'></tbody></table>");
@@ -156,7 +160,7 @@ function FileProgress(file, ufObj){
 		}
 		di.onclick = function (){
 			var rowIndex = di.parentNode.parentNode.rowIndex;
-			$(targetID).deleteRow(rowIndex);
+			$i(targetID).deleteRow(rowIndex);
 			ufObj.cancelUpload(file.id);
 		};
 		this.deleteTD.appendChild(di);

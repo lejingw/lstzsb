@@ -106,7 +106,7 @@
 </form>
 <script>
 function checkForm(){
-	if(!Validator.Validate($("frm"),3))
+	if(!Validator.Validate($i("frm"),3))
 		return false;
 	if($n("ornaCode").length<1){
 		alert("请添加饰品");

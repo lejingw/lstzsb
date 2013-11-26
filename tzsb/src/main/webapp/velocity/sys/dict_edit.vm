@@ -62,7 +62,7 @@ function checkField(obj){
 	return false;
 }
 function checkform(){
-	if(!Validator.Validate($("frm"),3))
+	if(!Validator.Validate($i("frm"),3))
 		return false;
 	for(var i=0;i<$n("itemOrder").length;i++){
 		if(!isNumber($n("itemOrder")[i].value)){

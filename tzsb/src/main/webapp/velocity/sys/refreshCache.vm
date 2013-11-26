@@ -60,7 +60,7 @@ function refreshItems(items){
 }
 function btnRefreshItem(obj){
 	var rowIndex = obj.parentNode.parentNode.rowIndex;
-	refreshItems($("tbl").rows[rowIndex-1].cells[1].innerHTML);
+	refreshItems($i("tbl").rows[rowIndex-1].cells[1].innerHTML);
 }
 jQuery(function(){
 	checkTable('tbl', 'chkall', 'chk', true);
@@ -73,7 +73,7 @@ jQuery(function(){
 		}
 		var items = [];
 		for(var i=0;i<indexs.length;i++){
-			items.push($("tbl").rows[indexs[i]].cells[1].innerHTML);
+			items.push($i("tbl").rows[indexs[i]].cells[1].innerHTML);
 		}
 		refreshItems(items.join(","));
 	});

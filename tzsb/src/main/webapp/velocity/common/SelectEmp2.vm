@@ -119,8 +119,8 @@ function createToolbar(){
 </table>
 <script>
 function loadStylePage(s, l){
-	for(var i=$("tb11").rows.length-1;i>=0;i--){
-		$("tb11").deleteRow(i);
+	for(var i=$i("tb11").rows.length-1;i>=0;i--){
+		$i("tb11").deleteRow(i);
 	}
 	SysCommonDwr.getExeOrgEmp(SELECTED_ORG_ID, s, l, function(datas){
 		var data = datas.pager.pageData;
