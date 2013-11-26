@@ -1,16 +1,69 @@
-function UploadFiles(btnPlaceHolder, uploadFlag) {
+function UploadFiles(btnPlaceHolder, uploadFlag, config) {
 	var obj = this;
 	this.allowUploadFlag = uploadFlag;
 	this.uploadProgressTblId = "uploadProgressTblId";
+	this.saveIdArr = [];
+	this.deleteIdArr = [];
+	this.config = config||{};
 
 	this.swfu = null;
 	this.cancelUpload = function(fileId){
 		if(!obj.swfu)	return;
 		obj.swfu.cancelUpload(fileId);
 	};
-	var fileQueued = function(file){
+	this.getSaveFileIds = function(){
+		return obj.saveIdArr;
+	};
+	this.getDeleteFileIds = function(){
+		return obj.deleteIdArr;
+	};
+	this.loadFiles = function(billCode, headid){
+		if(isNull(headid))	return;
+		SysCommonDwr.getUploadFile(billCode, headid, function(dataList){
+			var tbl = $i(obj.uploadProgressTblId);
+			for(var i=0;i<dataList.length;i++){
+				var file = dataList[i];
+				var td0 = document.createElement("td");
+				td0.innerHTML = "<a href='" + ctxPath + "/common/download.do?id=" + file.id + "'>" + file.mingcheng + "</a>";
+
+				var td1 = document.createElement("td");
+				//this.statusTD.innerHTML = "<div style='font-size:0;margin-top:2px;background-color:#FFDD99;height:14px;width:"+100+"%;'></div>";
+
+				var td2 = document.createElement("td");
+				var di = document.createElement("input");
+				di.type = 'button';
+				di.value = "删除";
+				if(!obj.allowUploadFlag){			
+					di.disabled = true;
+				}
+				di.onclick = function (){
+					var tr = this.parentNode.parentNode;
+					obj.deleteIdArr.push(tr.id);
+					var rowIndex = tr.rowIndex;
+					tbl.deleteRow(rowIndex);
+				};
+				td2.appendChild(di);
+				//this.deleteTD.innerHTML = "<input type='button' value='删除' onclick=\"deleteRow(this,'"+targetID+"')\">";
+
+				var tr = document.createElement("tr");
+				tr.id = file.id;
+				tr.appendChild(td0);
+				tr.appendChild(td1);
+				tr.appendChild(td2);
+				tbl.appendChild(tr);
+			}
+		});
+	};
+	var uploadSuccess = function(file, serverData, receivedResponse) {
+		var jsonObj = eval("(" + serverData + ")");
+		obj.saveIdArr.push(jsonObj.fileId);
 		var progress = new FileProgress(file, obj);
-		progress.setStatus("Pending...");		
+		progress.setStatus("Complete.");
+	};
+	var fileQueued = function(file){
+		obj.swfu.addFileParam(file.id, "sort", file.index);
+		var progress = new FileProgress(file, obj);
+		progress.setStatus("Pending...");
 	};
 	var fileQueueError = function(file, errorCode, message) {
 		if (errorCode === SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED) {
@@ -52,11 +105,6 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 		var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
 		var progress = new FileProgress(file, obj);
 		progress.setProgress("Uploading...", percent);
-	};
-	
-	var uploadSuccess = function(file, serverData) {
-		var progress = new FileProgress(file, obj);
-		progress.setStatus("Complete.");
 	};
 	
 	var uploadError = function(file, errorCode, message) {
@@ -103,14 +151,11 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 				file_upload_limit : 0, //允许上传的文件个数
 				file_queue_limit : 0, //上传文件的队列大小
 				button_cursor : SWFUpload.CURSOR.HAND,
-//				custom_settings : {
-//					progressTarget : "uploadProgressTblId"
-//				},
 				debug : false,
 				//button settings
 				button_width : "52",
 				button_height : "18",
-				button_image_url : ctxPath + "/js/jiancha/other/btnBackground.png",
+				button_image_url : ctxPath + "/script/swfupload/btnBackground.png",
 				button_text : '<span class="theFont">选择文件</span>',
 				button_text_style : ".theFont{font-size:12px;font-weight:bold;}",
 				button_text_left_padding : 0,
@@ -126,10 +171,6 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 				upload_success_handler : uploadSuccess
 		};
 		obj.swfu = new SWFUpload(settings_object);
-		info("0")
-		obj.swfu.addPostParam("billCode", "fuck...");
-		obj.swfu.addPostParam("headid", "again...");
-		obj.swfu.setPostParams({"billCode":"aaaaa", "headid":"bbbbb"});
 	};
 	var createFileTable = function(){
 		jQuery("#"+btnPlaceHolder).after("<table style='width:600px;'><tbody id='"+obj.uploadProgressTblId+"'></tbody></table>");

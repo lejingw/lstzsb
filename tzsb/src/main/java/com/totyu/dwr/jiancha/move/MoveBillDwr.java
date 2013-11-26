@@ -62,12 +62,9 @@ public class MoveBillDwr {
 	 * @return
 	 */
 	@RemoteMethod
-	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<FileTransfer> ftList, HttpSession session){
+	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, HttpSession session){
 		try {
-			for(FileTransfer ft : ftList){
-				System.out.println("filename = "+ft.getFilename() + "=" + ft.getInputStream());
-			}
-			moveBillService.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, ftList, CommonUtil.getSessionUserId(session));
+			moveBillService.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, saveIdList, deleteIdList, CommonUtil.getSessionUserId(session));
 		} catch (Exception e) {
 			return e.getMessage();
 		}

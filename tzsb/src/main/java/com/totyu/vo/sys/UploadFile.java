@@ -1,5 +1,8 @@
 package com.totyu.vo.sys;
 
+import org.directwebremoting.annotations.DataTransferObject;
+
+@DataTransferObject
 public class UploadFile {
 
 	private String id;

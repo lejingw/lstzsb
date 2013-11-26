@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.totyu.common.Global;
 import com.totyu.service.common.SysCommonService;
-import com.totyu.service.common.impl.SysCommonServiceImpl;
 import com.totyu.vo.sys.UploadFile;
 
 @Controller
@@ -26,8 +26,6 @@ public class SysCommonController {
 	@RequestMapping("/download")
 	public String download(String id, Model model, HttpServletRequest req, HttpServletResponse res) {
 		UploadFile uploadFile = sysCommonService.getUploadFile(id);
-		
-		
 	    OutputStream os = null;
 	    try {
 	    	os = res.getOutputStream();
@@ -36,8 +34,7 @@ public class SysCommonController {
 	        System.out.println(fileName);
 	        res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 	        res.setContentType("application/octet-stream; charset=utf-8");
-			//File file = new File("/Users/wanglj/workspaces/lstzsb_workspace/tzsb/src/main/webapp/aaa.jpg");
-	        File file = new File(SysCommonServiceImpl.ABSOLUTE_FILE_UPLOAD_PATH + uploadFile.getPath());
+	        File file = new File(Global.getPicUploadPath() + uploadFile.getPath());
 	        os.write(FileUtils.readFileToByteArray(file));
 	        os.flush();
 	    } catch(Exception e){

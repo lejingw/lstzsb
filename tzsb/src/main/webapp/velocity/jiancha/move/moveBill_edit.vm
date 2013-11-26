@@ -4,10 +4,9 @@
 #set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js",
 	"${rc.contextPath}/script/swfupload/swfupload.js",
 	"${rc.contextPath}/script/swfupload/swfupload.queue.js",
-	"${rc.contextPath}/script/swfupload/fileprogress.js",
-	"${rc.contextPath}/js/jiancha/move/handlers.js",
+	"${rc.contextPath}/js/jiancha/other/fileUpDownload.js",
 	"${rc.contextPath}/js/jiancha/move/moveBill.js",
-	"${rc.contextPath}/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
+	"${rc.contextPath}/dwr/interface/MoveBillDwr.js"])
 
 #set($modelCode = '0803010102')
 
@@ -22,7 +21,6 @@
 				<input type='button' value='保存' class='btn' id='btnSave' $RightUtil.able($session, $modelCode,'1')>
 				<input type='button' value='记账' class='btn' id='btnMark' $RightUtil.able($session, $modelCode,'2')>
     			<input type='button' value='打印' class='btn' id="btnPrint" $RightUtil.able($session, $modelCode,'3')>
-    			<input type='button' value='上传附件' class='btn' id="btnUpload">
 				<input type='button' value='返回列表' class='btn' id="btnToList">
 			</td>
 		</tr>
@@ -82,27 +80,11 @@
     </table>
     <table>
     	<tr>
-			<td style='width:33%'>上传文件1</td>
-			<td>
-				<input type="file" id="file1" value=""/>
-			</td>
-		</tr>
-    	<tr>
-			<td style='width:33%'>上传文件2</td>
-			<td>
-				<input type="file" id="file2" value=""/>
+			<td colspan='8'>
+				<span id="btnPlaceHolder"></span>
 			</td>
 		</tr>
 	</table>
-	
-    <div id="uploadProgressId" class="fieldset">
-        <span class="legend">Upload Queue</span>
-    </div>
-    <div id="divStatus">0 Files Uploaded</div>
-    <div>
-        <span id="btnPlaceHolder"></span>
-        <input id="btnCancel" type="button" value="取消上传" onclick="swfu.cancelQueue()" disabled="disabled"/>
-    </div>
 </form>
 <script>
 function checkForm(){
@@ -148,8 +130,7 @@ function saveform(status){
 
 function saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, action){
 	showLayer(true);
-	var fileArr = [dwr.util.getValue('file1'), dwr.util.getValue('file2')];
-    MoveBillDwr.saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, fileArr, function(data){
+    MoveBillDwr.saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, uploadFiles.getSaveFileIds(), uploadFiles.getDeleteFileIds(), function(data){
 		showLayer(false);
     	alert(data?data:action+"成功", function(){
 			if(!data){
@@ -164,7 +145,6 @@ jQuery(function(){
 	checkTable('tbl', 'chkall', 'chk', true);
 	jQuery("#btnSave").click(function(){saveform("1");});
 	jQuery("#btnMark").click(function(){saveform("2");});
-	//jQuery("#btnUpload").click(fileUploadFun);
 	jQuery("#btnPrint").click(printMoveBill);
 	
 	//返回列表
@@ -179,8 +159,10 @@ jQuery(function(){
 	setValues();
 	changeButtons();
 	
-	initFileUpload222();
+	uploadFiles = new UploadFiles('btnPlaceHolder', true);
+	uploadFiles.loadFiles("TB", jQuery("#headid").val());
 });
+var uploadFiles = null;
 function setContent(){
 	initCalendar('dodate');
 }

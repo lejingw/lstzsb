@@ -24,8 +24,6 @@ public class MoveBillServiceImpl extends BaseService implements MoveBillService 
 	private MoveBillDao moveBillDao;
 	@Autowired
 	private SysCommonDao sysCommonDao;
-	@Autowired
-	private SysCommonService sysCommonService;
 
 	public SysCommonDao getCommonDao() {
 		return sysCommonDao;
@@ -73,7 +71,7 @@ public class MoveBillServiceImpl extends BaseService implements MoveBillService 
 	 * @param deleteOrnaCodeList 删除的行记录
 	 * @return
 	 */
-	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<FileTransfer> ftList, String userid) {
+	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, String userid) {
 		try {
 			String headid = moveHead.getHeadid();
 			if (StringUtil.isEmpty(headid)) {
@@ -86,7 +84,7 @@ public class MoveBillServiceImpl extends BaseService implements MoveBillService 
 			}
 			moveBillDao.saveMoveBillLine(newOrnaCodeList, headid, userid);
 			moveBillDao.updateMoveBillSumNum(headid, userid);
-			sysCommonService.uploadFile(sysCommonDao.getBillno(DictConstant.BILL_CODE_TIAOBODAN), headid, ftList, userid);
+			sysCommonDao.updateLoadFiles(DictConstant.BILL_CODE_TIAOBODAN, headid, saveIdList, deleteIdList, userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("保存失败");
