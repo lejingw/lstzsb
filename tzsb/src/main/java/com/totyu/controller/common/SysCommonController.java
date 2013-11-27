@@ -3,6 +3,7 @@ package com.totyu.controller.common;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,15 +31,15 @@ public class SysCommonController {
 	    try {
 	    	os = res.getOutputStream();
 	        res.reset();
-	        String fileName = new String(uploadFile.getMingcheng().getBytes("GBK"), "UTF-8");
-	        System.out.println(fileName);
-	        res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+	        //String fileName = uploadFile.getMingcheng();//new String(uploadFile.getMingcheng().getBytes("GBK"), "UTF-8");
+	        String fileName = URLEncoder.encode(uploadFile.getMingcheng(),"utf-8");
+	        res.setHeader("Content-Disposition", "attachment; filename=" + fileName + "");
 	        res.setContentType("application/octet-stream; charset=utf-8");
 	        File file = new File(Global.getPicUploadPath() + uploadFile.getPath());
 	        os.write(FileUtils.readFileToByteArray(file));
 	        os.flush();
 	    } catch(Exception e){
-	    	
+	    	e.printStackTrace();
 	    } finally {
 	    	try {
             	if (os != null) {
