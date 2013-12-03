@@ -126,7 +126,6 @@ function UploadFiles(btnPlaceHolder, uploadFlag) {
 				upload_success_handler : uploadSuccess
 		};
 		obj.swfu = new SWFUpload(settings_object);
-		info("0")
 		obj.swfu.addPostParam("billCode", "fuck...");
 		obj.swfu.addPostParam("headid", "again...");
 		obj.swfu.setPostParams({"billCode":"aaaaa", "headid":"bbbbb"});

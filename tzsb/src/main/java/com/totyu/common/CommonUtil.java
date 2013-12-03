@@ -224,12 +224,7 @@ public class CommonUtil {
 			keys = new String[0];
 		}
 	    String[] pageKeys = Arrays.copyOf(keys, keys.length + 2);
-//	    System.arraycopy(cs, 0, newElements, len, cs.length);
-	    
-//		String[] pageKeys = new String[keys.length + 2];
-//		for(int i=0;i<keys.length;i++){
-//			pageKeys[i] = keys[i];
-//		}
+
 		pageKeys[keys.length] = "start";
 		pageKeys[keys.length + 1] = "limit";
 		return pageKeys;
