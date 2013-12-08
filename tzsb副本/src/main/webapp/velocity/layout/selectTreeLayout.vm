@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>SCM</title>
+    <link href="${rc.contextPath}/style/ztree/zTreeStyle.css" type="text/css" rel="stylesheet" />
+    
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.core-3.5.js" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.5.js" charset="UTF-8"></script>
+<script>
+var callbackFn = null;
+//供外部调用的取值方法
+function getValues(){
+	var idArr = [], nameArr = [], nodeArr = [];
+	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
+	var nodes = zTree.getCheckedNodes(true);
+	for(var i=0;i<nodes.length;i++){
+		idArr.push(nodes[i].id);
+		nameArr.push(nodes[i].name);
+		nodeArr.push(nodes[i]);
+	}
+	if(callbackFn){
+		return [idArr, nameArr, callbackFn(nodeArr)];
+	}else{
+		return [idArr, nameArr];
+	}
+}
+function initTree(dataArr, multiFlag, selectedValues){
+	var checkCfg = {enable:true, chkboxType:{'Y':'','N':''}};
+	var radioCheckCfg = {enable:true, chkboxType:{'Y':'','N':''},chkStyle:'radio',radioType:'all'};
+	var setting = {
+    	view : {selectedMulti : false},
+    	check : multiFlag ? checkCfg : radioCheckCfg,//多选和单选采用不同的配置
+    	data : {simpleData : {enable : true}},
+		callback: {//当单据树节点时，选中或取消勾选状态
+			"onClick": function(event, treeId, treeNode){
+				var flag = treeNode.checked;
+				if(!multiFlag){
+					checkAllNodes(false);
+				}
+    			jQuery.fn.zTree.getZTreeObj(treeId).checkNode(treeNode, !flag);
+			}
+		}
+    };
+	//初始化tree
+	jQuery.fn.zTree.init(jQuery("#myZTree"), setting, dataArr);
+	if(!multiFlag){
+		jQuery("#btnSelectAll").hide();
+	}
+	selectItems(selectedValues);
+}
+//勾选已选中项
+function selectItems(selectedValues){
+	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
+	var vals = selectedValues.split(",");
+	for(var i=0;i<vals.length;i++){
+		if(vals[i]){
+    		var node = zTree.getNodeByParam("id", vals[i]);
+			zTree.checkNode(node, true);
+			
+			var arr = [], n;
+			while(n = node.getParentNode()){
+				arr.push(n);
+				node = n;
+			}
+			while(n = arr.pop()){
+    			zTree.expandNode(n, true, false, true);
+			}
+		}
+	}
+}
+function checkSubNodes(tree, node, flag){
+	tree.checkNode(node, flag);
+	var childs = node.children;
+	if(!childs)	return ;
+	for(var i=0;i<childs.length;i++){
+		 checkSubNodes(tree, childs[i], flag);
+	}
+}
+function checkAllNodes(flag){
+	var zTree = jQuery.fn.zTree.getZTreeObj("myZTree");
+	var allNodes = zTree.getNodes();
+	for(var i=0;i<allNodes.length;i++){
+		checkSubNodes(zTree, allNodes[i], flag);
+	}
+}
+</script>
+</head>
+<body>
+	<input type="button" id="btnSelectAll" value="全选" class='btn' onclick="checkAllNodes(true)"/>
+	<input type="button" value="清空" class='btn' onclick="checkAllNodes(false)"/>
+	<div id="myZTree" class="ztree"></div>
+	$screen_content
+</body>
+</html>

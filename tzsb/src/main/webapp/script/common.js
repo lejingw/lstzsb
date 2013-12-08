@@ -1,7 +1,7 @@
 /**
  * 根据id，返回dom对象
  */
-function $(id) {
+function $i(id) {
     return document.getElementById(id);
 }
 /**
@@ -22,39 +22,10 @@ function apply(obj, obj2){
 	return obj;
 }
 window.info = window.alert;
-//window.info = function(){};
 window.alert = function(msg, callback){
-	/*
-	return jQuery.weeboxs.open(""+msg, {
-			title:'提示',
-			type:'alert',
-			boxid:'alertDiv',
-			closeable:false,
-			onok:function(box){
-				if(callback){callback();};
-				box.close();
-			}
-		});
-	*/
 	jAlert(msg, "提示", callback);
 };
 window.confirm = function(msg, okfunc, cancelfunc){
-	/*
-	jQuery.weeboxs.open(""+msg, {
-			title:'确认',
-			boxid:'confirmDiv',
-			closeable:true,
-			onok:function(box){
-				if(okfunc){okfunc();};
-				box.close();
-			},
-			oncancel:function(box){
-				if(cancelfunc){cancelfunc();};
-				box.close();
-			}
-		});
-	return false;
-	*/
 	jConfirm(msg, "确认", function(flag){
 		if(flag && okfunc){
 			try{okfunc();}catch(e){}
@@ -63,33 +34,6 @@ window.confirm = function(msg, okfunc, cancelfunc){
 		}
 	});
 };
-/**
- * 显示遮罩层
-function showLayer(status) {
-	switch( status ) {
-		case true:
-			showLayer(false);
-			jQuery("BODY").append('<div id="confirm_loading"></div>');
-			jQuery("#confirm_loading").css({
-				position: 'absolute',
-				zIndex: 99999,
-				top: '0px',
-				left: '0px',
-				width: '100%',
-				height: jQuery(document).height(),
-				background: '#AAA',
-				opacity: .5,
-				"background-image": "url('"+ctxPath+"/css/img/loading.gif')",
-				"background-repeat": "no-repeat",
-				"background-position": "center"
-			});
-		break;
-		case false:
-			jQuery("#confirm_loading").remove();
-		break;
-	}
-}
- */
 window.confirm2 = function(msg, okBtnName, okfunc, cancelBtnName, cancelfunc){
 	jQuery.weeboxs.open(""+msg, {
 			title:'确认',
@@ -259,10 +203,10 @@ function insertRow(tblId, tdHtmlArr, insertFirstFlag){
 	if(!tdHtmlArr || tdHtmlArr.length<1)	return;
 	var tr = null;
 	if(insertFirstFlag){
-		tr = $(tblId).insertRow(0);
+		tr = $i(tblId).insertRow(0);
 	}else{
 		tr = document.createElement("TR");
-		$(tblId).appendChild(tr);
+		$i(tblId).appendChild(tr);
 	}
 	for(var i=0;i<tdHtmlArr.length;i++){
 		var td = document.createElement("TD");
@@ -270,9 +214,9 @@ function insertRow(tblId, tdHtmlArr, insertFirstFlag){
 		tr.appendChild(td);
 	}
 	var className = "row1";
-	if($(tblId).rows.length>1){
+	if($i(tblId).rows.length>1){
 		var index = tr.rowIndex + (insertFirstFlag?0:-2);
-		if($(tblId).rows[index].className == "row1")
+		if($i(tblId).rows[index].className == "row1")
 			className = "row2";
 		else
 			className = "row1";
@@ -297,7 +241,7 @@ function deleteRow(obj, tblId){
  * @param index
  */
 function deleteRowByIndex(index, tblId){
-	$(tblId).deleteRow(index);
+	$i(tblId).deleteRow(index);
 }
 /**
  * 删除下拉框所有内容
@@ -305,7 +249,7 @@ function deleteRowByIndex(index, tblId){
 * showEmptyOptionFlag true 显示'--请选择--"选项 <可选 默认为false>
  */
 function removeAllOptions(sltId,showEmptyOptionFlag){
-	var slt = ((typeof sltId == 'string')?$(sltId):sltId);
+	var slt = ((typeof sltId == 'string')?$i(sltId):sltId);
 	var length = slt.options.length;
 	for(var i=length-1;i>=0;i--){
 		slt.options.remove(i);
@@ -322,7 +266,7 @@ function removeAllOptions(sltId,showEmptyOptionFlag){
  * @param value 添加选项的值
  */
 function addOption(sltId, key, value, selectedFlag){
-	var slt = ((typeof sltId == 'string')?$(sltId):sltId);
+	var slt = ((typeof sltId == 'string')?$i(sltId):sltId);
 	var op = new Option(value, key);
 	if(selectedFlag)
 		op.selected = true;
@@ -375,7 +319,7 @@ function addOptions2(sltName, index, data, keyName, valueName, clearAll, showEmp
  * @param val 选中的值（单选）
  */
 function selectOption(sltId, val){
-	var slt = ((typeof sltId == 'string')?$(sltId):sltId);
+	var slt = ((typeof sltId == 'string')?$$i(ltId):sltId);
 	var length = slt.options.length;
 	for(var i=0;i<length;i++){
 		if(slt.options[i].value == val){
@@ -389,7 +333,7 @@ function selectOption(sltId, val){
  * @param val 选中的值（单选）
  */
 function selectOptionByText(sltId, txt){
-	var slt = ((typeof sltId == 'string')?$(sltId):sltId);
+	var slt = ((typeof sltId == 'string')?$i(sltId):sltId);
 	var length = slt.options.length;
 	for(var i=0;i<length;i++){
 		if(slt.options[i].text == txt){
@@ -541,13 +485,13 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	document.write("<input type='hidden' id='start' name='start' value=''/>");
 	document.write("<input type='hidden' id='limit' name='limit' value=''/>");
 	document.write("<input type='hidden' id='_totalCount' value=''/>");
-	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/css/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
-	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/css/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
+	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/style/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
+	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/style/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
 	document.write("当前第<input type='text' id='_pageindex' style='width:25px;height:12px;text-align:center;' value=''>页&nbsp;");
 	document.write("共<input type='text' id='_totalPageCount' style='width:40px;height:12px;text-align:center;background-color:#EBEBEB;' value='' readonly>页&nbsp;");
-	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/css/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
-	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/css/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
-	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/css/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
+	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/style/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
+	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/style/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
+	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/style/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
 	
 	document.write("每页<input type='text' id='_pageCount' style='width:25px;height:12px;text-align:center;' value=''>条&nbsp;");
 	document.write("显示第 "+(start+1)+" 条到 "+(start + limit)+" 条记录，一共 "+totalCount+" 条");
@@ -561,15 +505,15 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	jQuery("#_totalCount").val(totalCount);
 	
 	if(parseInt(jQuery("#_pageindex").val())<=1){
-		jQuery("#_btnPre").attr('src', "" + ctxPath + "/css/img/page-prev-disabled.gif");
-		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/css/img/page-first-disabled.gif");
+		jQuery("#_btnPre").attr('src', "" + ctxPath + "/style/img/page-prev-disabled.gif");
+		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/style/img/page-first-disabled.gif");
 		
 		jQuery("#_btnPre").attr('disabled', true);
 		jQuery("#_btnFirst").attr("disabled", true);
 	}
 	if(parseInt(jQuery("#_pageindex").val())>=parseInt(jQuery("#_totalPageCount").val())){
-		jQuery("#_btnNext").attr('src', ctxPath + "/css/img/page-next-disabled.gif");
-		jQuery("#_btnLast").attr("src", ctxPath + "/css/img/page-last-disabled.gif");
+		jQuery("#_btnNext").attr('src', ctxPath + "/style/img/page-next-disabled.gif");
+		jQuery("#_btnLast").attr("src", ctxPath + "/style/img/page-last-disabled.gif");
 		
 		jQuery("#_btnNext").attr('disabled', true);
 		jQuery("#_btnLast").attr("disabled", true);

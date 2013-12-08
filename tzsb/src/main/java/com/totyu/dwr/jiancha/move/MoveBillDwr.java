@@ -2,13 +2,13 @@ package com.totyu.dwr.jiancha.move;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
+import org.directwebremoting.io.FileTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -62,9 +62,9 @@ public class MoveBillDwr {
 	 * @return
 	 */
 	@RemoteMethod
-	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, HttpSession session){
+	public String saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, HttpSession session){
 		try {
-			moveBillService.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, CommonUtil.getSessionUserId(session));
+			moveBillService.saveMoveBill(moveHead, newOrnaCodeList, deleteOrnaCodeList, saveIdList, deleteIdList, CommonUtil.getSessionUserId(session));
 		} catch (Exception e) {
 			return e.getMessage();
 		}

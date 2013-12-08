@@ -11,10 +11,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.totyu.common.Global;
 import com.totyu.web.util.StringUtil;
-/**
- * servletcontext 监听器
- * 
- */
+
 public class TzsbServletContextListener implements ServletContextListener {
 
 	private static final Logger log = Logger.getLogger(TzsbServletContextListener.class);
@@ -26,10 +23,9 @@ public class TzsbServletContextListener implements ServletContextListener {
      * servletContext 初始化时候做同步配置文件工作
      */
     public void contextInitialized(ServletContextEvent event) {
-    	Properties global = new Properties();
     	try {
     		InputStream is = getClass().getResourceAsStream("/global.properties");
-    		global.load(is);
+    		Global.load(is);
         } catch (Exception e) {
             log.debug("加载属性文件出错:/global.properties", e);
         }

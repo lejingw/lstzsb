@@ -3,6 +3,8 @@ package com.totyu.service.jiancha.move;
 import java.util.List;
 import java.util.Map;
 
+import org.directwebremoting.io.FileTransfer;
+
 import com.totyu.common.Pager;
 import com.totyu.vo.jiancha.move.MoveBillHead;
 import com.totyu.vo.jiancha.move.MoveBillLine;
@@ -37,7 +39,7 @@ public interface MoveBillService {
 	 * @param deleteOrnaCodeList 删除的行记录
 	 * @return
 	 */
-	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, String userid);
+	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, String userid);
 	/**
 	 * 删除调拨单
 	 * @param netIdList

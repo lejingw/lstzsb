@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysCommon">
+	<!-- 根据sql语句查询单个返回值 -->
+	<select id="SysCommon.querySingleString" resultClass="string" parameterClass="string">
+		$value$
+	</select>
+	
+	<!-- 获取当前特定单据编号的下标 -->
+	<select id="SysCommon.getCurrentBillnoIndex" resultClass="string" parameterClass="map">
+		select concat(c.biz_index) as "bizIndex" from jat_sys_index c where c.biz_type = #bizType# and c.biz_code = #bizCode# and c.biz_date = #bizDate#
+	</select>
+	<insert id="SysCommon.createIndex" parameterClass="map">
+		insert into jat_sys_index(biz_type, biz_code, biz_date, biz_index)values(#bizType#, #bizCode#, #bizDate#, #bizIndex#)
+	</insert>
+	<update id="SysCommon.increaseIndex" parameterClass="map">
+		update jat_sys_index a set a.biz_index = a.biz_index + 1 where a.biz_type = #bizType# and a.biz_code = #bizCode# and a.biz_date = #bizDate#
+	</update>
+	
+	<!-- 获取所有系统参数 -->
+	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.sys.Parameter">
+		select a.param_name as "name", a.param_value as "value", a.memo as "memo" from jat_sys_parameter a where a.status = '1' order by a.param_name
+	</select>
+	
+	<!-- 组织Org -->
+	<typeAlias alias="Org" type="com.totyu.vo.basic.Org" />
+	<resultMap id="orgResult" class="Org">
+		<result property="orgId" column="org_id"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="orgName" column="org_name"/>
+	</resultMap>
+	<!-- 获取所有组织数据 -->
+	<select id="SysCommon.getOrgTree" resultMap="orgResult" parameterClass="string">
+		select a.org_id, a.parent_id, a.org_name from jat_sm_org a where a.status = 1 order by a.parent_id, a.org_id
+	</select>
+	<!-- 保存上传文件数据 -->
+	<insert id="SysCommon.saveUploadFile" parameterClass="com.totyu.vo.sys.UploadFile">
+		insert into t_xt_fujian(laiyuan, lyid, shunxu, mingcheng, path, create_id, create_date, status)
+		values(#laiyuan#, #lyid#, #shunxu#, #mingcheng#, #path#, #createId#, now(), 1)
+        <selectKey keyProperty="id">
+        	SELECT last_insert_id() as id
+        </selectKey>
+	</insert>
+	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
+		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#
+	</select>
+</sqlMap>

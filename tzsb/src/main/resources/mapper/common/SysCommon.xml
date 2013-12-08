@@ -34,4 +34,24 @@
 	<select id="SysCommon.getOrgTree" resultMap="orgResult" parameterClass="string">
 		select a.org_id, a.parent_id, a.org_name from jat_sm_org a where a.status = 1 order by a.parent_id, a.org_id
 	</select>
+	<!-- 保存上传文件数据 -->
+	<insert id="SysCommon.saveUploadFile" parameterClass="com.totyu.vo.sys.UploadFile">
+		insert into t_xt_fujian(laiyuan, lyid, shunxu, mingcheng, path, create_id, create_date, status)
+		values(#laiyuan#, #lyid#, #shunxu#, #mingcheng#, #path#, #createId#, now(), 1)
+        <selectKey keyProperty="id">
+        	SELECT last_insert_id() as id
+        </selectKey>
+	</insert>
+	<select id="SysCommon.getUploadFileList" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="map">
+		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.shunxu, a.id
+	</select>
+	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
+		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#
+	</select>
+	<update id="SysCommon.updateLoadFiles1" parameterClass="map">
+		update t_xt_fujian set laiyuan = #billCode#, lyid = #headid#, create_id = #userid# where id = #id#
+	</update>
+	<delete id="SysCommon.updateLoadFiles2" parameterClass="string">
+		delete from t_xt_fujian where id = #value#
+	</delete>
 </sqlMap>

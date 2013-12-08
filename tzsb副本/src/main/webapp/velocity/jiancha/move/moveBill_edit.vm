@@ -1,0 +1,234 @@
+#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css",
+	"${rc.contextPath}/script/swfupload/fileprogress.css"])
+
+#set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js",
+	"${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/script/swfupload/swfupload.queue.js",
+	"${rc.contextPath}/script/swfupload/fileprogress.js",
+	"${rc.contextPath}/js/jiancha/move/handlers.js",
+	"${rc.contextPath}/js/jiancha/move/moveBill.js",
+	"${rc.contextPath}/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
+
+#set($modelCode = '0803010102')
+
+<form id='frm' action="" method="post">
+	<input type='hidden' id='headid' value='$!{head.headid}'/>
+    <table class="title">
+    	<tr><td>调拨单</td></tr>
+    </table>
+    <table class="control">
+    	<tr>
+			<td>
+				<input type='button' value='保存' class='btn' id='btnSave' $RightUtil.able($session, $modelCode,'1')>
+				<input type='button' value='记账' class='btn' id='btnMark' $RightUtil.able($session, $modelCode,'2')>
+    			<input type='button' value='打印' class='btn' id="btnPrint" $RightUtil.able($session, $modelCode,'3')>
+    			<input type='button' value='上传附件' class='btn' id="btnUpload">
+				<input type='button' value='返回列表' class='btn' id="btnToList">
+			</td>
+		</tr>
+    </table>
+    <table class='content'>
+    	<tr>
+			<td class='body1'>单据编号</td><td class='body2'><input type='text' readonly id='billno' value='自动生成'/></td>
+			<td class='body1'>单据状态</td><td class='body2'><input type='text' readonly id='status' value='保存'/></td>
+			<td class='body1'>单据日期</td><td class='body2'><input type='text' readonly id='dodate' value='$!{DateUtil.getCurrentDate10()}'/></td>
+			<td class='body1'>创建人</td><td class='body2'><input type='text' readonly id='createName' value='$!{StringUtil.getUserName($session)}'/></td>
+		</tr>
+    	<tr>
+    		<td class='body1'>调出组织</td><td class='body2'>
+				<input type='hidden' id='outOrgId' value="$!StringUtil.getOrgId($session)">
+				<input type='text' id='outOrgName' value="$!StringUtil.getOrgName($session)" readonly>
+			</td>
+			<td class='body1'>调入组织</td><td class='body2'>
+				<input type='hidden' id='inOrgId'>
+				<input type='text' id='inOrgName' readonly class='target' ondblclick="showInOrgWin()" dataType="Require" msg="不能为空">
+            </td>
+			<td class='body1'>件数合计</td><td class='body2'><input type='text' readonly id='sumCount' value='$!{head.sumCount}'/></td>
+			<td class='body1'>重量合计</td><td class='body2'><input type='text' readonly id='sumWeight' value='$!{head.sumWeight}'/></td>
+		</tr>
+    	<tr>
+			<td class='body1'>编码</td><td class='body2'><input type='text' id='ornaCode_in' value='0001'/></td>
+			<td class='body1'>备注</td><td class='body2' colspan="5"><input type='text' id='memo' value='$!{head.memo}' style="width:95%;"/></td>
+		</tr>
+    </table>
+	<table class='list'>
+		<thead>
+			<tr>
+				<th><input type='checkbox' id='chkall'/></th>
+				<th>编码</th>
+				<th>名称</th>
+				<th>重量</th>
+				<th>状态</th>
+				<th width='60px;'></th>
+			</tr>
+		</thead>
+		<tbody id='tbl'>
+		#foreach($item in $lineList)
+			<tr>
+				<td>
+					<input type='checkbox' name='chk'/>
+            		<input type='hidden' name='lineid' value='$!{item.lineid}'/>
+            		<input type='hidden' name='ornaCode' value='$!{item.ornaCode}'/>
+            		<input type='hidden' name='weight' value='$!{item.weight}'/>
+				</td>
+				<td>$!item.ornaCode</td>
+				<td>$!item.ornaDsc</td>
+				<td>$!item.weight</td>
+				<td>$!DictUtil.getValue('status', $!item.status)</td>
+				<td><input type='button' class='btn' name="deleteBtn" value='删除' onclick='deleteMoveRow(this)'/></td>
+			</tr>
+		#end
+        </tbody>
+    </table>
+    <table>
+    	<tr>
+			<td style='width:33%'>上传文件1</td>
+			<td>
+				<input type="file" id="file1" value=""/>
+			</td>
+		</tr>
+    	<tr>
+			<td style='width:33%'>上传文件2</td>
+			<td>
+				<input type="file" id="file2" value=""/>
+			</td>
+		</tr>
+	</table>
+	
+    <div id="uploadProgressId" class="fieldset">
+        <span class="legend">Upload Queue</span>
+    </div>
+    <div id="divStatus">0 Files Uploaded</div>
+    <div>
+        <span id="btnPlaceHolder"></span>
+        <input id="btnCancel" type="button" value="取消上传" onclick="swfu.cancelQueue()" disabled="disabled"/>
+    </div>
+</form>
+<script>
+function checkForm(){
+	if(!Validator.Validate($("frm"),3))
+		return false;
+	if($n("ornaCode").length<1){
+		alert("请添加饰品");
+		return false;
+	}
+	return true;
+}
+function saveform(status){
+	if(!checkForm())	return;
+	var action = "1" == status?"保存":("2" == status?"记账":"");
+	confirm("确定"+action+"?", function(){
+		var moveHead = {
+			headid : jQuery("#headid").val(),
+			billno : jQuery("#billno").val(),
+			dodate : jQuery("#dodate").val(),
+			outOrgId : jQuery("#outOrgId").val(),
+			inOrgId : jQuery("#inOrgId").val(),
+			memo : jQuery("#memo").val(),
+			status : status
+		};
+		var newOrnaCodeArr = [];
+		for(var i=0;i<$n("ornaCode").length;i++){
+			//lineid为空表示新添加
+			if(isNull($n("lineid")[i].value)){
+    			newOrnaCodeArr.push($n("ornaCode")[i].value);
+			}
+		}
+		showLayer(true);
+		MoveBillDwr.checkOrnaStatusAvail(newOrnaCodeArr, function(data){
+    		showLayer(false);
+			if(data){
+				alert("编码：<br>"+data.join("<br>")+"<br>状态不为有效，不能进行调拨");
+				return ;
+			}
+    		saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, action);
+		});
+	});
+}
+
+function saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, action){
+	showLayer(true);
+	var fileArr = [dwr.util.getValue('file1'), dwr.util.getValue('file2')];
+    MoveBillDwr.saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, fileArr, function(data){
+		showLayer(false);
+    	alert(data?data:action+"成功", function(){
+			if(!data){
+        		window.location = "${rc.contextPath}/jiancha/move/moveBill/list.do";
+			}
+    	});
+    });
+}
+//修改时删除的行id
+var deleteOrnaCodeArr = [];
+jQuery(function(){
+	checkTable('tbl', 'chkall', 'chk', true);
+	jQuery("#btnSave").click(function(){saveform("1");});
+	jQuery("#btnMark").click(function(){saveform("2");});
+	//jQuery("#btnUpload").click(fileUploadFun);
+	jQuery("#btnPrint").click(printMoveBill);
+	
+	//返回列表
+	jQuery("#btnToList").click(function(){
+		forward("${rc.contextPath}/jiancha/move/moveBill/list.do");
+	});
+	setEnterKey('ornaCode_in', function(){
+		getMaterActiveInfo(jQuery("#ornaCode_in").val());
+	});
+	
+	setContent();
+	setValues();
+	changeButtons();
+	
+	initFileUpload222();
+});
+function setContent(){
+	initCalendar('dodate');
+}
+function setValues(){
+	if(isNull(jQuery("#headid").val()))	return ;
+	jQuery("#billno").val("$!{head.billno}");
+	jQuery("#status").val("$!DictUtil.getValue('status', $!{head.status})");
+	jQuery("#dodate").val("$!{head.dodate}");
+	jQuery("#createName").val("$!BdCommon.getUserName($!{head.createId})");
+	
+	jQuery("#outOrgId").val("$!{head.outOrgId}");
+	jQuery("#outOrgName").val("$!BdCommon.getOrgName($!{head.outOrgId})");
+	
+	jQuery("#inOrgId").val("$!{head.inOrgId}");
+	jQuery("#inOrgName").val("$!BdCommon.getOrgName($!{head.inOrgId})");
+	
+	calcSum();
+}
+function showInOrgWin(){
+	selectOrg(function(idArr, nameArr){
+		jQuery("#inOrgId").val(idArr.join(','));
+		jQuery("#inOrgName").val(nameArr.join(','));
+	}, null, null, false, jQuery("#inOrgId").val());
+}
+function changeButtons(){
+	jQuery("#btnSave").attr("disabled", true);
+	jQuery("#btnMark").attr("disabled", true);
+	
+	if(("1" == "$!{head.status}" || isNull("$!{head.status}"))){
+    	jQuery("#btnSave").attr("disabled", false);
+    	jQuery("#btnMark").attr("disabled", false);
+	}
+}
+/**
+ * 打印单据
+ */
+function printMoveBill(){
+	var options = {
+		title : '打印调拨单',
+		contentType : 'iframe',
+		iframeId : "billFrm",
+		width : 800,
+		height : 350,
+		okBtnName : '确定',
+		//cancelBtnName : '取消',
+		showCancelBtn : false
+	};
+	var url = ctxPath + '/jiancha/move/moveBill.vm?user_action=printbill&headid=' + jQuery("#headid").val();
+	jQuery.weeboxs.open(url, options);
+}
+</script>

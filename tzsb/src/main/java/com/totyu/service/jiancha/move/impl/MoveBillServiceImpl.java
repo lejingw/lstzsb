@@ -3,6 +3,7 @@ package com.totyu.service.jiancha.move.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.directwebremoting.io.FileTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.totyu.common.constant.DictConstant;
 import com.totyu.dao.common.SysCommonDao;
 import com.totyu.dao.jiancha.move.MoveBillDao;
 import com.totyu.service.BaseService;
+import com.totyu.service.common.SysCommonService;
 import com.totyu.service.jiancha.move.MoveBillService;
 import com.totyu.vo.jiancha.move.MoveBillHead;
 import com.totyu.vo.jiancha.move.MoveBillLine;
@@ -69,7 +71,7 @@ public class MoveBillServiceImpl extends BaseService implements MoveBillService 
 	 * @param deleteOrnaCodeList 删除的行记录
 	 * @return
 	 */
-	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, String userid) {
+	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, String userid) {
 		try {
 			String headid = moveHead.getHeadid();
 			if (StringUtil.isEmpty(headid)) {
@@ -82,6 +84,7 @@ public class MoveBillServiceImpl extends BaseService implements MoveBillService 
 			}
 			moveBillDao.saveMoveBillLine(newOrnaCodeList, headid, userid);
 			moveBillDao.updateMoveBillSumNum(headid, userid);
+			sysCommonDao.updateLoadFiles(DictConstant.BILL_CODE_TIAOBODAN, headid, saveIdList, deleteIdList, userid);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("保存失败");

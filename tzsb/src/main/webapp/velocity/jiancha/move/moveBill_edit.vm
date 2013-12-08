@@ -1,8 +1,12 @@
-#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css"])
+#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css",
+	"${rc.contextPath}/script/swfupload/fileprogress.css"])
 
 #set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js",
+	"${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/script/swfupload/swfupload.queue.js",
+	"${rc.contextPath}/js/jiancha/other/fileUpDownload.js",
 	"${rc.contextPath}/js/jiancha/move/moveBill.js",
-	"${rc.contextPath}/dwr/interface/MoveBillDwr.js?t=201208061433.js"])
+	"${rc.contextPath}/dwr/interface/MoveBillDwr.js"])
 
 #set($modelCode = '0803010102')
 
@@ -74,10 +78,17 @@
 		#end
         </tbody>
     </table>
+    <table>
+    	<tr>
+			<td colspan='8'>
+				<span id="btnPlaceHolder"></span>
+			</td>
+		</tr>
+	</table>
 </form>
 <script>
 function checkForm(){
-	if(!Validator.Validate($("frm"),3))
+	if(!Validator.Validate($i("frm"),3))
 		return false;
 	if($n("ornaCode").length<1){
 		alert("请添加饰品");
@@ -119,7 +130,7 @@ function saveform(status){
 
 function saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, action){
 	showLayer(true);
-    MoveBillDwr.saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, function(data){
+    MoveBillDwr.saveMoveBill(moveHead, newOrnaCodeArr, deleteOrnaCodeArr, uploadFiles.getSaveFileIds(), uploadFiles.getDeleteFileIds(), function(data){
 		showLayer(false);
     	alert(data?data:action+"成功", function(){
 			if(!data){
@@ -147,7 +158,11 @@ jQuery(function(){
 	setContent();
 	setValues();
 	changeButtons();
+	
+	uploadFiles = new UploadFiles('btnPlaceHolder', true);
+	uploadFiles.loadFiles("TB", jQuery("#headid").val());
 });
+var uploadFiles = null;
 function setContent(){
 	initCalendar('dodate');
 }

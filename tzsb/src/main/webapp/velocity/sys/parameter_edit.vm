@@ -38,7 +38,7 @@
 <script>
 //检查表单有效性
 function checkForm(){
-	if(!Validator.Validate($("frm"),3))
+	if(!Validator.Validate($i("frm"),3))
 		return false;
 	return true;
 }

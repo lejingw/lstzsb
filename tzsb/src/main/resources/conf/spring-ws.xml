@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
     xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
@@ -16,4 +17,53 @@
 
     <bean id="helloService" class="com.lejingw.apps.ws2.HelloServiceSEI" />
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
+        http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+
+	<wss:binding url="/Hello2Service">
+		<wss:service>
+			<ws:service bean="#hello2WsService">
+				<ws:metadata>
+					<value>/WEB-INF/wsdl2/Hello2WsService_schema1.xsd</value>
+				</ws:metadata>
+			</ws:service>
+		</wss:service>
+	</wss:binding>
+	<bean id="hello2WsService" class="com.lejingw.apps.ws2.Hello2WsService" />
+
+
+	<wss:binding url="/Hello3Service">
+		<wss:service>
+			<ws:service bean="#hello3WsService">
+				<ws:handlers>
+					<ref bean="authValidationHandler"/>
+				</ws:handlers>
+				<ws:metadata>
+					<value>/WEB-INF/wsdl31/hello3.xsd</value>
+				</ws:metadata>
+			</ws:service>
+		</wss:service>
+	</wss:binding>
+	<bean id="authValidationHandler" class="com.lejingw.apps.handler.AuthValidationHandler"/>
+	<bean id="hello3WsService" class="com.lejingw.apps.ws31.Hello3WsService" />
+
+
+	<wss:binding url="/Hello4Service">
+		<wss:service>
+			<ws:service bean="#hello4WsService">
+				<ws:metadata>
+					<value>/WEB-INF/wsdl4/Hello4WsService_schema1.xsd</value>
+				</ws:metadata>
+			</ws:service>
+		</wss:service>
+	</wss:binding>
+	<bean id="hello4WsService" class="com.lejingw.apps.ws4.Hello4WsServiceImpl" />
+>>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 </beans>
