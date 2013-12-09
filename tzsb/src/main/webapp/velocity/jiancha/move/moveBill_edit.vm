@@ -1,10 +1,8 @@
-#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css",
-	"${rc.contextPath}/script/swfupload/fileprogress.css"])
+#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css"])
 
 #set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js",
 	"${rc.contextPath}/script/swfupload/swfupload.js",
-	"${rc.contextPath}/script/swfupload/swfupload.queue.js",
-	"${rc.contextPath}/js/jiancha/other/fileUpDownload.js",
+	"${rc.contextPath}/script/swfupload/fileUpload.js",
 	"${rc.contextPath}/js/jiancha/move/moveBill.js",
 	"${rc.contextPath}/dwr/interface/MoveBillDwr.js"])
 
