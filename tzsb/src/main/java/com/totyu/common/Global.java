@@ -1,5 +1,9 @@
 package com.totyu.common;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -18,4 +22,29 @@ public class Global {
 	public static final String			PAGE_DEFAULT_LIMIT									= "15";//列表默认每页15行
 	public static final String			PAGE_DEFAULT_LIMIT_WIN								= "10";//弹出框列表默认每页10行
 	
+	private static Properties properties = null;
+	public static void load(InputStream is){
+		try {
+			if(null == properties){
+				properties = new Properties();
+				properties.load(is);
+			}
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(null != is){
+					is.close();
+					is = null;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static String getPicUploadPath(){
+		return properties.getProperty("pic_upload_path", Global.class.getResource("/").toString());
+	}
 }

@@ -11,7 +11,7 @@
     <table class="control">
     	<tr>
 			<td>
-				<input type='button' value='上传' class='btn' id='btnUpload' onclick="uploadFiles()">
+				<input type='button' value='上传' class='btn' id='btnUpload'>
 			</td>
 		</tr>
     </table>
@@ -23,15 +23,7 @@
 			<td class='body1'>字段4</td><td class='body2'><input type='text' id='field4' value=''/></td>
 		</tr>
     	<tr>
-			<td class='body1'>上传文件1</td>
-			<td class='body2'>
-				<input type="file" id="file1" />
-			</td>
-			<td class='body1'>上传文件2</td>
-			<td class='body2'>
-				<input type="file" id="file2" />
-			</td>
-			<td class='body1'>上传文件3</td>
+			<td class='body1'>上传文件</td>
 			<td class='body2'>
 				<input type="file" id="file3" />
 			</td>
@@ -40,15 +32,6 @@
 			<td>下载</td>
 			<td>
 				<a href="${rc.contextPath}/common/download.do?id=2">aaa.jpg</a>
-			</td>
-			<td>下载</td>
-			<td colspan='5'>
-				<button onclick="downloadPdfFile2()">Download</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				
 			</td>
 		</tr>
 		<tr>
@@ -59,14 +42,9 @@
     </table>
 </form>
 <script>
-function downloadPdfFile2() {
-	FileUpDownloadDwr.downloadPdfFile(function(data) {
-		dwr.engine.openInDownload(data);
-	});
-}
 function uploadFiles() {
 	var file3 = dwr.util.getValue('file3');
-	FileUpDownloadDwr.uploadFiles(file3, function(data) {
+	FileUpDownloadDwr.uploadFiles(file3, uploadFiles.getSaveFileIds(), uploadFiles.getDeleteFileIds(), function(data) {
 		if(!data){
 			alert("上传成功");
 		}else{
@@ -74,8 +52,10 @@ function uploadFiles() {
 		}
 	});
 }
+var uploadFiles = null;
 jQuery(function(){
 	jQuery("#btnUpload").click(uploadFiles);
-	var uf = new UploadFiles('btnPlaceHolder', true);
+	uploadFiles = new UploadFiles('btnPlaceHolder', true);
+	uploadFiles.loadFiles("TB", "1");
 });
 </script>

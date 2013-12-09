@@ -39,7 +39,7 @@ public interface MoveBillService {
 	 * @param deleteOrnaCodeList 删除的行记录
 	 * @return
 	 */
-	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<FileTransfer> ftList, String userid);
+	public void saveMoveBill(MoveBillHead moveHead, List<String> newOrnaCodeList, List<String> deleteOrnaCodeList, List<String> saveIdList, List<String> deleteIdList, String userid);
 	/**
 	 * 删除调拨单
 	 * @param netIdList

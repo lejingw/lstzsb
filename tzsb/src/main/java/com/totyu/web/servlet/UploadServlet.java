@@ -3,6 +3,9 @@ package com.totyu.web.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,26 +18,37 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.FileCleanerCleanup;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileCleaningTracker;
+import org.apache.log4j.Logger;
 
 import com.totyu.common.Global;
 import com.totyu.service.common.SysCommonService;
 
 public class UploadServlet extends HttpServlet {
+	private static Logger log = Logger.getLogger(UploadServlet.class);
+	private String tempPath = null;//临时文件路径
+	private String fileRelativePath = null;//文件相对路径
+	private String fileAbsolutePath = null;//文件绝对路径
+	private DateFormat dataFmt = new SimpleDateFormat("yyyy/MM/dd");
 	private SysCommonService sysCommonService;
 	
 	public UploadServlet(){
 		super();
 		this.sysCommonService = Global.springContext.getBean(SysCommonService.class);
+		tempPath = Global.getPicUploadPath() + "temp/";
+		File tempPathDir = new File(tempPath);
+		if(!tempPathDir.exists()){
+			tempPathDir.mkdirs();
+		}
+		fileRelativePath = dataFmt.format(new Date()) + "/";
+		fileAbsolutePath = Global.getPicUploadPath() + fileRelativePath;
+		File filePathDir = new File(fileAbsolutePath);
+		if(!filePathDir.exists()){
+			filePathDir.mkdirs();
+		}
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doPost(req, resp);
 	}
 
@@ -45,51 +59,45 @@ public class UploadServlet extends HttpServlet {
 		resp.setCharacterEncoding("utf-8");
 		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 		if (!isMultipart) {
-			System.out.println(">> This wasn't a file upload request!");
+			if(log.isDebugEnabled()){
+				log.debug(">> This wasn't a file upload request!");
+			}
 			return;
 		}
-
-		PrintWriter out = resp.getWriter();
-
-		// create factory and file cleanup tracker
 		FileCleaningTracker tracker = FileCleanerCleanup.getFileCleaningTracker(getServletContext());
-		File tmpDir = new File(getBaseDir() + "/upload/temp");
-		DiskFileItemFactory factory = new DiskFileItemFactory(
-				DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, tmpDir);
+		File tmpDir = new File(tempPath);
+		DiskFileItemFactory factory = new DiskFileItemFactory(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, tmpDir);
 		factory.setFileCleaningTracker(tracker);
 		
 		try {
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = upload.parseRequest(req);
-			String fileName = null;
-			File savefile = null;
+			
+			String sort = "0";
+			String filename = null;
+			String filepath = null;
 			for (FileItem item : items) {
 				if (!item.isFormField()) {
-					// 确定是文件而不是一个普通的表单字段
-					fileName = item.getName();
-					savefile = new File(getBaseDir() + "/upload/" + fileName);
+					String relativeFilename = System.currentTimeMillis() + "_" + item.getName();
+					File savefile = new File(fileAbsolutePath + relativeFilename);
 					item.write(savefile);
-					System.out.println(">> [save] " + savefile.getAbsolutePath());
-					// to client info
-					out.print("fileId=" + savefile.getAbsolutePath());
-					out.flush();
+					
+					filename = item.getName();
+					filepath = fileRelativePath + relativeFilename;
+				}else{
+					if("sort".equals(item.getFieldName())){
+						sort = item.getString();
+					}
 				}
 			}
-			System.out.println("======"+req.getAttribute("billCode"));
-			System.out.println("======"+req.getParameter("headid"));
-//			sysCommonService.uploadFile(billCode, headid, ftList, userid);
+			PrintWriter out = resp.getWriter();
+			if(null != filepath){
+				String id = sysCommonService.saveUploadFile(filename, sort, filepath);
+				out.print("{fileId:"+id+"}");
+			}
+			out.flush();
 		} catch (Exception e) {
-			System.out.println(">> " + e.getMessage());
 			throw new IOException(e.getMessage());
 		}
-	}
-
-	/**
-	 * Return the WEB-INF directory.
-	 * 
-	 * @return
-	 */
-	private String getBaseDir() {
-		return this.getServletContext().getRealPath("/WEB-INF");
 	}
 }

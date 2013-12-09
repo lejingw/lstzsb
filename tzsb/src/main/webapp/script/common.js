@@ -233,7 +233,6 @@ function insertRow(tblId, tdHtmlArr, insertFirstFlag){
  */
 function deleteRow(obj, tblId){
 	var rowIndex = obj.parentNode.parentNode.rowIndex;
-	info(rowIndex);
 	deleteRowByIndex(rowIndex - 1, tblId);
 }
 /**

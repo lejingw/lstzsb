@@ -22,21 +22,21 @@ public interface SysCommonService {
 	List<Parameter> getAllParameters();
 	/**
 	 * 根据组织类型，获取组织、树
-	 * @param orgType
-	 * @return
 	 */
 	List<Org> getOrgTree();
+
+	/**
+	 * 保存上传文件
+	 */
+	String saveUploadFile(String filename, String order, String filepath);
 	/**
 	 * 文件上传
-	 * @param ftArr
 	 */
-	void uploadFile(String billCode, String headid, List<FileTransfer> ftList, String userid);
+	void uploadFile(String billCode, String headid, List<FileTransfer> ftList, List<String> saveIdList, List<String> deleteIdList, String userid);
 	
 	List<UploadFile> getUploadFileList(String billCode, String headid);
 	/**
 	 * 根据 id 获取上传文件信息
-	 * @param id
-	 * @return
 	 */
 	UploadFile getUploadFile(String id);
 }

@@ -42,7 +42,16 @@
         	SELECT last_insert_id() as id
         </selectKey>
 	</insert>
+	<select id="SysCommon.getUploadFileList" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="map">
+		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.shunxu, a.id
+	</select>
 	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
 		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#
 	</select>
+	<update id="SysCommon.updateLoadFiles1" parameterClass="map">
+		update t_xt_fujian set laiyuan = #billCode#, lyid = #headid#, create_id = #userid# where id = #id#
+	</update>
+	<delete id="SysCommon.updateLoadFiles2" parameterClass="string">
+		delete from t_xt_fujian where id = #value#
+	</delete>
 </sqlMap>

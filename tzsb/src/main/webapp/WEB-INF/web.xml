@@ -26,6 +26,7 @@
 			classpath:conf/applicationContext.xml
 		</param-value>
 	</context-param>
+	
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
@@ -43,6 +44,7 @@
 		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener
 		</listener-class>
@@ -52,14 +54,24 @@
 	</listener>
 	<!-- 
 	<listener>
-        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-    </listener>
-	 -->
+<<<<<<< HEAD
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
 	<listener>
 		<listener-class>com.totyu.web.listener.TzsbServletContextListener
 		</listener-class>
 	</listener>
 	
+	
+=======
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+	 -->
+	<listener>
+		<listener-class>com.totyu.web.listener.TzsbServletContextListener</listener-class>
+	</listener>
+	
+>>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -70,6 +82,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+<<<<<<< HEAD
+		<servlet-name>Hello</servlet-name>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+=======
 		<servlet-name>UploadServlet</servlet-name>
 		<servlet-class>com.totyu.web.servlet.UploadServlet</servlet-class>
 	</servlet>
@@ -79,6 +97,7 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+>>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 	
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
@@ -88,6 +107,13 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
+		<servlet-mapping>
+		<servlet-name>Hello</servlet-name>
+		<url-pattern>/HelloService</url-pattern>
+	</servlet-mapping>
+	
+=======
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/uploadServlet</url-pattern>
@@ -104,6 +130,7 @@
         <servlet-name>Hello</servlet-name>
         <url-pattern>/Hello4Service</url-pattern>
     </servlet-mapping>
+>>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

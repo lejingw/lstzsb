@@ -39,85 +39,33 @@ public class SysCommonServiceImpl implements SysCommonService {
 
 	/**
 	 * 根据组织类型获取组织树
-	 * 
-	 * @return
 	 */
 	public List<Org> getOrgTree() {
 		return sysCommonDao.getOrgTree();
 	}
-
-	public static final String ABSOLUTE_FILE_UPLOAD_PATH = "/Users/wanglj/Desktop/";
+	/**
+	 * 保存上传文件
+	 */
+	public String saveUploadFile(String filename, String order, String filepath){
+		return sysCommonDao.saveUploadFile(filename, order, filepath);
+	}
 	/**
 	 * 文件上传列表
-	 * 
-	 * @param ftArr
-	 * @throws IOException
 	 */
-	public void uploadFile(String billCode, String headid, List<FileTransfer> ftList, String userid){
-		InputStream is = null;
-		OutputStream os = null;
-		try {
-			int len = 0;
-			byte[] buff = new byte[1024];
-			int sort = 0;
-			List<UploadFile> uploadFileList = new ArrayList<UploadFile>();
-			for (FileTransfer ft : ftList) {
-				is = ft.getInputStream();
-				String relativeFilename = getRelativeFilename(ft.getFilename());
-				File file = new File(ABSOLUTE_FILE_UPLOAD_PATH + relativeFilename);
-				os = new FileOutputStream(file);
-				while ((len = is.read(buff)) > 0) {
-					os.write(buff, 0, len);
-				}
-				os.flush();
-				os.close();
-				is.close();
-				os = null;
-				is = null;
-				
-				UploadFile data = new UploadFile();
-				data.setLaiyuan(billCode);
-				data.setLyid(headid);
-				data.setShunxu(""+sort++);
-				data.setMingcheng(ft.getFilename());
-				data.setPath(relativeFilename);
-				data.setCreateId(userid);
-				
-				uploadFileList.add(data);
-			}
-			sysCommonDao.saveUploadFile(uploadFileList);
-		} catch (Exception e) {
-			throw new RuntimeException("保存文件出错");
-		}finally{
-			try{
-				if(null != os){
-					os.close();
-					os = null;
-				}
-				if(null != is){
-					is.close();
-					is = null;
-				}
-			}catch(Exception e){
-				throw new RuntimeException("保存文件出错");
-			}
-		}
+	public void uploadFile(String billCode, String headid, List<FileTransfer> ftList, List<String> saveIdList, List<String> deleteIdList, String userid){
+		sysCommonDao.saveUploadFile(billCode, headid, ftList, userid);
+		sysCommonDao.updateLoadFiles(billCode, headid, saveIdList, deleteIdList, userid);
 	}
-	
-	private String getRelativeFilename(String fileName) {
-		return System.currentTimeMillis() + "_" + fileName;
-	}
-	
 
 	public List<UploadFile> getUploadFileList(String billCode, String headid){
-		return null;
+		return sysCommonDao.getUploadFileList(billCode, headid);
 	}
 	/**
 	 * 根据 id 获取上传文件信息
-	 * @param id
-	 * @return
 	 */
 	public UploadFile getUploadFile(String id){
 		return sysCommonDao.getUploadFile(id);
 	}
+
+
 }
