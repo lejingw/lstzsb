@@ -159,8 +159,15 @@ jQuery(function(){
 	setValues();
 	changeButtons();
 	
-	uploadFiles = new UploadFiles('btnPlaceHolder', true);
-	uploadFiles.loadFiles("TB", jQuery("#headid").val());
+	uploadFiles = new UploadFiles({
+		placeHolder:'btnPlaceHolder',
+		billCode:'TB',
+		billid:$("#headid").val(),
+		uploadFlag:true,//'9' != $("#status").val(),
+		fileTypes:"*.jpg;*.gif;*.png",
+		buttonText:'上传图片',
+		fileSizeLimit:'5 MB'
+	});
 });
 var uploadFiles = null;
 function setContent(){

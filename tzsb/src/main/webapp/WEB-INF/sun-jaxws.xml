@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+<!-- 
+	<endpoint implementation="com.lejingw.apps.ws1.HelloService" name="Hello" url-pattern="/HelloService"/>
+ -->
+<!--  如果是从WSDL生成的Web Service -->
+	<endpoint implementation="com.lejingw.apps.ws2.HelloServiceSEI" name="Hello" url-pattern="/HelloService"/>
+</endpoints>

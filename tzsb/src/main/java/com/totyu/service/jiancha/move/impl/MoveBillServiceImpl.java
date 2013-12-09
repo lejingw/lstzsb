@@ -22,12 +22,6 @@ import com.totyu.web.util.StringUtil;
 public class MoveBillServiceImpl extends BaseService implements MoveBillService {
 	@Autowired
 	private MoveBillDao moveBillDao;
-	@Autowired
-	private SysCommonDao sysCommonDao;
-
-	public SysCommonDao getCommonDao() {
-		return sysCommonDao;
-	}
 	/**
 	 * 获取调拨单分页数据
 	 * @param condition

@@ -26,6 +26,7 @@
 			classpath:conf/applicationContext.xml
 		</param-value>
 	</context-param>
+	
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
@@ -43,6 +44,7 @@
 		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener
 		</listener-class>
@@ -69,15 +71,15 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>Hello</servlet-name>
+        <!-- <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class> -->
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
 		<servlet-class>com.totyu.web.servlet.UploadServlet</servlet-class>
 	</servlet>
-	<servlet>
-        <servlet-name>Hello</servlet-name>
-        <!-- <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class> -->
-        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
 	
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
@@ -91,6 +93,10 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/uploadServlet</url-pattern>
     </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Hello</servlet-name>
+		<url-pattern>/HelloService</url-pattern>
+	</servlet-mapping>
     <servlet-mapping>
         <servlet-name>Hello</servlet-name>
         <url-pattern>/Hello2Service</url-pattern>
