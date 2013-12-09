@@ -1,7 +1,6 @@
 package com.totyu.web.listener;
 
 import java.io.InputStream;
-import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -10,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.totyu.common.Global;
-import com.totyu.web.util.StringUtil;
 
 public class TzsbServletContextListener implements ServletContextListener {
 
