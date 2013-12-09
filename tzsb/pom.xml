@@ -31,31 +31,8 @@
 			</snapshots>
 		</repository>
 	</repositories>
-<<<<<<< HEAD
-  
-  
-  	<dependencies>
-		<dependency>
-		  <groupId>org.jvnet.jax-ws-commons.spring</groupId>
-		  <artifactId>jaxws-spring</artifactId>
-		  <version>1.8</version>
-		  <exclusions>
-		  	<exclusion>
-		  		<groupId>org.springframework</groupId>
-		  		<artifactId>spring</artifactId>
-		  	</exclusion>
-		  </exclusions>
-		</dependency>
 	
-		<dependency>
-		  <groupId>com.sun.xml.ws</groupId>
-		  <artifactId>jaxws-rt</artifactId>
-		  <version>2.2.6</version>
-		</dependency>
-		
-=======
-
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jax-ws-commons.spring</groupId>
@@ -90,9 +67,7 @@
 			<artifactId>jaxws-rt</artifactId>
 			<version>2.2.6</version>
 		</dependency>
-
-
->>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
+		
 		<!-- SPRING begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>

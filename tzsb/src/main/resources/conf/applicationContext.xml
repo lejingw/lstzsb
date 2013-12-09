@@ -108,9 +108,6 @@
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	
-<<<<<<< HEAD
-	<import resource="classpath:conf/spring-ws.xml"/>
-=======
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -122,5 +119,4 @@
 	<bean id="exceptionHandler" class="com.totyu.web.handler.ExceptionHandler"/>
 	
 	<import resource="classpath:conf/spring-ws.xml" />
->>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 </beans>

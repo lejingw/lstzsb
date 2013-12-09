@@ -1,12 +1,19 @@
 package com.totyu.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.totyu.common.constant.DictConstant;
 import com.totyu.dao.common.SysCommonDao;
 import com.totyu.web.util.DictUtil;
 import com.totyu.web.util.StringUtil;
 
 public abstract class BaseService {
-	public abstract SysCommonDao getCommonDao();
+	@Autowired
+	protected SysCommonDao sysCommonDao;
+	
+	public SysCommonDao getCommonDao(){
+		return this.sysCommonDao;
+	}
 	/**
 	 * 获取单据状态
 	 * @return

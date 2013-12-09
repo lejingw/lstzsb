@@ -1,13 +1,11 @@
-<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
-    xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-        http://jax-ws.dev.java.net/spring/core
-        http://jax-ws.dev.java.net/spring/core.xsd
-        http://jax-ws.dev.java.net/spring/servlet
-        http://jax-ws.dev.java.net/spring/servlet.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
+        http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
 
     <wss:binding url="/HelloService">
         <wss:service>
@@ -16,16 +14,6 @@
     </wss:binding>
 
     <bean id="helloService" class="com.lejingw.apps.ws2.HelloServiceSEI" />
-
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
-	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-        http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
-        http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
-
 
 	<wss:binding url="/Hello2Service">
 		<wss:service>
@@ -65,5 +53,4 @@
 		</wss:service>
 	</wss:binding>
 	<bean id="hello4WsService" class="com.lejingw.apps.ws4.Hello4WsServiceImpl" />
->>>>>>> 2906c257188ec1ab5dc2650eb31f9f621677e7db
 </beans>

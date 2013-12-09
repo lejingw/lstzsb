@@ -171,12 +171,6 @@ function UploadFiles(btnPlaceHolder, uploadFlag, config) {
 				upload_success_handler : uploadSuccess
 		};
 		obj.swfu = new SWFUpload(settings_object);
-<<<<<<< HEAD
-		obj.swfu.addPostParam("billCode", "fuck...");
-		obj.swfu.addPostParam("headid", "again...");
-		obj.swfu.setPostParams({"billCode":"aaaaa", "headid":"bbbbb"});
-=======
->>>>>>> d1086b210ab5e72efc6a8e0c9542f7b87f6b2c60
 	};
 	var createFileTable = function(){
 		jQuery("#"+btnPlaceHolder).after("<table style='width:600px;'><tbody id='"+obj.uploadProgressTblId+"'></tbody></table>");

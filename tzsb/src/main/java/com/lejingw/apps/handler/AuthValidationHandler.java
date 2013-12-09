@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 import javax.xml.soap.Node;
 import javax.xml.soap.SOAPBody;
-import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFault;
@@ -30,12 +29,6 @@ public class AuthValidationHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 	public boolean handleMessage(SOAPMessageContext context) {
-//		HttpServletRequest request = (HttpServletRequest) context.get(SOAPMessageContext.SERVLET_REQUEST);
-//		if (request != null) {
-//			System.out.println("Client IP：" + request.getRemoteAddr());
-//		} else {
-//			System.out.println("get client ip is null>>>>>>>>>");
-//		}
 		try {
 			Boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			System.out.println("====handleMessage===="+outbound);
