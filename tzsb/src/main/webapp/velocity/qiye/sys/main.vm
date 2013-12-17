@@ -1,0 +1,224 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+
+#set($cssfiles = [])
+#set($jsfiles = ["${rc.contextPath}/dwr/interface/MenhuSysDwr.js"])
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="tableTextCenter" >
+  <caption>
+  安全隐患统计
+  </caption>
+  <tr>
+    <th>未注册登记</th>
+    <th>超期未定检 </th>
+    <th> 定期不合格</th>
+    <th>人员无证</th>
+    <th>未建立安全管理制度
+      </td>
+    <th>合计</th>
+  </tr>
+  <tr>
+    <td><a href="#">2</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">4</a></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="tableTextCenter" id="table_tab">
+  <caption>
+  设备及人员统计（人员数量：10）
+  </caption>
+  <tr>
+    <th>设备类别</th>
+    <th>总数</th>
+    <th>在用</th>
+    <th>停用</th>
+    <th>拆除/报废</th>
+    <th>预警（2个月）</th>
+    <th>超期</th>
+    <th>持证作业项目数</th>
+    <th>持证管理项目数</th>
+    <th>超期证件数</th>
+    <th>预警数(3个月内)</th>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">锅炉（台）</td>
+    <td><a href="#">100</a></td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">3</a></td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">1</a></td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">7</a></td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">5</a></td>
+    <td><a href="#">4</a></td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">压力容器（台）</td>
+    <td><a href="#">100</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="warning_yellow"><a href="#">2</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">5</a></td>
+    <td><a href="#">4</a></td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">压力管道（单元）</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><a href="#">2</a></td>
+    <td><a href="#">5</a></td>
+    <td><a href="#">4</a></td>
+    <td>&nbsp;</td>
+    <td class="overdue_red"><a href="#">1</a></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">压力管道（管段）</td>
+    <td><a href="#">100</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="warning_yellow"><a href="#">1</a></td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">起重机（台）</td>
+    <td><a href="#">100</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">场（厂）内机动车辆</td>
+    <td><a href="#">100</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">客运素道（台）</td>
+    <td><a href="#">100</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">游乐设施（台）</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">电梯（台）</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="text_left text_space_left">合计</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<!-------div container start -------->
+
+<div class="h_15"></div>
+<div id="Divcontainer">
+  <div id="Divcontainer_son" class="f_l">
+    <div class="div_content mr_10">
+      <div class="div_title"><span class="ico_title01_1">运营记录填写</span><span class="f_r normal"><a href="#">更多&gt;&gt;</a></span></div>
+      <ul>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <div class="clear"></div>
+      </ul>
+    </div>
+  </div>
+  <div id="Divcontainer_son" class="f_r">
+    <div class="div_content">
+      <div class="div_title"><span class="ico_title01_2">运营记录填写</span><span class="f_r normal"><a href="#">更多&gt;&gt;</a></span></div>
+      <ul>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <div class="clear"></div>
+      </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="div_content">
+      <div class="div_title"><span></span><span class="ico_title01_3">运营记录填写</span><span class="f_r normal"><a href="#">更多&gt;&gt;</a></span></div>
+      <ul>
+        <li><span class="text_length">1.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <li><span class="text_length">2.填写锅炉日常保养记录，1天后到期</span><span class="data_length">2013-12-12</span></li>
+        <div class="clear"></div>
+      </ul>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
+
+<script>
+function show(){
+	altRowCSS("table_tab");
+}
+window.onload=show;
+</script>

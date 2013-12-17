@@ -1,0 +1,22 @@
+#set($layout = "layout/selectTreeLayout.vm")
+<script>
+callbackFn = function(nodeArr){
+	var objArr = [];
+	for(var i=0;i<nodeArr.length;i++){
+		objArr.push({orgId:nodeArr[i].id, orgName:nodeArr[i].name});
+	}
+	return objArr;
+};
+jQuery(document).ready(function(){
+	//数据
+    var dataArr =[
+    	#foreach($param in ${dataMap.keySet()})
+    		{id:$param, pId:0, name:'${dataMap.get($param).orgName}'},
+        #end
+		null
+    ];
+	dataArr.pop();//删除最后一个null项
+	
+	initTree(dataArr, $!multiFlag, "$!selectedValues");
+});
+</script>

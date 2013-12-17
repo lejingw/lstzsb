@@ -12,25 +12,22 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
 
-	private static Logger logger = Logger.getLogger(ExceptionHandler.class
-			.getName());
+	private static Logger logger = Logger.getLogger(ExceptionHandler.class.getName());
 
-	public ModelAndView resolveException(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception ex) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		// 记录异常信息
 		logger.debug("系统发生异常：", ex);
-		StringBuffer buff = new StringBuffer(
-				"<table style='width:100%'><tr><td width='50%'>class</td><td width='30%'>method</td><td>line No</td></tr>");
+		StringBuffer buff = new StringBuffer("<table style='width:100%'><tr><td width='50%'>类</td><td width='30%'>方法</td><td>错误行</td></tr>");
 		StackTraceElement[] sts = ex.getStackTrace();
 		for (StackTraceElement st : sts) {
-			buff.append("<tr><td>" + st.getClassName() + "</td><td>"
-					+ st.getMethodName() + "</td><td>" + st.getLineNumber()
-					+ "</td></tr>");
+			if(st.getClassName().startsWith("com.totyu")){
+				buff.append("<tr style='color:#ff0000;'>");
+			}else{
+				buff.append("<tr>");
+			}
+			buff.append("<td>" + st.getClassName() + "</td><td>" + st.getMethodName() + "</td><td>" + st.getLineNumber() + "</td></tr>");
 		}
 		buff.append("</table>");
-		// 根据异常类型的不同，提供不同的异常提示
-		// String error = "系统发生异常，请稍后处理业务！";
-
 		return new ModelAndView("error", "error", buff.toString());
 	}
 

@@ -3,6 +3,7 @@ package com.totyu.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.ibatis.sqlmap.client.SqlMapExecutor;
 import com.ibatis.sqlmap.client.SqlMapSession;
 import com.totyu.common.Pager;
 import com.totyu.dao.common.TransactionAction;
+import com.totyu.vo.BaseVo;
 /**
  *
  */
@@ -25,6 +27,16 @@ public class BaseDao extends SqlMapClientDaoSupport {
 		super.setSqlMapClient(sqlMapClient);
 	}
 
+	protected void setCreate(BaseVo vo, String userid) {
+		vo.setCreateId(userid);
+		vo.setCreateDate(new Date());
+		vo.setUpdateId(userid);
+		vo.setUpdateDate(new Date());
+	}
+	protected void setUpdate(BaseVo vo, String userid) {
+		vo.setUpdateId(userid);
+		vo.setUpdateDate(new Date());
+	}
     /**
      * 单条添加
      * 

@@ -11,6 +11,7 @@ function Map(){
                 return this.values[i];
             }
         }
+        return null;
     };
     this.getValueByIndex = function(index) {
         if (index > 0 && index < this.size) {

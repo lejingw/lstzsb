@@ -1,0 +1,14 @@
+@charset "utf-8";
+.print_title{ height:100px; text-align:center; background-color:#fff; line-height:50px; font-size:28px; border-bottom:4px #000 solid; margin-bottom:10px;}
+.print_Content{ height:800px; background-color:#093;}
+.print_footer{ height:80px; text-align:right; line-height:40px;}
+.text_remark{ height:40px; line-height:40px; position:absolute; bottom:0;}
+.text{ line-height:40px;}
+.text_space{ text-indent:2em;}
+table p{ text-indent:2em; line-height:26px;}
+table .nop{text-indent:0;}
+
+
+table.css
+
+common.css

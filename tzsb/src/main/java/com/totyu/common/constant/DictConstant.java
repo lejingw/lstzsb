@@ -12,8 +12,11 @@ public class DictConstant {
 	public static final String BILL_STATUS_SAVE									= "1"; //保存
 	public static final String BILL_STATUS_MARK									= "2"; //记账
 	
+
+	/**设备类型**/
+	public static final String SBLX												= "sblx";
+	
 	
 	/**单据编码**/
 	public static final String BILL_CODE										= "billcode";
-	public static final String BILL_CODE_TIAOBODAN								= "TB"; //调拨单
 }

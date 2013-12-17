@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
+	<link href="${rc.contextPath}/css/common/css/base_css.css" type="text/css" rel="stylesheet"/>
+	<link href="${rc.contextPath}/css/common/css/managePages_css.css" type="text/css" rel="stylesheet"/>
+	#foreach($item in $!cssfiles)
+	<link href="$item" type="text/css" rel="stylesheet" />
+	#end
+	<title>TZSB</title>
+	#set($dateParam = '20131111')
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
+	
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/engine.js?date=$!dateParam' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/util.js?date=$!dateParam' charset="UTF-8"></script>
+	
+	<script language='javascript' type="text/javascript" src='${rc.contextPath}/js/qiye/common/menu.js' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/SysCommonDwr.js' charset="UTF-8"></script>
+	<script>
+    var ctxPath = "${rc.contextPath}";
+    dwr.engine.setTimeout(600000);
+    dwr.engine.setErrorHandler(function(msg, err){showLayer(false);if("Timeout" == msg){alert("系统执行超时...");}else{alert(msg);}});
+    
+    //[if It IE 6]透明度
+	if(navigator.appName=="Microsoft Internet Explorer"){
+		var trim_Version=navigator.appVersion.split(";")[1].replace(/[ ]/g,"");
+		if(trim_Version=="MSIE6.0"){
+			jQuery.getScript("${rc.contextPath}/js/qiye/common/DD_belatedPNG_0.0.8a-min.js",function(data, textStatus, jqxhr){
+    			DD_belatedPNG.fix('img, span');
+			//	DD_belatedPNG.fix('div,img,input,background,ul,li,a,a:hover,li a:hover');
+			});
+		}
+    }
+	function resizeIframe(){
+		var height = 143, width = 226;
+		if("none" == $("#container_leftnav").css("display")){
+			width = 28;
+		}
+		$("#mainFrame").height($(window).height() - height);
+    	$("#mainFrame").width($(window).width() - width);
+    	//$("#mainFrame").width($(window).width() - 239);
+		$("#container_leftnav .nav_content").height($(window).height() - height);
+	}
+    $(document).ready(function() {
+    	initMenu();
+		$("#btnShenSuo").click(function(){
+			if("block" == $("#container_leftnav").css("display")){
+    			$("#container_leftnav").css("display", "none");
+				$("#btn_flex").removeClass("left_flex");
+    			$("#btn_flex a img").attr("src", "${rc.contextPath}/css/common/images/managePages_bg/base_ico/btn_right_flex.png");
+			}else{
+    			$("#container_leftnav").css("display", "block");
+				$("#btn_flex").addClass("left_flex");
+    			$("#btn_flex a img").attr("src", "${rc.contextPath}/css/common/images/managePages_bg/base_ico/btn_left_flex.png");
+			}
+			resizeIframe();
+		});
+		resizeIframe();
+		$(window).resize(resizeIframe);
+    });
+    </script> 
+    #foreach($item in $!jsfiles)
+    <script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>
+	#end
+</head>
+<body>
+<div id="header">
+  <h1><img src="${rc.contextPath}/css/common/images/managePages_bg/head_logo.png" width="538" height="87" alt="logo" /></h1>
+  <form>
+    <ul>
+      <li id="ico_close"><a href="${rc.contextPath}/logout.do">退出</a></li>
+      <li id="ico_home"><a href="#" onclick="showIndexPage()">首页</a></li>
+      <li id="ico_user">欢迎您！<a href="#">张三</a></li>
+    </ul>
+  </form>
+</div>
+<div id="container"> 
+  <div id="container_leftnav">
+    <div class="nav_title">
+      <h3>企业单位</h3>
+    </div>
+    <div class="nav_content">
+      <ul id="menu">
+        <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/sys/main.do')"><span class="ico01_2">首页</span></a></li>
+        <li><a href="#"><span class="ico01_10">测试例子</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/list.do')"><span>各种选择框例子</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><span class="ico01_10">基本信息</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/jbxx/scxkzgl/list.do')"><span>生产许可证管理</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><span class="ico01_3">人员持证</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>人员持证</span></a></li>
+          </ul>
+		</li>
+		<li><a href="#" onclick="openUrl(this, '#')"><span>维保电梯台帐</span></a></li>
+        <li><a href="#"><span class="ico01_2">设备信息</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>全部设备</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯</span></a>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>锅炉</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>压力容器</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>压力管道</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>起重机械</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>场（厂）内专用机械车辆</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>客运索道</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>游乐设施</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><span class="ico01_5">安全管理</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>安全隐患</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>监察指令</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>制度文档</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>预警信息</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>定检申报</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>起重机械</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>安全附件</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><span class="ico01_9">运营记录</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>例行监察记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>维护保养记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>修理记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>隐患排查整治</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>定期教育记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>应急演练记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>作业签到记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>作业交接班记录</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#"><span class="ico01_6">文件/通知</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>文件/通知</span></a></li>
+          </ul>
+		</li>
+        <li><a href="#"><span class="ico01_13">其他管理</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>修改密码</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>变更申请记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>节能管理</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>标准化评定信息</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯维保合同确认</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯维保记录确认</span></a></li>
+          </ul>
+        </li>
+         <li><a href="#"><span class="ico01_5">维保单位</span></a>
+          <ul class="child">
+            <li><a href="#" onclick="openUrl(this, '#')"><span>维保记录</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>故障修理</span></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id='btn_flex' class="left_flex f_l">
+	<a href="#" id='btnShenSuo'>
+		<img src="${rc.contextPath}/css/common/images/managePages_bg/base_ico/btn_left_flex.png" alt="伸缩按钮"/>
+	</a>
+  </div>
+  <div id="container_rightmian"> 
+    <div class="urlLink">
+      <div class="ulrText f_l"><a href="#">首页</a></div>
+	</div>
+    <div class="content">
+		<div id="scroll_container">
+			$screen_content
+		</div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</body>
+</html>

@@ -1,33 +1,26 @@
 package com.totyu.dao.common.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.directwebremoting.io.FileTransfer;
 import org.springframework.stereotype.Repository;
 
-import com.ibatis.sqlmap.client.SqlMapSession;
-import com.totyu.common.CommonUtil;
-import com.totyu.common.Global;
 import com.totyu.dao.BaseDao;
 import com.totyu.dao.common.SysCommonDao;
-import com.totyu.dao.common.TransactionAction;
-import com.totyu.vo.basic.Org;
-import com.totyu.vo.sys.Parameter;
+import com.totyu.vo.common.Dict;
+import com.totyu.vo.common.Org;
+import com.totyu.vo.common.Parameter;
+import com.totyu.vo.common.SelectorOption;
+import com.totyu.vo.common.User;
+import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
-import com.totyu.web.util.DateUtil;
 
 @Repository
 public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
-	private static final String BIZ_TYPE_BILLNO = "billNo";//单据编号
 	/**
+	private static final String BIZ_TYPE_BILLNO = "billNo";//单据编号
 	 * 查找单个string类型返回值
 	 * @param sql
 	 * @return
@@ -37,7 +30,6 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 	}
 	/**
 	 * 获取单据编号
-	 */
 	public synchronized String getBillno(final String billCode) {
 		return (String)executeOutTransaction(new TransactionAction() {
 			public Object executeAction(SqlMapSession session) throws SQLException {
@@ -60,95 +52,58 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 			}
 		});
 	}
-	
+	 */
+	/**
+	 * 获取所有用户信息
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<User> getAllUser(){
+		return (List<User>)executeQueryForList("SysCommon.getAllUser", null);
+	}
+	/**
+	 * 获取所有数据字典项
+	 * @return
+	 */
+	public List<Dict> getAllDictItem(){
+		List<Dict> list = executeQueryForList("SysCommon.getAllDictItem", null);
+		return list;
+	}
 	/**
 	 * 获取所有系统参数配置
 	 */
 	public List<Parameter> getAllParameters(){
 		return executeQueryForList("SysCommon.getAllParameters", null);
 	}
-	
 	/**
-	 * 根据组织类型获取组织树
-	 * @return
+	 * 获取所有组织数据
 	 */
-	public List<Org> getOrgTree(){
-		return executeQueryForList("SysCommon.getOrgTree", null);
-	}
-
-	private String getRelativeFilename(String fileName) {
-		return System.currentTimeMillis() + "_" + fileName;
+	public List<Org> getAllOrg(){
+		return executeQueryForList("SysCommon.getAllOrg", null);
 	}
 
 	/**
 	 * 更新上传文件
 	 */
 	public void updateLoadFiles(String billCode, String headid, List<String> saveIdList, List<String> deleteIdList, String userid){
-		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+		List<Map<String, String>> addFileList = new ArrayList<Map<String,String>>();
 		for(String saveId : saveIdList){
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("billCode", billCode);
 			map.put("headid", headid);
 			map.put("id", saveId);
 			map.put("userid", userid);
-			list.add(map);
+			addFileList.add(map);
 		}
-		executeBatchUpdate("SysCommon.updateLoadFiles1", list);
-		executeBatchDelete("SysCommon.updateLoadFiles2", deleteIdList);
+		executeBatchUpdate("SysCommon.updateLoadFiles", addFileList);
+		executeBatchDelete("SysCommon.deleteLoadFiles", deleteIdList);
+	}
+	private String getRelativeFilename(String fileName) {
+		return System.currentTimeMillis() + "_" + fileName;
 	}
 	/**
-	 * 保存附件信息
+	 * 获取单据上传文件列表
 	 */
-	public void saveUploadFile(String billCode, String headid, List<FileTransfer> ftList, String userid){
-		List<UploadFile> uploadFileList = new ArrayList<UploadFile>();
-		InputStream is = null;
-		OutputStream os = null;
-		try {
-			int len = 0;
-			byte[] buff = new byte[1024];
-			int sort = 0;
-			for (FileTransfer ft : ftList) {
-				is = ft.getInputStream();
-				String relativeFilename = getRelativeFilename(ft.getFilename());
-				File file = new File(Global.getPicUploadPath() + relativeFilename);
-				os = new FileOutputStream(file);
-				while ((len = is.read(buff)) > 0) {
-					os.write(buff, 0, len);
-				}
-				os.flush();
-				os.close();
-				is.close();
-				os = null;
-				is = null;
-				
-				UploadFile data = new UploadFile();
-				data.setLaiyuan(billCode);
-				data.setLyid(headid);
-				data.setShunxu(""+sort++);
-				data.setMingcheng(ft.getFilename());
-				data.setPath(relativeFilename);
-				data.setCreateId(userid);
-				
-				uploadFileList.add(data);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("保存文件出错");
-		}finally{
-			try{
-				if(null != os){
-					os.close();
-					os = null;
-				}
-				if(null != is){
-					is.close();
-					is = null;
-				}
-			}catch(Exception e){
-				throw new RuntimeException("保存文件出错");
-			}
-		}
-		executeBatchInsert("SysCommon.saveUploadFile", uploadFileList);
-	}
 	public List<UploadFile> getUploadFileList(String billCode, String headid){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("billCode", billCode);
@@ -171,7 +126,34 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 		uf.setPath(filepath);
 		return (String)executeInsert("SysCommon.saveUploadFile", uf);
 	}
+	/**
+	 * 获取单位信息
+	 */
+	public Dwxx getDwxxById(String dwid){
+		return (Dwxx) executeQueryForObject("SysCommon.getDwxxById", dwid);
+	}
+	
+	/**
+	 * 获取设备种类下拉列表数据
+	 * 
+	 * @return 设备种类一览数据
+	 */
+	@Override
+	public List<SelectorOption> getSbzl() {
+		return executeQueryForList("SysCommon.getSbzl", null);
+	}
 
+	/**
+	 * 获取设备类别下拉列表数据
+	 * @return 设备类别一览数据
+	 */
+	@Override
+	public List<SelectorOption> getSblb(String fjdm, String dmjb) {
+		Map condition = new HashMap<String,String>();
+		condition.put("fjdm", fjdm);
+		condition.put("dmjb", dmjb);
+		return executeQueryForList("SysCommon.getSblb", condition);
+	}
 	/**
 	 * 获取工具条权限
 	 * @param toolbarCode

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.totyu.common.constant.DictConstant;
 import com.totyu.dao.common.SysCommonDao;
-import com.totyu.web.util.DictUtil;
+import com.totyu.web.cache.DictCache;
 import com.totyu.web.util.StringUtil;
 
 public abstract class BaseService {
@@ -23,7 +23,7 @@ public abstract class BaseService {
 			statusField = "status";
 		}
 		String sql = "select " + statusField + " as \"status\" from " + tableName + " where " + idField + " = " + idValue;
-		String status = getCommonDao().querySingleString(sql);
+		String status = sysCommonDao.querySingleString(sql);
 		return status;
 	}
 	/**
@@ -39,7 +39,7 @@ public abstract class BaseService {
 	protected void asertStatus(String realStatus, String asertStatus){
 		if(StringUtil.isNotEmpty(realStatus)){
 			if(!realStatus.equals(asertStatus)){
-				throw new RuntimeException("操作不能继续，单据状态要求为[" + DictUtil.getValue(DictConstant.BILL_STATUS, asertStatus) + "],实际值为[" + DictUtil.getValue(DictConstant.BILL_STATUS, realStatus) + "]");
+				throw new RuntimeException("操作不能继续，单据状态要求为[" + DictCache.getInstance().getValue(DictConstant.BILL_STATUS, asertStatus) + "],实际值为[" + DictCache.getInstance().getValue(DictConstant.BILL_STATUS, realStatus) + "]");
 			}
 		}else{
 			throw new RuntimeException("不能获取单据状态信息，请检查单据是否已经删除");
@@ -64,9 +64,9 @@ public abstract class BaseService {
 				StringBuffer statusList = new StringBuffer();
 				for(String asertStatus : asertStatusArr){
 					if(statusList.length() > 0){
-						statusList.append(",").append(DictUtil.getValue(DictConstant.BILL_STATUS, asertStatus));
+						statusList.append(",").append(DictCache.getInstance().getValue(DictConstant.BILL_STATUS, asertStatus));
 					} else {
-						statusList.append(DictUtil.getValue(DictConstant.BILL_STATUS, asertStatus));
+						statusList.append(DictCache.getInstance().getValue(DictConstant.BILL_STATUS, asertStatus));
 					}
 					if(realStatus.equals(asertStatus) && !isCon){
 						isCon = Boolean.TRUE;
@@ -74,7 +74,7 @@ public abstract class BaseService {
 					}
 				}
 				if(!isCon){
-					throw new RuntimeException("操作不能继续，单据状态要求为[" + statusList.toString() + "],实际值为[" + DictUtil.getValue(DictConstant.BILL_STATUS, realStatus) + "]");
+					throw new RuntimeException("操作不能继续，单据状态要求为[" + statusList.toString() + "],实际值为[" + DictCache.getInstance().getValue(DictConstant.BILL_STATUS, realStatus) + "]");
 				}
 			} else {
 				throw new RuntimeException("系统异常");

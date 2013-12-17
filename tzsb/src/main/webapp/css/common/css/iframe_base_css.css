@@ -1,0 +1,232 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,body,div,span,applet,object,iframe,p,tt,var,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,strong,small,strike,sub,sup,form,lable,legend,select,textarea,fieldset,input,blockquote,table,caption,tbody,tfoot,tr,th,td{margin:0;padding:0;}
+/*table{border-collapse:collapse;border-spacing:0;}
+*/fieldset,img,a img,iframe{border:0}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul li{list-style:none;}
+caption,th,td {text-align:left; font-weight:normal;white-space:nowrap;}
+q:before,q:after{content:'';}
+a span,form label{ cursor:pointer;}
+select,textarea,input,button{ vertical-align:middle; font-family:inherit; font-size:100%;}
+
+
+
+/* */
+*{ margin:0; padding:0;}
+html { text-align:center; margin:0; padding:0;/*min-width:1000px;overflow:hidden; 首页两条滚动条，如去掉，伸拉浏览器时非首页便没有滚动条*/ _overflow-y:scroll;}
+body { background:#fff;/* min-width:1000px; */margin:0 auto;text-align:left; font:12px/1.6em Tahoma,Verdana, Lucida, Arial, Helvetica, 宋体,sans-serif; color:#013b61;}
+
+h1, h2, h3, h4, h5, h6 { font-size:100%; font-family:"微软雅黑";}
+h1{ font-size:24px;}
+h2{ font-size:20px;}
+h3{ font-size:18px;}
+h4{ font-size:16px;}
+h5{ font-size:14px;}
+h6{ font-size:12px;}
+
+address, caption, cite, code, dfn, em, strong, th, var,b,i { font-style:normal; font-weight:normal;}
+/*table { border-collapse:collapse; border-spacing:0; empty-cells:show;}
+*/:focus { outline :0;}
+
+a { color:#000;text-decoration:none; }
+a:hover { text-decoration:underline; color:#df0101;}
+input,select,textarea { font-size:12px; padding:2px;}
+.clearfix { overflow:hidden; zoom:1;}
+
+/*文本对齐方式 （右，左，中） */
+.text_right{ text-align:right;}
+.text_left{ text-align:left;}
+.text_center{ text-align:center;}
+
+/*文本和边框间距 （右，左） */
+.text_space_right{ padding-right:1em;}
+.text_space_left{ padding-left:0.5em;}
+
+/*文本域自适应定义 */
+.textarea_space_left{ padding:0.5em 1em 0.5em 0.5em}
+
+
+/*文本行高 */
+.lineH_20{ line-height:20px;}
+.lineH_26{ line-height:26px;}
+.lineH_40{ line-height:40px;}
+.lineH_50{ line-height:50px;}
+
+
+/* font */
+.f12{font-size:12px!important}
+.f14{font-size:14px!important}
+.bold{font-weight:bold;}
+.normal{font-weight:normal;}
+.font_none{font-size:0px; line-height:0px;}
+
+.more{ float:right;}
+.more a{ font-weight:normal; font-size:12px;}
+/* color */
+.red , .red a{color:#f00!important;}
+.gray, .gray a {color:#666 !important;}
+.green , .green a {color:#76c56a !important;}
+.orange, .orange a {color:#fd864a !important;}
+.blue, .blue a{ color:#0000ff !important;}
+
+/*layout*/
+.block{display:block;}
+.hidden{display:none;}
+.bg_none{background:none;!important}
+.f_l{float:left; display:inline;}
+.f_r{float:right;display:inline;}
+.clear{ overflow:hidden;clear:both;!important}
+.m_10{margin:10px;}
+.m_20{margin:20px;}
+.mt_10{margin-top:10px;}
+.mr_10{margin-right:10px;}
+.mb_10{margin-bottom:10px;}
+.ml_10{margin-left:10px;}
+
+.mtb_5{ margin:5px 0;}
+.p_10{padding:10px;}
+.p_20{padding:20px;}
+.pt_10{padding-top:10px;}
+.pr_10{padding-right:10px;}
+.pb_10{padding-bottom:10px;}
+.pl_10{padding-left:10px;}
+.nop{padding:0;!important}
+
+.h_10{ height:0px; width:auto;}
+
+.h_15{ height:15px; width:auto;}
+.w_15{ height: auto; width:15px;}
+
+/****表格标题*****/
+.table_title{ text-align:center; line-height:25px;}
+
+/**列表按钮区域**/
+.operateBtnDiv{ height:30px; width:auto; white-space:nowrap; /* min-width:800px; */}
+/**查找按钮区域**/
+.operateBtnDiv_select{ height:10px; width:110px; margin:10px auto; text-align:center; white-space:nowrap;}
+/**单据按钮区域**/
+.operateBtnDiv_down{ height:30px; width:800px; margin:20px auto; text-align:center;}
+/**按钮样式**/
+.btn{ height:24px; margin-right:5px; text-align:center; line-height:23px; cursor:pointer; display: inline-block; _zoom:1;_display:inline;}
+.btn a{ color:#fff; display:block;text-decoration:none;}
+.btn[disabled=true] a{ color:#333; display:block;text-decoration:none;}
+.btn[disabled=true] a:hover{background:none; color:#333;}
+
+.num2{ background:url(../images/btn_enter2.png) no-repeat; width:49px;}
+.num2 a:hover{ background:url(../images/btn_enter2_hover.png) no-repeat;color:#000; text-decoration:none;}
+.num2[disabled=true]{background: url(../images/btn-cancel2.png) no-repeat;}
+
+.num4{background:url(../images/btn_enter4.png) no-repeat; width:82px; }
+.num4 a:hover{ background:url(../images/btn_enter4_hover.png) no-repeat; color:#000; text-decoration:none;}
+.num4[disabled=true]{background: url(../images/btn-cancel4.png) no-repeat;}
+
+.num6{background:url(../images/btn_enter6.png) no-repeat; width:82px; }
+.num6 a:hover{ background:url(../images/btn_enter6_hover.png) no-repeat; color:#000; text-decoration:none;}
+.num6[disabled=true]{background: url(../images/btn-cancel6.png) no-repeat;}
+
+.num8{background:url(../images/btn_enter8.png) no-repeat; width:82px; }
+.num8 a:hover{ background:url(../images/btn_enter8_hover.png) no-repeat; color:#000; text-decoration:none;}
+.num8[disabled=true]{background: url(../images/btn-cancel8.png) no-repeat;}
+
+
+/**两像素高度的下划线*/
+.downline2px{ height:1px; border-bottom:#bfd8e0 solid 1px; background:#d5e3e7;}
+
+
+/*表格下页码 上一页 下一页*/
+.pageNumDiv{ height:40px; width:auto;white-space:nowrap;/* min-width:900px; */}
+.manu{text-align:right; height:40px; margin-top:20px;white-space:nowrap;}
+.manu a{ border: #eee 1px solid; padding:2px 5px; margin: 2px; color:#666666; text-decoration:none;}
+.manu a:hover { border:#036cb4 1px solid; color:#036cb4;}
+.manu a:active { border:#036cb4 1px solid; color:#036cb4; }
+.manu .current { border:#036cb4 1px solid; padding:2px 5px; font-weight:bold; margin:2px; color:#ffffff; background:#036cb4;}
+.manu .disabled {border: #eee 1px solid;padding:2px 5px; margin:2px; color:#ddd;}
+.manu input{ width:25px; margin:0 5px; text-align:center;}
+
+.excelIcon{ background:url(../images/excel.png) no-repeat; width:16px; height:16px; margin:20px 5px 0 10px; display:block; float:left;}
+.wordIcon{ background:url(../images/word.png) no-repeat; width:16px; height:16px;margin:20px 5px 0 5px;display:block;float:left;}
+
+/****搜索弹出DIV****/
+.select_div{ border: #2fa7e1 1px solid; padding:10px;}
+.shrinkBtn{ margin:0 auto; height:14px; width:22px;}
+
+
+/******tab 选项卡******/
+.tab_div{ background:#fff; height:30px; border-bottom:3px solid #198bc9; margin-bottom:10px; display:block;position:fixed;z-index:999}
+.tab_div .tab_btn{ height:29px; width:120px; border-top:1px solid #bfd8e0;border-left:1px solid #bfd8e0;border-right:1px solid #bfd8e0; background: url(../images/managePages_bg/tab_bg.png) repeat-x; text-align:center; line-height:29px; float:left; margin-right:10px; }
+
+.tab_div .tab_btn a:hover ,.tab_current{ height:29px; width:120px;color:#fff; font-weight:bold;text-decoration:none;height:29px; width:120px; border-top:1px solid #48b1ea;border-left:1px solid #48b1ea;border-right:1px solid #48b1ea;background: url(../images/managePages_bg/tab_bg_hover.png) repeat-x; display:block;}
+
+
+/***设备详细信息 DIV标题 弹出DIV，里面是相对应表*/
+.block_accordeon_type_1 {
+	padding:40px 15px;
+	position:relative;
+	border:1px solid #ededed;
+	
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	
+	behavior:url(js/PIE.htc);
+}
+.block_accordeon_type_1 .button_outer {padding-left:30px; background:url(../images/managePages_bg/icon_minus.png) no-repeat 0px 11px; border-top:1px solid #f0f0f0; font-size:13px; color:#636363; font-weight:bold; cursor:pointer;}
+.block_accordeon_type_1 .button_outer.first {border:0px;}
+.block_accordeon_type_1 .button_outer:hover {color:#f24024;}
+.block_accordeon_type_1 .button_outer .button_inner {height:42px; line-height:42px;}
+.block_accordeon_type_1 .button_outer.current {background:url(../images/managePages_bg/icon_plus.png) no-repeat 0px 11px;/*  color:#f24024; */}
+.block_accordeon_type_1 .accordeon_content {margin-top:-4px; padding:0px 30px 13px;}
+.block_accordeon_type_1 .accordeon_content p {padding-bottom:0px; color:#737373; line-height:18px;}
+
+
+/* 交替行奇数行的背景色 */
+tr.evenrow td {
+	background-color: #FFFFFF;
+}
+/* 交替行偶数行的背景色 */
+tr.oddrow td {
+	background-color: #ebf5ff;
+}
+/* 鼠标经过时的背景色 */
+tr.rowover td {
+	background-color: #CCCCCC;
+}
+
+/***报表上报详细 DIV标题 弹出DIV，里面是相对应表*/
+.table_all{ padding:5px 15px; border:1px solid #ededed;}
+.title_1{ height:42px; line-height:42px; padding-left:30px; color:#1f61c2; border-top:1px solid #f0f0f0; background:url(../images/managePages_bg/icon_h3.png) no-repeat 0 11px;}
+.table_content{ padding:0px 30px 13px;}
+
+/*****监察首页 头部 “代办事项“ DIV*****/
+.run_btnDiv{ height:20px; padding-top:10px;}
+.run_btnDiv h3{ float:left;}
+.run_btnDiv ul{}
+.run_btnDiv ul li{ float:left; border:1px solid #bfd8e0; background:#f9fcfd; margin:0 5px;}
+.run_btnDiv ul li a{ color:#013b61; text-decoration: none;padding:0 8px;}
+.run_btnDiv ul li a:hover{ background:#198bc9; color:#fff; display:block;}
+
+
+/*****选择城市 样式 *****/
+.selectCity a{ color:#013b61; text-decoration: none;padding:0 3px;}
+.selectCity a:hover{ color:#f00; text-decoration:underline;}
+.selectCity .city_current{ color:#f00; font-weight:bold;}
+
+
+
+/***************企业单位 首页 图标  icon****************/
+.icon_compress{ background:url(../images/icon/compress.png) no-repeat 0 6px; height:30px;padding-left:20px;}/***运营记录填写***/
+.icon_safe{ background:url(../images/icon/safe.png) no-repeat 0 6px;  height:30px;padding-left:20px;}/****安全隐患统计***/
+.icon_chart_pie{ background:url(../images/icon/chart_pie.png) no-repeat 0 6px; height:30px;padding-left:20px;}/**设备及人员持证统计**/
+.icon_buildings{ background:url(../images/icon/buildings.png) no-repeat 0 6px; width:30px; height:30px;padding-left:20px;}/****维保电梯统计***/
+.icon_status_online{ background:url(../images/icon/status_online.png) no-repeat 0 6px;height:30px;padding-left:20px;}/****维保人员持证状况*****/
+.icon_wand{ background:url(../images/icon/wand.png) no-repeat 0 6px; height:30px;padding-left:20px;}/**整改指令**/
+.icon_paper_bag{ background:url(../images/icon/paper_bag.png) no-repeat 0 6px; height:30px;padding-left:20px; }/**文件通知**/
+.icon_paste_plain{ background:url(../images/icon/paste_plain.png) no-repeat 0 6px; height:30px;padding-left:20px;}/**施工报告记录**/
+
+.icon_email_open{ background:url(../images/icon/email_open.png) no-repeat 0 6px;  height:30px;padding-left:20px;}/**预警信息  邮件打开**/
+.icon_envelope{ background:url(../images/icon/envelope.png) no-repeat 0 6px;  height:30px;padding-left:20px;}/**预警信息 邮件未看**/
+
+.icon_report{ background:url(../images/icon/report.png) no-repeat 0 6px; height:30px;padding-left:20px;}/**报表上报**/
+.icon_monitor{ background:url(../images/icon/monitor.png) no-repeat 0 6px;  height:30px;padding-left:20px;}/**巡查监督**/

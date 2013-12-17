@@ -3,15 +3,36 @@ package com.totyu.web.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.totyu.vo.sys.Dict;
+import com.totyu.vo.common.Dict;
 import com.totyu.web.cache.DictCache;
 
 public class HtmlUtil {
 	public static String printOption(String value, String text, boolean selected){
 		if(null == value)	value = "";
 		return "<option value='" + value + "' " + (selected?"selected":"") + ">" + text + "</option>";
+	}
+	public static String printOption(String value, String text, String selectValue){
+		if(null == value)	value = "";
+		return "<option value='" + value + "' " + (value.equals(selectValue)?"selected":"") + ">" + text + "</option>";
+	}
+	/**
+	 * 根据参数打印options
+	 * @param values
+	 * @param texts
+	 * @param selectValue
+	 * @return
+	 */
+	public static String printOptions(String[] values, String[] texts, boolean showEmptyOption, String selectValue){
+		StringBuffer buff = new StringBuffer();
+		if(showEmptyOption){
+			buff.append("<option value=''>--请选择--</option>");
+		}
+		if(null != values && null != texts && values.length == texts.length){
+			for(int i=0;i < values.length;i++){
+				buff.append(printOption(values[i], texts[i], selectValue));
+			}
+		}
+		return buff.toString();
 	}
 	/**
 	 * 根据参数打印options

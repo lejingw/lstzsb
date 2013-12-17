@@ -1,7 +1,0 @@
-http://172.16.191.250/webAuth/index.htm?www.baidu.com/
-
-
-http://172.16.191.250/ajaxlogout?_t=1383094314751
-
-
-http://172.16.191.250/authresult/authresult.htm

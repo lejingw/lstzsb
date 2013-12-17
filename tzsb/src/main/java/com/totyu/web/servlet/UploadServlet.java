@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import com.totyu.common.Global;
 import com.totyu.service.common.SysCommonService;
 
+@SuppressWarnings("serial")
 public class UploadServlet extends HttpServlet {
 	private static Logger log = Logger.getLogger(UploadServlet.class);
 	private String tempPath = null;//临时文件路径
@@ -78,7 +79,11 @@ public class UploadServlet extends HttpServlet {
 			String filepath = null;
 			for (FileItem item : items) {
 				if (!item.isFormField()) {
-					String relativeFilename = System.currentTimeMillis() + "_" + item.getName();
+					String relativeFilename = System.currentTimeMillis()+"";
+					int suffIndex = item.getName().lastIndexOf(".");
+					if(suffIndex>-1){
+						relativeFilename +=  item.getName().substring(suffIndex);
+					}
 					File savefile = new File(fileAbsolutePath + relativeFilename);
 					item.write(savefile);
 					
@@ -93,7 +98,7 @@ public class UploadServlet extends HttpServlet {
 			PrintWriter out = resp.getWriter();
 			if(null != filepath){
 				String id = sysCommonService.saveUploadFile(filename, sort, filepath);
-				out.print("{fileId:"+id+"}");
+				out.print("{fileId:"+id+", path:'"+filepath+"'}");
 			}
 			out.flush();
 		} catch (Exception e) {

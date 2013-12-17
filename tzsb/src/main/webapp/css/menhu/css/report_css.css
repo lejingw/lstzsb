@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+/******举报 相关页CSS*****/
+.contentBox{min-height:550px; height:auto !important; height:550px; padding:30px;}
+.bigTitle{ height:50px; line-height:40px; border-bottom:2px solid #1f5fc0; text-align:center;}
+.bigTitle h1{letter-spacing:2px; font-size:30px;}
+
+table{ margin:20px auto; line-height:45px; font-size:12px; color:#2f2e2e;}
+table .inputBox{ width:270px; height:21px; line-height:21px;}
+table textarea{width:270px; height:70px; margin-top:5px;}
+
+
+.btnBox{ height:auto; margin-left:374px;}
+.btnBox_1{ height:auto; margin-left:255px;}
+
+.btn1{ background:url(../images/bt_agree_3.png) no-repeat; width:98px; height:28px; border:none; cursor:pointer;}
+.btn1:hover{ background:url(../images/bt_agree_3_hover.png) no-repeat; width:98px; height:28px;}
+
+.btnBox p{text-indent: 0em;}
+
+
+/*****问答中心*左侧搜索**********/
+.selQuestion{ width:auto; height:auto; margin:10px;}
+.selQuestion .inputBox{ width:150px; height:25px; line-height:25px; border:1px solid #bdbcbc; float:left; margin-right:-5px; text-indent:5px;}
+.selQuestion .inputBtn{ width:49px; height:31px; background:url(../images/icon_search_1.png) no-repeat;float:right; border:none;}
+.selQuestion .inputBtn:hover{ background:url(../images/icon_search_2.png) no-repeat;}
+
+.wenDiv{ line-height:30px;}
+.wenIco{ background:url(../images/icon_question.png) no-repeat; width:17px; height:17px; display:block; float:left; margin-top:5px; padding-right:10px; margin-left:12px;}
+
+
+.daDiv{ border:#f8eba0 1px solid; height:auto; padding:10px; margin-top:8px; background:#fffcee;}
+.daIco{ background: url(../images/icon_answer.png) no-repeat; width:17px; height:17px;display:block; float:left; margin-top:5px;padding-right:10px;}

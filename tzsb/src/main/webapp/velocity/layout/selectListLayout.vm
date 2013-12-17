@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>SCM</title>
+	#set($dateParam = '20131111')
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/map.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam" charset="UTF-8"></script>
+<style>
+body{
+	font: 12px/1.6em Tahoma,Verdana, Lucida, Arial, Helvetica, 宋体,sans-serif;
+}
+/* 交替行奇数行的背景色 */
+tr.evenrow td {
+	background-color: #FFFFFF;
+}
+/* 交替行偶数行的背景色 */
+tr.oddrow td {
+	background-color: #ebf5ff;
+}
+/* 鼠标经过时的背景色 */
+tr.rowover td {
+	background-color: #CCCCCC;
+}
+</style>
+<script>
+</script>
+</head>
+<body>
+	$screen_content
+</body>
+</html>

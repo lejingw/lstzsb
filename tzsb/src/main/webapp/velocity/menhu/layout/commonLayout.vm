@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/menhu/css/base_css.css"/>
+	#foreach($item in $!cssfiles)
+	<link href="$item" type="text/css" rel="stylesheet" />
+	#end
+	<title>TZSB</title>
+	#set($dateParam = '20131111')
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
+	
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/engine.js?date=$!dateParam' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/util.js?date=$!dateParam' charset="UTF-8"></script>
+	
+	<script language='javascript' type="text/javascript" src='${rc.contextPath}/js/menhu/common/dropdown.js' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/SysCommonDwr.js' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src='${rc.contextPath}/script/formValidator.js' charset="UTF-8"></script>
+	<script>
+    var ctxPath = "${rc.contextPath}";
+    dwr.engine.setTimeout(600000);
+    dwr.engine.setErrorHandler(function(msg, err){showLayer(false);if("Timeout" == msg){alert("系统执行超时...");}else{alert(msg);}});
+  
+    //[if It IE 6]透明度
+    if(navigator.appName=="Microsoft Internet Explorer"){
+        var trim_Version=navigator.appVersion.split(";")[1].replace(/[ ]/g,"");
+		if(trim_Version=="MSIE6.0"){
+        	jQuery.getScript("${rc.contextPath}/js/qiye/common/DD_belatedPNG_0.0.8a-min.js",function(data, textStatus, jqxhr){
+        		DD_belatedPNG.fix('div,img,input,background,ul,li,a,a:hover,li a:hover');
+        	});
+		}
+    }
+    </script>
+    #foreach($item in $!jsfiles)
+    <script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>
+    #end
+</head>
+<body>
+	<div class="login-main">
+	    <div class="floatJB"><a href="${rc.contextPath}/menhu/MHJB001/jb001/list.do"><img src="${rc.contextPath}/css/menhu/images/xuanfu_1.png" width="41" height="109" alt="我要举报" onmouseover="this.src='${rc.contextPath}/css/menhu/images/xuanfu_2.png'" onmouseout="this.src='${rc.contextPath}/css/menhu/images/xuanfu_1.png'"/></a></div>
+		<!---head start--->
+		<div id="head">
+		  <div id="logo"> </div>
+		  <div id="search">
+		    <form action="" method="post"  id="search_frm">
+		      <input type="text" name='sousuoContent' id="inputBox" value="$!{sousuoContent}" />
+		      <input name="" type="button" id="inputBtn" onclick="toSearch()"/>
+		      <script>
+							function toSearch() {
+								jQuery("#search_frm").attr("action", "${rc.contextPath}/menhu/search/doSearch.do");
+								jQuery("#search_frm").submit();
+								jQuery("#search_frm").attr("action", "");
+							}
+					</script>
+		    </form>
+		  </div>
+		</div>
+		<!---head end---> 
+		<!---navMenu start--->
+		<div id="navMenu">
+		  <div class="layout">
+		    <ul>
+		      <li><a href="${rc.contextPath}/index.html" class="active">首页</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311002">通知通告</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311003" rel="dropmenu1">行业信息</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311004" rel="dropmenu2">技术规范</a> </li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311005" rel="dropmenu3">法律法规</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311006" >资料表格下载</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007" rel="dropmenu5">办事指南</a></li>
+		      <li><a href="${rc.contextPath}/menhu/wdzx001/doWdzx001.do">问答中心</a></li>
+		      <li><a href="${rc.contextPath}/menhu/MHJB001/jb001/list.do" rel="dropmenu7">举报</a></li>
+		    </ul>
+		  </div>
+		</div>
+		  <ul id="dropmenu1" class="dropMenu">
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311003&&id=2013110031">行业数据</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311003&&id=2013110032">行业信息公告</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311003&&id=2013110033">行业督导意见</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311003&&id=2013110034">行风建设</a></li>
+		  </ul>
+		  <ul id="dropmenu2" class="dropMenu">
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311004&&id=2013110041">安全技术监察规程</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311004&&id=2013110042">技术检验规则</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311004&&id=2013110043">资格认可规则</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311004&&id=2013110044">监督管理办法</a></li>
+		  </ul>
+		  <ul id="dropmenu3" class="dropMenu">
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311005&&id=2013110051">国家法规</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311005&&id=2013110052">部委规章</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311005&&id=2013110053">地方法规</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311005&&id=2013110054">省局文函</a></li>
+		  </ul>
+		  <ul id="dropmenu5" class="dropMenu">
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007&&id=2013110071" >设备使用登记</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007&&id=2013110072" >设备申报检验</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007&&id=2013110073" >设备报停报废</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007&&id=2013110074" >设备施工告知</a></li>
+		    <li><a href="${rc.contextPath}/menhu/MHGT001/gt001/list.do?flm_id=201311007&&id=2013110075" >其他办理事项</a></li>
+		  </ul>
+		  <script type="text/javascript">cssdropdown.startchrome("navMenu")</script> 
+		  
+		<!---navMenu end---> 
+	</div>
+	
+<div class="h_15"></div>
+
+<!---mian start--->
+$screen_content
+	<!-----版权所有 foot--------->
+	<div id="font">
+	  <div class="layout">
+	    <p>CopyRight 2013-2020 www.xxxxxx.com All Rights Reserved 版权所有:丽水市质量技术监督局  浙ICP备07000001号</p>
+	    <p>地址：浙江省丽水市中山街北395号　邮编：323000　电话：0578-2661011　传真：0578-2661012 </p>
+	  </div>
+	</div>
+</body>
+</html>

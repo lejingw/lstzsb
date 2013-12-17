@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>SCM</title>
+	#set($dateParam = '20131111')
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/map.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam" charset="UTF-8"></script>
+<style>
+body{
+	font: 12px/1.6em Tahoma,Verdana, Lucida, Arial, Helvetica, 宋体,sans-serif;
+}
+/* 交替行奇数行的背景色 */
+tr.evenrow td {
+	background-color: #FFFFFF;
+}
+/* 交替行偶数行的背景色 */
+tr.oddrow td {
+	background-color: #ebf5ff;
+}
+/* 鼠标经过时的背景色 */
+tr.rowover td {
+	background-color: #CCCCCC;
+}
+</style>
+<script>
+function PagingSelector(config){
+	this.getValues=function(){
+		var idArr = [], nameArr = [];
+    	if(config.multiSelectFlag === true){
+    		for(var i=0;i<$n("key2").length;i++){
+    			idArr.push($n('key2')[i].value);
+    			nameArr.push($n('val2')[i].value);
+    		}
+    		return [idArr, nameArr];
+    	}else{
+			var objArr = [];
+			for(var i=0;i<$n("chk").length;i++){
+				if($n("chk")[i].checked){
+					idArr.push($n('key')[i].value);
+					nameArr.push($n('val')[i].value);
+					var obj = {};
+					obj[config.idProperty] = $n('key')[i].value;
+					obj[config.nameProperty] = $n('val')[i].value;
+					for(var j=0;j<config.columns.length;j++){
+						var pro = config.columns[j];
+						if(typeof pro === 'object'){
+							obj[pro.name] = $n(pro.name)[i].value;
+						}
+					}
+					objArr.push(obj);
+				}
+			}
+			return [idArr, nameArr, objArr];
+    	}
+	};
+	this.load = function(){
+		startIpt.val(0);
+		//limitIpt.val(10);
+		loadPagerData();
+	};
+	function countToolbar(){
+		pageindexIpt.val(Math.ceil((parseInt(startIpt.val())+1) / parseInt(limitIpt.val())));
+		totalPageCountIpt.val(Math.ceil(totalCountIpt.val() / parseInt(limitIpt.val())));
+		pageCountIpt.val(parseInt(limitIpt.val()));
+		
+		if(parseInt(pageindexIpt.val())<=1){
+			preBtn.attr('disabled', true);
+			firstBtn.attr("disabled", true);
+		}else{
+			preBtn.removeAttr("disabled");
+			firstBtn.removeAttr("disabled");
+		}
+		if(parseInt(pageindexIpt.val())>=parseInt(totalPageCountIpt.val())){
+			nextBtn.attr('disabled', true);
+			lastBtn.attr("disabled", true);
+		}else{
+			nextBtn.removeAttr("disabled");
+			lastBtn.removeAttr("disabled");
+		}
+	}
+	function isChecked(empid){
+    	if(config.multiSelectFlag === true){
+    		for(var i=0;i<$n("key2").length;i++){
+    			if($n("key2")[i].value == empid){
+    				return true;
+    			}
+    		}
+    	}else{
+    		var selectedValues = config.selectedValues.split(",");
+    		for(var i=0;i<selectedValues.length;i++){
+    			if(selectedValues[i] == empid){
+    				return true;
+    			}
+    		}
+    	}
+		return false;
+	}
+	function nullToEmpty(str){
+		if(!str)	return "";
+		return str;
+	}
+    function loadPagerData(){
+    	for(var i=$i(config.tableId).rows.length-1;i>0;i--){
+    		$i(config.tableId).deleteRow(i);
+    	}
+    	config.getPageData(startIpt.val(), limitIpt.val(), function(pager){
+    		var data = pager.pageData;
+        	for(var i=0;i<data.length;i++){
+        		var colHtmlArr = [];
+        		var chkHtml = "<input type='checkbox' name='chk' " + (isChecked(data[i][config.idProperty])?"checked":"") + ">"
+        				+ "<input type='hidden' name='key' value='" + nullToEmpty(data[i][config.idProperty]) + "'/>"
+        				+ "<input type='hidden' name='val' value='" + nullToEmpty(data[i][config.nameProperty]) + "'/>";
+        		for(var j=0;j<config.columns.length;j++){
+        			var pro = config.columns[j];
+        			if(typeof pro === 'string'){
+        				colHtmlArr.push(data[i][pro]);
+        			}else if(typeof pro === 'object'){
+        				chkHtml += "<input type='hidden' name='" + pro.name + "' value='" + nullToEmpty(data[i][pro.name]) + "'/>";
+        				if(pro.hidden !== true){
+        					colHtmlArr.push(nullToEmpty(data[i][pro.name]));
+        				}
+        			}
+        		}
+        		colHtmlArr.splice(0,0,chkHtml);
+//        		info(colHtmlArr);
+        		insertRow(config.tableId, colHtmlArr, false);
+        	}
+        	updateCheckallStatus();
+    		checkTable2(config.tableId, 'chkall', 'chk', config.multiSelectFlag === true, rowSelectAction);
+        	totalCountIpt.val(parseInt(pager.totalCount));
+        	countToolbar();
+    	});
+    }
+    function updateCheckallStatus(){
+    	var flag = true;
+		for(var i=0;i<$n("chk").length;i++){
+			if(!$n("chk")[i].checked){
+				flag = false;
+				break;
+			}
+		}
+    	$("#chkall").attr("checked", flag);
+    }
+
+    function selectRow(idx){
+		for(var i=0;i<$n("key2").length;i++){
+			if($n("key2")[i].value == $n('key')[idx].value){
+		    	return;
+			}
+		}
+		createSelectRow($n('key')[idx].value, $n('val')[idx].value);
+    }
+    function unselectRow(idx){
+		for(var i=0;i<$n("key2").length;i++){
+			if($n("key2")[i].value == $n('key')[idx].value){
+		    	$i('tbl').deleteRow(i+1);
+			}
+		}
+		resetRowCSS("tbl");
+    }
+    function createSelectRow(key, val){
+    	var tr = $("<tr></tr>");
+    	$("<td>"+val+"</td>").appendTo(tr);
+    	var td = $("<td></td>");
+    	$("<input type='hidden' name='key2' value='" + key + "'/>").appendTo(td);
+    	$("<input type='hidden' name='val2' value='" + val + "'/>").appendTo(td);
+    	$("<input type='button' value='删除'>").click(function(){
+	    		for(var i=0;i<$n("key").length;i++){
+	    			if($(this).prev().prev().val() == $n("key")[i].value){
+	    				$n("chk")[i].checked = false;
+	    			}
+	    		}
+	    		$(this).parent().parent().remove();
+	    		resetRowCSS("tbl");
+	    	}).appendTo(td);
+    	td.appendTo(tr);
+    	tr.appendTo($("#tbl"));
+    	
+    	if($("#tbl tr").size()%2==0){
+    		tr.addClass("oddrow");
+    	}else{
+    		tr.addClass("evenrow");
+    	}
+    	tr.hover(function(){
+	    		$(this).toggleClass("rowover");
+	        });
+    }
+    function rowSelectAction(checked, index){
+    	if(config.multiSelectFlag !== true)
+    		return ;
+    	if(index == '-1'){
+    		var chks = getSelectIndexs('chk');
+    		for(var i=0;i<$n("chk").length;i++){
+    	    	if(checked){
+    	    		selectRow(i);
+    	    	}else{
+    	    		unselectRow(i);
+    	    	}
+    		}
+    	}else{    		
+    		if(checked){
+    			selectRow(index);
+    		}else{
+    			unselectRow(index);
+    		}
+    	}
+    	updateCheckallStatus();
+    }
+    
+	var toolbarTd = $("#" + config.toolbarId);
+	$("#" + config.tableId + " tr:eq(0)").addClass("evenrow");
+	var startIpt = $("<input type='hidden' name='_start' value=''/>").val(0);
+	var limitIpt = $("<input type='hidden' name='_limit' value=''/>").val(10);
+	var pageindexIpt = $("<input type='text' style='width:25px;text-align:center;' value=''>").change(function(){
+		if(isNumber($(this).val())){
+	       	startIpt.val((parseInt($(this).val()) - 1) * parseInt(limitIpt.val()));
+	       	loadPagerData();
+		}else{
+			$(this).val("");
+		}
+	});;
+	var totalPageCountIpt = $("<input type='text' style='width:25px;text-align:center;' value='' readonly>");
+	var pageCountIpt = $("<input type='text' style='width:25px;text-align:center;' value=''>").change(function(){
+    		if(isNumber($(this).val())){
+    	    	startIpt.val(0);
+    	    	limitIpt.val(parseInt($(this).val()));
+    	    	loadPagerData();
+    		}else{
+    			$(this).val("");
+    		}
+    	});
+	var totalCountIpt = $("<input type='text' style='width:25px;text-align:center;' value='' readonly>");
+	var firstBtn = $("<input type='button' class='pageToolbarBtn' value='首页'>").click(function(){
+			startIpt.val(0);
+			loadPagerData();
+		});
+	var preBtn = $("<input type='button' class='pageToolbarBtn' value='上一页'>").click(function(){
+	    	startIpt.val(parseInt(startIpt.val()) - parseInt(limitIpt.val()));
+			loadPagerData();
+		});
+	var nextBtn = $("<input type='button' class='pageToolbarBtn' value='下一页'>").click(function(){
+	    	startIpt.val(parseInt(startIpt.val()) + parseInt(limitIpt.val()));
+			loadPagerData();
+		});
+	var lastBtn = $("<input type='button' class='pageToolbarBtn' value='尾页'>").click(function(){
+    		startIpt.val((Math.ceil(parseInt(totalCountIpt.val()) / parseInt(limitIpt.val())) - 1)* parseInt(pageCountIpt.val()));
+			loadPagerData();
+    	});
+	
+	startIpt.appendTo(toolbarTd);
+	limitIpt.appendTo(toolbarTd);
+	$("<span>当前第</span>").appendTo(toolbarTd);
+	pageindexIpt.appendTo(toolbarTd);
+	$("<span>页,共</span>").appendTo(toolbarTd);
+	totalPageCountIpt.appendTo(toolbarTd);
+	$("<span>页,每页</span>").appendTo(toolbarTd);
+	pageCountIpt.appendTo(toolbarTd);
+	$("<span>条,共</span>").appendTo(toolbarTd);
+	totalCountIpt.appendTo(toolbarTd);
+	$("<span>条</span> ").appendTo(toolbarTd);
+	
+	firstBtn.appendTo(toolbarTd);
+	preBtn.appendTo(toolbarTd);
+	nextBtn.appendTo(toolbarTd);
+	lastBtn.appendTo(toolbarTd);
+
+	if(config.multiSelectFlag === true){
+		$("#selectedRowDiv").css("display", "block");
+		$("#tbl tr:eq(0)").addClass("evenrow");
+		var selectedValues = config.selectedValues.split(",");
+		var selectedNames = config.selectedNames.split(",");
+		for(var i=0;i<selectedValues.length;i++){
+			if(selectedValues[i]){				
+				createSelectRow(selectedValues[i], selectedNames[i]);
+			}
+		}
+	}else{
+		$("#selectedRowDiv").css("display", "none");
+	}
+	
+	loadPagerData();
+}
+</script>
+</head>
+<body>
+	$screen_content
+    <table style='width:100%;'>
+    	<tr height='10px;'>
+    		<td height='10px;' id='toolbarId'></td>
+    	</tr>
+    </table>
+	<div id='selectedRowDiv'>
+		<table id='tbl' style='width:100%;'>
+			<tr>
+				<th>名称</th>
+				<th width='15%'><span>操作</span></th>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+@charset "utf-8";
+/*后台管理页面中的所有表样式 */
+
+/*全局样式*/
+table{border-collapse:collapse; color:#013b61;}
+table th{height:30px; line-height:30px;font-weight:bold; text-align:center; letter-spacing: 0.1em;background:url(../images/managePages_bg/leftNav_ico/ico_table_theadBg.png) repeat-x;border:solid 1px #d5e3e7;}
+tr{background:#ffffff;}
+tr td{border:solid 1px #d5e3e7;line-height:26px; white-space:nowrap; }
+table a{ color:#ff0000; text-decoration:underline;}
+table a:hover{ color:#0000ff; text-decoration:none;}
+
+caption{font-size:18px; height:50px; line-height:50px; font-family:"微软雅黑"; font-weight:bold; text-align:center; letter-spacing: 0.05em;_border:0; background:#ffffff; padding:0;}
+
+.tableTextCenter td{ white-space:nowrap;} 
+
+/**表格无边框样式*/
+.noborder tr td{ border: none; white-space:nowrap;}
+
+/*预警与超期单元格样式提示*/
+.warning_yellow{ background:#ffff00;}
+.overdue_red{ background:#ff0000;}
+.warning_yellow a,.overdue_red a{ color:#000; }
+
+
+/*div 块样式*/
+#Divcontainer{color:#013b61; width:auto;}
+#Divcontainer #Divcontainer_son{ width:50%;_width:49%; _margin-right:0;_margin:0 -3px;height:auto;}
+.div_content{border:#d5e3e7 1px solid; height:auto !important; min-height:150px;_height:150px;margin-bottom:15px; }
+.div_content .div_title{ background:url(../images/managePages_bg/leftNav_ico/ico_table_theadBg.png) repeat-x; border-bottom:1px solid #d5e3e7;height:31px; line-height:30px; padding:0 15px 0 15px; font-weight:bold; font-family:"宋体"; white-space:nowrap;}
+.div_content .div_title a{ color:#013b61;}
+.div_content ul{padding:15px; line-height:28px; height:auto;white-space:nowrap;}
+.div_content ul li{width:100%;}
+.div_content ul .text_length{ width:80%; float:left; overflow: hidden;}
+.div_content ul .data_length{ width:20%; float:right; text-align:right;}
+
+/*div 块样式 图标*/
+.ico_title01_1,.ico_title01_2,.ico_title01_3{background:url(../images/managePages_bg/leftNav_ico/ico_title_01.png) no-repeat; position:relative; float:left; padding-left:25px;}
+.ico_title01_1{background-position:0 5px;_background-position:0 0px;}/*兼容IE6*/
+.ico_title01_2{background-position:0 -26px;_background-position:0 0px;}/*兼容IE6*/
+.ico_title01_3{background-position:0 -55px;_background-position:0 0px;}/*兼容IE6*/
+
+
+/**主体内容，外边框，如人员管理，上面DIV 需要套一起**/
+.outerDiv{ margin:20px 0;border:#d5e3e7 1px solid; padding:20px;}
+
+/**嵌套表**/
+.table_xiao{ line-height:25px; height:25px; text-align:center;}
+
+
+/***上传图片******DIV及图片大小*/
+.uploadDiv{  height:auto; width:auto; margin:10px;}
+.uploadImgDiv{ height:118px; width:105px; float:left; text-align:center; border:1px solid #e0e0e0; margin:10px;}
+.uploadImgDiv:hover{ height:118px; width:105px; float:left; text-align:center; border:1px solid #7da2ce; background:#d4e6fc; opacity:0.5;-moz-opacity:0.5; }
+.uploadImgDiv img{ margin-top:6px;}
+.uploadImgDiv span{  line-height:20px;}
+
+/****查询 箭头按钮***/
+.btn_popSelect{ background:url(../images/managePages_bg/ico_dropdown.png) no-repeat; width:22px; height:14px;}

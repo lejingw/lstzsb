@@ -9,8 +9,8 @@
     <link href="${rc.contextPath}/style/ztree/zTreeStyle.css" type="text/css" rel="stylesheet" />
     
     <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
-    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.core-3.5.js" charset="UTF-8"></script>
-    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.5.js" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.core-3.5.min.js" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/ztree/jquery.ztree.excheck-3.5.min.js" charset="UTF-8"></script>
 <script>
 var callbackFn = null;
 //供外部调用的取值方法

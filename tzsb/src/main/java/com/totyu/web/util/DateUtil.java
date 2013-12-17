@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -1100,4 +1101,11 @@ public class DateUtil extends DateUtils {
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + days);
         return df.format(calendar.getTime());
     }
+	public static String date10(String str){
+		if(null == str || "".equals(str))
+			return "";
+		if(str.length()<=10)
+			return "";
+		return str.substring(0, 10);
+	}
 }

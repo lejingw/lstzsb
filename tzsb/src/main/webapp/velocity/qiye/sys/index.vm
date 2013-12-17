@@ -1,0 +1,2 @@
+#set($layout = "qiye/layout/indexLayout.vm")
+<iframe id='mainFrame' frameborder='0' scrolling="auto" src='${rc.contextPath}/qiye/sys/main.do'></iframe>

@@ -1,3 +1,4 @@
-<a href="home.do">首页</a>异常提示
+<a href="#" onclick="window.history.go(-2);">返回</a><br>
+<h1>异常提示</h1>
 <br>
 $!error

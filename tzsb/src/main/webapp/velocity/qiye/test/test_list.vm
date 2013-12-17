@@ -1,0 +1,80 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($jsfiles = [
+	"${rc.contextPath}/script/commonSelector.js",
+	"${rc.contextPath}/js/qiye/test/test.js"
+])
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="im_tr f12">
+    <tr>
+      <td width="15%" class="im_tr_a text_right text_space_right">日期选择：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="text" name='yxrq1' value="" onclick="MyCalendar.SetDate(this)"/>
+	  </td>
+      <td width="15%" class="im_tr_a text_right text_space_right">数据字典下拉框：</td>
+      <td width="35%" class="text_space_left text_left">
+        <select name="sblb" class="select_12">
+       	   $HtmlUtil.printDictOptions('sblx', true, "2")
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="15%" class="im_tr_a text_right text_space_right">复选框：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="checkbox" id='sfsj' name='sfsj' value="1" checked/><label for="sfsj" class="mr_10">chk1</label>
+		<input type="checkbox" id='sfzz' name='sfzz' value="1" />		<label for="sfzz" class="mr_10">chk2</label>
+		<input type="checkbox" id='sfaz' name='sfaz' value="1" checked/><label for="sfaz" class="mr_10">chk3</label>
+		<input type="checkbox" id='sfgz' name='sfgz' value="1" />		<label for="sfgz" class="mr_10">chk4</label>
+		<input type="checkbox" id='sfwx' name='sfwx' value="1" checked/><label for="sfwx" class="mr_10">chk5</label>
+	  </td>
+      <td width="15%" class="im_tr_a text_right text_space_right">常量下拉框：</td>
+      <td width="35%" class="text_space_left text_left">
+        <select name="qstatus" class="select_12">
+			$!HtmlUtil.printOptions(["1","9"], ["保存", "已注销"], true, "1")
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td width="15%" class="im_tr_a text_right text_space_right">单选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='dxid' value=""/>
+		<input type="text" id='dxmc' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showListSelectWin()"/>
+	  </td>
+      <td width="15%" class="im_tr_a text_right text_space_right">多选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='dxid2' value=""/>
+		<input type="text" id='dxmc2' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showListSelectWin2()"/>
+	  </td>
+	</tr>
+    <tr>
+      <td width="15%" class="im_tr_a text_right text_space_right">树单选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='trid' value=""/>
+		<input type="text" id='trmc' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showSelectTreeWin()"/>
+	  </td>
+      <td width="15%" class="im_tr_a text_right text_space_right">树多选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='trid2' value=""/>
+		<input type="text" id='trmc2' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showSelectTreeWin2()"/>
+	  </td>
+	</tr>
+    <tr>
+      <td width="15%" class="im_tr_a text_right text_space_right">分页单选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='dwid' value=""/>
+		<input type="text" id='dwmc' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showPagingSelectWin()"/>
+	  </td>
+      <td width="15%" class="im_tr_a text_right text_space_right">分页多选：</td>
+      <td width="35%" class="text_space_left text_left">
+		<input type="hidden" id='dwid2' value=""/>
+		<input type="text" id='dwmc2' value=""/>
+        <input type="button" value="选择" style="width:50px;" onclick="showPagingSelectWin2()"/>
+	  </td>
+    </tr>
+  </table>
+<scrit>
+
+</scrit>

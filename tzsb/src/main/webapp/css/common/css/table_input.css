@@ -1,0 +1,33 @@
+@charset "utf-8";
+table{ background:#d5e3e7;}
+table td{ background:#fff; white-space:nowrap;}
+.im_tr{/* line-height:24px;*/}
+.im_tr td{ line-height:36px}
+.im_tr_a{ background-color:#f1f7f9;}
+.im_tr_b{ background-color:#fff;}
+
+/*输入框全局宽度*/
+input{/* width:12em; border:1px solid #ccc;*/}
+.input_1{ width:12em}
+
+/*文本域全局宽高*/
+textarea{ width:50%; height:5em; border:1px solid #ccc;}
+
+/*文本域重定义*/
+.textarea_1{ width:100%; height:30em;}
+
+/*文本域标题行高*/
+.im_tr_lh{ height:6em; line-height:6em;}
+
+/*单选按钮重定义*/
+.radio_1{ width:auto; border:none;}
+
+/*复选按钮重定义*/
+.checkbox_1{ width:auto; border:none;}
+
+
+/*选择框指定宽度*/
+.select_5{ width:5em;}
+.select_7{ width:7em;}
+.select_12{ width:12em;}
+.select_20{ width:20em;}

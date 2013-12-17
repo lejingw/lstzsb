@@ -1,6 +1,7 @@
 package com.totyu.web.interceptor;
 
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,26 +12,26 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.totyu.common.CommonUtil;
 
 public class SignonInterceptor extends HandlerInterceptorAdapter {
-	
+
 	private Logger logger = Logger.getLogger(this.getClass().getName());
-	
-//	private final String mappingUrl = "^.*" + StringUtil.getContextPath() + "(/login.vm|/error.vm)$";
-	private final String loginUrl = "/login/false.do";
 
-
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		String url = request.getRequestURL().toString();
-//		if (url.matches(mappingUrl))
-		if(url.indexOf("/login/")>=0 || url.indexOf("/error/")>=0)
-			return true;
-		if (!CommonUtil.isLogined(request)){
-			RequestDispatcher rd = request.getRequestDispatcher(loginUrl);
-			rd.forward(request, response);
-//			response.sendRedirect(loginUrl);
-			return false;
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+		if (CommonUtil.isLogined(request)) {
+			logger.debug(handler.getClass().getName() + " 开始执行...");
+			return super.preHandle(request, response, handler);
 		}
-		logger.debug(handler.getClass().getName() + " 开始执行...");
-		return true;
+		PrintWriter out = response.getWriter();
+		StringBuilder builder = new StringBuilder();
+		builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+	//	builder.append("alert(\"页面过期，请重新登录\");");
+		builder.append("var win = window;");
+		builder.append("if(window != window.top) win = window.top;");
+		builder.append("win.location=\"" + request.getContextPath() + "/index.do\";");
+		builder.append("</script>");
+		out.print(builder.toString());
+		out.close();
+		return false;
 	}
 
 	public void postHandle(HttpServletRequest request,

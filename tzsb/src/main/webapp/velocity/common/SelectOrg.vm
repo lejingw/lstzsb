@@ -1,22 +1,43 @@
-#set($layout = "layout/selectTreeLayout.vm")
+#set($layout = "layout/selectPagerLayout.vm")
+<table style="width:100%;" border="0">
+	<tr>
+        <td width="20%">名称</td>
+        <td><input type="text" id='qorgName'/></td>
+        <td width="20%"><input type='button' value='查询' onclick="query()"></td>
+	</tr>
+</table>
+<table id='tb11' style="width:100%;" border="0">
+    <tr>
+		<th width='15%'><input type='checkbox' id='chkall'/></th>
+		<th>ID</th>
+		<th>名称</th>
+	</tr>
+</table>
 <script>
-callbackFn = function(nodeArr){
-	var objArr = [];
-	for(var i=0;i<nodeArr.length;i++){
-		objArr.push({orgId:nodeArr[i].id, orgName:nodeArr[i].name});
-	}
-	return objArr;
-};
+//供外部调用的取值方法
+function getValues(){
+	return pagingSelector.getValues();
+}
+function query(){
+	pagingSelector.load();
+}
+function getPageData(start, limit, callback){
+    SysCommonDwr.getOrgPagerData("$!{orgType}", start, limit, $("#qorgName").val(), function(pager){
+			callback(pager);
+    	});
+}
+var pagingSelector = null;
 jQuery(document).ready(function(){
-	//数据
-    var dataArr =[
-    	#foreach($param in ${dataMap.keySet()})
-    		{id:$param, pId:${dataMap.get($param).parentId}, name:'${dataMap.get($param).orgName}' #if(0 == ${dataMap.get($param).parentId}), open: true #end #if(1 == ${dataMap.get($param).nocheck}), nocheck:true #end},
-        #end
-		null
-    ];
-	dataArr.pop();//删除最后一个null项
-	
-	initTree(dataArr, $!multiFlag, "$!selectedValues");
+	pagingSelector = new PagingSelector({
+			toolbarId:'toolbarId',
+			tableId:'tb11',
+			getPageData:getPageData,
+			selectedValues:"$!{selectedValues}",
+			selectedNames:"$!{selectedNames}",
+			idProperty:'orgId',
+			nameProperty:'orgName',
+			multiSelectFlag:$multiFlag,
+			columns:["orgId", {name:"orgName",hidden:false}, {name:'orgType',hidden:true}]
+		});
 });
 </script>

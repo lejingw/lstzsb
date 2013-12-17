@@ -21,7 +21,7 @@ public class Global {
 	public static final String			PAGE_DEFAULT_START									= "0";//列表默认从1开始
 	public static final String			PAGE_DEFAULT_LIMIT									= "15";//列表默认每页15行
 	public static final String			PAGE_DEFAULT_LIMIT_WIN								= "10";//弹出框列表默认每页10行
-	
+
 	private static Properties properties = null;
 	public static void load(InputStream is){
 		try {
@@ -45,6 +45,9 @@ public class Global {
 	}
 	
 	public static String getPicUploadPath(){
-		return properties.getProperty("pic_upload_path", Global.class.getResource("/").toString());
+		String path = properties.getProperty("pic_upload_path", Global.class.getResource("/").toString());
+		if(!path.endsWith("/"))
+			path += "/";
+		return path;
 	}
 }

@@ -9,7 +9,10 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.totyu.common.Global;
-
+/**
+ * servletcontext 监听器
+ * 
+ */
 public class TzsbServletContextListener implements ServletContextListener {
 
 	private static final Logger log = Logger.getLogger(TzsbServletContextListener.class);

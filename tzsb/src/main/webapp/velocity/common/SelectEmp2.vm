@@ -49,7 +49,7 @@ function createToolbar(){
 	* 改变页数
 	*/
 	jQuery("#_pageindex").change(function(){
-		if(isNumeric(jQuery("#_pageindex").val())){
+		if(isNumber(jQuery("#_pageindex").val())){
 	       	jQuery("#_start").val((parseInt(jQuery("#_pageindex").val()) - 1) * parseInt(jQuery("#_pageCount").val()) + 1);
 	       	loadStylePage(jQuery("#_start").val(),jQuery("#_limit").val());
 		}else{
@@ -61,7 +61,7 @@ function createToolbar(){
 	* 改变每页显示条数
 	*/
 	jQuery("#_pageCount").change(function(){
-		if(isNumeric(jQuery("#_pageCount").val())){
+		if(isNumber(jQuery("#_pageCount").val())){
 	    	jQuery("#_start").val("1");
 	    	jQuery("#_limit").val(jQuery("#_pageCount").val());
 	    	loadStylePage(jQuery("#_start").val(),jQuery("#_limit").val());

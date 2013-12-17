@@ -1,0 +1,97 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($cssfiles = [])
+#set($jsfiles = ["${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/script/swfupload/fileUpload.js",
+	"${rc.contextPath}/js/qiye/jbxx/scxkzgl.js",
+	"${rc.contextPath}/dwr/interface/ScxkzglDwr.js"])
+<form  id='frm'>
+<input type='hidden' id='billid' value='$!{bill.billid}'/>
+<input type='hidden' id='status' value='$!{bill.status}'/>
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="im_tr f12">
+  <caption>许可证信息</caption>
+  <tr>
+    <td width="15%" class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>证书编号</td>
+    <td width="35%" class="text_space_left text_left"><input type="text" id='zsbh' class="input_1" value='$!{bill.zsbh}'/></td>
+    <td width="15%" class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>批准日期</td>
+    <td width="35%" class="text_space_left text_left"><input type="text" id='pzrq' class="input_1" onclick="MyCalendar.SetDate(this)" value='$!DateUtil.date10($!{bill.pzrq})'/></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>单位名称</td>
+    <td class="text_space_left text_left">
+		<input type='hidden' id='dwId' value='$!{bill.dwId}'/>
+		<input type="text" id='dwmc' class="input_1" value="$!{bill.dwmc}" readonly/>
+	</td>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>有效日期</td>
+    <td class="text_space_left text_left"><input type="text" id='yxrq' class="input_1" onclick="MyCalendar.SetDate(this)" value='$!DateUtil.date10($!{bill.yxrq})'/></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>单位地址</td>
+    <td class="text_space_left text_left"><input type="text" id='dwdz' class="input_1" value='$!{bill.dwdz}' readonly/></td>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>批准机构</td>
+    <td class="text_space_left text_left"><input type="text" id='pzjg' class="input_1" value='$!{bill.	}'/></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>制造地址：</td>
+    <td  colspan="3" class="text_space_left text_left"><input type="text" id='zzdz' class="input_1" value='$!{bill.zzdz}'/></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>设备类别</td>
+    <td  colspan="3" class="text_space_left text_left">
+	  <select id="sblb" class="select_12">
+        $HtmlUtil.printDictOptions('sblx', true, $!{bill.sblb})
+      </select>
+	</td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right">主管部门</td>
+    <td colspan="3" class="text_space_left text_left">
+      <input type="checkbox" id='sfsj' value="1" #if("1"=="$!{bill.sfsj}") checked #end/><label for="sfsj" class="mr_10">设计</label>
+      <input type="checkbox" id='sfzz' value="1" #if("1"=="$!{bill.sfzz}") checked #end/><label for="sfzz" class="mr_10">制造</label>
+      <input type="checkbox" id='sfaz' value="1" #if("1"=="$!{bill.sfaz}") checked #end/><label for="sfaz" class="mr_10">安装</label>
+      <input type="checkbox" id='sfgz' value="1" #if("1"=="$!{bill.sfgz}") checked #end/><label for="sfgz" class="mr_10">改造</label>
+      <input type="checkbox" id='sfwx' value="1" #if("1"=="$!{bill.sfwx}") checked #end/><label for="sfwx" class="mr_10">维修</label>
+    </td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>许可证图片</td>
+    <td  colspan="3" class="text_space_left text_left">
+	  <span id="btnPlaceHolder"></span>
+	</td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right">备注:</td>
+    <td colspan="3" class="text_space_left text_left"><textarea id="beizhu" cols="" rows="" class="mtb_5">$!{bill.beizhu}</textarea></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right">状态</td>
+    <td  colspan="3" class="text_space_left text_left">
+	  <input type="text" id='txtStatus' class="input_1" readonly value='$!BdCommon.getStatusName(${bill.status})'/>
+	</td>
+  </tr>
+</table>
+<div class="operateBtnDiv_down">
+  <div class="smallGreenBtn f_l mr_10" id='btnBack'><a href="#">返回</a></div>
+</div>
+</form>
+<script>
+var uploadFiles = null;
+//设置单据信息 smallGreyBtn
+$(document).ready(function(){
+	initView();
+	uploadFiles = new UploadFiles('btnPlaceHolder', false, {
+		fileTypes:"*.jpg;*.gif;*.png",
+		buttonText:'上传图片',
+		fileSizeLimit:'5 MB'
+	});
+	uploadFiles.loadFiles("SC", jQuery("#billid").val());
+});
+function setAddInitValues(){
+	$("#dwId").val('$!StringUtil.getOrgId($session)');
+	$("#dwmc").val('$!StringUtil.getOrgName($session)');
+	$("#txtStatus").val("保存");
+	SysCommonDwr.getDwxxById('$!StringUtil.getOrgId($session)', function(data){
+    	$("#dwdz").val(data.dwzcdzxx);
+    	$("#zzdz").val(data.dwzcdzxx);
+	});
+}
+</script>

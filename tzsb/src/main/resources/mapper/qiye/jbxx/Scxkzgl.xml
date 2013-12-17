@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Scxkzgl">
+	<!-- 查询条件 -->
+	<sql id="Scxkzgl.getPageDataCD">
+		<isNotEmpty property="zsbh">and a.zsbh like '%$zsbh$%'</isNotEmpty>
+		<isNotEmpty property="dwmc">and a.dwmc like '%$dwmc$%'</isNotEmpty>
+		<isNotEmpty property="yxrq1"><![CDATA[and DATE_FORMAT(a.yxrq, '%Y-%m-%d') >= #yxrq1#]]></isNotEmpty>
+		<isNotEmpty property="yxrq2"><![CDATA[and DATE_FORMAT(a.yxrq, '%Y-%m-%d') <= #yxrq2#]]></isNotEmpty>
+		<isNotEmpty property="sblb">and a.sblb = #sblb#</isNotEmpty>
+		<isNotEmpty property="qstatus">and a.status = #qstatus#</isNotEmpty>
+		<isNotEmpty property="sfsj">and a.sfsj = #sfsj#</isNotEmpty>
+		<isNotEmpty property="sfzz">and a.sfzz = #sfzz#</isNotEmpty>
+		<isNotEmpty property="sfaz">and a.sfaz = #sfaz#</isNotEmpty>
+		<isNotEmpty property="sfgz">and a.sfgz = #sfgz#</isNotEmpty>
+		<isNotEmpty property="sfwx">and a.sfwx = #sfwx#</isNotEmpty>
+	</sql>
+	<!-- 根据父栏目ID 查询栏目信息 -->
+	<select id="Scxkzgl.getPageData" parameterClass="map" resultClass="com.totyu.vo.qiye.jbxx.Scxkzgl">
+		select a.id as "billid", a.zsbh, a.dw_id as "dwId", a.dwmc, a.dwdz, a.zzdz, a.yxrq, a.pzjg, a.sblb, a.sfsj, a.sfzz, a.sfaz, a.sfgz, a.sfwx,
+				a.create_id as "createId", a.create_date as "createDate", a.update_id as "updateId", a.update_date as "updateDate", a.status as "status"
+		from t_dw_tzsbxkzscwb a where a.status in(1,9) and a.dw_id = #orgid#
+		<include refid="Scxkzgl.getPageDataCD"/> order by a.id desc
+		limit $start$, $limit$
+	</select>
+	<!-- 获取总条数 -->
+	<select id="Scxkzgl.getPageCount" parameterClass="map" resultClass="int">
+		select count(1) from t_dw_tzsbxkzscwb a where a.status in(1,9) and a.dw_id = #orgid#
+		<include refid="Scxkzgl.getPageDataCD"/>
+	</select>
+	<!-- 创建单据 -->
+	<insert id="Scxkzgl.createBill" parameterClass="com.totyu.vo.qiye.jbxx.Scxkzgl">
+		insert into t_dw_tzsbxkzscwb(dw_id, sblb, zsbh, dwmc, dwdz, zzdz, pzrq, yxrq, pzjg,
+			sfsj, sfzz, sfaz, sfgz, sfwx, beizhu, create_id, create_date, update_id, update_date, status)
+		values(#dwId#, #sblb#, #zsbh#, #dwmc#, #dwdz#, #zzdz#, #pzrq#, #yxrq#, #pzjg#,
+			#sfsj#, #sfzz#, #sfaz#, #sfgz#, #sfwx#, #beizhu#, #createId#, #createDate#, #updateId#, #updateDate#, #status#)
+        <selectKey keyProperty="billid">
+        	SELECT last_insert_id() as billid
+        </selectKey>
+	</insert>
+	<!-- 修改单据 -->
+	<update id='Scxkzgl.updateBill' parameterClass='com.totyu.vo.qiye.jbxx.Scxkzgl'>
+		update t_dw_tzsbxkzscwb a set a.sblb=#sblb#, a.zsbh=#zsbh#, a.zzdz=#zzdz#, a.pzrq=#pzrq#, a.yxrq=#yxrq#, a.pzjg=#pzjg#,
+			a.sfsj=#sfsj#, a.sfzz=#sfzz#, a.sfaz=#sfaz#, a.sfgz=#sfgz#, a.sfwx=#sfwx#, a.beizhu=#beizhu#,
+			a.update_id=#updateId#, a.update_date=#updateDate#, a.status=#status#
+		where a.id = #billid#
+	</update>
+	<!-- 删除单据，逻辑删除 -->
+	<update id='Scxkzgl.deleteBill' parameterClass='string'>
+		update t_dw_tzsbxkzscwb set status = 0 where id = #value# and status = 1
+	</update>
+	<!-- 获取单据数据 -->
+	<select id='Scxkzgl.getBill' parameterClass='string' resultClass="com.totyu.vo.qiye.jbxx.Scxkzgl">
+		select a.id as "billid", a.zsbh, a.dw_id as "dwId", a.dwmc, a.dwdz, a.zzdz, a.yxrq, a.pzjg, a.pzrq, a.sblb, a.sfsj, a.sfzz, a.sfaz, a.sfgz, a.sfwx, a.beizhu,
+				a.create_id as "createId", a.create_date as "createDate", a.update_id as "updateId", a.update_date as "updateDate", a.status as "status"
+		from t_dw_tzsbxkzscwb a where a.id = #value#
+	</select>
+	<!-- 检查证书编号是否已经存在 -->
+	<select id='Scxkzgl.checkZsbh' parameterClass='map' resultClass="int">
+		select count(1) from t_dw_tzsbxkzscwb a where a.zsbh=#zsbh#
+		<isNotEmpty property="billid"> and a.id!=#billid#</isNotEmpty>
+	</select>
+</sqlMap>

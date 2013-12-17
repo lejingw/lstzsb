@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="MenhuSys">
+	<!-- 根据用户名获取用户信息  -->
+     <select id="MenhuSys.getLoginUserInfo" parameterClass="string" resultClass="com.totyu.vo.menhu.sys.User">
+ 		select a.id as id, a.zhanghao as username, a.mima as password, a.dwbm_id as orgid, a.status as status
+		  from t_xt_yonghu a
+		 where a.zhanghao = #value#
+    </select>
+</sqlMap>

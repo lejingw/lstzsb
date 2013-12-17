@@ -4,114 +4,113 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
 import com.totyu.common.Global;
-import com.totyu.service.sys.UserService;
-import com.totyu.vo.sys.User;
+import com.totyu.service.common.SysCommonService;
+import com.totyu.vo.common.User;
 import com.totyu.web.util.DateUtil;
 import com.totyu.web.util.StringUtil;
+
 /**
  * 用户数据缓存
+ * 
  * @author wanglj
- *
+ * 
  */
 public class UserCache implements CacheSingletonIntf {
-	private static Logger logger = Logger.getLogger(UserCache.class);
-	private static UserCache userCache = null;
-	private static Map<String, User> userMap = null;
-	private static Map<String, User> userMap2 = null;
-	private static Date refreshTime = null;
+	private Logger logger = Logger.getLogger(UserCache.class);
+	private static UserCache instance = null;
+
+	private final ReentrantLock lock = new ReentrantLock();
+	private final Map<String, User> map = new HashMap<String, User>();
+	private Date refreshTime = null;
 
 	private UserCache() {
 	}
 
 	public synchronized static UserCache getInstance() {
-		if (null == userCache) {
-			init();
+		if (null == instance) {
+			instance = new UserCache();
+			instance.init();
 		}
-		return UserCache.userCache;
-	}
-	public synchronized static void refresh(){
-		userCache = null;
-		userMap = null;
-		userMap2 = null;
-		init();
+		return instance;
 	}
 
-	private synchronized static void init() {
-		if (null == UserCache.userCache) {
+	public void refresh() {
+		lock.lock();
+		try {
+			map.clear();
+			init();
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	private void init() {
+		lock.lock();
+		try {
+			SysCommonService sysCommonService = (SysCommonService) Global.springContext
+					.getBean("sysCommonService");
+			if (null == sysCommonService) {
+				throw new RuntimeException("初始化spring上下文失败");
+			}
 			logger.debug("初始化用户缓存数据...");
 			try {
-				UserService userService = (UserService) Global.springContext.getBean("userService");
-				if (null != userService) {
-					UserCache.userMap = new HashMap<String, User>();
-					UserCache.userMap2 = new HashMap<String, User>();
-					List<User> list = userService.getAllUser();
-					for(User user : list){
-						UserCache.userMap.put(user.getUserid(), user);
-						UserCache.userMap2.put(user.getUsercode(), user);
-					}
+				List<User> list = sysCommonService.getAllUser();
+				for (User user : list) {
+					map.put(user.getUserid(), user);
 				}
-				UserCache.userCache = new UserCache();
+				refreshTime = new Date();
 			} catch (Exception e) {
 				logger.error("初始化用户缓存数据失败");
-				e.printStackTrace();
 				throw new RuntimeException("初始化用户缓存数据失败");
 			}
+		} finally {
+			lock.unlock();
 		}
-		refreshTime = new Date();
 	}
 
-	public synchronized void destroy() {
-		if (null != UserCache.userCache) {
-			UserCache.userCache = null;
-		}
-		if(null != UserCache.userMap){
-			UserCache.userMap.clear();
-		}
-		if(null != UserCache.userMap2){
-			UserCache.userMap2.clear();
-		}
-	}
 	/**
 	 * 根据用户id获取用户名称
+	 * 
 	 * @param userId
 	 * @return
 	 */
-	public String getUserName(String userId){
-		User user = UserCache.userMap.get(userId);
-		if(null != user){
-			return user.getUsername();
+	public String getUserName(String userId) {
+		lock.lock();
+		try {
+			User user = map.get(userId);
+			if (null != user) {
+				return user.getUsername();
+			}
+			return null;
+		} finally {
+			lock.unlock();
 		}
-		return null;
 	}
-	public String getNameById(String userIds){
-		if(StringUtil.isEmpty(userIds)){
+
+	public String getNameById(String userIds) {
+		if (StringUtil.isEmpty(userIds)) {
 			return null;
 		}
 		String[] useridArr = userIds.split(",");
 		String nameStr = "$";
-		for(String userid : useridArr){
-			if(!StringUtil.isEmpty(userid)){
-				String tmp = UserCache.getInstance().getUserName(userid);
-				if(null != tmp){
+		for (String userid : useridArr) {
+			if (!StringUtil.isEmpty(userid)) {
+				String tmp = getUserName(userid);
+				if (null != tmp) {
 					nameStr += "," + tmp;
 				}
 			}
 		}
-		if("$".equals(nameStr))
+		if ("$".equals(nameStr))
 			return userIds;
 		return nameStr.substring(2);
 	}
-	public String getUserIdByCode(String code){
-		User user = UserCache.userMap2.get(code);
-		if(null != user){
-			return user.getUserid();
-		}
-		return null;
-	}
+
 	public String getRefreshTime() {
 		return DateUtil.formatSdf1(refreshTime);
 	}

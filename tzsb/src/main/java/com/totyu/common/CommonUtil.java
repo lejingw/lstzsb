@@ -1,6 +1,5 @@
 package com.totyu.common;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ import com.totyu.web.util.StringUtil;
 public class CommonUtil {
 	private static Logger logger = Logger.getLogger(CommonUtil.class);
 	private static final String AUTH_TOKEN					= "auth_token";			//session中的用户登陆信息
+	private static final String LOGIN_TYPE					= "login_type";			//登陆类型0企业登陆1监察登陆2乡镇登陆3行业登陆
 	
 	/**
 	 * 从request中获取参数信息，未找到返回null
@@ -101,7 +101,7 @@ public class CommonUtil {
      */
     public static final boolean isLogined(HttpSession session){
 		if (session != null) {
-			return null != getAuthToken(session);
+			return null != getAuthToken(session) && null != session.getAttribute(LOGIN_TYPE);
 		} else {
 			return false;
 		}
@@ -120,7 +120,7 @@ public class CommonUtil {
 	public static void logoutClearSession(HttpSession session) {
 		if(null != session){
 			session.removeAttribute(AUTH_TOKEN);
-			session.setAttribute(AUTH_TOKEN, null);
+			session.removeAttribute(LOGIN_TYPE);
 		}
 	}
 	
@@ -180,6 +180,50 @@ public class CommonUtil {
 			throw new RuntimeException("session失效，请重新登录");
 		}
 		return authToken.getOrgId();
+	}
+	/**
+	 * 获取登录组织
+	 * @param session
+	 * @return
+	 */
+	public static void setSessionLoginType(HttpSession session, String type) {
+		if(null != session){
+			session.setAttribute(LOGIN_TYPE, type);
+		}
+	}
+	/**
+	 * 获取登录组织
+	 * @param session
+	 * @return
+	 */
+	public static String getSessionLoginType(HttpSession session) {
+		if(null == session){
+			return null;
+		}
+		return (String)session.getAttribute(LOGIN_TYPE);
+	}
+	/**
+	 * 获取登录类型
+	 * @param session
+	 * @return
+	 */
+	public static String getSessionType(HttpSession session) {
+		if(null == session){
+			return null;
+		}
+		AuthToken authToken = getAuthToken(session);
+		if(null == authToken){
+			throw new RuntimeException("session失效，请重新登录");
+		}
+		return authToken.getOrgId();
+	}
+	public static String toUTF8(String selectedNames) {
+		try {
+			if(null == selectedNames)	return null;
+			return new String(selectedNames.getBytes("ISO-8859-1"),"UTF-8");
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	/**
 	 * 根据Class的可写字段，从request中获取值，并生成对应的实例
@@ -244,16 +288,15 @@ public class CommonUtil {
 			for(String key : keys){
 				String tmp = getParameterNull(req, key);
 				if(null != tmp){
-					condition.put(key, new String(tmp.getBytes("ISO-8859-1"),"utf-8"));
+					condition.put(key, tmp);//new String(tmp.getBytes("ISO-8859-1"),"utf-8"));
 				}
 			}
 			condition.put("start", getParameterNull(req, "start"));
 			condition.put("limit", getParameterNull(req, "limit"));
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			logger.error(e);
 		}
 	}
-	
 	private static void setDefaultStartLimit(Map<String, String> condition, String startDefaultValue, String limitDefaultValue) {
 		if(StringUtil.isEmpty(condition.get("start"))){
 			condition.put("start", startDefaultValue);
@@ -297,10 +340,10 @@ public class CommonUtil {
 		}
 	}
 	private static boolean isUnQuerys(Map<String, String> condition){
-         if(StringUtil.isNotEmpty(condition.get("start")) || StringUtil.isNotEmpty(condition.get("limit"))){
-                 return false;
-         }
-         return true;
+		if(StringUtil.isNotEmpty(condition.get("start")) || StringUtil.isNotEmpty(condition.get("limit"))){
+        	 return false;
+		}
+		return true;
 	}
 	
 	/**

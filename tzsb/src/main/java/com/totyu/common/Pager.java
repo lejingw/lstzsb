@@ -41,7 +41,4 @@ public class Pager<T> {
 		this.limit = limit;
 	}
 
-	public String toString(){
-		return "[start:"+start + ", limit:"+limit+"]";
-	}
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
-
 <sqlMap namespace="SysCommon">
 	<!-- 根据sql语句查询单个返回值 -->
 	<select id="SysCommon.querySingleString" resultClass="string" parameterClass="string">
@@ -17,41 +16,66 @@
 	<update id="SysCommon.increaseIndex" parameterClass="map">
 		update jat_sys_index a set a.biz_index = a.biz_index + 1 where a.biz_type = #bizType# and a.biz_code = #bizCode# and a.biz_date = #bizDate#
 	</update>
-	
+		
+	<!-- 获取所有用户信息 -->
+	<select id="SysCommon.getAllUser" resultClass="com.totyu.vo.common.User">
+		select a.id as userid, a.zhanghao as usercode, a.xingming as username from t_xt_yonghu a
+	</select>
+	<!-- 获取所有数据字典信息 -->
+	<select id="SysCommon.getAllDictItem" resultClass="com.totyu.vo.common.Dict">
+		select a.entry_code as 'entryCode', a.entry_name as 'entryName', a.entry_type as 'entryType', b.item_key as 'itemKey', b.item_value as 'itemValue', b.item_order as 'itemOrder'
+		from t_xt_sjzdlb a, t_xt_sjzdsjx b
+		where a.entry_code = b.entry_code and a.status = 1 and b.status = 1
+		order by a.entry_type, a.entry_code, b.item_order, b.item_key
+	</select>
 	<!-- 获取所有系统参数 -->
-	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.sys.Parameter">
+	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.common.Parameter">
 		select a.param_name as "name", a.param_value as "value", a.memo as "memo" from jat_sys_parameter a where a.status = '1' order by a.param_name
 	</select>
-	
-	<!-- 组织Org -->
-	<typeAlias alias="Org" type="com.totyu.vo.basic.Org" />
-	<resultMap id="orgResult" class="Org">
-		<result property="orgId" column="org_id"/>
-		<result property="parentId" column="parent_id"/>
-		<result property="orgName" column="org_name"/>
-	</resultMap>
 	<!-- 获取所有组织数据 -->
-	<select id="SysCommon.getOrgTree" resultMap="orgResult" parameterClass="string">
-		select a.org_id, a.parent_id, a.org_name from jat_sm_org a where a.status = 1 order by a.parent_id, a.org_id
+	<select id="SysCommon.getAllOrg" resultClass="com.totyu.vo.common.Org">
+		select a.id as "orgId", a.name as "orgName", a.leibie as "orgType", a.parentId as "parentId" from view_dwzzjg a order by a.leibie, a.name, a.id
 	</select>
 	<!-- 保存上传文件数据 -->
 	<insert id="SysCommon.saveUploadFile" parameterClass="com.totyu.vo.sys.UploadFile">
-		insert into t_xt_fujian(laiyuan, lyid, shunxu, mingcheng, path, create_id, create_date, status)
-		values(#laiyuan#, #lyid#, #shunxu#, #mingcheng#, #path#, #createId#, now(), 1)
+		insert into t_xt_fujian(laiyuan, lyid, shunxu, mingcheng, path, status)
+		values(#laiyuan#, #lyid#, #shunxu#, #mingcheng#, #path#, 1)
         <selectKey keyProperty="id">
         	SELECT last_insert_id() as id
         </selectKey>
 	</insert>
 	<select id="SysCommon.getUploadFileList" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="map">
-		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.shunxu, a.id
+		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.create_date, a.shunxu, a.id
 	</select>
 	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
 		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#
 	</select>
-	<update id="SysCommon.updateLoadFiles1" parameterClass="map">
-		update t_xt_fujian set laiyuan = #billCode#, lyid = #headid#, create_id = #userid# where id = #id#
+	<update id="SysCommon.updateLoadFiles" parameterClass="map">
+		update t_xt_fujian set laiyuan = #billCode#, lyid = #headid#, create_id = #userid#, create_date = now() where id = #id#
 	</update>
-	<delete id="SysCommon.updateLoadFiles2" parameterClass="string">
+	<delete id="SysCommon.deleteLoadFiles" parameterClass="string">
 		delete from t_xt_fujian where id = #value#
 	</delete>
+	<select id='SysCommon.getDwxxById' resultClass="com.totyu.vo.qiye.jbxx.Dwxx">
+		select * from (select d.id as 'orgId', d.mchxm as 'orgName', 0 as 'orgType', 0 as 'secondLevelFlag', d.dwzcdzxx as 'dwzcdzxx' from t_dw_dwxx d
+				union ALL
+				select e.id as 'orgId', e.xsdwmc as 'orgName', 0 as 'orgType', 1 as 'secondLevelFlag', f.dwzcdzxx as 'dwzcdzxx' from t_dw_ejdw e inner join t_dw_dwxx f on e.yjdw_id = f.id) aa
+		where aa.orgId = #value#
+	</select>
+	
+   	<!-- 获取特种设备种类-->
+    <select id="SysCommon.getSbzl" resultClass="com.totyu.vo.common.SelectorOption">
+			select dmb.daima as "value",
+				   dmb.mingcheng as "text"
+			from t_xt_tzsbfldmb dmb 
+			where (dmb.fjdm is null or dmb.fjdm ='') and dmb.dmjb = 1			
+    </select>
+    
+    <!-- 获取特种设备种类-->
+    <select id="SysCommon.getSblb" parameterClass="map" resultClass="com.totyu.vo.common.SelectorOption">
+			select dmb.daima as "value",
+				   dmb.mingcheng as "text"
+			from t_xt_tzsbfldmb dmb 
+			where dmb.fjdm= #fjdm# and dmb.dmjb = #dmjb#	
+    </select>   
 </sqlMap>

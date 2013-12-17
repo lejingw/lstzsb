@@ -29,8 +29,8 @@
 .weedialog .dialog-close:hover{background:url(img/dialog_close2.png) no-repeat; /*_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_close2.png"); _background:none;*/}
 .weedialog .dialog-content{clear:both; line-height:20px; padding:5px; background:#fff; text-align:left; overflow-y:auto; overflow-x:hidden;}
 .weedialog .dialog-button{clear:both; background:#fff;}
-.weedialog .dialog-cl{width:6px;background:url(img/dialog_con_lc.png); _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_con_lc.png"); _background:none;}
-.weedialog .dialog-cr{width:6px;background:url(img/dialog_con_rc.png); _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_con_rc.png"); _background:none;}
+.weedialog .dialog-cl{border:0px;/*add*/width:6px;background:url(img/dialog_con_lc.png); _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_con_lc.png"); _background:none;}
+.weedialog .dialog-cr{border:0px;/*add*/width:6px;background:url(img/dialog_con_rc.png); _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_con_rc.png"); _background:none;}
 .weedialog .dialog-button{text-align:right; font-size:12px; padding-right:6px; _padding-right:2px;}
 .weedialog .dialog-ok{border:1px solid #33621D; background:url(img/dialog_btn_ok.gif) top #88B674; height:24px; line-height:24px; color:#fff;cursor:pointer; padding:0 5px; margin:0px; margin-right:3px;}
 .weedialog .dialog-cancel{border:1px solid #999; background:url(img/dialog_btn_cancel.gif) top; height:24px; line-height:24px; color:#666;cursor:pointer; padding:0 5px; margin:0px;}
@@ -39,7 +39,7 @@
 .weedialog .dialog-bl{position:absolute; left:0px; top:0px; width:11px; height:11px; background:url(img/dialog_bl.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_bl.png"); _background:none;}
 .weedialog .dialog-bc{margin-left:11px; margin-right:11px; width:auto; height:11px; background:url(img/dialog_bc.png) repeat-x; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_bc.png"); _background:none;}
 .weedialog .dialog-br{position:absolute; right:0px; top:0px; width:11px; height:11px; background:url(img/dialog_br.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale", src="/weebox/src/img/dialog_br.png"); _background:none;}
-
+.weedialog table tbody tr td{border:0px;}/*add*/
 .weealert .dialog-cancel{display:none;}
 
 .weeselect li{float:left; width:120px;}

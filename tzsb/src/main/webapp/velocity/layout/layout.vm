@@ -8,29 +8,21 @@
 <title>SCM</title>
 #set($dateParam = '20131111')
 <link href="${rc.contextPath}/style/jqueryUI/jquery-ui-1.8.18.custom.css" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/style/common.css?date=$!dateParam" type="text/css" rel="stylesheet" />
 <link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
 <link href="${rc.contextPath}/style/weebox.css" type="text/css" rel="stylesheet" />
-<link href="${rc.contextPath}/script/calendar/calendar.css" type="text/css" rel="stylesheet" />
 #foreach($item in $!cssfiles)
 <link href="$item" type="text/css" rel="stylesheet" />
 #end
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/bgiframe/jquery.bgiframe-2.1.2.js" charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-ui-1.8.18.custom.js" charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/weebox.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/formValidate.js" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/script/calendar/calendar.js' charset="UTF-8"></script>
-
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonSelector.js?date=$!dateParam" charset="UTF-8"></script>
 
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/engine.js?date=$!dateParam' charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/util.js?date=$!dateParam' charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/DictDwr.js?date=$!dateParam' charset="UTF-8"></script>
-<script language="javascript" type="text/javascript" src='${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam' charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam" charset="UTF-8"></script>
 
 <script>
 var ctxPath = "${rc.contextPath}";

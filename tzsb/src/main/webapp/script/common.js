@@ -11,6 +11,12 @@ function $n(name){
 	return document.getElementsByName(name);
 }
 /**
+ * 创建元素
+ */
+function $c(tagName){
+	return document.createElement(tagName);
+}
+/**
  * 应用属性，不存在则添加，存在则覆盖
  */
 function apply(obj, obj2){
@@ -22,10 +28,10 @@ function apply(obj, obj2){
 	return obj;
 }
 window.info = window.alert;
-window.alert = function(msg, callback){
+window.alert=function(msg, callback){
 	jAlert(msg, "提示", callback);
 };
-window.confirm = function(msg, okfunc, cancelfunc){
+window.confirm=function(msg, okfunc, cancelfunc){
 	jConfirm(msg, "确认", function(flag){
 		if(flag && okfunc){
 			try{okfunc();}catch(e){}
@@ -34,7 +40,7 @@ window.confirm = function(msg, okfunc, cancelfunc){
 		}
 	});
 };
-window.confirm2 = function(msg, okBtnName, okfunc, cancelBtnName, cancelfunc){
+window.confirm2=function(msg, okBtnName, okfunc, cancelBtnName, cancelfunc){
 	jQuery.weeboxs.open(""+msg, {
 			title:'确认',
 			boxid:'confirmDiv',
@@ -78,15 +84,12 @@ function goToURL(url) {
  * 页面重定向
  */
 function forward(url) {
-//	document.write("<form id='_frm' name='_frm' action='" + url + "' method='post'></form>");
-//	document.getElementById("_frm").submit();
-	var frm = document.createElement("form");
+	var frm = $c("form");
 	frm.id = "_frm";
 	frm.name = "_frm";
 	frm.action = url;
 	frm.method = 'post';
 	document.body.appendChild(frm);
-//	document.body.insertAdjacentElement("beforeEnd",frm); 
 	document.getElementById("_frm").submit();
 }
 /**
@@ -113,39 +116,6 @@ function getParameterValue(name){
 	endSync();
 	return val;
 }
-/*
-#set($cssfiles = ["${rc.contextPath}/script/calendar/calendar.css"])
-#set($jsfiles = ["${rc.contextPath}/script/calendar/calendar.js"])
-*/
-/**
- * 初始化日期控件
- */
-function initCalendarArr(inputIdArr, config){
-	if(!inputIdArr){
-		return ;
-	}
-	for(var i=0;i<inputIdArr.length;i++){
-		initCalendar(inputIdArr[i], config);
-	}
-}
-/**
- * 初始化日期控件
- */
-function initCalendar(inputId, config){
-	return Calendar.setup(apply({
-			inputField: inputId,
-			dateFormat: "%Y-%m-%d",
-			trigger: inputId,
-			bottomBar: true,
-			showTime:false,
-			onSelect: function() {
-				this.hide();
-			}
-		}, config)
-	);
-}
-//cal.selection.set(Calendar.dateToInt(new Date()) + 3);
-//jQuery("#date").val(cal.selection.print("%Y-%m-%d"));
 /**
  * 添加回车键的响应
  * @param inputId 控件id，如编码或条码输入框
@@ -195,7 +165,7 @@ function getSelectIndexs(chkName){
 	return valsArr;
 }
 /**
- * @param tblId 一般取tbody的id
+ * @param tblId 一般取table的id
  * @param tdHtmlArr td单元格的innerHTML字符串数组,数字长度要与tr中td的个数一致
  * @param insertFirstFlag 是否插入第一行，false添加最后一行
  */
@@ -203,24 +173,22 @@ function insertRow(tblId, tdHtmlArr, insertFirstFlag){
 	if(!tdHtmlArr || tdHtmlArr.length<1)	return;
 	var tr = null;
 	if(insertFirstFlag){
-		tr = $i(tblId).insertRow(0);
+		tr = $i(tblId).insertRow(1);
 	}else{
-		tr = document.createElement("TR");
+		tr = $c("TR");
 		$i(tblId).appendChild(tr);
 	}
 	for(var i=0;i<tdHtmlArr.length;i++){
-		var td = document.createElement("TD");
+		var td = $c("TD");
 		td.innerHTML = tdHtmlArr[i];
 		tr.appendChild(td);
 	}
-	var className = "row1";
-	if($i(tblId).rows.length>1){
-		var index = tr.rowIndex + (insertFirstFlag?0:-2);
-		if($i(tblId).rows[index].className == "row1")
-			className = "row2";
-		else
-			className = "row1";
-	}
+	var className = "evenrow";
+	var index = insertFirstFlag?2:$i(tblId).rows.length-2;
+	if($i(tblId).rows[index].className == "evenrow")
+		className = "oddrow";
+	else
+		className = "evenrow";
 	jQuery(tr).addClass(className);
 	jQuery(tr).hover(function(){
 		jQuery(this).toggleClass("rowover");
@@ -245,8 +213,8 @@ function deleteRowByIndex(index, tblId){
 }
 /**
  * 删除下拉框所有内容
-* sltId select下拉框的id或对象
-* showEmptyOptionFlag true 显示'--请选择--"选项 <可选 默认为false>
+ * sltId select下拉框的id或对象
+ * showEmptyOptionFlag true 显示'--请选择--"选项 <可选 默认为false>
  */
 function removeAllOptions(sltId,showEmptyOptionFlag){
 	var slt = ((typeof sltId == 'string')?$i(sltId):sltId);
@@ -319,7 +287,7 @@ function addOptions2(sltName, index, data, keyName, valueName, clearAll, showEmp
  * @param val 选中的值（单选）
  */
 function selectOption(sltId, val){
-	var slt = ((typeof sltId == 'string')?$$i(ltId):sltId);
+	var slt = ((typeof sltId == 'string')?$i(sltId):sltId);
 	var length = slt.options.length;
 	for(var i=0;i<length;i++){
 		if(slt.options[i].value == val){
@@ -374,14 +342,29 @@ function checkAll(chkallId, chkName, multiSelectFlag) {
 	}
 }
 /**
+ * 重置列表渐变样式
+ * @param tblId
+ */
+function resetRowCSS(tblId){
+	jQuery("#"+tblId+" tr").each(function(){
+		jQuery(this).removeClass("oddrow");
+		jQuery(this).removeClass("evenrow");
+	});
+	jQuery("#"+tblId+" tr").filter(":odd").each(function(){
+		jQuery(this).addClass("oddrow");
+	}).end().filter(":even").each(function(){
+		jQuery(this).addClass("evenrow");
+	});
+}
+/**
  * 为列表添加换行样式
  * @param tblId tbody的id
  */
 function altRowCSS(tblId){
 	jQuery("#"+tblId+" tr").filter(":odd").each(function(){
-		jQuery(this).addClass("row2");
+		jQuery(this).addClass("oddrow");
 	}).end().filter(":even").each(function(){
-		jQuery(this).addClass("row1");
+		jQuery(this).addClass("evenrow");
 	}).end().hover(function(){
 		jQuery(this).toggleClass("rowover");
 	});
@@ -400,6 +383,9 @@ function altRowCSS(tblId){
 function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dblClickFun){
 	//设置样式
 	altRowCSS(tblId);
+	checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dblClickFun);
+}
+function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dblClickFun){
 	//多选
 	if(multiSelectFlag){
 		jQuery("#"+chkallId).change(function(){
@@ -408,7 +394,7 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
 				jQuery(this).attr("checked", obj.attr("checked"));
 			});
 			if(rowSelectFun){
-				rowSelectFun(jQuery(this).attr("checked"), -1);
+				rowSelectFun(jQuery(this).attr("checked"), -1, jQuery(this).attr("checked")?getSelectIndexs(chkName):[]);
 			}
 		});
 		jQuery("input[name='" + chkName + "']").each(function(index){
@@ -437,14 +423,16 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
 	}
 	
 	jQuery("#"+tblId+" tr").each(function(index){
+		if(0 == index)	return ;
 		jQuery(this).bind("click", function(event){
-			if(!jQuery("input[name='"+chkName+"']")[index])	return ;
-			var currentChk = jQuery(jQuery("input[name='"+chkName+"']")[index]);
+			var checkIndex = index - 1;
+			if(!jQuery("input[name='"+chkName+"']")[checkIndex])	return ;
+			var currentChk = jQuery(jQuery("input[name='"+chkName+"']")[checkIndex]);
 			if(currentChk.attr("disabled"))	return;
 			currentChk.attr("checked", !currentChk.attr("checked"));
 			if(currentChk.attr("checked") && !multiSelectFlag){
 				jQuery("input[name='" + chkName + "']").each(function(index2){
-					if(index != index2){
+					if(checkIndex != index2){
 						jQuery(this).attr("checked", false);
 					}
 				});
@@ -452,9 +440,9 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
 			event.stopPropagation();
 			if(rowSelectFun){
 				if(multiSelectFlag){
-					rowSelectFun(currentChk.attr("checked"), index, getSelectIndexs(chkName));					
+					rowSelectFun(currentChk.attr("checked"), checkIndex, getSelectIndexs(chkName));					
 				}else{
-					rowSelectFun(currentChk.attr("checked"), index);
+					rowSelectFun(currentChk.attr("checked"), checkIndex);
 				}
 			}
 		});
@@ -462,12 +450,14 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
 	
 	if(dblClickFun){
 		jQuery("#"+tblId+" tr").each(function(index){
+			if(0 == index)	return ;
+			var checkIndex = index - 1;
 			jQuery(this).bind("dblclick", function(event){
-				var currentChk = jQuery("input[name='"+chkName+"']")[index];
+				var currentChk = jQuery("input[name='"+chkName+"']")[checkIndex];
 				if(currentChk){
                     jQuery(currentChk).attr("checked", true);
                 }
-				dblClickFun(index);
+				dblClickFun(checkIndex);
 			});
 		});
 	}
@@ -480,102 +470,81 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
  * @param totalCount 总条数通常取$!form.pager.totalCount
  */
 function createPagingToolbar(formId, start, limit, totalCount){
-	document.write("<table style='width:100%;'><tr><td style='BACKGROUND-COLOR: #D2E0F1;height:20px;' valign='center'>");
-	//document.write("<table border='0' width='100%' height='100%' style='BACKGROUND-COLOR: #D2E0F1;'><tr><td>");
-	document.write("<input type='hidden' id='start' name='start' value=''/>");
-	document.write("<input type='hidden' id='limit' name='limit' value=''/>");
-	document.write("<input type='hidden' id='_totalCount' value=''/>");
-	document.write("<input type='image' id='_btnFirst'   src='" + ctxPath + "/style/img/page-first.gif' style='vertical-align:text-bottom;' title='第一页'>&nbsp;");
-	document.write("<input type='image' id='_btnPre'     src='" + ctxPath + "/style/img/page-prev.gif'  style='vertical-align:text-bottom;' title='上一页'>&nbsp;");
-	document.write("当前第<input type='text' id='_pageindex' style='width:25px;height:12px;text-align:center;' value=''>页&nbsp;");
-	document.write("共<input type='text' id='_totalPageCount' style='width:40px;height:12px;text-align:center;background-color:#EBEBEB;' value='' readonly>页&nbsp;");
-	document.write("<input type='image' id='_btnNext'    src='" + ctxPath + "/style/img/page-next.gif'  style='vertical-align:text-bottom;' title='下一页'>&nbsp;");
-	document.write("<input type='image' id='_btnLast'    src='" + ctxPath + "/style/img/page-last.gif'  style='vertical-align:text-bottom;' title='最后页'>&nbsp;");
-	document.write("<input type='image' id='_btnRefresh' src='" + ctxPath + "/style/img/refresh.gif'    style='vertical-align:text-bottom;' title='刷新'>&nbsp;");
+	var totalPageCount = Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1:0);
+	var pageIndex = Math.floor((start+1) / limit) + ((start+1) % limit > 0 ? 1:0);
 	
-	document.write("每页<input type='text' id='_pageCount' style='width:25px;height:12px;text-align:center;' value=''>条&nbsp;");
-	document.write("显示第 "+(start+1)+" 条到 "+(start + limit)+" 条记录，一共 "+totalCount+" 条");
-	document.write("</td></tr></table>");
+	var html = [];
+	html.push("<div class='pageNumDiv'><input type='hidden' id='start' name='start' value='"+start+"'/><input type='hidden' id='limit' name='limit' value='"+limit+"'/>");
+	html.push("<div class='f_l mt_10 gray  lineH_40'>总共"+totalCount+"条记录，每页"+limit+"条，第"+pageIndex+"/"+totalPageCount+"页 </div>");
+	html.push("<div class='manu f_r' id='_pagingToolbar'>");
+	html.push("</div></div>");
+	document.write(html.join(""));
 	
-	jQuery("#start").val(start);
-	jQuery("#limit").val(limit);
-	jQuery("#_pageindex").val(Math.floor((start+1) / limit) + ((start+1) % limit > 0 ? 1:0));
-	jQuery("#_totalPageCount").val(Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1:0));
-	jQuery("#_pageCount").val(limit);
-	jQuery("#_totalCount").val(totalCount);
-	
-	if(parseInt(jQuery("#_pageindex").val())<=1){
-		jQuery("#_btnPre").attr('src', "" + ctxPath + "/style/img/page-prev-disabled.gif");
-		jQuery("#_btnFirst").attr("src", "" + ctxPath + "/style/img/page-first-disabled.gif");
-		
-		jQuery("#_btnPre").attr('disabled', true);
-		jQuery("#_btnFirst").attr("disabled", true);
-	}
-	if(parseInt(jQuery("#_pageindex").val())>=parseInt(jQuery("#_totalPageCount").val())){
-		jQuery("#_btnNext").attr('src', ctxPath + "/style/img/page-next-disabled.gif");
-		jQuery("#_btnLast").attr("src", ctxPath + "/style/img/page-last-disabled.gif");
-		
-		jQuery("#_btnNext").attr('disabled', true);
-		jQuery("#_btnLast").attr("disabled", true);
-	}
-	/**
-	* 改变页数
-	*/
-	jQuery("#_pageindex").change(function(){
-		if(isNumeric(jQuery("#_pageindex").val())){
-	       	jQuery("#start").val((parseInt(jQuery("#_pageindex").val()) - 1) * parseInt(jQuery("#_pageCount").val()));
-			jQuery("#"+formId).submit();
-		}else{
-			jQuery("#_pageindex").val("");
-		}
-		
-	});
-	/**
-	* 改变每页显示条数
-	*/
-	jQuery("#_pageCount").change(function(){
-		if(isNumeric(jQuery("#_pageCount").val())){
-	    	jQuery("#start").val(0);
-	    	jQuery("#limit").val(jQuery("#_pageCount").val());
-	    	jQuery("#"+formId).submit();
-		}else{
-			jQuery("#_pageCount").val("");
-		}
-	});
-	jQuery("#_totalPageCount").focus(function(){
-		jQuery(this).blur();
-	});
-	jQuery("#_btnFirst").click(function(){
-		jQuery("#start").val(0);
+	function forw(start){
+		$("#start").val(start);
 		jQuery("#"+formId).submit();
+	}
+	var prePageLink = null;
+	if(1>=pageIndex){
+		prePageLink = $("<span class='disabled'>&lt; 上一页</span>");
+	}else{
+		prePageLink = $("<a href='#'>&lt; 上一页</a>");
+	}
+	prePageLink.appendTo($("#_pagingToolbar")).click(function(){
+		if(1>=pageIndex)	return ;
+		forw((pageIndex-2)*limit);
 	});
-	jQuery("#_btnPre").click(function(){
-		if(parseInt(jQuery("#start").val()) - parseInt(jQuery("#limit").val()) >= 0){
-			//jQuery("#_pageindex").val(parseInt(jQuery("#_pageindex").val()) - 1);
-	    	jQuery("#start").val(parseInt(jQuery("#start").val()) - parseInt(jQuery("#limit").val()));
-	    	jQuery("#"+formId).submit();
-		}
-	});
-	jQuery("#_btnLast").click(function(){
-		if(0>= totalCount){
-			jQuery("#start").val(0);
-		}else{
-			jQuery("#start").val(Math.floor((totalCount - 1) / limit)*parseInt(jQuery("#limit").val()));
-		}
-		jQuery("#"+formId).submit();
-	});
-	jQuery("#_btnNext").click(function(){
-		if(parseInt(jQuery("#start").val()) + parseInt(jQuery("#limit").val()) < totalCount){
-	    	//jQuery("#_pageindex").val(parseInt(jQuery("#_pageindex").val()) + 1);
-	    	jQuery("#start").val(parseInt(jQuery("#start").val()) + parseInt(jQuery("#limit").val()));
-	    	jQuery("#"+formId).submit();
-		}
-	});
-	jQuery("#_btnRefresh").click(function(){
-    	jQuery("#"+formId).submit();
-	});
-}
 
+	function createPageNode(page){
+		if(pageIndex == page){
+			$("<span class='current'>"+page+"</span>").appendTo($("#_pagingToolbar"));
+		}else{
+			$("<a href='#'>"+page+"</a>").appendTo($("#_pagingToolbar")).click(function(){
+				forw((page-1)*limit);
+			});
+		}
+	}
+	var pageNodeCount = 5;
+	var startSpan = (Math.floor(pageIndex / pageNodeCount) + (pageIndex % pageNodeCount > 0 ? 1:0)-1)*pageNodeCount+1;
+	var i=0;
+	for(;i < pageNodeCount && (i+startSpan) <= totalPageCount ; i++){
+		createPageNode(startSpan+i);
+	}
+	if(totalPageCount - (startSpan+i) + 1 > 2){
+		$(document.createTextNode(" ... ")).appendTo($("#_pagingToolbar"));
+	}
+	if(totalPageCount - (startSpan+i) + 1 == 1){
+		createPageNode(totalPageCount);
+	}
+	if(totalPageCount - (startSpan+i) + 1 > 1){
+		createPageNode(totalPageCount-1);
+		createPageNode(totalPageCount);
+	}
+	
+
+	var nextPageLink = null;
+	if(pageIndex>=totalPageCount){
+		nextPageLink = $("<span class='disabled'>下一页 &gt;</span>");
+	}else{
+		nextPageLink = $("<a href='#'>下一页 &gt;</a>");
+	}
+	nextPageLink.appendTo($("#_pagingToolbar")).click(function(){
+		if(pageIndex>=totalPageCount)	return ;
+		forw(pageIndex*limit);
+	});
+	function goToPage(){
+		if(!isNumber($("#_pageIndex").val()) || $("#_pageIndex").val()<=0 || $("#_pageIndex").val()>totalPageCount){
+			info("页数必须为0~"+totalPageCount+"之间的正整数");
+			return false;
+		}
+		forw(($("#_pageIndex").val()-1)*limit);
+	}
+	$("<span class='ml_10'>转到第</span>").appendTo($("#_pagingToolbar"));
+	$("<input name='' type='text' id='_pageIndex'/>").appendTo($("#_pagingToolbar")).keypress(function(e){if(e.keyCode != 13)return ;return goToPage();});
+	$("<span class='mr_10'>页</span>").appendTo($("#_pagingToolbar"));
+	$("<a href='#'>跳转</a>").appendTo($("#_pagingToolbar")).click(goToPage);
+	
+}
 /**
  * 浮点数加法运算
  */
@@ -658,59 +627,6 @@ function parseURLParam() {
 	}
 	return ret;
 }
-jQuery.fn.clearForm = function(){
-	return this.each(function() {
-            var type = this.type, tag = this.tagName.toLowerCase();
-            if (tag == 'form')
-              return jQuery(':input',this).clearForm();
-            if (type == 'text' || type == 'password' || tag == 'textarea')
-              this.value = '';
-            else if (type == 'checkbox' || type == 'radio')
-              this.checked = false;
-            else if (tag == 'select')
-              this.selectedIndex = 0;
-      });
-};
-/**
- * 判断当前浏览器是否为IE
- */
-function isIE(){
-	return navigator.userAgent.indexOf("MSIE")>0;
-}
-/**
- * 为 Array 类增加一个 max 方法
- */
-Array.prototype.max = function(){
-    var i, max = this[0];
-    for (i = 1; i < this.length; i++){
-        if (max < this[i])
-            max = this[i];
-    }
-    return max;
-};
-/**
- * 为字符串增加trim方法
- */
-String.prototype.trim = function(){
-    // 用正则表达式将前后空格用空字符串替代。
-    return this.replace(/(^\s*)|(\s*$)/g, "");
-};
-/**
- * 为 Array 类增加一个 contains方法
- */
-Array.prototype.contains = function(str) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] === str)
-            return true;
-    }
-    return false;
-};
-/**
- * 执行正则表达式
- */
-function executeExp(re, s){
-    return re.test(s);
-}
 /**
  * 判断是否为空
  * null，undefined，空字符串""，空格字符串" "，都返回false
@@ -723,6 +639,12 @@ function isNull(str){
 		return true;
 	}
 	return false;
+}
+/**
+ * 执行正则表达式
+ */
+function executeExp(re, s){
+	return re.test(s);
 }
 /**
  * 判断是否是字母、数字或者为空
@@ -776,19 +698,6 @@ function isEmpty(strValue){
         return false;
 }
 /**
- * 检查输入字符串是否符合正整数格式
- */
-function isNumber(s) {
-    var s1 = s + "";
-	var regu = "^[0-9]+$";
-	var re = new RegExp(regu);
-	if (s1.search(re) != -1) {
-		return true;
-	} else {
-		return false;
-	}
-}
-/**
  * 检查输入对象的值是否符合整数格式
  */
 function isInteger(str) {
@@ -814,8 +723,9 @@ function isDecimal(str) {
 /**
  * 判断是否为数字
  */
-function isNumeric(strValue){
-    return executeExp(/^\d*$/g, strValue);
+function isNumber(strValue){
+    if (isEmpty(strValue)) return false;
+    return executeExp(/^\d+$/g, strValue);
 }
 /**
  * 判断是否为浮点数（不带正负号）
@@ -832,25 +742,11 @@ function isMoney(strValue){
     return executeExp(/^[+-]?\d+(,\d{3})*(\.\d+)?$/g, strValue);
 }
 /**
- * 判断是否为手机号码
- */
-function isMobile(strValue){
-    if (isEmpty(strValue)) return false;
-    return executeExp(/^(130|131|132|133|134|135|136|137|138|139|150|151|152|153|154|155|156|157|158|159|180|181|182|183|184|185|186|187|188|189)\d{8}$/, strValue);
-}
-/**
- * 判断是否为电话
- */
-function isPhone(strValue){
-    if (isEmpty(strValue)) return false;
-    return executeExp(/(^\(\d{3,5}\)\d{6,8}(-\d{2,8})?$)|(^\d+-\d+$)|(^(130|131|132|133|134|135|136|137|138|139|150|151|152|153|154|155|156|157|158|159|180|181|182|183|184|185|186|187|188|189)\d{8}$)/g, strValue);
-}
-/**
  * 判断是否为邮政编码
  */
 function isPostalCode(strValue){
 	if (isEmpty(strValue)) return false;
-    return executeExp(/(^$)|(^\d{6}$)/gi, strValue);
+    return executeExp(/^\d{6}$/gi, strValue);
 }
 /**
  * 判断是否为合法的URL
@@ -861,138 +757,43 @@ function isURL(strValue){
     return executeExp(pattern, strValue);
 }
 /**
- * 刷新当前窗口
- */
-function refresh() {
-	document.location.reload();
-}
-
-/**
- * 把json对象转成json字符串
- */
-JSON.stringify = JSON.stringify || function (obj) {
-    var t = typeof (obj);
-    if (t != "object" || obj === null) {
-        // simple data type
-        if (t == "string") obj = '"'+obj+'"';
-        return String(obj);
-    }
-    else {
-        // recurse array or object
-        var n, v, json = [], arr = (obj && obj.constructor == Array);
-        for (n in obj) {
-            v = obj[n]; t = typeof(v);
-            if (t == "string") v = '"'+v+'"';
-            else if (t == "object" && v !== null) v = JSON.stringify(v);
-            json.push((arr ? "" : '"' + n + '":') + String(v));
-        }
-        return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
-    }
-};
-function resetWinSize(){
-	var dw = jQuery(document).width();
-	var dw2 = jQuery(".list").width();
-	var dh2 = jQuery(".list").height();
-	var dh = jQuery(document).height();
-	var dh3 = jQuery(".control").height();
-	var newHeight = dh-dh3-27;
-	if(dw2<dw){
-		if(dh2 > newHeight){
-			dw = dw - 18;
-		}
-		jQuery(".list").css("width", dw+"px");
-	}
-	jQuery(".scroll").css("height", newHeight+"px");
-}
-/**
  * 四舍五入 默认2位小数
  * @param {} decimal
  * @param {} num 默认2
- * @return {}
  */
 function roundDecimal(decimal, num) {
     num = num||2;
     decimal = decimal||0;
     return floatDiv(Math.round(decimal*Math.pow(10, num)), Math.pow(10, num));
 }
-
 /**
- * 浮点数除法运算
+ * 为字符串增加trim方法
  */
-function floatDiv2(arg1, arg2, n) {
-    arg1 = "" + arg1;
-    arg2 = "" + arg2;
-    var r1 = 0, r2 = 0;
-    if(arg1.split(".").length>1){
-        r1 = arg1.split(".")[1].length;
-    }
-    if(arg2.split(".").length>1){
-        r2 = arg2.split(".")[1].length;
-    }
-    var res = floatMul(Number(arg1.replace(".", "")) / Number(arg2.replace(".", "")), Math.pow(10, r2 - r1));
-    if(n && isNumber(n)) {
-        return Math.round(res*Math.pow(10, n))/Math.pow(10, n);
-    }else{
-        return res;
-    }
-}
-
-/**
- 函数：把字符串转换为日期对象
- 参数：yyyy-mm-dd或dd/mm/yyyy形式的字符串
- 返回：Date对象
- 注：IE下不支持直接实例化日期对象，如new Date("2011-04-06")
- */
-Date.prototype.convertDate = function (date) {
-    var flag = true;
-    var dateArray = date.split("-");
-    if (dateArray.length != 3) {
-        dateArray = date.split("/");
-        if (dateArray.length != 3) {
-            return null;
-        }
-        flag = false;
-    }
-    var newDate = new Date();
-    if (flag) {
-        // month从0开始
-        newDate.setFullYear(dateArray[0], dateArray[1] - 1, dateArray[2]);
-    } else {
-        newDate.setFullYear(dateArray[2], dateArray[1] - 1, dateArray[0]);
-    }
-    newDate.setHours(0, 0, 0);
-    return newDate;
+String.prototype.trim=function(){
+    // 用正则表达式将前后空格用空字符串替代。
+    return this.replace(/(^\s*)|(\s*$)/g, "");
 };
-
 /**
- 函数：计算两个日期之间的差值
- 参数：date是日期对象
- flag：ms-毫秒，s-秒，m-分，h-小时，d-天，M-月，y-年
- 返回：当前日期和date两个日期相差的毫秒/秒/分/小时/天
+ * 为 Array 类增加一个 max 方法
  */
-Date.prototype.dateDiff = function (date, flag) {
-    var msCount;
-    var diff = this.getTime() - date.getTime();
-    switch (flag) {
-        case "ms":
-            msCount = 1;
-            break;
-        case "s":
-            msCount = 1000;
-            break;
-        case "m":
-            msCount = 60 * 1000;
-            break;
-        case "h":
-            msCount = 60 * 60 * 1000;
-            break;
-        case "d":
-            msCount = 24 * 60 * 60 * 1000;
-            break;
+Array.prototype.max=function(){
+    var i, max = this[0];
+    for (i = 1; i < this.length; i++){
+        if (max < this[i])
+            max = this[i];
     }
-    return Math.floor(diff / msCount);
+    return max;
 };
-
+/**
+ * 为 Array 类增加一个 contains方法
+ */
+Array.prototype.contains=function(str) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === str)
+            return true;
+    }
+    return false;
+};
 /**
  * 计算2个时间相差天数
  * @param date1 时间字符串 “2012-10-10”
@@ -1002,4 +803,144 @@ function diffDate(date1, date2) {
     var dateObj1 = new Date().convertDate(date1);
     var dateObj2 = new Date().convertDate(date2);
     return dateObj1.dateDiff(dateObj2, 'd');
+}
+/**
+ 函数：把字符串转换为日期对象
+ 参数：yyyy-mm-dd
+ 返回：Date对象
+ */
+Date.prototype.convertDate=function(date){
+	var dateArray = date.split("-");
+	if (dateArray.length != 3) {
+		return null;
+	}
+	var newDate = new Date();
+	// month从0开始
+	newDate.setFullYear(dateArray[0], dateArray[1]*1 - 1, dateArray[2]*1);
+	newDate.setHours(0, 0, 0);
+	return newDate;
+};
+/**
+ 函数：计算两个日期之间的差值
+ 参数：date是日期对象
+ flag：ms-毫秒，s-秒，m-分，h-小时，d-天，M-月，y-年
+ 返回：当前日期和date两个日期相差的毫秒/秒/分/小时/天
+ */
+Date.prototype.dateDiff=function(date, flag) {
+    var msCount = null;
+    if(!flag)	flag = "d";
+    var diff = this.getTime() - date.getTime();
+    switch (flag) {
+        case "ms":
+            msCount=1;
+            break;
+        case "s":
+            msCount=1000;
+            break;
+        case "m":
+            msCount=60 * 1000;
+            break;
+        case "h":
+            msCount=60 * 60 * 1000;
+            break;
+        case "d":
+            msCount=24 * 60 * 60 * 1000;
+            break;
+    }
+    return Math.floor(diff / msCount);
+};
+/**
+ * 创建回调方法
+ */
+Function.prototype.createCallback=function(){
+	var args = arguments;
+	var method = this;
+	return function() {
+		return method.apply(window, args);
+	};
+};
+/**
+ * 创建代理方法
+ */
+Function.prototype.createDelegate=function(obj, args, appendArgs){
+	var method = this;
+	return function() {
+		var callArgs = args || arguments;
+		if (appendArgs === true){
+			callArgs = Array.prototype.slice.call(arguments, 0);
+			callArgs = callArgs.concat(args);
+		}else if (typeof appendArgs === 'number'){
+			callArgs = Array.prototype.slice.call(arguments, 0); // copy arguments first
+			var applyArgs = [appendArgs, 0].concat(args); // create method call params
+			Array.prototype.splice.apply(callArgs, applyArgs); // splice them in
+		}
+		return method.apply(obj || window, callArgs);
+    };
+};
+/**
+ * 创建过滤方法
+ */
+Function.prototype.createInterceptor=function(fcn, scope){
+	var method = this;
+	return (typeof fcn != 'function') ?
+            this :
+            function() {
+				var me = this, args = arguments;
+				fcn.target = me;
+				fcn.method = method;
+				return (fcn.apply(scope || me || window, args) !== false) ? method.apply(me || window, args) : null;
+            };
+};
+/**
+ * 创建序列方法
+ */
+Function.prototype.createSequence=function(fcn, scope){
+	var method = this;
+	return (typeof fcn != 'function') ?
+			this :
+			function(){
+				var retval = method.apply(this || window, arguments);
+				fcn.apply(scope || this || window, arguments);
+				return retval;
+			};
+};
+jQuery.fn.clearForm=function(){
+	return this.each(function() {
+			var type = this.type, tag = this.tagName.toLowerCase();
+			if (tag == 'form')
+				return jQuery(':input',this).clearForm();
+			if (type == 'text' || type == 'password' || tag == 'textarea')
+				this.value = '';
+			else if (type == 'checkbox' || type == 'radio')
+				this.checked = false;
+			else if (tag == 'select')
+				this.selectedIndex = 0;
+		});
+};
+
+function initRight(modelCode, btnCfgArr){
+	for(var i=0;i<btnCfgArr.length;i++){
+		var btnCfg = btnCfgArr[i];
+		var method = btnCfg.fn.createCallback();
+		if(!btnCfg.code){
+			$("#" + btnCfg.id).click(method);
+		}else{
+			$("#"+btnCfg.id).click(method.createInterceptor(function(){
+				var dis = $(this).attr("disabled");
+				if(true === dis || "true" === dis || "disabled" === dis){
+					return false;
+				}
+				return true;
+			}));
+		}
+	}
+}
+/**
+ * 加载图片显示框架
+ */
+function loadPictureFrame(tblId){
+	$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
+	$.getScript(ctxPath + "/script/foxibox/jquery-foxibox-0.2.js", function(data, status){
+			$('#'+tblId+' tr td a').foxibox();
+		});
 }

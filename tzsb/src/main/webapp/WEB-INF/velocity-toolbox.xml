@@ -38,12 +38,6 @@
     	<scope>application</scope>
     	<class>com.totyu.web.util.StringUtil</class>
 	</tool>
-	<!-- 数据字典实用类 -->
-	<tool>
-    	<key>DictUtil</key>
-    	<scope>application</scope>
-    	<class>com.totyu.web.util.DictUtil</class>
-	</tool>
 	<!-- 基础数据实用类 -->
 	<tool>
     	<key>BdCommon</key>

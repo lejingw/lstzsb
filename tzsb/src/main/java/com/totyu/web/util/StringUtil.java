@@ -60,7 +60,7 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static String getOrgName(HttpSession session){
-		return OrgCache.getInstance().getOrgName(CommonUtil.getSessionOrgId(session));
+		return OrgCache.getInstance().getOrgName(CommonUtil.getSessionLoginType(session), CommonUtil.getSessionOrgId(session));
 	}
 	
 	public static Object getFromSession(HttpSession session, String name){
@@ -214,7 +214,6 @@ public class StringUtil extends StringUtils {
 		}
 		return 0;
 	}
-	
 	public static String subString(String str, int n){
 		if(StringUtil.isBlank(str)){
 			return "";

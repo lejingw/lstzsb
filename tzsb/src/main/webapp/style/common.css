@@ -126,17 +126,14 @@ body {
 }
 
 /* 交替行奇数行的背景色 */
-tr.row1 td {
+tr.evenrow td {
 	background-color: #FFFFFF;
 }
 /* 交替行偶数行的背景色 */
-tr.row2 td {
+tr.oddrow td {
 	background-color: #ebf5ff;
 }
-/* 鼠标经过时的背景色 */
-tr.rowover td {
-	background-color: #CCCCCC;
-}
+
 input.target {
 	cursor: pointer;
 	background-image: url(img/target.png);

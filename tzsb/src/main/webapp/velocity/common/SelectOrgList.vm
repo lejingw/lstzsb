@@ -1,0 +1,72 @@
+#set($layout = "layout/selectListLayout.vm")
+<form id='frm' method="post">
+	<input type='hidden' name='multiFlag' value='$!{multiFlag}'>
+	<input type='hidden' name='selectedValues' value='$!{selectedValues}'>
+    <table style="width:100%;" border="0">
+    	<tr>
+            <td width="20%">名称</td>
+            <td><input type="text" name='qorgName' value='$!{qorgName}'/></td>
+            <td width="20%"><input type='button' value='查询' onclick="query()"></td>
+    	</tr>
+    </table>
+    <table id='tb11' style="width:100%;" border="0">
+        <tr>
+    		<th width='15%'><input type='checkbox' id='chkall'/></th>
+    		<th>ID</th>
+    		<th>名称</th>
+    	</tr>
+      #foreach($item in $dataList)
+    	<tr>
+            <td>
+        		<input name="chk" type="checkbox" value="" />
+        		<input type='hidden' name='orgId' value='$!{item.orgId}'/>
+        		<input type='hidden' name='orgName' value='$!{item.orgName}'/>
+        	</td>
+            <td>$!{item.orgId}</td>
+            <td>$!{item.orgName}</td>
+		</tr>
+	  #end
+    </table>
+</form>
+<script>
+//供外部调用的取值方法
+function getValues(){
+	var idArr = [], nameArr = [], objArr = [];
+	for(var i=0;i<$n("chk").length;i++){
+		if($n("chk")[i].checked){
+			idArr.push($n('orgId')[i].value);
+			nameArr.push($n('orgName')[i].value);
+			var obj = {};
+			objArr.push({
+        			orgId : $n('orgId')[i].value,
+        			orgName : $n('orgName')[i].value
+    			});
+		}
+	}
+	return [idArr, nameArr, objArr];
+}
+function query(){
+	$i("frm").submit();
+}
+function updateCheckallStatus(){
+	var flag = true;
+	for(var i=0;i<$n("chk").length;i++){
+		if(!$n("chk")[i].checked){
+			flag = false;
+			break;
+		}
+	}
+	$("#chkall").attr("checked", flag);
+}
+jQuery(document).ready(function(){
+	checkTable('tb11', 'chkall', 'chk', ${multiFlag} === true, updateCheckallStatus);
+	var selectedValues = '$!{selectedValues}'.split(",");
+	for(var i=0;i<selectedValues.length;i++){
+		for(var j=0;j<$n('orgId').length;j++){
+			if(selectedValues[i] == $n('orgId')[j].value){
+				$n('chk')[j].checked = true;
+			}
+		}
+	}
+});
+</script>

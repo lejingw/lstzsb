@@ -1,0 +1,81 @@
+@charset "utf-8";
+body{ background:#f8fcff;}
+input{ border:none;}
+
+
+
+/*主体内容  新闻列表*/
+.mianContainer{width:662px; height:306px;}
+.mianContainer .navTitle{ height:39px;line-height:39px;background:url(../images/tab_bar_01.png) no-repeat;}
+.mianContainer .navTitle ul{}
+.mianContainer .navTitle ul li{ width:107px; height:39px; line-height:42px; _line-height:39px;float:left; text-align: center;}
+.mianContainer .navTitle ul li a{ color:#0c4283;}
+.mianContainer .navTitle ul li .active{ color:#ffffff; background:url(../images/tab_01.png) no-repeat; display:block;}
+
+.mianContainer .navTitle ul li .active2{ color:#ffffff; background:url(../images/tab_02.png) no-repeat; display:block;}
+
+.mianContainer .navContent{ height:266px; width:660px; border-top:2px solid #08a4d6;border-bottom:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9; background:#ffffff;float:left;}
+.mianContainer .navContent ul{ margin:15px 25px; }
+.mianContainer .navContent ul li{line-height:30px; }
+.mianContainer .navContent ul li .list{ width:480px; float:left; overflow: hidden; background:url(../images/icon_list.png) no-repeat 0 12px; padding-left:8px;}
+.mianContainer .navContent ul li .day{ width:100px; float:right; overflow: hidden; text-align:right; display:inline; }
+
+.mianContainer #shadow_1{ background:url(../images/shadow_1.png) no-repeat; width:653px; height:14px; margin-left:10px;}
+
+/*主体内容  用户登录*/
+.login{width:323px; height:306px;_height:308px; }
+.login #loginTitle{ background:url(../images/login_bar.png) no-repeat; height:40px;}
+.login #loginContent{border-left:1px solid #d9d9d9; border-right:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;height:267px; background:#ffffff;}
+.login #loginContent .userChange{ height:246px;}
+
+
+/*主体内容  用户登录  切换用户按钮*/
+.wrap {border-left:0px solid #b7c5d9; border-right:0px solid #b7c5d9;border-bottom:0px solid #b7c5d9;background: #fff;}
+.a10 {font-size:12px; color: #000;text-decoration: none;}
+.a10:hover {clear: #bb2233;text-decoration: underline;color: #0099cc;}
+.md-head {padding-left: 0;line-height: 33px;height: 33px;}
+.md-head A {border-top-width: 0px;border-left-width: 1px;float: left;border-bottom-width: 1px;
+margin-left: -1px;background:#f0f6f9;text-align: center;border-right-width: 0px;padding:0 5.9px;}
+.md-head A.wid { padding:0 5.8px;}
+.md-head A.cur {border-bottom-width: 0px;color:#df0101;background:#fff;text-decoration: none;}
+.md-body {zoom: 1;}
+a, area {blr:e-xpression(this.onFocus=this.blur())}
+:focus {-moz-outline-style: none;}
+.diaplay{ display:none; _position:relative;}
+
+
+.login #loginContent .loginInput{ padding:15px 30px;}
+.login #loginContent .loginInput span{ line-height:45px; width:50px; text-align:right;}
+.login #loginContent .loginInput .loginBox{ height:31px; width:183px; background:url(../images/input_bg.png) no-repeat; line-height:31px; margin-left:5px; text-indent:5px;}
+.login #loginContent .loginInput .loginBtn{ background:url(../images/login_bt_01.png) no-repeat; width:104px; height:30px; cursor: pointer; margin-left:63px; margin-top:10px; }
+.login #loginContent .loginInput .loginBtn:hover{ background:url(../images/login_bt_02.png) no-repeat;}
+.login #loginContent .loginInput .err{ font-size:12px; color:#df0101;margin-left:63px; line-height:40px; height:40px;}
+.login #loginContent .loginName{ height:40px; border-top:1px dotted #bdbcbc; line-height:40px; text-align:center; color:#42a3e5;}
+
+.login #shadow_2{ background:url(../images/shadow_2.png) no-repeat; width:318px; height:14px; float:right;}
+
+
+/*主体内容  下方三列*/
+#otherColumn{ height:233px; border:1px solid #d5d5d5; background:#ffffff; }
+#otherColumn .column{ width:230px;height:213px;margin:0px 45px;}
+#otherColumn .columnRight{ width:270px;height:213px;margin:0px 30px 0 45px;}
+
+#otherColumn .columnTitle{ height:44px; border-bottom:1px solid #08a4d6; color:#08a4d6; line-height:40px;}
+#otherColumn .column ul{}
+#otherColumn .column ul li{ float:left; margin-top:18px;}
+#otherColumn .column ul li img{width:102px; height:65px; }
+
+/*主体内容  问答中心*/
+.selQuestion{ width:auto; height:31px; margin:18px 0 10px 0;}
+.selQuestion .inputBox{ width:220px; height:25px; line-height:25px; border:1px solid #bdbcbc; float:left; margin-right:-5px; text-indent:5px;}
+.selQuestion .inputBtn{ width:49px; height:31px; background:url(../images/icon_search_1.png) no-repeat;float:right;}
+.selQuestion .inputBtn:hover{ background:url(../images/icon_search_2.png) no-repeat;}
+
+.selAnswers p{ font-size:12px;line-height:30px;}
+.selAnswers .wen{ height:30px; background:url(../images/icon_question.png) no-repeat 0 6px;  overflow: hidden;}
+.selAnswers .da { height:48px; background:url(../images/icon_answer.png) no-repeat 0 6px; overflow:hidden;}
+
+.selAnswers .askBtn{ background:url(../images/bt_question_1.png) no-repeat; width:106px; height:32px; cursor:pointer; margin-left:80px;}
+.selAnswers .askBtn:hover{ background:url(../images/bt_question_2.png) no-repeat;}
+
+.line{ background:url(../images/line.png) no-repeat; width:1px; height:145px; margin-top:65px;}
