@@ -109,11 +109,74 @@
 		<td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td>
 	</tr>
   </table>
+  <br>
+  <br>
+  <a href='#' id='btnAdd'>添加</a> <a href='#' id='btnDelete'>删除</a>
+  <table id='addDeleteRowTbl' width='500px;'>
+	<tr>
+		<th width='45px;'><input type='checkbox' id='chkall'></th>
+		<th width='45px;'>序号</th>
+		<th width='60px;'>值</th>
+		<th>控件</th>
+		<th>radio控件</th>
+		<th width='60px;'>操作</th>
+	</tr>
+	<tr>
+		<td><input type='checkbox' name='chk'></td>
+		<td><span name='xuhao'>1</span></td>
+		<td>1001</td>
+		<td><input type='text' name='ipt'></td>
+		<td><input type='radio' name='rdo0' value='1'>选项1 <input type='radio' name='rdo0' value='2'>选项2 <input type='radio' name='rdo0' value='3'>选项3</td>
+		<td><input type='button' value='删除'></td>
+	</tr>
+	<tr>
+		<td><input type='checkbox' name='chk'></td>
+		<td><span name='xuhao'>2</span></td>
+		<td>1002</td>
+		<td><input type='text' name='ipt'></td>
+		<td><input type='radio' name='rdo1' value='1'>选项1 <input type='radio' name='rdo1' value='2'>选项2 <input type='radio' name='rdo1' value='3'>选项3</td>
+		<td><input type='button' value='删除'></td>
+	</tr>
+	<tr>
+		<td><input type='checkbox' name='chk'></td>
+		<td><span name='xuhao'>3</span></td>
+		<td>1003</td>
+		<td><input type='text' name='ipt'></td>
+		<td><input type='radio' name='rdo2' value='1'>选项1 <input type='radio' name='rdo2' value='2'>选项2 <input type='radio' name='rdo2' value='3'>选项3</td>
+		<td><input type='button' value='删除'></td>
+	</tr>
+	<tr>
+		<td><input type='checkbox' name='chk'></td>
+		<td><span name='xuhao'>4</span></td>
+		<td>1004</td>
+		<td><input type='text' name='ipt'></td>
+		<td><input type='radio' name='rdo3' value='1'>选项1 <input type='radio' name='rdo3' value='2'>选项2 <input type='radio' name='rdo3' value='3'>选项3</td>
+		<td><input type='button' value='删除'></td>
+	</tr>
+  </table>
 <script>
 function checkboxClick(obj){
 	var hang = $(obj).parent().parent().prevAll().length+1;
 	var lie = $(obj).parent().prevAll().length+1;
 	info("第"+hang+"行，第"+lie+"列");
+}
+var rowCount = $n("chk").length;
+function addRow(){
+	rowCount ++;
+	var htmlArr = [
+			"<input type='checkbox' name='chk'>",
+			"<span name='xuhao'>" + ($n("chk").length+1) + "</span>",
+			(1000+$n("chk").length),
+			"<input type='text' name='ipt'>",
+			"<input type='radio' name='rdo" + rowCount + "' value='1'>选项1 "
+				+ "<input type='radio' name='rdo" + rowCount + "' value='2'>选项2 "
+				+ "<input type='radio' name='rdo" + rowCount + "' value='3'>选项3",
+			"<input type='button' value='删除'>"
+		];
+	insertRow('addDeleteRowTbl', htmlArr);
+}
+function deleteRow(){
+	
 }
 $(document).ready(function(){
 	$("#test_tbl").find("td").hover(function(){
@@ -127,5 +190,8 @@ $(document).ready(function(){
     		var lie = $(this).parent().prevAll().length+1;
     		info("第"+hang+"行，第"+lie+"列");
 		});
+	checkTable('addDeleteRowTbl', 'chkall', 'chk', true);
+	$("#btnAdd").click(addRow);
+	$("#btnDelete").click(deleteRow);
 });
 </script>
