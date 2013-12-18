@@ -8,11 +8,7 @@
     <title>SCM</title>
 	#set($dateParam = '20131111')
     <script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2.js" charset="UTF-8"></script>
-	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/map.js" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/common.js?date=$!dateParam" charset="UTF-8"></script>
-    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
-    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
-    <script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js?date=$!dateParam" charset="UTF-8"></script>
 <style>
 body{
 	font: 12px/1.6em Tahoma,Verdana, Lucida, Arial, Helvetica, 宋体,sans-serif;
@@ -31,9 +27,82 @@ tr.rowover td {
 }
 </style>
 <script>
+function ListSelector(config){
+	this.submit = function(){
+		$i("frm").submit();
+	};
+	this.getValues = function(){
+		var idArr = [], nameArr = [], objArr = [];
+		for(var i=0;i<$n("chk").length;i++){
+			if($n("chk")[i].checked){
+				idArr.push($n('key')[i].value);
+				nameArr.push($n('val')[i].value);
+				var obj = {};
+				obj[config.idProperty] = $n('key')[i].value;
+				obj[config.nameProperty] = $n('val')[i].value;
+				for(var j=0;j<config.columns.length;j++){
+					var pro = config.columns[j];
+					if(typeof pro === 'object'){
+						obj[pro.name] = $n(pro.name)[i].value;
+					}
+				}
+			}
+		}
+		return [idArr, nameArr, objArr];
+	};
+	function createTableTitle(){
+		var tr = $("<tr></tr>");
+		var chk = $("<th width='15%'><input type='checkbox' id='chkall'/></th>").appendTo(tr);
+		for(var j=0;j<config.columns.length;j++){
+			var pro = config.columns[j];
+			if(typeof pro !== 'object')	continue;
+			if(pro.title){
+				$("<th>"+pro.title+"</th>").appendTo(tr);
+			}
+		}
+		tr.appendTo($("#tb11"));
+	}
+	function isChecked(v){
+		var selectedValues = config.selectedValues.split(",");
+		for(var i=0;i<selectedValues.length;i++){
+			if(selectedValues[i] == v){
+				return true;
+			}
+		}
+		return false;
+	}
+	function loadListData(){
+		var data = config.dataMap;
+		for(var i=0;i<data.length;i++){
+			var tr = $("<tr></tr>");
+			var colHtmlArr = [];
+    		var chkHtml = "<input type='checkbox' name='chk' " + (isChecked(data[i][config.idProperty])?"checked":"") + ">"
+				+ "<input type='hidden' name='key' value='" + nullToEmpty(data[i][config.idProperty]) + "'/>"
+				+ "<input type='hidden' name='val' value='" + nullToEmpty(data[i][config.nameProperty]) + "'/>";
+			for(var j=0;j<config.columns.length;j++){
+				var pro = config.columns[j];
+				if(typeof pro !== 'object')	continue;
+				chkHtml += "<input type='hidden' name='" + pro.name + "' value='" + nullToEmpty(data[i][pro.name]) + "'/>";
+				if(!pro.hidden || pro.hidden !== true){
+					$("<td>" + nullToEmpty(data[i][pro.name]) + "</td>").appendTo(tr);
+				}
+			}
+			$("<td>" + chkHtml + "</td>").prependTo(tr);
+			tr.appendTo($("#tb11"));
+		}
+		checkTable("tb11", 'chkall', 'chk', config.multiSelectFlag === true);
+	}
+	createTableTitle();
+	loadListData();
+}
 </script>
 </head>
 <body>
-	$screen_content
+<form id='frm' method="post">
+	<input type='hidden' name='multiFlag' value='$!{multiFlag}'>
+	<input type='hidden' name='selectedValues' value='$!{selectedValues}'>
+$screen_content
+    <table id='tb11' style="width:100%;" border="0"></table>
+</form>
 </body>
 </html>

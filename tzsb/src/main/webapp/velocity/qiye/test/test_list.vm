@@ -75,6 +75,57 @@
 	  </td>
     </tr>
   </table>
-<scrit>
-
-</scrit>
+  <br>
+  <br>
+  <h2>5*8 table <input type='text' id='result_ipt' readonly></h2>
+  <br>
+  <table id='test_tbl' width="500px" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+    </tr>
+    <tr>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+    </tr>
+    <tr>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+    </tr>
+    <tr>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+    </tr>
+    <tr>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+      <td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td><td width="12.5%"><input type='button' value='click'></td>
+    </tr>
+	<tr>
+		<td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td>
+		<td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td>
+	</tr>
+	<tr>
+		<td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td>
+		<td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td><td><a href='#' onclick='checkboxClick(this)'>选择</a></td>
+	</tr>
+  </table>
+<script>
+function checkboxClick(obj){
+	var hang = $(obj).parent().parent().prevAll().length+1;
+	var lie = $(obj).parent().prevAll().length+1;
+	info("第"+hang+"行，第"+lie+"列");
+}
+$(document).ready(function(){
+	$("#test_tbl").find("td").hover(function(){
+    		var hang = $(this).parent().prevAll().length+1;
+    		var lie = $(this).prevAll().length+1;
+    		$("#result_ipt").val("第"+hang+"行，第"+lie+"列");
+		});
+	
+	$("#test_tbl").find("input[type='button']").click(function(){
+    		var hang = $(this).parent().parent().prevAll().length+1;
+    		var lie = $(this).parent().prevAll().length+1;
+    		info("第"+hang+"行，第"+lie+"列");
+		});
+});
+</script>

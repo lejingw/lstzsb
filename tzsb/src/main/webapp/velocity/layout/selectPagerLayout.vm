@@ -86,26 +86,22 @@ function PagingSelector(config){
 			lastBtn.removeAttr("disabled");
 		}
 	}
-	function isChecked(empid){
+	function isChecked(v){
     	if(config.multiSelectFlag === true){
     		for(var i=0;i<$n("key2").length;i++){
-    			if($n("key2")[i].value == empid){
+    			if($n("key2")[i].value == v){
     				return true;
     			}
     		}
     	}else{
     		var selectedValues = config.selectedValues.split(",");
     		for(var i=0;i<selectedValues.length;i++){
-    			if(selectedValues[i] == empid){
+    			if(selectedValues[i] == v){
     				return true;
     			}
     		}
     	}
 		return false;
-	}
-	function nullToEmpty(str){
-		if(!str)	return "";
-		return str;
 	}
     function loadPagerData(){
     	for(var i=$i(config.tableId).rows.length-1;i>0;i--){
@@ -133,21 +129,10 @@ function PagingSelector(config){
 //        		info(colHtmlArr);
         		insertRow(config.tableId, colHtmlArr, false);
         	}
-        	updateCheckallStatus();
     		checkTable2(config.tableId, 'chkall', 'chk', config.multiSelectFlag === true, rowSelectAction);
         	totalCountIpt.val(parseInt(pager.totalCount));
         	countToolbar();
     	});
-    }
-    function updateCheckallStatus(){
-    	var flag = true;
-		for(var i=0;i<$n("chk").length;i++){
-			if(!$n("chk")[i].checked){
-				flag = false;
-				break;
-			}
-		}
-    	$("#chkall").attr("checked", flag);
     }
 
     function selectRow(idx){
@@ -212,7 +197,6 @@ function PagingSelector(config){
     			unselectRow(index);
     		}
     	}
-    	updateCheckallStatus();
     }
     
 	var toolbarTd = $("#" + config.toolbarId);

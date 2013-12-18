@@ -183,13 +183,14 @@ function insertRow(tblId, tdHtmlArr, insertFirstFlag){
 		td.innerHTML = tdHtmlArr[i];
 		tr.appendChild(td);
 	}
-	var className = "evenrow";
-	var index = insertFirstFlag?2:$i(tblId).rows.length-2;
-	if($i(tblId).rows[index].className == "evenrow")
-		className = "oddrow";
-	else
-		className = "evenrow";
-	jQuery(tr).addClass(className);
+//	var className = "evenrow";
+//	var index = insertFirstFlag?2:$i(tblId).rows.length-2;
+//	if($i(tblId).rows[index].className == "evenrow")
+//		className = "oddrow";
+//	else
+//		className = "evenrow";
+//	jQuery(tr).addClass(className);
+	resetRowCSS(tblId);
 	jQuery(tr).hover(function(){
 		jQuery(this).toggleClass("rowover");
 	});
@@ -386,6 +387,17 @@ function checkTable(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dbl
 	checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dblClickFun);
 }
 function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, dblClickFun){
+	function updateCheckallStatus(){
+		if(!multiSelectFlag)	return;
+		var flag = true;
+		for(var i=0;i<$n(chkName).length;i++){
+			if(!$n(chkName)[i].checked){
+				flag = false;
+				break;
+			}
+		}
+		$("#"+chkallId).attr("checked", flag);
+	}
 	//多选
 	if(multiSelectFlag){
 		jQuery("#"+chkallId).change(function(){
@@ -400,6 +412,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 		jQuery("input[name='" + chkName + "']").each(function(index){
 			jQuery(this).bind("click", function(event){
 				event.stopPropagation();
+				updateCheckallStatus();
 				if(rowSelectFun){
 					rowSelectFun(jQuery(this).attr("checked"), index, getSelectIndexs(chkName));
 				}
@@ -408,12 +421,15 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 	}else{
 		jQuery("input[name='" + chkName + "']").each(function(index){
 			jQuery(this).bind("click", function(event){
-				jQuery("input[name='" + chkName + "']").each(function(index2){
-					if(index != index2){
-						jQuery(this).attr("checked", false);
-					}
-				});
+				if(jQuery(this).attr("checked")){
+					jQuery("input[name='" + chkName + "']").each(function(index2){
+						if(index != index2){
+							jQuery(this).attr("checked", false);
+						}
+					});
+				}
 				event.stopPropagation();
+				updateCheckallStatus();
 				if(rowSelectFun){
 					rowSelectFun(jQuery(this).attr("checked"), index);
 				}
@@ -422,7 +438,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 		jQuery("#"+chkallId).attr("disabled",true);
 	}
 	
-	jQuery("#"+tblId+" tr").each(function(index){
+	jQuery("#" + tblId + " tr").each(function(index){
 		if(0 == index)	return ;
 		jQuery(this).bind("click", function(event){
 			var checkIndex = index - 1;
@@ -430,6 +446,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 			var currentChk = jQuery(jQuery("input[name='"+chkName+"']")[checkIndex]);
 			if(currentChk.attr("disabled"))	return;
 			currentChk.attr("checked", !currentChk.attr("checked"));
+			
 			if(currentChk.attr("checked") && !multiSelectFlag){
 				jQuery("input[name='" + chkName + "']").each(function(index2){
 					if(checkIndex != index2){
@@ -438,6 +455,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 				});
 			}
 			event.stopPropagation();
+			updateCheckallStatus();
 			if(rowSelectFun){
 				if(multiSelectFlag){
 					rowSelectFun(currentChk.attr("checked"), checkIndex, getSelectIndexs(chkName));					
@@ -461,6 +479,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
 			});
 		});
 	}
+	updateCheckallStatus();
 }
 /**
  * 创建列表分页工具条
@@ -639,6 +658,10 @@ function isNull(str){
 		return true;
 	}
 	return false;
+}
+function nullToEmpty(str){
+	if(isNull(str))	return "";
+	return str;
 }
 /**
  * 执行正则表达式
