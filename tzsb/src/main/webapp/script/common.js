@@ -210,7 +210,8 @@ function deleteRow(obj, tblId){
  * @param index
  */
 function deleteRowByIndex(index, tblId){
-	$i(tblId).deleteRow(index);
+	//$i(tblId).deleteRow(index);
+	$("#" + tblId + " tr").filter(":eq(" + index + ")").remove();
 }
 /**
  * 删除下拉框所有内容
