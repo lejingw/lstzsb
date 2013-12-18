@@ -8,3 +8,4 @@ classes
 .tomcatplugin
 /src/main/webapp/upload/
 .externalToolBuilders
+.project
