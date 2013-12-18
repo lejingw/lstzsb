@@ -6,3 +6,5 @@ classes
 .DS_Store
 .svn
 .tomcatplugin
+/src/main/webapp/upload/
+.externalToolBuilders
