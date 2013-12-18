@@ -4,3 +4,4 @@
 /.settings
 WEB-INF/classes
 WEB-INF/lib
+.DS_Store
