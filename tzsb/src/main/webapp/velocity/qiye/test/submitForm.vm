@@ -1,0 +1,17 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($jsfiles = [
+	"${rc.contextPath}/js/qiye/test/test.js"
+])
+<form id='frm' method='post'>
+	<input type='text' name='user.username' value='admin'>
+	<input type='text' name='user.password' value='111111'>
+	<input type='button' value='提交' id='btn1'>
+</form>
+<script>
+$(document).ready(function(){
+	$("#btn1").click(function(){
+		$("#frm").attr("action", "$!{rc.contextPath}//qiye/test/test/user.do");
+		$("#frm").submit();
+	});
+});
+</script>
