@@ -491,7 +491,7 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
  */
 function createPagingToolbar(formId, start, limit, totalCount){
 	if(!totalCount || totalCount<=0){
-		document.write("未找到记录");
+		document.write("<input type='hidden' name='start' value='" + start + "'/><input type='hidden' name='limit' value='" + limit + "'/><font color='red'>未找到记录</font>");
 		return ;
 	}
 	var totalPageCount = Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1:0);
