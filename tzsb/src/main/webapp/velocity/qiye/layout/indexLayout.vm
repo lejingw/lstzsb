@@ -106,7 +106,7 @@
         <li><a href="#"><span class="ico01_2">设备信息</span></a>
           <ul class="child">
             <li><a href="#" onclick="openUrl(this, '#')"><span>全部设备</span></a></li>
-            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯</span></a>
+            <li><a href="#" onclick="openUrl(this, '#')"><span>电梯</span></a></li>
             <li><a href="#" onclick="openUrl(this, '#')"><span>电梯</span></a></li>
             <li><a href="#" onclick="openUrl(this, '#')"><span>锅炉</span></a></li>
             <li><a href="#" onclick="openUrl(this, '#')"><span>压力容器</span></a></li>
