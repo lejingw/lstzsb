@@ -1,6 +1,13 @@
 @charset "utf-8";
-table{ background:#d5e3e7;}
-table td{ background:#fff; white-space:nowrap;}
+table{ table-layout:fixed;background:#d5e3e7;}
+table td{
+	background:#fff;
+	white-space:nowrap;
+	text-overflow:ellipsis;/* for IE */ 
+	-moz-text-overflow:ellipsis;/* for Firefox,mozilla */ 
+	overflow:hidden;
+	white-space: nowrap;
+}
 .im_tr{/* line-height:24px;*/}
 .im_tr td{ line-height:36px}
 .im_tr_a{ background-color:#f1f7f9;}

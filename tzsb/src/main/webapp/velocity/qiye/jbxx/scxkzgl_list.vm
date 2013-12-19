@@ -61,17 +61,17 @@
 </div>
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="tableTextCenter" id="table_tab" >
   <tr>
-    <th><input id="chkall" type="checkbox" value=""/></th>
-    <th>序号</th>
-    <th>操作</th>
-    <th>证书编号</th>
+    <th style='width:45px;'><input id="chkall" type="checkbox" value=""/></th>
+    <th style='width:45px;'>序号</th>
+    <th style='width:60px;'>操作</th>
+    <th style='width:150px;'>证书编号</th>
     <th>单位名称</th>
     <th>制造地址</th>
-    <th>有效日期</th>
+    <th style='width:120px;'>有效日期</th>
     <th>批准机构</th>
     <th>设备类别</th>
     <th>许可证类别</th>
-    <th>状态</th>
+    <th style='width:45px;'>状态</th>
   </tr>
   #foreach($item in $pager.pageData)
 	<tr>
@@ -85,7 +85,7 @@
     <td class="text_space_left text_left">$!{item.zsbh}</td>
     <td class="text_left text_space_left">$!{item.dwmc}</td>
     <td class="text_left text_space_left">$!{item.zzdz}</td>
-    <td class="text_left text_space_left">$!DateUtil.date10($!{item.yxrq})</td>
+    <td class="text_center">$!DateUtil.date10($!{item.yxrq})</td>
     <td class="text_left text_space_left">$!{item.pzjg}</td>
     <td class="text_left text_space_left">$!BdCommon.getDictValue('sblx', $!{item.sblb})</td>
     <td class="text_left text_space_left">
