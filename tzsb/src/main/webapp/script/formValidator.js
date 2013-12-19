@@ -90,33 +90,69 @@ Validator = {
 			mode = mode || 3;
 			var errCount = this.ErrorItem.length;
 			switch(mode){
-			case 2 :
-				for(var i=1;i<errCount;i++){					
-					this.ErrorItem[i].style.color = "red";
-				}
-			case 1 :
-				alert(this.ErrorMessage.join("\n"));
-                try{
-                    this.ErrorItem[1].focus();
-                }catch(e){}
-				break;
-			case 3 :
-				for(var i=1;i<errCount;i++){
+				case 1 :
+	                try{
+	                	alert(this.ErrorMessage.join("\n"));
+	                    this.ErrorItem[1].focus();
+	                }catch(e){
+	                }
+					break;
+				case 2 :
+	                try{
+	                	for(var i=1;i<errCount;i++){					
+	                		this.ErrorItem[i].style.color = "red";
+	                	}
+	                	alert(this.ErrorMessage.join("\n"));
+	                    this.ErrorItem[1].focus();
+	                }catch(e){
+	                }
+					break;
+				case 3 :
 					try{
-						var span = document.createElement("SPAN");
-						span.id = "__ErrorMessagePanel";
-						span.style.color = "red";
-						this.ErrorItem[i].parentNode.appendChild(span);
-						span.innerHTML = this.ErrorMessage[i].replace(/\d+:/,"<img src='"+ctxPath+"/style/img/error.gif'/>");
+						for(var i=1;i<errCount;i++){
+							var td = $(this.ErrorItem[i].parentNode);
+							var span = $("<span id='__ErrorMessagePanel' style='white-space:normal;position:relative;line-height:22px;height:auto; '>&nbsp;&nbsp;</span>");
+							span.appendTo(td);
+							var img = $("<img src='"+ctxPath+"/style/img/icon_error_2.png'/>").hover(function(){
+									$(this).next().css("display", "block");
+								}, function(){
+									$(this).next().css("display", "none");
+								});
+							img.appendTo(span);
+							var msg = this.ErrorMessage[i].split(":")[1];
+							$("<div style='z-Index:1;word-wrap: break-word; word-break: normal;display:none;position:absolute;top:5px;left:15px;font-size:12px;color:#682200; border:1px solid #f2b100; background:#fff6de; line-height:22px; min-height:22px;height: auto; width:150px; padding:0 0.5em;'>" + msg + "</div>").appendTo(span);
+						}
 					}catch(e){
-						alert(e.description);
 					}
-				}
-				this.ErrorItem[1].focus();
-				break;
-			default :
-				alert(this.ErrorMessage.join("\n"));
-				break;
+					break;
+				case 5 :
+					try{
+						for(var i=1;i<errCount;i++){
+							var span = document.createElement("SPAN");
+							span.id = "__ErrorMessagePanel";
+							this.ErrorItem[i].parentNode.appendChild(span);
+							var msg = this.ErrorMessage[i].split(":")[1];
+							span.innerHTML = "&nbsp;&nbsp;<img alt='" + msg + "' title='" + msg + "' src='" + ctxPath + "/style/img/icon_error_2.png'/>";
+						}
+					}catch(e){
+					}
+					break;
+				case 4 :
+					try{
+						for(var i=1;i<errCount;i++){
+							var span = document.createElement("SPAN");
+							span.id = "__ErrorMessagePanel";
+							span.style.color = "red";
+							this.ErrorItem[i].parentNode.appendChild(span);
+							span.innerHTML = this.ErrorMessage[i].replace(/\d+:/,"<img src='"+ctxPath+"/style/img/icon_error_2.png'/>");
+						}
+					}catch(e){
+					}
+					this.ErrorItem[1].focus();
+					break;
+				default :
+					alert(this.ErrorMessage.join("\n"));
+					break;
 			}
 			return false;
 		}

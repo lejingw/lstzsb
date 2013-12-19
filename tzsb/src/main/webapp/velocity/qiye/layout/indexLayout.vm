@@ -89,6 +89,7 @@
         <li><a href="#"><span class="ico01_10">测试例子</span></a>
           <ul class="child">
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/list.do')"><span>各种选择框例子</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/submitForm.do')"><span>各种选择框例子</span></a></li>
           </ul>
         </li>
         <li><a href="#"><span class="ico01_10">基本信息</span></a>
