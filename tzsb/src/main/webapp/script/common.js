@@ -490,6 +490,10 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
  * @param totalCount 总条数通常取$!form.pager.totalCount
  */
 function createPagingToolbar(formId, start, limit, totalCount){
+	if(!totalCount || totalCount<=0){
+		document.write("未找到记录");
+		return ;
+	}
 	var totalPageCount = Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1:0);
 	var pageIndex = Math.floor((start+1) / limit) + ((start+1) % limit > 0 ? 1:0);
 	

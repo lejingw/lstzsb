@@ -25,7 +25,7 @@
     if(navigator.appName=="Microsoft Internet Explorer"){
         var trim_Version=navigator.appVersion.split(";")[1].replace(/[ ]/g,"");
 		if(trim_Version=="MSIE6.0"){
-        	jQuery.getScript("${rc.contextPath}/js/qiye/common/DD_belatedPNG_0.0.8a-min.js",function(data, textStatus, jqxhr){
+        	jQuery.getScript("${rc.contextPath}/js/common/DD_belatedPNG_0.0.8a-min.js",function(data, textStatus, jqxhr){
         		DD_belatedPNG.fix('div,img,input,background,ul,li,a,a:hover,li a:hover');
         	});
 		}
