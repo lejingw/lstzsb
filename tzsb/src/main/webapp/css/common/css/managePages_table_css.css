@@ -2,10 +2,10 @@
 /*后台管理页面中的所有表样式 */
 
 /*全局样式*/
-table{border-collapse:collapse; color:#013b61;}
+table{table-layout:fixed;border-collapse:collapse;color:#013b61;}
 table th{height:30px; line-height:30px;font-weight:bold; text-align:center; letter-spacing: 0.1em;background:url(../images/managePages_bg/leftNav_ico/ico_table_theadBg.png) repeat-x;border:solid 1px #d5e3e7;}
 tr{background:#ffffff;}
-tr td{border:solid 1px #d5e3e7;line-height:26px; white-space:nowrap; }
+tr td{border:solid 1px #d5e3e7;line-height:24px;text-overflow:ellipsis;/*for IE*/-moz-text-overflow:ellipsis;/*for Firefox,mozilla*/overflow:hidden;white-space:nowrap;}
 table a{ color:#ff0000; text-decoration:underline;}
 table a:hover{ color:#0000ff; text-decoration:none;}
 
