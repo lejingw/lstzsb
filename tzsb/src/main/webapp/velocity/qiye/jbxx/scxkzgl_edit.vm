@@ -74,6 +74,10 @@
   <div class="btn num2" id='btnBack'><a href="#">返回</a></div>
   <div class="btn num2" id='btnSave'><a href="#">保存</a></div>
   <div class="btn num2" id='btnDistroy'><a href="#">注销</a></div>
+  <div class="btn num4" id='btnTest1'><a href="#">添加验证</a></div>
+  <div class="btn num4" id='btnTest2'><a href="#">移除验证</a></div>
+  <div class="btn num4" id='btnTest3'><a href="#">移除所有验证</a></div>
+  <div class="btn num2" id='btnTest4'><a href="#">验证</a></div>
 </div>
 </form>
 <script>

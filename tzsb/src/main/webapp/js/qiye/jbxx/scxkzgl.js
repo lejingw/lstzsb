@@ -86,18 +86,33 @@ function initListView(){
 function initView(){
 	//1给button设置响应事件
 	initRight('010102', [
-	       {id:'btnBack', fn:function(){window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";}},
-	       {id:'btnSave',	code:'save', fn:function(){saveScxkzgl("1");}},
-	       {id:'btnDistroy',	code:'distroy', fn:function(){saveScxkzgl("9");}}
-	  ]);
+			{id:'btnBack', fn:function(){window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";}},
+			{id:'btnSave',	code:'save', fn:function(){saveScxkzgl("1");}},
+			{id:'btnDistroy',	code:'distroy', fn:function(){saveScxkzgl("9");}},
+			{id:'btnTest1', fn:function(){
+						Validator.add({id:'sblb', dataType:'Required', msg:'设备类别不能为空'});
+					}
+				},
+			{id:'btnTest2', fn:function(){
+						Validator.remove("sblb");
+					}
+				},
+			{id:'btnTest3', fn:function(){
+						Validator.removeAll();
+					}
+				},
+			{id:'btnTest4', fn:function(){
+						Validator.validate("frm");
+					}
+				}
+		]);
 	//2初始化验证信息
 	Validator.init([
 		   {id:'zsbh', dataType:'Required', msg:'证书编号不能为空'},
 		   {id:'pzrq', dataType:'Date', msg:'批准日期不能为空，且格式为yyyy-mm-dd', format:'yyyy-mm-dd'},
 		   {id:'yxrq', dataType:'Date', msg:'有效日期不能为空，且格式为yyyy-mm-dd'},
 		   {id:'zzdz', dataType:'Required', msg:'制造地址不能为空'},
-		   {id:'pzjg', dataType:'Required', msg:'批准机构不能为空'},
-		   {id:'sblb', dataType:'Required', msg:'设备类别不能为空'}
+		   {id:'pzjg', dataType:'Required', msg:'批准机构不能为空'}
 		]);
 	
 	//3如果为新增页面，则给新增页面设置初始默认值
