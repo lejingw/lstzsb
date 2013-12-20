@@ -20,6 +20,7 @@
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/formValidator.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/js/qiye/common/locale.js" charset="UTF-8"></script>
 	
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>

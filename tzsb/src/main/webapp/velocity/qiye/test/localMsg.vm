@@ -1,0 +1,19 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($jsfiles = [
+	"${rc.contextPath}/js/qiye/test/test.js"
+])
+<input type='button' value='显示无参数字符串' id='btn1'>
+	<br>
+	<br>
+<input type='button' value='显示带参数字符串' id='btn2'>
+
+<script>
+$(document).ready(function(){
+	$("#btn1").click(function(){
+		info(msg("noparamStr"));
+	});
+	$("#btn2").click(function(){
+		info(msg("hasparamStr", "aaa", "bbb"));
+	});
+});
+</script>

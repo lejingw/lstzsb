@@ -88,8 +88,9 @@
         <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/sys/main.do')"><span class="ico01_2">首页</span></a></li>
         <li><a href="#"><span class="ico01_10">测试例子</span></a>
           <ul class="child">
-            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/list.do')"><span>各种选择框例子</span></a></li>
-            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/submitForm.do')"><span>各种选择框例子</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/test/list.do')"><span>各种选择框</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/localMsg/show.do')"><span>国际化资源</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/submitForm/show.do')"><span>增强form提交</span></a></li>
           </ul>
         </li>
         <li><a href="#"><span class="ico01_10">基本信息</span></a>

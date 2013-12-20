@@ -1,5 +1,4 @@
 /*********************************************列表JS*************************************************/
-
 function showInOrgWin(){
 	showSelectWin({
 		title:'选择单位名称',
@@ -42,23 +41,23 @@ function toEditPage(index){
 function deleteBills(){
 	var idxArr = getSelectIndexs("chk");
 	if(idxArr.length<1){
-		alert("请选择要删除的记录");
+		alert(msg("norowselected"));
 		return ;
 	}
 	var deleteIds = [];
 	for(var i=0;i<idxArr.length;i++){
 		if($n("status")[idxArr[i]].value != "1"){
-			alert("第"+(idxArr[i]+1)+"行 记录状态不为保存状态，不能删除");
+			alert(msg("rowundelete",(idxArr[i]+1)));
 			return ;
 		}
 		deleteIds.push($n("billid")[idxArr[i]].value);
 	}
-	confirm("确定删除?", function(){			
+	confirm(msg("deleteconfirm"), function(){			
 		ScxkzglDwr.deleteBill(deleteIds, function(data){
 			if(data){
 				alert(data);
 			}else{
-				alert("删除成功", function(){
+				alert(msg("deletesuccess"), function(){
 					window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";
 				});
 			}
@@ -90,7 +89,7 @@ function initView(){
 			{id:'btnSave',	code:'save', fn:function(){saveScxkzgl("1");}},
 			{id:'btnDistroy',	code:'distroy', fn:function(){saveScxkzgl("9");}},
 			{id:'btnTest1', fn:function(){
-						Validator.add({id:'sblb', dataType:'Required', msg:'设备类别不能为空'});
+						Validator.add({id:'sblb', dataType:'Required', msgkey:'sblb'});
 					}
 				},
 			{id:'btnTest2', fn:function(){
@@ -108,11 +107,11 @@ function initView(){
 		]);
 	//2初始化验证信息
 	Validator.init([
-		   {id:'zsbh', dataType:'Required', msg:'证书编号不能为空'},
-		   {id:'pzrq', dataType:'Date', msg:'批准日期不能为空，且格式为yyyy-mm-dd', format:'yyyy-mm-dd'},
-		   {id:'yxrq', dataType:'Date', msg:'有效日期不能为空，且格式为yyyy-mm-dd'},
-		   {id:'zzdz', dataType:'Required', msg:'制造地址不能为空'},
-		   {id:'pzjg', dataType:'Required', msg:'批准机构不能为空'}
+		   {id:'zsbh', dataType:'Required', msgkey:'zsbh'},
+		   {id:'pzrq', dataType:'Date', msgkey:'pzrq', format:'yyyy-mm-dd'},
+		   {id:'yxrq', dataType:'Date', msgkey:'yxrq'},
+		   {id:'zzdz', dataType:'Required', msgkey:'zzdz'},
+		   {id:'pzjg', dataType:'Required', msgkey:'pzjg'}
 		]);
 	
 	//3如果为新增页面，则给新增页面设置初始默认值
@@ -179,14 +178,14 @@ function saveScxkzgl(status){
 		}
 		var action = ("1"==status?"保存":("9"==status?"注销":""));
 		//后台单据验证通过，进行保存确认
-		confirm("确认"+action+"?", function(){
+		confirm(msg("confirm", action), function(){
 			showLayer(true);//显示遮罩层，防止重复提交
 			ScxkzglDwr.saveBill(bill, uploadFiles.getSaveFileIds(), uploadFiles.getDeleteFileIds(), function(data){
 				showLayer(false);//取消遮罩层
 				if(data){
 					alert(data);
 				}else{
-					alert(action+"成功", function(){
+					alert(msg("success", action), function(){
 						window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";
 					});
 				}

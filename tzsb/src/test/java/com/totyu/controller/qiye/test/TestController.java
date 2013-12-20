@@ -14,22 +14,26 @@ import com.totyu.spring.mvc.util.MapWapper;
 import com.totyu.vo.menhu.sys.User;
 
 @Controller
-@RequestMapping("/qiye/test/test")
+@RequestMapping("/qiye/test")
 public class TestController {
 	@Autowired
 	private ScxkzglService scxkzglService;
 
-	@RequestMapping("/list")
+	@RequestMapping("/test/list")
 	public String list() {
 		return "qiye/test/test_list";
 	}
-	@RequestMapping(value="/submitForm", method=RequestMethod.GET)
+	@RequestMapping(value="/localMsg/show", method=RequestMethod.GET)
+	public String localMsg() {
+		return "qiye/test/localMsg";
+	}
+	@RequestMapping(value="/submitForm/show", method=RequestMethod.GET)
 	public String submitForm() {
 		return "qiye/test/submitForm";
 	}
 
     //ok   http://localhost:9080/springmvc-chapter6/formmodel/user?user.username=zhang&user.password=123
-    @RequestMapping("/user")  
+    @RequestMapping("/test/user")  
     public String user(@FormModel("user") User user) {
         System.out.println(user);
 		return "qiye/test/submitForm";      

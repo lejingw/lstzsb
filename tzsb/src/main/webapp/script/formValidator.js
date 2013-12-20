@@ -37,33 +37,34 @@ Validator = {
 			var cfg = cfgArr[i];
 			var obj = $("#" + cfg.id);
 			for(var p in cfg){
-				obj.attr(p, cfg[p]);
+				if(p == 'msgkey'){
+					obj.attr("msg", msg("Validator."+cfg[p]));
+				}else{
+					obj.attr(p, cfg[p]);
+				}
 			}
 		}
-		if ( jQuery.browser.msie && ( jQuery.browser.version == "6.0" ) && !jQuery.support.style ){
-			jQuery('div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section').hover(function(){
-				jQuery(this).addClass('hover');
+		if ($.browser.msie && ( $.browser.version == "6.0" ) && !$.support.style ){
+			$('div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section').hover(function(){
+				$(this).addClass('hover');
 			},function(){
-				jQuery(this).removeClass('hover');
+				$(this).removeClass('hover');
 			});
 		}
 	},
 	add : function(cfg){
 		var obj = $("#" + cfg.id);
 		for(var p in cfg){
-			obj.attr(p, cfg[p]);
+			if(p == 'msgkey'){
+				obj.attr("msg", msg("Validator."+cfg[p]));
+			}else{
+				obj.attr(p, cfg[p]);
+			}
 		}
 	},
 	remove : function(id){
 		$("#" + id).attr("dataType", null);
 		$("#" + id).parent().find("span[name='__ErrorMessagePanel']").remove();
-//		with(elem){
-//			if(style.color == "red")
-//				style.color = "";
-//			var lastNode = parentNode.childNodes[parentNode.childNodes.length-1];
-//			if(lastNode.name == "__ErrorMessagePanel")
-//				parentNode.removeChild(lastNode);
-//		}
 	},
 	removeAll:function(){
 		$("span[name='__ErrorMessagePanel']").prev().attr("dataType", null);

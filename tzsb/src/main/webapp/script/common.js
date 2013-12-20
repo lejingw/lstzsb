@@ -963,6 +963,42 @@ function initRight(modelCode, btnCfgArr){
 		}
 	}
 }
+
+function msg(key){
+	if(!key)	return "";
+	var locationStr = window.location.href;
+	//var reg = /^http(s)?\:\/\/(\w+\:\d+)?\/lstzsb\/(menhu|qiye|jiancha|xiangzhen|hangye)\//gi;
+	var reg = eval("/^http(s)?\\:\\/\\/(\\w+\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
+	locationStr = locationStr.replace(reg, "");
+	var pathArr = locationStr.split("/");
+	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')
+		return "未找到提示信息资源";
+	
+	var modelMsgData = JSLocale[pathArr[0]][pathArr[1]];
+	var result = "";
+	if(key.indexOf(".")>0){
+		try{
+			result = eval("JSLocale."+pathArr[0]+"."+pathArr[1]+"."+key);
+		}catch(e){
+			return "";
+		}
+	}else{
+		if(modelMsgData[key] != undefined){
+			result = modelMsgData[key];
+		}else if(typeof JSLocale.global != 'undefined' && typeof JSLocale.global[key] != 'undefined'){
+			result = JSLocale['global'][key];
+		} else{
+			result = key;
+		}
+	}
+	if(arguments.length>1){
+		var callArgs = Array.prototype.slice.call(arguments, 1);
+		for(var i=0;i<callArgs.length;i++){
+			result = result.replace(eval("/{[" + i + "]}/g"), callArgs[i]);
+		}
+	}
+	return result;
+}
 /**
  * 加载图片显示框架
  */
