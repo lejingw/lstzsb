@@ -69,11 +69,11 @@
     删除编辑器</button>
 </div>
 <script type="text/javascript">
-window.alert=info;
     //实例化编辑器
+	var domUtils = UE.dom.domUtils;
     var ue = UE.getEditor('editor');
     function isFocus(e){
-        alert(ue.isFocus());
+        info(ue.isFocus());
         UE.dom.domUtils.preventDefault(e)
     }
     function setblur(e){
@@ -89,27 +89,27 @@ window.alert=info;
         UE.getEditor('editor');
     }
     function getAllHtml() {
-        alert(UE.getEditor('editor').getAllHtml())
+        info(UE.getEditor('editor').getAllHtml())
     }
     function getContent() {
         var arr = [];
         arr.push("使用editor.getContent()方法可以获得编辑器的内容");
         arr.push("内容为：");
         arr.push(UE.getEditor('editor').getContent());
-        alert(arr.join("\n"));
+        info(arr.join("\n"));
     }
     function getPlainTxt() {
         var arr = [];
         arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
         arr.push("内容为：");
         arr.push(UE.getEditor('editor').getPlainTxt());
-        alert(arr.join('\n'))
+        info(arr.join('\n'))
     }
     function setContent(isAppendTo) {
         var arr = [];
         arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
         UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
-        alert(arr.join("\n"));
+        info(arr.join("\n"));
     }
     function setDisabled() {
         UE.getEditor('editor').setDisabled('fullscreen');
@@ -126,7 +126,7 @@ window.alert=info;
         var range = UE.getEditor('editor').selection.getRange();
         range.select();
         var txt = UE.getEditor('editor').selection.getText();
-        alert(txt)
+        info(txt)
     }
 
     function getContentTxt() {
@@ -134,14 +134,14 @@ window.alert=info;
         arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
         arr.push("编辑器的纯文本内容为：");
         arr.push(UE.getEditor('editor').getContentTxt());
-        alert(arr.join("\n"));
+        info(arr.join("\n"));
     }
     function hasContent() {
         var arr = [];
         arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
         arr.push("判断结果为：");
         arr.push(UE.getEditor('editor').hasContents());
-        alert(arr.join("\n"));
+        info(arr.join("\n"));
     }
     function setFocus() {
         UE.getEditor('editor').focus();
@@ -172,11 +172,11 @@ window.alert=info;
     }
 
     function getLocalData () {
-        alert(ue.execCommand( "getlocaldata" ));
+        info(ue.execCommand( "getlocaldata" ));
     }
 
     function clearLocalData () {
         ue.execCommand( "clearlocaldata" );
-        alert("已清空草稿箱")
+        info("已清空草稿箱")
     }
 </script>
