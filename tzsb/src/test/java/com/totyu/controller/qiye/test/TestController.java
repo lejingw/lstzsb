@@ -31,6 +31,10 @@ public class TestController {
 	public String submitForm() {
 		return "qiye/test/submitForm";
 	}
+	@RequestMapping(value="/richEditor/show", method=RequestMethod.GET)
+	public String richEditor() {
+		return "qiye/test/richEditor";
+	}
 
     //ok   http://localhost:9080/springmvc-chapter6/formmodel/user?user.username=zhang&user.password=123
     @RequestMapping("/test/user")  
