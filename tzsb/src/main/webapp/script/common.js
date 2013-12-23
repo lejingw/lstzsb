@@ -973,22 +973,23 @@ function msg(key){
 	var pathArr = locationStr.split("/");
 	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')
 		return "未找到提示信息资源";
-	
-	var modelMsgData = JSLocale[pathArr[0]][pathArr[1]];
-	var result = "";
-	if(key.indexOf(".")>0){
-		try{
-			result = eval("JSLocale."+pathArr[0]+"."+pathArr[1]+"."+key);
-		}catch(e){
-			return "";
+	var result = "", useGlobalFlag=false;
+	try{
+		result = eval("JSLocale."+pathArr[0]+"."+pathArr[1]+"."+key);
+		if(null == result){
+			useGlobalFlag = true;
 		}
-	}else{
-		if(modelMsgData[key] != undefined){
-			result = modelMsgData[key];
-		}else if(typeof JSLocale.global != 'undefined' && typeof JSLocale.global[key] != 'undefined'){
-			result = JSLocale['global'][key];
-		} else{
-			result = key;
+	}catch(e){
+		useGlobalFlag = true;
+	}
+	if(useGlobalFlag){
+		try{
+			result = eval("JSLocale.global."+key);
+			if(null == result){
+				return key;
+			}
+		}catch(e){
+			return key;
 		}
 	}
 	if(arguments.length>1){
