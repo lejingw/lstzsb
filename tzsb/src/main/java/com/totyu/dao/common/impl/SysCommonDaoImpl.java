@@ -111,6 +111,13 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 		return executeQueryForList("SysCommon.getUploadFileList", map);
 	}
 	/**
+	 * 获取最新的50张图片
+	 * @return
+	 */
+	public List<UploadFile> getLatest50Pics(){
+		return executeQueryForList("SysCommon.getLatest50Pics", null);
+	}
+	/**
 	 * 根据 id 获取上传文件信息
 	 */
 	public UploadFile getUploadFile(String id){

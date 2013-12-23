@@ -37,7 +37,7 @@ function UploadFiles(config) {
 		var jsonObj = eval("(" + serverData + ")");
 		obj.saveIdArr.push(jsonObj.fileId);
 		var ufi = obj.getUploadFileItem(file.id, file.name);
-		ufi.setImageUrl(jsonObj.path);
+		ufi.setImageUrl(jsonObj.url);
 	};
 	var fileQueued = function(file){
 		obj.swfupload.addFileParam(file.id, "sort", file.index);
@@ -115,8 +115,8 @@ function UploadFiles(config) {
 		
 		this.fileid = fileId;
 		this.setImageUrl = function(url){
-			$("#"+this.fileid+" a[title]").attr("href", ctxPath + "/upload/" + url);
-			$("#"+this.fileid+" a[title] img").attr("src", ctxPath + "/upload/" + url);
+			$("#"+this.fileid+" a[title]").attr("href", ctxPath + url);
+			$("#"+this.fileid+" a[title] img").attr("src", ctxPath + url);
 			obj.reloadPicFrame();
 		};
 		this.setErrorResult = function(url){
@@ -129,7 +129,7 @@ function UploadFiles(config) {
 		SysCommonDwr.getUploadFileList(obj.config.billCode, obj.config.billid, function(dataList){
 			for(var i=0;i<dataList.length;i++){
 				var file = dataList[i];
-				var fileUrl = ctxPath + "/upload/" + file.path;
+				var fileUrl = ctxPath + file.path;
 				new UploadFileItem(file.id, file.mingcheng, fileUrl);
 			}
 			obj.reloadPicFrame();

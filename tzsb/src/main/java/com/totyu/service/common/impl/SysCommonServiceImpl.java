@@ -69,6 +69,12 @@ public class SysCommonServiceImpl implements SysCommonService {
 		return sysCommonDao.getUploadFileList(billCode, headid);
 	}
 	/**
+	 * 获取最新的50张图片
+	 */
+	public List<UploadFile> getLatest50Pics(){
+		return sysCommonDao.getLatest50Pics();
+	}
+	/**
 	 * 根据 id 获取上传文件信息
 	 */
 	public UploadFile getUploadFile(String id){

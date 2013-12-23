@@ -44,6 +44,10 @@ public interface SysCommonService {
 	 */
 	List<UploadFile> getUploadFileList(String billCode, String headid);
 	/**
+	 * 获取最新的50张图片
+	 */
+	List<UploadFile> getLatest50Pics();
+	/**
 	 * 根据 id 获取上传文件信息
 	 */
 	UploadFile getUploadFile(String id);

@@ -11,10 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 
-import com.totyu.common.constant.ParameterConstant;
 import com.totyu.controller.common.QuerySessionKeyIntf;
 import com.totyu.vo.sys.AuthToken;
-import com.totyu.web.cache.ParameterCache;
 import com.totyu.web.util.StringUtil;
 
 public class CommonUtil {
@@ -369,16 +367,5 @@ public class CommonUtil {
 			}
 		}
 		session.setAttribute(conditionSessionKey, condition);
-	}
-	
-	/**
-	 * 获取图片根目录
-	 * @return
-	 */
-	public static String getPicBasePath(){
-		String basePath = ParameterCache.getInstance().getValue(ParameterConstant.PIC_BASE_PATH_OUT);
-		if(StringUtil.isEmpty(basePath))
-			basePath = "";
-		return basePath;
 	}
 }

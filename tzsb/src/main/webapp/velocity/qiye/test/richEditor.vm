@@ -1,18 +1,36 @@
 #set($layout = "qiye/layout/commonLayout.vm")
 #set($jsfiles = [
-	"${rc.contextPath}/script/ueditor/ueditor.all.min.js",
 	"${rc.contextPath}/script/ueditor/ueditor.config.js",
-	"${rc.contextPath}/script/ueditor/lang/zh-cn/zh-cn.js"
+	"${rc.contextPath}/script/ueditor/ueditor.all.min.js"
 ])
-
-    <style type="text/css">
-        .clear {
-            clear: both;
-        }
-    </style>
 <div>
     <h1>完整demo</h1>
-    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+    <script id="editor" type="text/plain" style="width:1024px;height:500px;">
+<h1 label="标题居左" style="font-size: 32px; font-weight: bold; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 2px; border-bottom-style: solid; padding: 0px 4px 0px 0px; text-align: left; margin: 0px 0px 10px;">
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">wwwwwwwww</span><br/>
+</h1>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;"> af &nbsp;dfaad fa df aadfadf爱的发的发地方爱的fad</span><br/>
+</p>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">打发打发打发啊fd</span>
+</p>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">爱的发地方大</span>
+</p>
+<p style="text-align: justify;">
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">&nbsp;阿发的发打发 大师傅</span>
+</p>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;"><br/></span>
+</p>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;"><img src="/lstzsb/upload/20131223/75341387769930798.jpg" title="aaa副本 6.jpg"/></span>
+</p>
+<p>
+    <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">阿打发地方啊飞爱的f<a name="we&#39;e&#39;w"></a>weew</span>
+</p>
+	</script>
 </div>
 <div id="btns">
     <div>
@@ -50,10 +68,8 @@
     <button onclick="deleteEditor()"/>
     删除编辑器</button>
 </div>
-
-</body>
 <script type="text/javascript">
-
+window.alert=info;
     //实例化编辑器
     var ue = UE.getEditor('editor');
     function isFocus(e){
@@ -136,6 +152,7 @@
     }
     function disableBtn(str) {
         var div = document.getElementById('btns');
+		info(domUtils)
         var btns = domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
             if (btn.id == str) {
@@ -147,6 +164,7 @@
     }
     function enableBtn() {
         var div = document.getElementById('btns');
+		info(domUtils)
         var btns = domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
             domUtils.removeAttributes(btn, ["disabled"]);
@@ -161,11 +179,4 @@
         ue.execCommand( "clearlocaldata" );
         alert("已清空草稿箱")
     }
-
-</script>
-<script>
-$(document).ready(function(){
-//	$("#btn1").click(function(){
-//	});
-});
 </script>

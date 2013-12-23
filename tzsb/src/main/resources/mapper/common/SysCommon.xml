@@ -45,7 +45,11 @@
         </selectKey>
 	</insert>
 	<select id="SysCommon.getUploadFileList" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="map">
-		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.create_date, a.shunxu, a.id
+		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.id
+	</select>
+	<select id="SysCommon.getLatest50Pics" resultClass="com.totyu.vo.sys.UploadFile">
+		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.shunxu=-1 and (lower(a.path) like '%.jpg' or lower(a.path) like '%.png'
+			 or lower(a.path) like '%.jpeg' or lower(a.path) like '%.gif' or lower(a.path) like '%.bmp') order by a.id desc limit 0, 50
 	</select>
 	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
 		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#

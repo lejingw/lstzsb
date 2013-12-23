@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.totyu.common.Global;
 import com.totyu.service.common.SysCommonService;
 import com.totyu.vo.sys.UploadFile;
 
@@ -35,7 +34,12 @@ public class SysCommonController {
 	        String fileName = URLEncoder.encode(uploadFile.getMingcheng(),"utf-8");
 	        res.setHeader("Content-Disposition", "attachment; filename=" + fileName + "");
 	        res.setContentType("application/octet-stream; charset=utf-8");
-	        File file = new File(Global.getPicUploadPath() + uploadFile.getPath());
+	        System.out.println(req.getServletPath());
+
+		//	String realPath = req.getSession().getServletContext().getRealPath(req.getServletPath());
+	    //	File file = new File(new File(realPath).getParent() + uploadFile.getPath());
+	        String realPath2 = req.getSession().getServletContext().getRealPath("/");
+	        File file = new File(realPath2 + uploadFile.getPath());
 	        os.write(FileUtils.readFileToByteArray(file));
 	        os.flush();
 	    } catch(Exception e){
