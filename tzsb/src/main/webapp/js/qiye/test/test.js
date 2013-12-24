@@ -14,6 +14,7 @@ function showListSelectWin(){
 }
 function showListSelectWin2(){
 	showSelectWin({
+		readOnly:true,
 		title:'选择单位名称[多选]',
 		okFn:function(idArr, nameArr, objArr){
 			$("#dxid2").val(idArr);

@@ -2,6 +2,7 @@
  * 显示选择框
  * 	参数 config{
  *		title:'选择单位名称',//弹出框标题
+ *		readOnly:true,//是否只读
  *		checkFn:function(idArr, nameArr, objArr){},//确定前做数据有效性检查
  *		okFn:function(idArr, nameArr, objArr){},//确定调用的方法
  *		cancelFn:function(){},//取消调用的方法
@@ -14,20 +15,24 @@
  * 	}
  */
 function showSelectWin(config){
+	var readOnly = config.readOnly === true;
 	var options = {
-		title : config.title||'选择',
+		title : (config.title||'请选择')+(readOnly?"[只读]":""),
 		contentType : 'iframe',
 		iframeId : "selectFrm",
 		width : config.width||520,
 		height : config.height||370,
-		okBtnName : config.okBtnName||'确定',
+		okBtnName : readOnly?"关闭":(config.okBtnName||'确定'),
+		showCancel : !readOnly,
 		cancelBtnName : config.cancelBtnName||'取消',
 		onok : function(box) {
-			var results = $("#selectFrm")[0].contentWindow.getValues();
-			if(config.checkFn && !config.checkFn(results[0], results[1], results[2])){
-				return;
+			if(!readOnly){				
+				var results = $("#selectFrm")[0].contentWindow.getValues();
+				if(config.checkFn && !config.checkFn(results[0], results[1], results[2])){
+					return;
+				}
+				config.okFn(results[0], results[1], results[2]);
 			}
-			config.okFn(results[0], results[1], results[2]);
 			box.close();// 增加事件方法后需手动关闭弹窗
 		},
 		oncancel : function(box) {

@@ -105,7 +105,7 @@ function initView(){
 					}
 				},
 			{id:'btnTest5', fn:function(){
-						addAlert("beizhu", "备注提示信息阿打发地方 打发打发dafadf  打发倒萨 打发打发地方丰富的奋斗奋斗");
+						addAlert("beizhu", "这是测试提示信息，样式与Validator一致");
 					}
 				},
 			{id:'btnTest6', fn:function(){
