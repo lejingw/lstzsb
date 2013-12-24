@@ -78,6 +78,8 @@
   <div class="btn num4" id='btnTest2'><a href="#">移除验证</a></div>
   <div class="btn num4" id='btnTest3'><a href="#">移除所有验证</a></div>
   <div class="btn num2" id='btnTest4'><a href="#">验证</a></div>
+  <div class="btn num4" id='btnTest5'><a href="#">添加提示</a></div>
+  <div class="btn num4" id='btnTest6'><a href="#">删除提示</a></div>
 </div>
 </form>
 <script>

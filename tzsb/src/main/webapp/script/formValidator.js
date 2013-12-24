@@ -64,7 +64,8 @@ Validator = {
 	},
 	remove : function(id){
 		$("#" + id).attr("dataType", null);
-		$("#" + id).parent().find("span[name='__ErrorMessagePanel']").remove();
+	//	$("#" + id).parent().find("span[name='__ErrorMessagePanel']").remove();
+		removeAlert2(false, $("#" + id));
 	},
 	removeAll:function(){
 		$("span[name='__ErrorMessagePanel']").prev().attr("dataType", null);
@@ -139,17 +140,19 @@ Validator = {
 				case 3 :
 					try{
 						for(var i=1;i<errCount;i++){
-							var td = $(this.ErrorItem[i].parentNode);
-							var span = $("<span name='__ErrorMessagePanel' style='white-space:normal;position:relative;line-height:22px;height:auto; '>&nbsp;&nbsp;</span>");
-							span.appendTo(td);
-							var img = $("<img src='"+ctxPath+"/style/img/icon_error_2.png'/>").hover(function(){
-									$(this).next().css("display", "block");
-								}, function(){
-									$(this).next().css("display", "none");
-								});
-							img.appendTo(span);
 							var msg = this.ErrorMessage[i].split(":")[1];
-							$("<div style='z-Index:1;word-wrap: break-word; word-break: normal;display:none;position:absolute;top:5px;left:15px;font-size:12px;color:#682200; border:1px solid #f2b100; background:#fff6de; line-height:22px; min-height:22px;height: auto; width:150px; padding:0 0.5em;'>" + msg + "</div>").appendTo(span);
+							addAlert2(false, this.ErrorItem[i], msg);
+//							var td = $(this.ErrorItem[i].parentNode);
+//							var span = $("<span name='__ErrorMessagePanel' style='white-space:normal;position:relative;line-height:22px;height:auto; '>&nbsp;&nbsp;</span>");
+//							span.appendTo(td);
+//							var img = $("<img src='"+ctxPath+"/style/img/icon_error_2.png'/>").hover(function(){
+//									$(this).next().css("display", "block");
+//								}, function(){
+//									$(this).next().css("display", "none");
+//								});
+//							img.appendTo(span);
+//							var msg = this.ErrorMessage[i].split(":")[1];
+//							$("<div style='z-Index:1;word-wrap: break-word; word-break: normal;display:none;position:absolute;top:5px;left:15px;font-size:12px;color:#682200; border:1px solid #f2b100; background:#fff6de; line-height:22px; min-height:22px;height: auto; width:150px; padding:0 0.5em;'>" + msg + "</div>").appendTo(span);
 						}
 					}catch(e){
 					}

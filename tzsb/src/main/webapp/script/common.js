@@ -1009,3 +1009,63 @@ function loadPictureFrame(tblId){
 			$('#'+tblId+' tr td a').foxibox();
 		});
 }
+/**
+ * 为控件添加提示信息
+ * @param iptId
+ * @param msg
+ */
+function addAlert(iptId, msg){
+	removeAlert(iptId);
+	//addAlert2(true, $("#" + iptId).parent(), msg);
+	addAlert2(false, $("#" + iptId), msg);
+}
+/**
+ * 删除控件提示信息
+ * @param iptId
+ */
+function removeAlert(iptId){
+	removeAlert2(false, $("#" + iptId));
+}
+/**
+ * 为table单元格添加提示信息
+ * @param tblId
+ * @param rowIndex
+ * @param colIndex
+ * @param msg
+ */
+function addTableAlert(tblId, rowIndex, colIndex, msg){
+	removeAlert2(true, $("#" + tblId + " tr:eq(" + rowIndex + ") td:eq(" + colIndex + ")"));
+	addAlert2(true, $("#" + tblId + " tr:eq(" + rowIndex + ") td:eq(" + colIndex + ")"), msg);
+}
+/**
+ * 为table单元格移除提示信息
+ * @param tblId
+ * @param rowIndex
+ * @param colIndex
+ */
+function removeTableAlert(tblId, rowIndex, colIndex){
+	removeAlert2(true, $("#" + tblId + " tr:eq(" + rowIndex + ") td:eq(" + colIndex + ")"));
+}
+function addAlert2(parentFlag, obj, msg){
+	var span = $("<span name='__ErrorMessagePanel' style='white-space:normal;position:relative;line-height:22px;height:auto; '>&nbsp;&nbsp;</span>");
+	if(parentFlag){
+		$(obj).append(span);
+		//span.appentTo(obj);
+	}else{
+		$(obj).after(span);
+	}
+	var img = $("<img src='"+ctxPath+"/style/img/icon_error_2.png'/>").hover(function(){
+		$(this).next().css("display", "block");
+	}, function(){
+		$(this).next().css("display", "none");
+	});
+	img.appendTo(span);
+	$("<div style='z-Index:1;word-wrap: break-word; word-break: normal;display:none;position:absolute;top:5px;left:15px;font-size:12px;color:#682200; border:1px solid #f2b100; background:#fff6de; line-height:22px; min-height:22px;height: auto; width:150px; padding:0 0.5em;'>" + msg + "</div>").appendTo(span);
+}
+function removeAlert2(parentFlag, obj){
+	if(parentFlag){
+		$(obj).find("span[name='__ErrorMessagePanel']").remove();
+	}else{
+		$(obj).nextAll("span[name='__ErrorMessagePanel']").remove();
+	}
+}

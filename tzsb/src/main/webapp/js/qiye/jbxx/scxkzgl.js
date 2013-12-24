@@ -89,7 +89,7 @@ function initView(){
 			{id:'btnSave',	code:'save', fn:function(){saveScxkzgl("1");}},
 			{id:'btnDistroy',	code:'distroy', fn:function(){saveScxkzgl("9");}},
 			{id:'btnTest1', fn:function(){
-						Validator.add({id:'sblb', dataType:'Required', msgkey:'sblb'});
+						Validator.add({id:'sblb', dataType:'Required', msgkey:'require'});
 					}
 				},
 			{id:'btnTest2', fn:function(){
@@ -103,15 +103,23 @@ function initView(){
 			{id:'btnTest4', fn:function(){
 						Validator.validate("frm");
 					}
+				},
+			{id:'btnTest5', fn:function(){
+						addAlert("beizhu", "备注提示信息阿打发地方 打发打发dafadf  打发倒萨 打发打发地方丰富的奋斗奋斗");
+					}
+				},
+			{id:'btnTest6', fn:function(){
+						removeAlert("beizhu");
+					}
 				}
 		]);
 	//2初始化验证信息
 	Validator.init([
-		   {id:'zsbh', dataType:'Required', msgkey:'zsbh'},
-		   {id:'pzrq', dataType:'Date', msgkey:'pzrq', format:'yyyy-mm-dd'},
-		   {id:'yxrq', dataType:'Date', msgkey:'yxrq'},
-		   {id:'zzdz', dataType:'Required', msgkey:'zzdz'},
-		   {id:'pzjg', dataType:'Required', msgkey:'pzjg'}
+		   {id:'zsbh', dataType:'Required', msgkey:'require'},
+		   {id:'pzrq', dataType:'Date', msgkey:'date'},
+		   {id:'yxrq', dataType:'Date', msgkey:'date'},
+		   {id:'zzdz', dataType:'Required', msgkey:'require'},
+		   {id:'pzjg', dataType:'Required', msgkey:'require'}
 		]);
 	
 	//3如果为新增页面，则给新增页面设置初始默认值
