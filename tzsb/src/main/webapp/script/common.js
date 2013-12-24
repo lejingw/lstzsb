@@ -1038,7 +1038,7 @@ function addTableAlert(tblId, rowIndex, colIndex, msg){
 	addAlert2(true, $("#" + tblId + " tr:eq(" + rowIndex + ") td:eq(" + colIndex + ")"), msg);
 }
 /**
- * 为table单元格移除提示信息
+ * 删除table单元格提示信息
  * @param tblId
  * @param rowIndex
  * @param colIndex
