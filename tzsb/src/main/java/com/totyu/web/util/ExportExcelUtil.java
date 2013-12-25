@@ -32,7 +32,7 @@ public class ExportExcelUtil {
 			// 设置导出文件名
 			String fileName = excelData.getTitle() + DateUtil.formatSdf8(new Date()) + ".xls";
 			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + new String(fileName.getBytes(), "ISO8859-1") + "\"");
+			response.setHeader("Content-Disposition", "attachment;filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
 			wb.write(response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();

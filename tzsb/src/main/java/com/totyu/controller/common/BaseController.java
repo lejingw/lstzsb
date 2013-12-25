@@ -60,7 +60,7 @@ public abstract class BaseController implements ExcelCheckMode{
 			// 设置导出文件名
 			String fileName = "检查结果" + DateUtil.formatSdf8(new Date()) + ".xls";
 			resp.setContentType("application/vnd.ms-excel");
-			resp.setHeader("Content-Disposition", "attachment;filename=\"" + new String(fileName.getBytes(), "ISO8859-1") + "\"");
+			resp.setHeader("Content-Disposition", "attachment;filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
 			workbook.write(os);
 			os.flush();
 		} catch (Exception e) {

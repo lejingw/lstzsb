@@ -52,12 +52,12 @@ function deleteBills(){
 		}
 		deleteIds.push($n("billid")[idxArr[i]].value);
 	}
-	confirm(msg("deleteconfirm"), function(){			
+	confirm(msg("confirm", "删除"), function(){			
 		ScxkzglDwr.deleteBill(deleteIds, function(data){
 			if(data){
 				alert(data);
 			}else{
-				alert(msg("deletesuccess"), function(){
+				alert(msg("success", "删除"), function(){
 					window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";
 				});
 			}
@@ -116,8 +116,8 @@ function initView(){
 	//2初始化验证信息
 	Validator.init([
 		   {id:'zsbh', dataType:'Required', msgkey:'require'},
-		   {id:'pzrq', dataType:'Date', msgkey:'date'},
-		   {id:'yxrq', dataType:'Date', msgkey:'date'},
+		   {id:'pzrq', dataType:'Date', msgkey:'requireDate'},
+		   {id:'yxrq', dataType:'Date', msgkey:'requireDate'},
 		   {id:'zzdz', dataType:'Required', msgkey:'require'},
 		   {id:'pzjg', dataType:'Required', msgkey:'require'}
 		]);
@@ -181,7 +181,7 @@ function saveScxkzgl(status){
 	//2、验证是否存在
 	ScxkzglDwr.checkBill(bill, function(data){
 		if(data){
-			alert(data);
+			alert(msg("exists", data));
 			return ;
 		}
 		var action = ("1"==status?"保存":("9"==status?"注销":""));
@@ -191,7 +191,7 @@ function saveScxkzgl(status){
 			ScxkzglDwr.saveBill(bill, uploadFiles.getSaveFileIds(), uploadFiles.getDeleteFileIds(), function(data){
 				showLayer(false);//取消遮罩层
 				if(data){
-					alert(data);
+					alert(msg("fail", "保存单据"));
 				}else{
 					alert(msg("success", action), function(){
 						window.location = ctxPath + "/qiye/jbxx/scxkzgl/list.do";

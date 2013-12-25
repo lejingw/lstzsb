@@ -186,8 +186,13 @@ public class ExcelUtil {
 				e.printStackTrace();
 			}
 			if(null == val || "".equals(val)){
-				if(!checkMode.isAllowEmpty())
-					return false;
+				if(!checkMode.isAllowEmpty()){
+					if(storeFlag){
+						setCheckResultMessage(rowData.getSheetIndex(), rowData.getRowIndex(),  checkMode.getColumnIndex(), "不能为空", false);
+					}else{
+						return false;
+					}
+				}
 			}else{				
 				if(ExcelColumnEnum.NUMBER_COLUMN.equals(checkMode.getTypeCheck())){
 					if(!numberPattern.matcher(val).matches()){

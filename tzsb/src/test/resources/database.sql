@@ -1,6 +1,6 @@
 
 CREATE TABLE `t_xt_excel_tmp_data` (
-	`seq_id`		int(16) NOT NULL,
+	`seq_id`		bigint(20) NOT NULL,
 	`sheetindex`	int(11) NOT NULL,
 	`rowindex`		int(11) NOT NULL,
 	`col0`	varchar(128) COLLATE utf8_bin DEFAULT NULL,
