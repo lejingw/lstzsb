@@ -12,9 +12,9 @@ public interface ExcelUtilDao {
 	void saveExcelData(List<ExcelRowData> excelDataList);
 
 	List<ExcelRowData> getExcelData(String seqId);
-
+	
 	List<ExcelRowData> getCheckDbrefrenceResult(String seqId,
-			String sheetIndex, String startCheckIndex, String columnIndex,
+			int sheetIndex, int startCheckIndex, int columnIndex,
 			String tableName, String idFieldName, String nameFieldName,
 			String queryCondition);
 	
@@ -24,6 +24,8 @@ public interface ExcelUtilDao {
 			String queryCondition);
 
 	void deleteTitleRows(String seqId, int startCheckIndex);
+	
+	void deleteExcelData(String seqId);
 
 	List<Map> printExcelData(String seqId);
 

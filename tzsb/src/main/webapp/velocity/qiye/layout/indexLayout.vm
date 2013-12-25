@@ -92,6 +92,7 @@
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/localMsg/show.do')"><span>国际化资源</span></a></li>
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/submitForm/show.do')"><span>增强form提交</span></a></li>
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/richEditor/show.do')"><span>富文本编辑器</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/uploadExcel/show.do')"><span>excel上传</span></a></li>
           </ul>
         </li>
         <li><a href="#"><span class="ico01_10">基本信息</span></a>

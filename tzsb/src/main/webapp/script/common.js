@@ -558,7 +558,7 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	});
 	function goToPage(){
 		if(!isNumber($("#_pageIndex").val()) || $("#_pageIndex").val()<=0 || $("#_pageIndex").val()>totalPageCount){
-			info("页数必须为0~"+totalPageCount+"之间的正整数");
+			info("页数必须为1~"+totalPageCount+"之间的正整数");
 			return false;
 		}
 		forw(($("#_pageIndex").val()-1)*limit);

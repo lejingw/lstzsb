@@ -3,6 +3,7 @@ package com.totyu.dao.common.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,8 @@ import com.totyu.dao.common.ExcelUtilDao;
 public class ExcelUtilDaoImpl extends BaseDao implements ExcelUtilDao {
 
 	public String getexcelKey(){
-		return (String)executeQueryForObject("ExcelUtil.getexcelKey", null);
+		//return (String)executeQueryForObject("ExcelUtil.getexcelKey", null);
+		return ""+new Random().nextInt(1000)+System.currentTimeMillis();
 	}
 
 	public void saveExcelData(List<ExcelRowData> excelDataList){
@@ -24,8 +26,7 @@ public class ExcelUtilDaoImpl extends BaseDao implements ExcelUtilDao {
 	public List<ExcelRowData> getExcelData(String seqId){
 		return executeQueryForList("ExcelUtil.getExcelData", seqId);
 	}
-	public List<ExcelRowData> getCheckDbrefrenceResult(String seqId, String sheetIndex,
-			String startCheckIndex, String columnIndex, String tableName,
+	public List<ExcelRowData> getCheckDbrefrenceResult(String seqId, int sheetIndex, int startCheckIndex, int columnIndex, String tableName,
 			String idFieldName, String nameFieldName, String queryCondition){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("seqId", seqId);
@@ -57,6 +58,9 @@ public class ExcelUtilDaoImpl extends BaseDao implements ExcelUtilDao {
 		map.put("seqId", seqId);
 		map.put("startCheckIndex", ""+startCheckIndex);
 		delete("ExcelUtil.deleteTitleRows", map);
+	}
+	public void deleteExcelData(String seqId){
+		delete("ExcelUtil.deleteExcelData", seqId);
 	}
 	public List<Map> printExcelData(String seqId){
 		return executeQueryForList("ExcelUtil.printExcelData", seqId);

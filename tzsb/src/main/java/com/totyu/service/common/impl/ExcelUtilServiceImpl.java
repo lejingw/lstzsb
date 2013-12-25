@@ -1,7 +1,6 @@
 package com.totyu.service.common.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +13,10 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.totyu.common.ExcelUtil;
 import com.totyu.common.excel.ExcelDbrefrenceCheck;
-import com.totyu.common.excel.ExcelDbrefrenceCheck2;
 import com.totyu.common.excel.ExcelRowData;
 import com.totyu.dao.common.ExcelUtilDao;
 import com.totyu.service.common.ExcelUtilService;
-import com.totyu.web.util.StringUtil;
 
 @Service
 public class ExcelUtilServiceImpl implements ExcelUtilService{
@@ -60,11 +56,8 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 		return excelUtilDao.getExcelData(seqId);
 	}
 
-	public List<ExcelRowData> getCheckDbrefrenceResult(String seqId,
-			int sheetIndex, int startCheckIndex, int columnIndex,
-			ExcelDbrefrenceCheck dbrefrence) {
-		return excelUtilDao.getCheckDbrefrenceResult(seqId, "" + sheetIndex, ""
-				+ startCheckIndex, "" + columnIndex, dbrefrence.getTableName(),
+	public List<ExcelRowData> getCheckDbrefrenceResult(String seqId, int sheetIndex, int startCheckIndex, int columnIndex, ExcelDbrefrenceCheck dbrefrence) {
+		return excelUtilDao.getCheckDbrefrenceResult(seqId, sheetIndex, startCheckIndex, columnIndex, dbrefrence.getTableName(),
 				dbrefrence.getIdFieldName(), dbrefrence.getNameFieldName(), dbrefrence.getQueryCondition());
 	}
 
@@ -72,10 +65,6 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 			int startCheckIndex, int columnIndex,
 			ExcelDbrefrenceCheck dbrefrence){
         String condition = dbrefrence.getQueryCondition();
-        if(dbrefrence instanceof ExcelDbrefrenceCheck2){
-            ExcelDbrefrenceCheck2 dbrefrence2 = (ExcelDbrefrenceCheck2)dbrefrence;
-            condition = dbrefrence2.getToIdCondition();
-        }
 		excelUtilDao.convertDbrefrenceToId(seqId, "" + sheetIndex, ""
 				+ startCheckIndex, "" + columnIndex, dbrefrence.getTableName(),
 				dbrefrence.getIdFieldName(), dbrefrence.getNameFieldName(), condition);
@@ -83,6 +72,10 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 
 	public void deleteTitleRows(String seqId, int startCheckIndex){
 		excelUtilDao.deleteTitleRows(seqId, startCheckIndex);
+	}
+	@Override
+	public void deleteExcelData(String seqId) {
+		excelUtilDao.deleteExcelData(seqId);
 	}
 	public void printExcelData(String seqId){
 		List<Map> list = excelUtilDao.printExcelData(seqId);
@@ -143,7 +136,6 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 			res = "";
 			break;
 		}
-//		System.out.println("======================" + cell.getCellType());
 		return res.trim();
 	}
 }

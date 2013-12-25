@@ -45,7 +45,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mimepull-1.8.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.19.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-3.9.jar" sourcepath="/Users/wanglj/appdata/maven_repo/org/apache/poi/poi/3.9/poi-3.9-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/policy-2.3.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/relaxngDatatype-20020414.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/resolver-20050927.jar"/>
@@ -64,7 +64,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-orm-3.1.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-test-3.1.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-tx-3.1.2.RELEASE.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-web-3.1.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-web-3.1.2.RELEASE.jar" sourcepath="/Users/wanglj/appdata/maven_repo/org/springframework/spring-web/3.1.2.RELEASE/spring-web-3.1.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-webmvc-3.1.2.RELEASE.jar" sourcepath="/Users/wanglj/appdata/maven_repo/org/springframework/spring-webmvc/3.1.2.RELEASE/spring-webmvc-3.1.2.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/sslext-1.2-0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/standard-1.1.1.jar"/>

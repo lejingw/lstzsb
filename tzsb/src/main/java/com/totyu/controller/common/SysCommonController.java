@@ -3,7 +3,6 @@ package com.totyu.controller.common;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.totyu.common.CommonUtil;
 import com.totyu.service.common.SysCommonService;
 import com.totyu.vo.sys.UploadFile;
 
@@ -24,22 +24,25 @@ public class SysCommonController {
 	private SysCommonService sysCommonService;
 
 	@RequestMapping("/download")
-	public String download(String id, Model model, HttpServletRequest req, HttpServletResponse res) {
+	public void download(String id, Model model, HttpServletRequest req, HttpServletResponse res) {
 		UploadFile uploadFile = sysCommonService.getUploadFile(id);
-	    OutputStream os = null;
+	    String fileName = uploadFile.getMingcheng();
+        down(fileName, uploadFile.getPath(), req, res);
+	}
+	
+	private void down(String fileName, String path, HttpServletRequest req, HttpServletResponse resp){
+		OutputStream os = null;
 	    try {
-	    	os = res.getOutputStream();
-	        res.reset();
-	        //String fileName = uploadFile.getMingcheng();//new String(uploadFile.getMingcheng().getBytes("GBK"), "UTF-8");
-	        String fileName = URLEncoder.encode(uploadFile.getMingcheng(),"utf-8");
-	        res.setHeader("Content-Disposition", "attachment; filename=" + fileName + "");
-	        res.setContentType("application/octet-stream; charset=utf-8");
-	        System.out.println(req.getServletPath());
+	    	resp.reset();
+	    	os = resp.getOutputStream();	        
+	        resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes(), "ISO8859-1") + "\"");
+//	        resp.setContentType("application/vnd.ms-excel");
+	        resp.setContentType("application/octet-stream; charset=utf-8");
 
-		//	String realPath = req.getSession().getServletContext().getRealPath(req.getServletPath());
-	    //	File file = new File(new File(realPath).getParent() + uploadFile.getPath());
-	        String realPath2 = req.getSession().getServletContext().getRealPath("/");
-	        File file = new File(realPath2 + uploadFile.getPath());
+	        String realPath = req.getSession().getServletContext().getRealPath("/");
+			if(realPath.endsWith("/"))
+				realPath = realPath.substring(0, realPath.length()-1);
+	        File file = new File(realPath + path);
 	        os.write(FileUtils.readFileToByteArray(file));
 	        os.flush();
 	    } catch(Exception e){
@@ -54,6 +57,12 @@ public class SysCommonController {
 				e.printStackTrace();
 	        }
 	    }
-		return null;
+	}
+	
+	@RequestMapping("/downloadExcelTemplate")
+	public void downloadExcelTemplate(String path, Model model, HttpServletRequest req, HttpServletResponse resp) {
+        path = CommonUtil.toUTF8(path);
+        String fileName = path.substring(path.lastIndexOf("/")+1, path.length());
+        down(fileName, "/velocity" + path, req, resp);
 	}
 }

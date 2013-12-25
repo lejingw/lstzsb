@@ -3,13 +3,17 @@ package com.totyu.dwr.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.totyu.common.Pager;
+import com.totyu.common.excel.ExcelUtil;
 import com.totyu.common.exception.TzsbException;
+import com.totyu.service.common.ExcelUtilService;
 import com.totyu.service.common.SysCommonService;
 import com.totyu.vo.common.Dict;
 import com.totyu.vo.common.Org;
@@ -24,6 +28,8 @@ import com.totyu.web.cache.ParameterCache;
 public class SysCommonDwr {
 	@Autowired
 	private SysCommonService sysCommonService;
+	@Autowired
+	private ExcelUtilService excelUtilService;
 	
 	/**
 	 * 获取系统参数配置值
@@ -41,6 +47,20 @@ public class SysCommonDwr {
 	public List<UploadFile> getUploadFileList(String billCode, String headid){
 		List<UploadFile> list = sysCommonService.getUploadFileList(billCode, headid);
 		return list;
+	}
+	@RemoteMethod
+	public String saveUploadExcelData(String fileId, HttpServletRequest req){
+		try {
+			UploadFile uploadFile = sysCommonService.getUploadFile(fileId);
+			String realPath = req.getSession().getServletContext().getRealPath("/");
+			if(realPath.endsWith("/"))
+				realPath = realPath.substring(0, realPath.length()-1);
+			ExcelUtil excelUtil = new ExcelUtil(excelUtilService);
+			String seqId = excelUtil.saveExcelData(realPath + uploadFile.getPath());
+			return seqId;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	/**
 	 * 根据数据字典名称获取数据字典项

@@ -56,7 +56,6 @@ public class ScxkzglController {
 
 	@RequestMapping("/export")
 	public String export(String billid, Model model, HttpServletRequest req, HttpServletResponse res) {
-
 		Map<String, String> condition = CommonUtil.getConditionForPageSession(this, req);
 		Pager pager = scxkzglService.getPageData(condition, CommonUtil.getSessionOrgId(req));
 		

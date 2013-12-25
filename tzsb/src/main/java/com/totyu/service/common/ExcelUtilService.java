@@ -26,4 +26,6 @@ public interface ExcelUtilService {
 
 	public void printExcelData(String seqId);
 
+	public void deleteExcelData(String seqId);
+
 }
