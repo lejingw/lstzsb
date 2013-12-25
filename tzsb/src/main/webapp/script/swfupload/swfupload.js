@@ -155,7 +155,7 @@ SWFUpload.prototype.initSettings = function () {
 	this.ensureDefault("button_placeholder_id", "");
 	this.ensureDefault("button_placeholder", null);
 	this.ensureDefault("button_cursor", SWFUpload.CURSOR.ARROW);
-	this.ensureDefault("button_window_mode", SWFUpload.WINDOW_MODE.WINDOW);
+	this.ensureDefault("button_window_mode", SWFUpload.WINDOW_MODE.OPAQUE);
 	
 	// Debug Settings
 	this.ensureDefault("debug", false);
