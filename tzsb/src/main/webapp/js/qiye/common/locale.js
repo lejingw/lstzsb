@@ -1,6 +1,7 @@
 var JSLocale = {};
 //全局，如果模块中没有对应的key，则再从global中查找
 JSLocale.global={};
+JSLocale.global.leave="您要放弃本次修改吗?";
 JSLocale.global.confirm="确认{0}?";
 JSLocale.global.success="{0}成功!";
 JSLocale.global.fail="{0}失败!";
