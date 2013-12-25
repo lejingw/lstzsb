@@ -1,0 +1,35 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($jsfiles = [
+	"${rc.contextPath}/script/commonSelector.js",
+	"${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/js/qiye/test/uploadExcel.js",
+	"${rc.contextPath}/dwr/interface/TestDwr.js"
+])
+<form method="post" enctype="multipart/form-data" action="${rc.contextPath}/uploadServlet">
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="im_tr f12">
+  <caption>许可证信息</caption>
+  <tr>
+    <td width="15%" class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>证书编号</td>
+    <td width="35%" class="text_space_left text_left"></td>
+    <td width="15%" class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>批准日期</td>
+    <td width="35%" class="text_space_left text_left"></td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>Excel上传</td>
+    <td  colspan="3" class="text_space_left text_left">
+	  <span id="uploadDivId"></span>
+	</td>
+  </tr>
+  <tr>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>Excel上传2</td>
+    <td  colspan="3" class="text_space_left text_left">
+	  <input type="file" >
+	</td>
+  </tr>
+</table>
+<div class="operateBtnDiv_down">
+  <div class="btn num2" id='btnUpload'><a href="#">上传</a></div>
+</div>
+</form>
+<script>
+</script>
