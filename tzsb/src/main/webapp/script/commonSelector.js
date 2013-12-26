@@ -174,3 +174,44 @@ function showUploadWin(config){
 	}
 	initUpload();
 }
+function showWin(config){
+	var readOnly = config.readOnly === true;
+	var options = {
+		title : (config.title||'请选择')+(readOnly?"[只读]":""),
+		contentType : 'iframe',
+		iframeId : "selectFrm",
+		width : config.width||520,
+		height : config.height||370,
+		okBtnName : readOnly?"关闭":(config.okBtnName||'确定'),
+		showCancel : !readOnly,
+		cancelBtnName : config.cancelBtnName||'取消',
+		onok : function(box) {
+			if(!readOnly){				
+				var results = $("#selectFrm")[0].contentWindow.getValues();
+				if(config.checkFn && !config.checkFn(results)){
+					return;
+				}
+				config.okFn(results);
+			}
+			box.close();// 增加事件方法后需手动关闭弹窗
+		},
+		oncancel : function(box) {
+			if(config.cancelFn){
+				config.cancelFn();
+			}
+			box.close();// 增加事件方法后需手动关闭弹窗
+		}
+	};
+	var reqUrl = config.url;
+	if(config.params){
+		if(-1 == reqUrl.indexOf("?")){
+			reqUrl += "?";
+		}
+		for(var p in config.params){
+			if(config.params[p]){				
+				reqUrl += "&" + p + "=" + config.params[p];
+			}
+		}
+	}
+	$.weeboxs.open(encodeURI(reqUrl), options);
+}
