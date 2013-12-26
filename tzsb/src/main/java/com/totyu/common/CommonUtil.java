@@ -1,14 +1,19 @@
 package com.totyu.common;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import com.totyu.controller.common.QuerySessionKeyIntf;
@@ -350,6 +355,7 @@ public class CommonUtil {
      * @param condition
      * @param keys
      */
+	@SuppressWarnings("unchecked")
 	public static void getSessionParameter(Object controller, HttpServletRequest req, Map<String, String> condition, String... keys) {
 		if (null == keys || keys.length < 1) {
 			return;
@@ -367,5 +373,56 @@ public class CommonUtil {
 			}
 		}
 		session.setAttribute(conditionSessionKey, condition);
+	}
+
+//	private static void aaa(){
+//		System.out.println("---------------------");
+//		Properties p = System.getProperties();
+//		Enumeration enu = p.keys();
+//		while(enu.hasMoreElements()){
+//			Object key = enu.nextElement();
+//			System.out.println(key+":"+p.getProperty(key.toString()));
+//		}
+//		System.out.println("---------------------");
+//		Map map = System.getenv();
+//		Iterator iter = map.keySet().iterator();
+//		while(iter.hasNext()){
+//			Object key = iter.next();
+//			System.out.println(key+":"+map.get(key));
+//		}
+//		System.out.println("---------------------");
+//	}
+	
+	public static void download(String fileName, String path, HttpServletRequest req, HttpServletResponse resp){
+		OutputStream os = null;
+	    try {
+	    	resp.reset();
+	    	os = resp.getOutputStream();
+	    	System.out.println("os.name=" + System.getProperties().getProperty("os.name"));
+	    	if("Mac OS X".equals(System.getProperties().getProperty("os.name"))){	    		
+	    		resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO8859-1") + "\"");
+	    	}else{
+	   	    	resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
+	    	}
+	        resp.setContentType("application/octet-stream; charset=utf-8");
+
+	        String realPath = req.getSession().getServletContext().getRealPath("/");
+			if(realPath.endsWith("/"))
+				realPath = realPath.substring(0, realPath.length()-1);
+	        File file = new File(realPath + path);
+	        os.write(FileUtils.readFileToByteArray(file));
+	        os.flush();
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    } finally {
+	    	try {
+            	if (os != null) {
+					os.close();
+					os = null;
+	        	}
+			} catch (IOException e) {
+				e.printStackTrace();
+	        }
+	    }
 	}
 }

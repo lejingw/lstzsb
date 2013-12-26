@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -287,5 +290,33 @@ public class ExcelUtil {
 				}
 			}
 		}
+	}
+	
+	public static void download(String fileName, HSSFWorkbook workbook, HttpServletResponse resp){
+		OutputStream os = null;
+	    try {
+	    	resp.reset();
+	    	os = resp.getOutputStream();
+	    	System.out.println("os.name=" + System.getProperties().getProperty("os.name"));
+	    	if("Mac OS X".equals(System.getProperties().getProperty("os.name"))){	    		
+	    		resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO8859-1") + "\"");
+	    	}else{
+	   	    	resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
+	    	}
+	        resp.setContentType("application/vnd.ms-excel");
+	        workbook.write(os);
+	        os.flush();
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    } finally {
+	    	try {
+            	if (os != null) {
+					os.close();
+					os = null;
+	        	}
+			} catch (IOException e) {
+				e.printStackTrace();
+	        }
+	    }
 	}
 }

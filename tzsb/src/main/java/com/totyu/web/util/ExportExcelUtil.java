@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.totyu.common.excel.ExcelData;
+import com.totyu.common.excel.ExcelUtil;
 
 public class ExportExcelUtil {
 	private ExcelData excelData;
@@ -23,22 +24,14 @@ public class ExportExcelUtil {
 		this.excelData = excelData;
 	}
 	
-	public void export(HttpServletResponse response){
-		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet("sheet1");
-		createHeader(wb, sheet);
-		createBody(wb, sheet);
-		try {
-			// 设置导出文件名
-			String fileName = excelData.getTitle() + DateUtil.formatSdf8(new Date()) + ".xls";
-			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
-			wb.write(response.getOutputStream());
-			response.getOutputStream().flush();
-			response.getOutputStream().close();
-		} catch (Exception e) {
-			throw new RuntimeException("导出excel出错");
-		}
+	public void export(HttpServletResponse resp){
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("sheet1");
+		createHeader(workbook, sheet);
+		createBody(workbook, sheet);
+		// 设置导出文件名
+		String fileName = excelData.getTitle() + DateUtil.formatSdf8(new Date()) + ".xls";
+		ExcelUtil.download(fileName, workbook, resp);
 	}
 
 	private void createBody(HSSFWorkbook wb, HSSFSheet sheet) {
