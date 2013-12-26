@@ -11,6 +11,7 @@ import com.totyu.common.PropertyUtil;
 import com.totyu.web.cache.CacheSingletonIntf;
 import com.totyu.web.cache.DictCache;
 
+@SuppressWarnings("rawtypes")
 public class ExcelData {
 	private String reg = "^(-?((0?\\.[0-9]+)|([1-9][0-9]*\\.[0-9]+)|([1-9]+[0-9]*)))|0$";
 	private Pattern pattern = java.util.regex.Pattern.compile(reg);
@@ -97,6 +98,7 @@ public class ExcelData {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<Map<String, String>> getStringDataFromPager() {
 		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 		for(Object object : pager.getPageData()){
