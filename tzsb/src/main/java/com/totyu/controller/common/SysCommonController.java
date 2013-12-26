@@ -35,7 +35,8 @@ public class SysCommonController {
 	    try {
 	    	resp.reset();
 	    	os = resp.getOutputStream();	        
-	        resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
+//	    	resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
+	        resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO8859-1") + "\"");
 //	        resp.setContentType("application/vnd.ms-excel");
 	        resp.setContentType("application/octet-stream; charset=utf-8");
 
