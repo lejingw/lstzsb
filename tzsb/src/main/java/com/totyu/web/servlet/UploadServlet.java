@@ -49,7 +49,7 @@ public class UploadServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			sysCommonService.saveUploadFile(up.getFileName(), "-1", up.getUrl());
+			sysCommonService.saveUploadFile(up.getOriginalName(), "-1", up.getUrl());
 			String str = "{'original':'"+up.getOriginalName()+"','fileType':'"+up.getType()+"','url':'"+up.getUrl()+"','state':'"+up.getState()+"','title':'"+up.getTitle()+"'}";
 			resp.getWriter().print(str);
 			return ;
@@ -65,7 +65,7 @@ public class UploadServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			String fileId = sysCommonService.saveUploadFile(up.getFileName(), "-1", up.getUrl());
+			String fileId = sysCommonService.saveUploadFile(up.getOriginalName(), "-1", up.getUrl());
 			String url = "/common/download.do?id=" + fileId;//换成下载链接
 		    resp.getWriter().print("{'original':'"+up.getOriginalName()+"','fileType':'"+up.getType()+"','url':'"+url+"','state':'"+up.getState()+"'}");
 		    return ;
@@ -92,8 +92,8 @@ public class UploadServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String id = sysCommonService.saveUploadFile(up.getFileName(), "0", up.getUrl());
-		resp.getWriter().print("{fileId:"+id+", url:'"+up.getUrl()+"'}");
+		String id = sysCommonService.saveUploadFile(up.getOriginalName(), "0", up.getUrl());
+		resp.getWriter().print("{fileId:"+id+",'original':'"+up.getOriginalName()+"',url:'"+up.getUrl()+"'}");
 		return ;
 	}
 	
