@@ -1,7 +1,8 @@
 #set($layout = "qiye/layout/commonLayout.vm")
+##"${rc.contextPath}/script/swfupload/fileUpload.js",
 #set($jsfiles = [
-	"${rc.contextPath}/script/commonSelector.js",
 	"${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/script/commonSelector.js",
 	"${rc.contextPath}/js/qiye/test/uploadExcel.js",
 	"${rc.contextPath}/dwr/interface/TestDwr.js"
 ])
@@ -15,21 +16,70 @@
     <td width="35%" class="text_space_left text_left"></td>
   </tr>
   <tr>
-    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>Excel上传</td>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>图片上传</td>
     <td  colspan="3" class="text_space_left text_left">
-	  <span id="uploadDivId"></span>
+	  <span id="uploadPicDivId"></span>
 	</td>
   </tr>
   <tr>
-    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>Excel上传2</td>
+    <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>附件上传</td>
     <td  colspan="3" class="text_space_left text_left">
-	  <input type="file" >
+	  <span id="uploadFileDivId"></span>
 	</td>
   </tr>
 </table>
 <div class="operateBtnDiv_down">
-  <div class="btn num2" id='btnUpload'><a href="#">上传</a></div>
+  <div class="btn num4" id='btnUploadExcel'><a href="#">上传Excel</a></div>
+  <div class="btn num4" id='btnUploadFile'><a href="#">上传附件</a></div>
+  <div class="btn num4" id='btnUploadPic'><a href="#">上传图片</a></div>
 </div>
 </form>
 <script>
+$(document).ready(function(){
+	$("#btnUploadExcel").click(function(){
+		showUploadWin({
+			title:"上传测试数据",
+			//templatePath : "/qiye/test/test_temp.xls",
+			templatePath : "/qiye/test/Excel测试模板.xls",
+			uploadUrl:ctxPath + "/qiye/test/uploadExcel.do",
+			checkFailUrl:ctxPath + "/qiye/test/excelError.do",
+			okFn:function(){
+				alert("刷新页面");
+			}
+		});
+	});
+	$("#btnUploadFile").click(function(){
+		showWin({
+			width:500,
+			height:358,
+			title:"上传附件",
+			url:ctxPath + "/qiye/test/uploadFile/show.do",
+			okFn:function(){
+				//alert("刷新页面");
+			}
+		});
+	});
+	$("#btnUploadPic").click(function(){
+		showWin({
+			width:640,
+			height:325,
+			title:"上传附件",
+			url:ctxPath + "/qiye/test/uploadPic/show.do",
+			okFn:function(){
+				//alert("刷新页面");
+			}
+		});
+	});
+	
+
+//	var uploadFiles = new UploadFiles({
+//			placeHolder:'uploadPicDivId',
+//			billCode:'010102',
+//			billid:"1",
+//			uploadFlag:true,
+//			fileTypes:"*.jpg;*.gif;*.png",
+//			buttonText:'上传图片',
+//			fileSizeLimit:'5 MB'
+//		});
+});
 </script>

@@ -4,15 +4,12 @@ var config = {
 	compressSide:0,
 	maxImageSideLength:900
 };
+//全局变量
+var imageUrls = [];			// 用于保存从服务器返回的图片信息数组
+var selectedImageCount = 0;	// 当前已选择的但未上传的图片数量
+var imageUploader = null;
 $(document).ready(function() {
 	var postConfig=[];
-	
-	//全局变量
-	var imageUrls = [];			// 用于保存从服务器返回的图片信息数组
-	var selectedImageCount = 0;	// 当前已选择的但未上传的图片数量
-	
-    var imageUploader = new ImageUploader();
-    
 	var flashOptions = {
 		container : "flashContainer", // flash容器id
 		url : config.imageUrl, // 上传处理页面的url地址
@@ -62,7 +59,6 @@ $(document).ready(function() {
 		// 单个文件上传完成的回调
 		uploadCompleteCallback : function(data) {
 			try {
-				info(data.info);
 				var f = eval("(" + data.info + ")");
 				f && imageUrls.push(f);
 				selectedImageCount --;
@@ -94,6 +90,7 @@ $(document).ready(function() {
 		}
 	};
 
+	imageUploader = new ImageUploader();
     imageUploader.init(flashOptions, callbacks);
 
     $i("upload").onclick = function () {
@@ -101,19 +98,6 @@ $(document).ready(function() {
         setPostParams(params);
         imageUploader.upload();
         this.style.display = "none";
-    };
-    $i("btnFinish").onclick = function () {
-    	if (imageUrls.length < 1) return;
-    	var imgObjs = [];
-    	for (var i = 0, ci; ci = imageUrls[i++];) {
-    		var tmpObj = {};
-    		tmpObj.title = ci.title;
-    		//修正显示时候的地址数据,如果后台返回的是图片的绝对地址，那么此处无需修正
-    		tmpObj._src = tmpObj.src = config.imagePath + ci.url;
-    		imgObjs.push(tmpObj);
-    	}
-    	info(imgObjs);
-    	imageUploader.destroy();
     };
     function setPostParams(obj,index){
         if(index===undefined){
@@ -125,7 +109,19 @@ $(document).ready(function() {
         }
     };
 });
-
+function getValues(){
+	if (imageUrls.length < 1) return;
+	var imgObjs = [];
+	for (var i = 0, ci; ci = imageUrls[i++];) {
+		var tmpObj = {};
+		tmpObj.title = ci.title;
+		//修正显示时候的地址数据,如果后台返回的是图片的绝对地址，那么此处无需修正
+		tmpObj._src = tmpObj.src = config.imagePath + ci.url;
+		imgObjs.push(tmpObj);
+	}
+	info(imgObjs);
+	imageUploader.destroy();
+}
 function ImageUploader(){
 	var me = this;
 	var flashObj = null;

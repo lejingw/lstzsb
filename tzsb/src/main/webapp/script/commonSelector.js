@@ -186,7 +186,7 @@ function showWin(config){
 		showCancel : !readOnly,
 		cancelBtnName : config.cancelBtnName||'取消',
 		onok : function(box) {
-			if(!readOnly){				
+			if(!readOnly){
 				var results = $("#selectFrm")[0].contentWindow.getValues();
 				if(config.checkFn && !config.checkFn(results)){
 					return;

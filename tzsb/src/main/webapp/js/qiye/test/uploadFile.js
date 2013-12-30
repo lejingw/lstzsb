@@ -54,20 +54,31 @@ $(document).ready(function () {
         upload_error_handler:uploadError,
         upload_success_handler:function (file, serverData) {
             try{
-                var info = eval("("+serverData+")");
+                var f = eval("("+serverData+")");
+                var progress = new FileProgress(file, this.customSettings.progressTarget);
+                if(f.state=="SUCCESS"){
+                	progress.setComplete();
+                	progress.setStatus("<span style='color: #0b0;font-weight: bold'>上传成功!</span>");
+                	filesList.push({fileId:f.fileId, url:f.url, type:f.fileType, original:f.original, _fileId:file.id});
+                	var me = this;
+                	var obj = {
+                			cancelUpload:function(fileId){
+                				for(var i=0;i<filesList.length;i++){
+                					if(fileId == filesList[i]._fileId){
+                						filesList.splice(i, 1);
+                						break;
+                					}
+                				}
+                				me.cancelUpload(fileId);
+                			}
+                		};
+                	progress.toggleCancel(true,obj,'从成功队列中移除');
+                }else{
+                	progress.setError();
+                	progress.setStatus(f.state);
+                	progress.toggleCancel(true,this,"移除保存失败文件");
+                }
             }catch(e){}
-            var progress = new FileProgress(file, this.customSettings.progressTarget);
-            if(info.state=="SUCCESS"){
-                progress.setComplete();
-                progress.setStatus("<span style='color: #0b0;font-weight: bold'>上传成功!</span>");
-                filesList.push({url:info.url,type:info.fileType,original:info.original});
-                progress.toggleCancel(true,this,'从成功队列中移除');
-            }else{
-                progress.setError();
-                progress.setStatus(info.state);
-                progress.toggleCancel(true,this,"移除保存失败文件");
-            }
-
         },
         //上传完成回调
         upload_complete_handler:uploadComplete,
@@ -80,10 +91,10 @@ $(document).ready(function () {
         }
     };
     swfupload = new SWFUpload( settings );
-    $i("btnFinish").onclick = function () {
-    	info(filesList)
-        swfupload.destroy();
-    };
+//    $i("btnFinish").onclick = function () {
+//    	info(filesList)
+//        //swfupload.destroy();
+//    };
     //点击OK按钮
 //    dialog.onok = function(){
 //        var map = fileTypeMaps,
@@ -100,3 +111,7 @@ $(document).ready(function () {
 //        swfupload.destroy();
 //    }
 });
+function getValues(){
+	info(filesList.length);
+	//swfupload.destroy();
+}

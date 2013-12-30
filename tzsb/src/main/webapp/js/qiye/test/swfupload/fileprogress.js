@@ -32,8 +32,8 @@ function FileProgress(file, targetID) {
 
         //by ue
         progressCancel.onclick = function(){
-            alert(1);
-        }
+            info(1);
+        };
 
 		var progressText = document.createElement("div");
 		progressText.className = "progressName";
@@ -126,7 +126,7 @@ FileProgress.prototype.setStatus = function (status) {
 };
 
 // Show/Hide the cancel button
-FileProgress.prototype.toggleCancel = function (show, swfUploadInstance,message) {
+FileProgress.prototype.toggleCancel = function (show, swfUploadInstance, message) {
     //edit by ue
     var cancelBtn = this.fileProgressElement.childNodes[0];
 	cancelBtn.style.visibility = show ? "visible" : "hidden";

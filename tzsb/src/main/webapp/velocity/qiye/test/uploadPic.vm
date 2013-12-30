@@ -21,7 +21,6 @@
 		<div id="duiqi"></div>
 		<div id="localFloat"></div>
 	</div>
-	<input type='button' id='btnFinish' value='ok'>
 </div>
 <script>
 </script>

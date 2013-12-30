@@ -118,10 +118,6 @@ a.progressCancel:hover {
 	text-align: left;
 	white-space: nowrap;
 }
-/* -- SWFUpload Object Styles ------------------------------- */
-.swfupload {
-	vertical-align: top;
-}
 </style>
 <div class="wrapper">
     <div class="controller">
@@ -130,7 +126,7 @@ a.progressCancel:hover {
     </div>
     <div class="fieldset flash" id="fsUploadProgress"></div>
     <span id="startUpload" style="background:url(${rc.contextPath}/js/qiye/test/swfupload/upload.png) no-repeat;display: none;"></span>
-	<input type='button' id='btnFinish' value='ok'>
+	<input type='button' id='btnFinish' value='ok' style='display:none;'>
 </div>
 <script>
 </script>
