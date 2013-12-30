@@ -114,6 +114,11 @@ input,select,textarea { font-size:12px; padding:2px;}
 .btn[disabled=true] a{ color:#333; display:block;text-decoration:none;}
 .btn[disabled=true] a:hover{background:none; color:#333;}
 
+.GreenBtn{ height:24px; margin-right:5px; text-align:center; line-height:23px; cursor:pointer; display: inline-block; _zoom:1;_display:inline;}
+.GreenBtn a{ color:#fff; display:block;text-decoration:none;}
+.GreenBtn[disabled=true] a{ color:#333; display:block;text-decoration:none;}
+.GreenBtn[disabled=true] a:hover{background:none; color:#333;}
+
 .num2{ background:url(../images/btn_enter2.png) no-repeat; width:49px;}
 .num2 a:hover{ background:url(../images/btn_enter2_hover.png) no-repeat;color:#000; text-decoration:none;}
 .num2[disabled=true]{background: url(../images/btn-cancel2.png) no-repeat;}

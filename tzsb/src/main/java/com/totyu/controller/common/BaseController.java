@@ -22,7 +22,7 @@ public abstract class BaseController implements ExcelCheckMode{
 	 * 数据检查通过会调用此方法，将数据保存入业务单据表
 	 * @param seqId
 	 */
-	public abstract void saveExcelData(String seqId);
+	public abstract void saveExcelData(String seqId, HttpServletRequest req);
 	
 	@RequestMapping(value = "/uploadExcel")
 	@ResponseBody
@@ -30,7 +30,7 @@ public abstract class BaseController implements ExcelCheckMode{
 		ExcelUtil excelUtil = new ExcelUtil(excelUtilService);
 		if(!excelUtil.checkExcelData(seqId, this))
 			return false;
-		saveExcelData(seqId);
+		saveExcelData(seqId, req);
 		excelUtilService.deleteExcelData(seqId);
 		return true;
 	}

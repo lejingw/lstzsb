@@ -49,11 +49,22 @@ caption{font-size:18px; height:50px; line-height:50px; font-family:"微软雅黑
 
 
 /***上传图片******DIV及图片大小*/
-.uploadDiv{  height:auto; width:auto; margin:10px;}
+.uploadDiv{ height:auto; width:auto; margin:10px;}
 .uploadImgDiv{ height:118px; width:105px; float:left; text-align:center; border:1px solid #e0e0e0; margin:10px;}
 .uploadImgDiv:hover{ height:118px; width:105px; float:left; text-align:center; border:1px solid #7da2ce; background:#d4e6fc; opacity:0.5;-moz-opacity:0.5; }
 .uploadImgDiv img{ margin-top:6px;}
 .uploadImgDiv span{  line-height:20px;}
+
+/***附件文件 删除******/
+/*
+.attachDiv{ background:#f5fafe url(../images/icon/attach_2.png) no-repeat 2px 4px;width:auto; height:24px; border:1px solid #e7eff5; width:250px; margin:2px; padding:0 0px 0 22px; float:left;}
+.attachDiv:hover{ background:#d2ecfd url(../images/icon/attach_2.png) no-repeat 2px 4px;width:auto; height:24px; border:1px solid #d0e5f3; width:250px; margin:2px; padding:0 0px 0 22px; float:left;}
+*/
+.attachDiv{ background:#f5fafe; width:auto; height:24px; border:1px solid #e7eff5; width:250px; margin:2px; padding:0 0px 0 5px; float:left;}
+.attachDiv:hover{ background:#d2ecfd; border:1px solid #d0e5f3;}
+.attachDiv .textDiv{ float:left; width:225px;text-overflow:ellipsis; /* for IE */ -moz-text-overflow: ellipsis; /* for Firefox,mozilla */ overflow:hidden;white-space: nowrap;}
+.attachDiv span{width:16px;}
+.icon_delete{ background:url(../images/ico_del.png) no-repeat 0 3px; width:16px; display:block; float:left; cursor:pointer; }
 
 /****查询 箭头按钮***/
 .btn_popSelect{ background:url(../images/managePages_bg/ico_dropdown.png) no-repeat; width:22px; height:14px;}

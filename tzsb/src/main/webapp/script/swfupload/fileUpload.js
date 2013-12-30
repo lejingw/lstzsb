@@ -10,18 +10,21 @@
  * 		fileTypes:"*.jpg;*.gif;*.png",//图片格式，默认为所有文件格式
  * 		buttonText:"上传图片",//'选择文件'
  * 		fileSizeLimit:"10 MB", //默认为"10 MB"，如果值为"0 MB"则表示大小不限制
+ * 		previewFlag:true//上传文件是否开发预览，默认为true，即开启预览，注意：预览模式只有图片类可选
  * 	}
  */
 function UploadFiles(config) {
+	var PREFIX = "ID_";
 	var obj = this;
-	this.config = config||{};
+	this.config = config;
 	this.allowUploadFlag = obj.config.uploadFlag||false;
-	this.uploadProgressTblId = "uploadProgressTblId";
+	this.uploadProgressTblId = "uploadId_" + config.placeHolder;
 	this.saveIdArr = [];
 	this.deleteIdArr = [];
 	this.swfupload = null;
-	this.map = null;
+	this.map = {};
 	this.loadFoxiboxFlag = false;
+	this.previewFlag = config.previewFlag !== false;//是否可以预览
 	
 	this.getSaveFileIds = function(){
 		return obj.saveIdArr;
@@ -36,13 +39,13 @@ function UploadFiles(config) {
 	var uploadSuccess = function(file, serverData, receivedResponse) {
 		var jsonObj = eval("(" + serverData + ")");
 		obj.saveIdArr.push(jsonObj.fileId);
+		$("#" + file.id).attr("fileId", jsonObj.fileId);
 		var ufi = obj.getUploadFileItem(file.id, file.name);
-		ufi.setImageUrl(jsonObj.url);
+		ufi.setDownloadUrl(obj.previewFlag?(ctxPath + jsonObj.url):(ctxPath + "/common/download.do?id=" + jsonObj.fileId));
 	};
 	var fileQueued = function(file){
 		obj.swfupload.addFileParam(file.id, "sort", file.index);
 	};
-	
 	var fileQueueError = function(file, errorCode, message) {
 		switch (errorCode) {
 			case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
@@ -63,65 +66,115 @@ function UploadFiles(config) {
 				break;
 		}
 	};
-	
 	var fileDialogComplete = function(numFilesSelected, numFilesQueued) {
 		this.startUpload();
 	};
-	
 	var uploadStart = function(file) {
 		var ufi = obj.getUploadFileItem(file.id, file.name);
 		return true;
 	};
-	
 	var uploadProgress = function(file, bytesLoaded, bytesTotal) {
 //		var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
 //		var ufi = obj.getUploadFileItem(file.id, file.name);
 //		ufi.setProgress(percent);
 	};
-	
 	var uploadError = function(file, errorCode, message) {
 		alert("文件[<font color='red'>"+file.name+"</font>]上传出错");
 		var ufi = obj.getUploadFileItem(file.id, file.name);
 		ufi.setErrorResult();
 	};
-	this.getUploadFileItem = function(fileId, fileName, fileUrl){
-		var ufi = obj.map.get(fileId);
+	this.getUploadFileItem = function(swfFileId, fileName){
+		var ufi = obj.map[swfFileId];
 		if(null == ufi){
-			fileUrl = fileUrl || ctxPath + "/script/swfupload/uploading.gif";
-			ufi = new UploadFileItem(fileId, fileName, fileUrl);
-			obj.map.put(fileId, ufi);
+			var fileUrl = ctxPath + "/script/swfupload/uploading.gif";
+			ufi = new UploadFileItem(swfFileId, fileName, fileUrl, false);
+			obj.map[swfFileId] = ufi;
 		}
 		return ufi;
 	};
-	function UploadFileItem(fileId, fileName, fileUrl){
-		var div = $("<div class='uploadImgDiv' id='" + fileId + "'/>");
-		var picA = $("<a href='" + fileUrl + "' title='" + fileName + "' rel=''/>").appendTo(div);
-		$("<img src='" + fileUrl + "' width='64' height='90' />").appendTo(picA);
-		$("<br/>").appendTo(div);
-		
-		if(obj.allowUploadFlag){
-			var delSpan = $("<span class='gray'/>").appendTo(div);
-			$("<a href='#'>删除</a>").appendTo(delSpan).click(function(){
+	function UploadFileItem(swfFileId, fileName, fileUrl, successFlag){
+		this.swfFileId = swfFileId;
+		function createPreviewObj(){
+			var div = $("<div class='uploadImgDiv' id='" + swfFileId + "'/>");
+			var picA = $("<a href='" + fileUrl + "' title='" + fileName + "' rel=''/>").appendTo(div);
+			$("<img src='" + fileUrl + "' width='64' height='90' />").appendTo(picA);
+			$("<br/>").appendTo(div);
+			
+			if(obj.allowUploadFlag){
+				var delSpan = $("<span class='gray'/>").appendTo(div);
+				$("<a href='#'>删除</a>").appendTo(delSpan).click(function(){
 					var imgDiv = $(this).parent().parent();
-					var divId = parseInt(imgDiv.attr('id'));
-					if(typeof divId == 'number' && !isNaN(divId)){
-						obj.deleteIdArr.push(divId);
+					if(PREFIX == imgDiv.attr("id").substr(0, PREFIX.length)){
+						obj.deleteIdArr.push(imgDiv.attr("id").substring(PREFIX.length));
+					}else{
+						if(imgDiv.attr("fileId")){
+							for(var i=0;i<obj.saveIdArr.length;i++){
+								if(imgDiv.attr("fileId") == obj.saveIdArr[i]){
+									obj.saveIdArr.splice(i,1);
+									break;
+								}
+							}
+						}
 					}
 					imgDiv.remove();
 					//obj.reloadPicFrame();
 				});
+			}
+			div.appendTo($("#" + obj.uploadProgressTblId));
 		}
-		div.appendTo($("#" + obj.uploadProgressTblId));
+		function createUnpreviewObj(){
+			var div = $("<div class='attachDiv' id='" + swfFileId + "'/>");
+			var picA = $("<div class='textDiv'>").appendTo(div);
+			if(successFlag){
+				$("<img src='" + ctxPath + "/css/common/images/icon/attach_2.png'/>").appendTo(picA);
+				$("<a href='" + fileUrl + "' class='blue'>" + fileName + "</a>").appendTo(picA);
+			}else{
+				$("<img src='" + fileUrl + "'/>").appendTo(picA);
+				$("<a href='#' class='blue'>" + fileName + "</a>").appendTo(picA);
+			}
+			if(obj.allowUploadFlag){
+				var delSpan = $("<span class='icon_delete'>&nbsp;</span>").appendTo(div).click(function(){
+					var imgDiv = $(this).parent();
+					if(PREFIX == imgDiv.attr("id").substr(0, PREFIX.length)){
+						obj.deleteIdArr.push(imgDiv.attr("id").substring(PREFIX.length));
+					}else{
+						if(imgDiv.attr("fileId")){
+							for(var i=0;i<obj.saveIdArr.length;i++){
+								if(imgDiv.attr("fileId") == obj.saveIdArr[i]){
+									obj.saveIdArr.splice(i,1);
+									break;
+								}
+							}
+						}
+					}
+					imgDiv.remove();
+				});
+			}
+			div.appendTo($("#" + obj.uploadProgressTblId));
+		}
+		if(obj.previewFlag){
+			createPreviewObj();
+		}else{
+			createUnpreviewObj();
+		}
 		
-		this.fileid = fileId;
-		this.setImageUrl = function(url){
-			$("#"+this.fileid+" a[title]").attr("href", ctxPath + url);
-			$("#"+this.fileid+" a[title] img").attr("src", ctxPath + url);
-			obj.reloadPicFrame();
+		this.setDownloadUrl = function(url){
+			if(obj.previewFlag){
+				$("#"+this.swfFileId+" a[title]").attr("href", url);
+				$("#"+this.swfFileId+" a[title] img").attr("src", url);
+				obj.reloadPicFrame();
+			}else{
+				$("#"+this.swfFileId+" div img").attr("src", ctxPath + "/css/common/images/icon/attach_2.png");
+				$("#"+this.swfFileId+" div a").attr("href", url);
+			}
 		};
 		this.setErrorResult = function(url){
 			var loadingImgUrl = ctxPath + "/script/swfupload/uploadfail.png";
-			$("#"+this.fileid+" img").attr("src", loadingImgUrl);
+			if(obj.previewFlag){
+				$("#"+this.swfFileId+" a[title] img").attr("src", loadingImgUrl);
+			}else{
+				$("#"+this.swfFileId+" div img").attr("src", loadingImgUrl);
+			}
 		};
 	};
 	function loadFiles(){
@@ -129,10 +182,15 @@ function UploadFiles(config) {
 		SysCommonDwr.getUploadFileList(obj.config.billCode, obj.config.billid, function(dataList){
 			for(var i=0;i<dataList.length;i++){
 				var file = dataList[i];
-				var fileUrl = ctxPath + file.path;
-				new UploadFileItem(file.id, file.mingcheng, fileUrl);
+				var fileUrl = ctxPath + "/common/download.do?id=" + file.id;
+				if(obj.previewFlag){
+					fileUrl = ctxPath + file.path;
+				}
+				new UploadFileItem(PREFIX + file.id, file.mingcheng, fileUrl, true);
 			}
-			obj.reloadPicFrame();
+			if(obj.previewFlag){
+				obj.reloadPicFrame();
+			}
 		});
 	};
 	var placeHolder = obj.config.placeHolder;
@@ -169,22 +227,21 @@ function UploadFiles(config) {
 		};
 		obj.swfupload = new SWFUpload(settings_object);
 	}
-	$.getScript(ctxPath + "/script/map.js",function(data, status, jqxhr){
-		if("success" != status){alert("加载map.js异常");return ;}
-		obj.map = new Map();
-	});
-	
-	var cssNode = document.createElement('link');
-	cssNode.rel = 'stylesheet';
-	cssNode.type = 'text/css';
-	cssNode.media = 'screen';
-	cssNode.href = ctxPath + "/style/foxibox/jquery-foxibox-0.2.css?t="+new Date().getTime();
-	document.getElementsByTagName('head')[0].appendChild(cssNode);
-	
-	//$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
-	$.getScript(ctxPath + "/script/foxibox/jquery-foxibox-0.2.js", function(data, status){
+	if(obj.previewFlag){
+		var cssNode = document.createElement('link');
+		cssNode.rel = 'stylesheet';
+		cssNode.type = 'text/css';
+		cssNode.media = 'screen';
+		cssNode.href = ctxPath + "/style/foxibox/jquery-foxibox-0.2.css?t="+new Date().getTime();
+		document.getElementsByTagName('head')[0].appendChild(cssNode);
+		
+		//$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
+		$.getScript(ctxPath + "/script/foxibox/jquery-foxibox-0.2.js", function(data, status){
 			obj.loadFoxiboxFlag = true;
 			loadFiles();
 		});
+	}else{
+		loadFiles();
+	}
 	return this;
 }

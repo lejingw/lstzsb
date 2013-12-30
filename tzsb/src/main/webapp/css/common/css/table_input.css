@@ -2,7 +2,7 @@
 table{ background:#d5e3e7;}
 table td{ background:#fff; white-space:nowrap;}
 .im_tr{/* line-height:24px;*/}
-.im_tr td{ line-height:36px}
+.im_tr td{/*  line-height:36px */}
 .im_tr_a{ background-color:#f1f7f9;}
 .im_tr_b{ background-color:#fff;}
 

@@ -3,6 +3,8 @@ package com.totyu.controller.qiye.test;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -143,7 +145,7 @@ public class TestController extends BaseController {
 	 * @param seqId
 	 */
 	@Override
-	public void saveExcelData(String seqId){
+	public void saveExcelData(String seqId, HttpServletRequest req){
 		//保存数据
 		//insert into table_name(col1, col2) select b.* from (select a.col1, a.col2 from  t_xt_excel_tmp_data a where a.seq_id=#seqId#) b
 		System.out.println("----保存数据-----");

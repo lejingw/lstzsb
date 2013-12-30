@@ -92,7 +92,7 @@ $(document).ready(function(){
 		billCode:'010102',
 		billid:$("#billid").val(),
 		uploadFlag:'9' != $("#status").val(),
-		fileTypes:"*.jpg;*.gif;*.png",
+		fileTypes:"*.jpg;*.gif;*.png;*.xls",
 		buttonText:'上传图片',
 		fileSizeLimit:'5 MB'
 	});

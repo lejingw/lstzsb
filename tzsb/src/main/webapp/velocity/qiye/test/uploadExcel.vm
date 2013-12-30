@@ -1,7 +1,7 @@
 #set($layout = "qiye/layout/commonLayout.vm")
-##"${rc.contextPath}/script/swfupload/fileUpload.js",
 #set($jsfiles = [
 	"${rc.contextPath}/script/swfupload/swfupload.js",
+	"${rc.contextPath}/script/swfupload/fileUpload.js",
 	"${rc.contextPath}/script/commonSelector.js",
 	"${rc.contextPath}/js/qiye/test/uploadExcel.js",
 	"${rc.contextPath}/dwr/interface/TestDwr.js"
@@ -23,8 +23,8 @@
   </tr>
   <tr>
     <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>附件上传</td>
-    <td  colspan="3" class="text_space_left text_left">
-	  <span id="uploadFileDivId"></span>
+    <td colspan="3" class="text_space_left text_left">
+	  <span id="uploadFileDivId"/>
 	</td>
   </tr>
 </table>
@@ -72,14 +72,24 @@ $(document).ready(function(){
 	});
 	
 
-//	var uploadFiles = new UploadFiles({
-//			placeHolder:'uploadPicDivId',
-//			billCode:'010102',
-//			billid:"1",
-//			uploadFlag:true,
-//			fileTypes:"*.jpg;*.gif;*.png",
-//			buttonText:'上传图片',
-//			fileSizeLimit:'5 MB'
-//		});
+	var uploadFiles = new UploadFiles({
+			placeHolder:'uploadPicDivId',
+			billCode:'010102',
+			billid:"22",
+			uploadFlag:true,
+			fileTypes:"*.jpg;*.gif;*.png",
+			buttonText:'上传图片',
+			fileSizeLimit:'5 MB'
+		});
+	var uploadFiles2 = new UploadFiles({
+			placeHolder:'uploadFileDivId',
+			billCode:'010102',
+			billid:"22",
+			uploadFlag:true,
+			fileTypes:"*.xls",
+			buttonText:'上传附件',
+			fileSizeLimit:'5 MB',
+			previewFlag:false
+		});
 });
 </script>
