@@ -113,9 +113,9 @@ public class TestController extends BaseController {
 	public List<ExcelColumnCheckRule> getColumnCheckRuleList() {
 		ExcelColumnCheckRule[] excelCheckModes = new ExcelColumnCheckRule[]{
 				new ExcelColumnCheckRule(0, 0, false, ExcelColumnEnum.STRING_COLUMN),//第1列字符类型，不允许为空
-				new ExcelColumnCheckRule(0, 1, true, ExcelColumnEnum.DATE_COLUMN),//第2列字符类型，允许为空
-				new ExcelColumnCheckRule(0, 2, false, ExcelColumnEnum.DATE_COLUMN),//第3列日期类型，不允许为空
-				new ExcelColumnCheckRule(0, 3, false, ExcelColumnEnum.DATE_COLUMN),
+				new ExcelColumnCheckRule(0, 1, true, ExcelColumnEnum.DATE_COLUMN),//第2列日期类型，允许为空
+				new ExcelColumnCheckRule(0, 2, false, ExcelColumnEnum.DATE_TIME_COLUMN),//第3列日期类型，不允许为空
+				new ExcelColumnCheckRule(0, 3, false, ExcelColumnEnum.DATE_TIME_COLUMN),
 				new ExcelColumnCheckRule(0, 4, false, ExcelColumnEnum.NUMBER_COLUMN),//第5列整数类型，不允许为空
 				new ExcelColumnCheckRule(0, 5, false, ExcelColumnEnum.FLOAT_COLUMN),//第6列小数类型，不允许为空
 				//第7列自定义检查

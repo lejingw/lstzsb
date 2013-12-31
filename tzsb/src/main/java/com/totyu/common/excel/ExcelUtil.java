@@ -32,7 +32,10 @@ public class ExcelUtil {
 	private HSSFWorkbook workbook = new HSSFWorkbook();
 	private Pattern numberPattern = Pattern.compile("^-?\\d+$");
 	private Pattern floatPattern = Pattern.compile("^-?\\d+\\.?\\d*$");
-	private Pattern datePattern = Pattern.compile("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}(\\s[0-9]{1,2}\\:[0-9]{1,2}(\\:[0-9]{1,2}(\\.[0-9])?)?)?$");
+	private Pattern datePattern =		Pattern.compile("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$");
+	private Pattern timePattern =		Pattern.compile("^[0-9]{1,2}\\:[0-9]{1,2}(\\:[0-9]{1,2}(\\.[0-9])?)?$");
+	private Pattern dateTimePattern =	Pattern.compile("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\\s[0-9]{1,2}\\:[0-9]{1,2}(\\:[0-9]{1,2}(\\.[0-9])?)?$");
+//	private Pattern dateTimePattern =	Pattern.compile("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}(\\s[0-9]{1,2}\\:[0-9]{1,2}(\\:[0-9]{1,2}(\\.[0-9])?)?)?$");
 	
 	public ExcelUtil(ExcelUtilService excelUtilService) {
 		this.excelUtilService = excelUtilService;
@@ -196,7 +199,7 @@ public class ExcelUtil {
 						return false;
 					}
 				}
-			}else{				
+			}else{
 				if(ExcelColumnEnum.NUMBER_COLUMN.equals(checkMode.getTypeCheck())){
 					if(!numberPattern.matcher(val).matches()){
 						if(storeFlag){							
@@ -217,6 +220,22 @@ public class ExcelUtil {
 					if(!datePattern.matcher(val).matches()){
 						if(storeFlag){
 							setCheckResultMessage(rowData.getSheetIndex(), rowData.getRowIndex(),  checkMode.getColumnIndex(), "日期格式(yyyy-mm-dd)不正确", true);
+						}else{							
+							return false;
+						}
+					}
+				}else if(ExcelColumnEnum.TIME_COLUMN.equals(checkMode.getTypeCheck())){
+					if(!timePattern.matcher(val).matches()){
+						if(storeFlag){
+							setCheckResultMessage(rowData.getSheetIndex(), rowData.getRowIndex(),  checkMode.getColumnIndex(), "时间格式(hh:mi:ss)不正确", true);
+						}else{							
+							return false;
+						}
+					}
+				}else if(ExcelColumnEnum.DATE_TIME_COLUMN.equals(checkMode.getTypeCheck())){
+					if(!dateTimePattern.matcher(val).matches()){
+						if(storeFlag){
+							setCheckResultMessage(rowData.getSheetIndex(), rowData.getRowIndex(),  checkMode.getColumnIndex(), "日期时间格式(yyyy-mm-dd hh:mi:ss)不正确", true);
 						}else{							
 							return false;
 						}
