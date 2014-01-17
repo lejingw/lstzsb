@@ -22,7 +22,8 @@ Validator = {
 	Filter : "this.DoFilter(value, getAttribute('accept'))",
 	Limit : "this.limit(value.length,getAttribute('min'),  getAttribute('max'))",
 	LimitB : "this.limit(this.LenB(value), getAttribute('min'), getAttribute('max'))",
-	Date : "this.isDate(value, getAttribute('format'), getAttribute('min'))",
+	Date : "this.isDate(value, getAttribute('format'))",
+	Time : "this.isTime(value)",
 	Repeat : "value == document.getElementsByName(getAttribute('to'))[0].value",
 	Range : "getAttribute('min') <= (value|0) && (value|0) <= getAttribute('max')",
 	Compare : "this.compare(value,getAttribute('operator'),getAttribute('to'))",
@@ -30,19 +31,23 @@ Validator = {
 	Group : "this.MustChecked(getAttribute('name'), getAttribute('min'), getAttribute('max'))",
 	ErrorItem : [document.forms[0]],
 	ErrorMessage : ["以下原因导致提交失败：\t\t\t\t"],
+	applyAttribute:function(obj, cfg){
+		for(var p in cfg){
+			if(p == 'msgkey'){
+				obj.attr("msg", msg("Validator."+cfg[p], cfg['msgArgs']));
+			}else{
+				obj.attr(p, cfg[p]);
+			}
+		}
+	},
 	init : function(cfgArr){
 		if(!cfgArr || !cfgArr.length || cfgArr.length<1)
 			return ;
 		for(var i=0;i<cfgArr.length;i++){
 			var cfg = cfgArr[i];
 			var obj = $("#" + cfg.id);
-			for(var p in cfg){
-				if(p == 'msgkey'){
-					obj.attr("msg", msg("Validator."+cfg[p]));
-				}else{
-					obj.attr(p, cfg[p]);
-				}
-			}
+			delete cfg.id;
+			this.applyAttribute(obj, cfg);
 		}
 		if ($.browser.msie && ( $.browser.version == "6.0" ) && !$.support.style ){
 			$('div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section').hover(function(){
@@ -54,13 +59,8 @@ Validator = {
 	},
 	add : function(cfg){
 		var obj = $("#" + cfg.id);
-		for(var p in cfg){
-			if(p == 'msgkey'){
-				obj.attr("msg", msg("Validator."+cfg[p]));
-			}else{
-				obj.attr(p, cfg[p]);
-			}
-		}
+		delete cfg.id;
+		this.applyAttribute(obj, cfg);
 	},
 	remove : function(id){
 		$("#" + id).attr("dataType", null);
@@ -92,6 +92,7 @@ Validator = {
 				switch(_dataType){
 					case "IdCard" :
 					case "Date" :
+					case "Time" :
 					case "Repeat" :
 					case "Range" :
 					case "Compare" :
@@ -140,7 +141,7 @@ Validator = {
 				case 3 :
 					try{
 						for(var i=1;i<errCount;i++){
-							var msg = this.ErrorMessage[i].split(":")[1];
+							var msg = this.ErrorMessage[i].split("_:_")[1];
 							addAlert2(false, this.ErrorItem[i], msg);
 //							var td = $(this.ErrorItem[i].parentNode);
 //							var span = $("<span name='__ErrorMessagePanel' style='white-space:normal;position:relative;line-height:22px;height:auto; '>&nbsp;&nbsp;</span>");
@@ -210,7 +211,7 @@ Validator = {
 	},
 	AddError : function(index, str){
 		this.ErrorItem[this.ErrorItem.length] = this.ErrorItem[0].elements[index];
-		this.ErrorMessage[this.ErrorMessage.length] = this.ErrorMessage.length + ":" + str;
+		this.ErrorMessage[this.ErrorMessage.length] = this.ErrorMessage.length + "_:_" + str;
 	},
 	Exec : function(op, reg){
 		return new RegExp(reg,"g").test(op);
@@ -259,7 +260,7 @@ Validator = {
 			Ai = number.substr(0, 6) + "19" + number.substr(6);
 			date = ["19" + re[4], re[5], re[6]].join("-");
 		}
-		if(!this.isDate(date, "ymd")) return false;
+		if(!this.isDate(date, "yyyy-mm-dd")) return false;
 		var sum = 0;
 		for(var i = 0;i<=16;i++){
 			sum += Ai.charAt(i) * Wi[i];
@@ -274,9 +275,16 @@ Validator = {
 			case "yyyy-mm-dd" :
 				m = op.match(new RegExp("^(\\d{4})[-](\\d{2})[-](\\d{2})$"));
 				if(m == null ) return false;
-				day = m[3]*1;
-				month = m[2]*1;
 				year = m[1];
+				month = m[2]*1;
+				day = m[3]*1;
+				break;
+			case "yyyymmdd" :
+				m = op.match(new RegExp("^(\\d{4})(\\d{2})(\\d{2})$"));
+				if(m == null ) return false;
+				year = m[1];
+				month = m[2]*1;
+				day = m[3]*1;
 				break;
 			case "dmy" :
 				m = op.match(new RegExp("^(\\d{1,2})([-./])(\\d{1,2})\\2((\\d{4})|(\\d{2}))$"));
@@ -293,6 +301,17 @@ Validator = {
 		var date = new Date(year, month-1, day);
         return (typeof(date) == "object" && year == date.getFullYear() && month == (date.getMonth()+1) && day == date.getDate());
 		function GetFullYear(y){return ((y<30 ? "20" : "19") + y)|0;}
+	},
+	isTime : function(strValue){
+		if (isEmpty(strValue)) return false;
+		var m = strValue.match(new RegExp("^(\\d{2})[:](\\d{2})[:](\\d{2})$"));
+		if(m == null ) return false;
+		var arr = strValue.split(":");
+	    var h = parseInt(arr[0]), m = parseInt(arr[1]), s = parseInt(arr[2]);
+	    if(h<0 || h>=24)	return false;
+	    if(m<0 || m>=60)	return false;
+	    if(s<0 || s>=60)	return false;
+	    return true;
 	},
 	isMoney : function(money) {
 		var right = /^\d+(\.\d+)?$/.test(money);

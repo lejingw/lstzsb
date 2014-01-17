@@ -95,6 +95,7 @@
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/uploadExcel/show.do')"><span>excel上传</span></a></li>
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/uploadPic/show.do')"><span>图片上传</span></a></li>
             <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/uploadFile/show.do')"><span>附件上传</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/test/map/show.do')"><span>高德地图</span></a></li>
           </ul>
         </li>
         <li><a href="#"><span class="ico01_10">基本信息</span></a>
