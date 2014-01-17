@@ -85,7 +85,7 @@
     <td class="text_space_left text_left">$!{item.zsbh}</td>
     <td class="text_left text_space_left">$!{item.dwmc}</td>
     <td class="text_left text_space_left">$!{item.zzdz}</td>
-    <td class="text_left text_space_left">$!DateUtil.date10($!{item.yxrq})</td>
+    <td class="text_center">$!DateUtil.date10($!{item.yxrq})</td>
     <td class="text_left text_space_left">$!{item.pzjg}</td>
     <td class="text_left text_space_left">$!BdCommon.getDictValue('sblx', $!{item.sblb})</td>
     <td class="text_left text_space_left">

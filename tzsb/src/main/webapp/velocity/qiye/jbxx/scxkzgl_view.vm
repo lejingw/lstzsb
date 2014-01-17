@@ -28,7 +28,7 @@
     <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>单位地址</td>
     <td class="text_space_left text_left"><input type="text" id='dwdz' class="input_1" value='$!{bill.dwdz}' readonly/></td>
     <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>批准机构</td>
-    <td class="text_space_left text_left"><input type="text" id='pzjg' class="input_1" value='$!{bill.	}'/></td>
+    <td class="text_space_left text_left"><input type="text" id='pzjg' class="input_1" value='$!{bill.pzjg}'/></td>
   </tr>
   <tr>
     <td class="im_tr_a text_right text_space_right"><span class="red">&lowast;</span>制造地址：</td>

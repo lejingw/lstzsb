@@ -76,7 +76,7 @@ function ListSelector(config){
 		for(var i=0;i<data.length;i++){
 			var tr = $("<tr></tr>");
 			var colHtmlArr = [];
-    		var chkHtml = "<input type='checkbox' name='chk' " + (isChecked(data[i][config.idProperty])?"checked":"") + ">"
+    		var chkHtml = "<center><input type='checkbox' name='chk' " + (isChecked(data[i][config.idProperty])?"checked":"") + "></center>"
 				+ "<input type='hidden' name='key' value='" + nullToEmpty(data[i][config.idProperty]) + "'/>"
 				+ "<input type='hidden' name='val' value='" + nullToEmpty(data[i][config.nameProperty]) + "'/>";
 			for(var j=0;j<config.columns.length;j++){

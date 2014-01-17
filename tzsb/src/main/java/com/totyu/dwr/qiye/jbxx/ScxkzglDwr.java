@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import com.totyu.common.CommonUtil;
 import com.totyu.service.qiye.jbxx.ScxkzglService;
@@ -18,7 +18,7 @@ import com.totyu.vo.qiye.jbxx.Scxkzgl;
  * 
  * @author wanglj
  */
-@Controller
+@Component
 @RemoteProxy(name = "ScxkzglDwr")
 public class ScxkzglDwr {
 
@@ -33,7 +33,7 @@ public class ScxkzglDwr {
 		try{
 			int count = scxkglService.checkZsbh(bill.getZsbh(), bill.getBillid());
 			if(count >0)
-				return "证书编号["+bill.getZsbh()+"]已经存在";
+				return "证书编号["+bill.getZsbh()+"]";
 		}catch(Exception e){
 			return "验证单据失败\n" + e.getMessage();
 		}

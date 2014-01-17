@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<tranCode>scxkz_query</tranCode>
+	<serviceClassName>com.totyu.service.qiye.test.TestService</serviceClassName>
+	<serviceMethod>getPageData</serviceMethod>
+	<parameterType>com.totyu.vo.qiye.test.TestVo</parameterType>
+	<fields>
+		<field>
+			<name>start</name><!-- 字段名称 -->
+			<type>int</type><!-- 字段类型 -->
+			<min>0</min>
+			<required>true</required><!-- 是否必填 -->
+			<description>开始节点</description><!-- 字段描述 -->
+		</field>
+		<field>
+			<name>limit</name>
+			<type>int</type>
+			<max>10</max>
+			<required>true</required>
+			<description>每页获取条数</description>
+		</field>
+		<field>
+			<name>orgId</name>
+			<type>int</type>
+			<required>true</required>
+			<description>组织ID</description>
+		</field>
+		<field>
+			<name>zsbh</name>
+			<type>string</type>
+			<maxLength>100</maxLength>
+			<required>false</required>
+			<description>证书编号</description>
+		</field>
+		<field>
+			<name>money</name>
+			<type>float</type>
+			<min>100</min>
+			<max>1000</max>
+			<required>true</required>
+		</field>
+		<field>
+			<name>zsbh2</name>
+			<type>string</type>
+			<minLength>10</minLength>
+			<description>证书编号</description>
+		</field>
+		<field>
+			<name>date1</name>
+			<type>date</type>
+		</field>
+		<field>
+			<name>date2</name>
+			<type>date</type>
+			<dateFormat>yyyy-MM-dd</dateFormat>
+		</field>
+		<field>
+			<name>date3</name>
+			<type>date</type>
+			<dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+		</field>
+	</fields>
+</service>

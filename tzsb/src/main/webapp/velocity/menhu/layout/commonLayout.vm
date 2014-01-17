@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
+	<link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/menhu/css/base_css.css"/>
 	#foreach($item in $!cssfiles)
 	<link href="$item" type="text/css" rel="stylesheet" />
@@ -50,12 +50,12 @@
 		      <input type="text" name='sousuoContent' id="inputBox" value="$!{sousuoContent}" />
 		      <input name="" type="button" id="inputBtn" onclick="toSearch()"/>
 		      <script>
-							function toSearch() {
-								jQuery("#search_frm").attr("action", "${rc.contextPath}/menhu/search/doSearch.do");
-								jQuery("#search_frm").submit();
-								jQuery("#search_frm").attr("action", "");
-							}
-					</script>
+					function toSearch() {
+						jQuery("#search_frm").attr("action", "${rc.contextPath}/menhu/search/doSearch.do");
+						jQuery("#search_frm").submit();
+						jQuery("#search_frm").attr("action", "");
+					}
+			  </script>
 		    </form>
 		  </div>
 		</div>
@@ -105,8 +105,6 @@
 		  
 		<!---navMenu end---> 
 	</div>
-	
-<div class="h_15"></div>
 
 <!---mian start--->
 $screen_content

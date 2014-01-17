@@ -937,6 +937,10 @@ jQuery.fn.clearForm=function(){
 			var type = this.type, tag = this.tagName.toLowerCase();
 			if (tag == 'form')
 				return jQuery(':input',this).clearForm();
+			if(true == $(this).attr("disabled")||"disabled" == $(this).attr("disabled"))
+				return ;
+			if(true == $(this).attr("readOnly"))
+				return ;
 			if (type == 'text' || type == 'password' || tag == 'textarea')
 				this.value = '';
 			else if (type == 'checkbox' || type == 'radio')
@@ -967,8 +971,8 @@ function initRight(modelCode, btnCfgArr){
 function msg(key){
 	if(!key)	return "";
 	var locationStr = window.location.href;
-	//var reg = /^http(s)?\:\/\/(\w+\:\d+)?\/lstzsb\/(menhu|qiye|jiancha|xiangzhen|hangye)\//gi;
-	var reg = eval("/^http(s)?\\:\\/\\/(\\w+\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
+	//var reg = eval("/^http(s)?\\:\\/\\/(\\w+\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
+	var reg = eval("/^http(s)?\\:\\/\\/[A-Za-z0-9-_%&\?\/.=]+(\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
 	locationStr = locationStr.replace(reg, "");
 	var pathArr = locationStr.split("/");
 //	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')

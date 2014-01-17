@@ -116,8 +116,8 @@ function initView(){
 	//2初始化验证信息
 	Validator.init([
 		   {id:'zsbh', dataType:'Required', msgkey:'require'},
-		   {id:'pzrq', dataType:'Date', msgkey:'requireDate'},
-		   {id:'yxrq', dataType:'Date', msgkey:'requireDate'},
+		   {id:'pzrq', dataType:'Date', msgkey:'require'},
+		   {id:'yxrq', dataType:'Date', msgkey:'require'},
 		   {id:'zzdz', dataType:'Required', msgkey:'require'},
 		   {id:'pzjg', dataType:'Required', msgkey:'require'}
 		]);
@@ -174,7 +174,6 @@ function getBillData(status){
  */
 function saveScxkzgl(status){
 	if(!checkForm())	return;
-	
 	//1、创建单据对象
 	var bill = getBillData(status);
 	

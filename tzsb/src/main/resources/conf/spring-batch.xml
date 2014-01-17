@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<!-- GeneralPointsForMaintenanceUnitController 批处理定义 START-->
+	<!-- 定义调用对象和调用对象的方法 --> 
+	<bean id="generalPointsForMaintenanceUnitControllerJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="generalPointsForMaintenanceUnitController" />
+		</property>
+		<property name="targetMethod">
+			<value>autoCheck</value>
+		</property>
+		<!--是否允许同一个任务并行运行，及：上次启动的还为执行完，有到了启动时间；false:不允许；true：允许 -->
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+		 <!--A (possibly) useful constant that can be used for specifying the group that <code>Job</code> and <code>Trigger</code> instances belong to.--> 
+		<property name="group">
+			<value>generalPointsForMaintenanceUnitController_GROUP</value>
+		</property>
+	</bean>
+	<!--定义触发规则 Trigger-->
+	<bean id="generalPointsForMaintenanceUnitControllerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="generalPointsForMaintenanceUnitControllerJob" />
+		</property>
+		<!--cron表达式-->
+		<property name="cronExpression">
+			<!--如每天，凌晨1点0分执行-->
+			<value>0 0 1 * * ?</value>
+			<!-- <value>0 0/1 * * * ?</value> -->
+		</property>
+	</bean>
+	<!-- GeneralPointsForMaintenanceUnitController 批处理定义 END-->
+	
+	<!-- GeneralPointsForUseUnitController 批处理定义 START-->
+	<!-- 定义调用对象和调用对象的方法 --> 
+	<bean id="generalPointsForUseUnitControllerJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="generalPointsForUseUnitController" />
+		</property>
+		<property name="targetMethod">
+			<value>autoCheck</value>
+		</property>
+		<!--是否允许同一个任务并行运行，及：上次启动的还为执行完，有到了启动时间；false:不允许；true：允许 -->
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+		 <!--A (possibly) useful constant that can be used for specifying the group that <code>Job</code> and <code>Trigger</code> instances belong to.--> 
+		<property name="group">
+			<value>generalPointsForUseUnitController_GROUP</value>
+		</property>
+	</bean>
+	<!--定义触发规则 Trigger-->
+	<bean id="generalPointsForUseUnitControllerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="generalPointsForUseUnitControllerJob" />
+		</property>
+		<!--cron表达式-->
+		<property name="cronExpression">
+			<!--如每天，凌晨1点0分执行-->
+			<value>0 0 1 * * ?</value>
+			<!-- <value>0 0/2 * * * ?</value> -->
+		</property>
+	</bean>
+	<!-- GeneralPointsForUseUnitController 批处理定义 END-->
+	
+	<!-- HiddenAutoIdentificationController 批处理定义 START-->
+	<!-- 定义调用对象和调用对象的方法 --> 
+	<bean id="hiddenAutoIdentificationControllerJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="hiddenAutoIdentificationController" />
+		</property>
+		<property name="targetMethod">
+			<value>autoCheck</value>
+		</property>
+		<!--是否允许同一个任务并行运行，及：上次启动的还为执行完，有到了启动时间；false:不允许；true：允许 -->
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+		 <!--A (possibly) useful constant that can be used for specifying the group that <code>Job</code> and <code>Trigger</code> instances belong to.--> 
+		<property name="group">
+			<value>hiddenAutoIdentificationController_GROUP</value>
+		</property>
+	</bean>
+	<!--定义触发规则 Trigger-->
+	<bean id="hiddenAutoIdentificationControllerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="hiddenAutoIdentificationControllerJob" />
+		</property>
+		<!--cron表达式-->
+		<property name="cronExpression">
+			<!--如每天，凌晨0点0分执行-->
+			<value>0 0 0 * * ?</value>
+			<!-- <value>0 0/2 * * * ?</value> -->
+		</property>
+	</bean>
+	<!-- HiddenAutoIdentificationController 批处理定义 END-->
+	
+	
+	<!-- 总调度类， 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="quertzScheduler" lazy-init="true" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!--startQuertz：项目启动后，延迟启动多少秒，单位秒 -->
+		<property name="startupDelay"> 
+			<value>10</value> 
+		</property> 
+		<property name="triggers">
+			<list>
+				<ref bean="generalPointsForMaintenanceUnitControllerTrigger" />
+				<ref bean="generalPointsForUseUnitControllerTrigger" />
+				<ref bean="hiddenAutoIdentificationControllerTrigger" />
+			</list>
+		</property>
+	</bean> 
+</beans>

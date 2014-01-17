@@ -31,12 +31,12 @@ public abstract class BaseService {
 	 */
 	protected void asertStatus(String tableName, String idField, String idValue, String statusField, String asertStatus){
 		String status = getBillStatus(tableName, idField, idValue, statusField);
-		asertStatus(status, asertStatus);
+		asertStatusDetail(status, asertStatus);
 	}
 	/**
 	 * 判断状态
 	 */
-	protected void asertStatus(String realStatus, String asertStatus){
+	protected void asertStatusDetail(String realStatus, String asertStatus){
 		if(StringUtil.isNotEmpty(realStatus)){
 			if(!realStatus.equals(asertStatus)){
 				throw new RuntimeException("操作不能继续，单据状态要求为[" + DictCache.getInstance().getValue(DictConstant.BILL_STATUS, asertStatus) + "],实际值为[" + DictCache.getInstance().getValue(DictConstant.BILL_STATUS, realStatus) + "]");
@@ -49,15 +49,15 @@ public abstract class BaseService {
 	/**
 	 * 判断状态
 	 */
-	protected void asertStatus(String tableName, String idField, String idValue, String statusField, String... asertStatusArr){
+	protected void asertStatus2(String tableName, String idField, String idValue, String statusField, String... asertStatusArr){
 		String status = getBillStatus(tableName, idField, idValue, statusField);
-		asertStatus(status, asertStatusArr);
+		asertStatusDetail2(status, asertStatusArr);
 	}
 	
 	/**
 	 * 判断状态
 	 */
-	protected void asertStatus(String realStatus, String... asertStatusArr){
+	protected void asertStatusDetail2(String realStatus, String... asertStatusArr){
 		if(StringUtil.isNotEmpty(realStatus)){
 			boolean isCon = Boolean.FALSE;
 			if(null != asertStatusArr && asertStatusArr.length > 0){

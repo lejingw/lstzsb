@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<tranCode>scxkz_save</tranCode>
+	<serviceClassName>com.totyu.service.qiye.test.TestService</serviceClassName>
+	<serviceMethod>save2</serviceMethod>
+	<parameterType>com.totyu.vo.qiye.test.TestVo</parameterType>
+	<fields>
+		<field>
+			<name>start</name><!-- 字段名称 -->
+			<type>int</type><!-- 字段类型 -->
+			<min>0</min>
+			<required>true</required><!-- 是否必填 -->
+			<description>开始节点</description><!-- 字段描述 -->
+		</field>
+		<field>
+			<name>limit</name>
+			<type>int</type>
+			<max>10</max>
+			<required>true</required>
+			<description>每页获取条数</description>
+		</field>
+	</fields>
+</service>

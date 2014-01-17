@@ -20,11 +20,13 @@
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/commonLayer.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/formValidator.js" charset="UTF-8"></script>
-	<script language="javascript" type="text/javascript" src="${rc.contextPath}/js/qiye/common/locale.js" charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/js/common/locale_global.js" charset="UTF-8"></script>
 	
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js" charset="UTF-8"></script>
+	<script language='javascript' type="text/javascript" src='${rc.contextPath}/js/common/menu.js' charset="UTF-8"></script>
+	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/formatNumber.js" charset="UTF-8"></script>
     <script>
     var ctxPath = "${rc.contextPath}";
     dwr.engine.setTimeout(600000);

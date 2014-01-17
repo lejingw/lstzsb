@@ -102,6 +102,10 @@
         <servlet-name>Hello</servlet-name>
         <url-pattern>/Hello3Service</url-pattern>
     </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Hello</servlet-name>
+		<url-pattern>/TzsbWsService</url-pattern>
+	</servlet-mapping>
     <servlet-mapping>
         <servlet-name>Hello</servlet-name>
         <url-pattern>/Hello4Service</url-pattern>

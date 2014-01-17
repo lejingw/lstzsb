@@ -65,6 +65,8 @@ public class HtmlUtil {
 		List<Dict> list = DictCache.getInstance().getDicts(entryCode);
 		if(null != list && list.size()>0){			
 			for(Dict dict : list){
+				if("1".equals(dict.getTreeFlag()) && null != dict.getParentKey())
+					continue;
 				values.add(dict.getItemKey());
 				texts.add(dict.getItemValue());
 			}
