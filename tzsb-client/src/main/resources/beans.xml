@@ -12,22 +12,35 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	
 	<context:component-scan base-package="com.lejingw.apps.handler"/>
+	<context:component-scan base-package="com.totyu.apps.handler"/>
 	
-	<!-- 使用spring来注入一个ws的client -->
-	<bean id="hello2WsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-	    <property name="serviceInterface" value="com.lejingw.apps.ws2.Hello2WsService"/>
-	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/Hello2Service?wsdl"/>
-	    <property name="namespaceUri" value="http://ws2.apps.lejingw.com"/>
-	    <property name="serviceName" value="Hello2WsService"/>
-	    <property name="portName" value="Hello2WsServicePort"/>
-	</bean>
-	
-	<bean id="hello3WsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-	    <property name="serviceInterface" value="com.lejingw.apps.ws31.IHello3WsService"/>
-	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/Hello3Service?wsdl"/>
-	    <property name="namespaceUri" value="http://ws3.apps.lejingw.com"/>
+	<bean id="hello3Service" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.apps.ws.hello3.Hello3Service"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8088/lstzsb/Hello3Service?wsdl"/>
+	    <property name="namespaceUri" value="http://ws.web.totyu.com"/>
 	    <property name="serviceName" value="Hello3WsService"/>
-	    <property name="portName" value="Hello3WsServicePort"/>
-	    <property name="handlerResolver" ref="mySOAPHandlerResolver"/>
+	    <property name="portName" value="Hello3ServicePort"/>
+	    <property name="lookupServiceOnStartup" value="false"/>
+	    <property name="handlerResolver" ref="soapHandlerResolver"/>
 	</bean>
+	
+	<bean id="tzsbWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.apps.ws.tzsb.TzsbWebService"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8088/lstzsb/TzsbWsService?wsdl"/>
+	    <property name="namespaceUri" value="http://ws.web.totyu.com"/>
+	    <property name="serviceName" value="TzsbWsService"/>
+	    <property name="portName" value="TzsbWsServicePort"/>
+	    <property name="lookupServiceOnStartup" value="false"/>
+	</bean>
+	
+	<bean id="zhongheWebServiceClient" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.web.ws.client.ZhongheWebServiceClient"/>
+	    <property name="wsdlDocumentUrl" value="http://61.153.67.243:8080/scdeap/services/tzsbService?wsdl"/>
+	    <property name="namespaceUri" value="http://localhost:88/scdeap/services"/>
+	    <property name="serviceName" value="tzsbService"/>
+	    <property name="portName" value="tzsbServiceHttpPort"/>
+	    <property name="lookupServiceOnStartup" value="false"/>
+	</bean>
+	
+	
 </beans>

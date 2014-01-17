@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client>
+	<tranCode>scxkz_query</tranCode>
+	<tranType>EQU1000</tranType>
+	<operType>SELECT</operType>
+	<inputClassName>com.totyu.vo.qiye.test.TestVo</inputClassName>
+	<outputClassName>com.totyu.vo.qiye.test.TestVo</outputClassName>
+	<inputFields>
+		<field>
+			<localName>start</localName><!-- 传入对象属性名，不能为空 -->
+			<remoteName>EquDataSysId</remoteName><!-- 为空表示和localName一致 -->
+			<description>开始节点</description><!-- 字段描述 -->
+		</field>
+		<field>
+			<localName>limit</localName>
+		</field>
+	</inputFields>
+	<outputFields>
+		<field>
+			<remoteName>USSTATUS</remoteName><!-- 返回对象属性名，不能为空 -->
+			<localName>start</localName><!-- 为空表示和localName一致 -->
+		</field>
+		<field>
+			<remoteName>RATCON</remoteName><!-- 返回对象属性名，不能为空 -->
+			<localName>money</localName><!-- 为空表示和localName一致 -->
+		</field>
+	</outputFields>
+</client>

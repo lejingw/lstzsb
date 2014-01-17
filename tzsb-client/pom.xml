@@ -107,11 +107,41 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1-beta-6</version>
+		</dependency>
 
 		<dependency>
 			<groupId>jsptags</groupId>
 			<artifactId>pager-taglib</artifactId>
 			<version>2.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -130,10 +160,19 @@
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<!-- 端口号 -->
-							<port>6868</port>
+							<port>8089</port>
 							<maxIdleTime>500000</maxIdleTime>
 						</connector>
 					</connectors>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.16</version>
+				<configuration>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
 				</configuration>
 			</plugin>
 			<!-- 
@@ -143,12 +182,15 @@
 	       		<artifactId>jaxws-maven-plugin</artifactId>
 	       		<configuration>
 	       			<wsdlUrls>
-	       				<wsdlUrl>http://localhost:8080/lstzsb/Hello4Service?wsdl</wsdlUrl>
+	       			<!-- 
+	       				<wsdlUrl>http://localhost:8088/lstzsb/TzsbWsService?wsdl</wsdlUrl>
+	       			 -->
+	       				<wsdlUrl>http://61.153.67.243:8080/scdeap/services/tzsbService?wsdl</wsdlUrl>
 	       			</wsdlUrls>
 	       			<keep>true</keep>
 	       			<verbose>true</verbose>
 	       			<xnocompile>true</xnocompile>
-	       			<packageName>com.lejingw.apps.ws4</packageName>
+	       			<packageName>com.totyu.web.ws.client</packageName>
 	       			<!-- 
 					<bindingDirectory>src/main/resources/META-INF/wsdl2</bindingDirectory>
 					<bindingFiles>

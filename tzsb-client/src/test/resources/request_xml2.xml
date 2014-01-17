@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tran>
+	<message>
+		<tranCode>scxkz_save</tranCode><!--业务代码-->
+		<authOrg>1001</authOrg><!--授权机构代码-->
+		<authName>test</authName><!--授权机构授权码-->
+		<authPassword>test111111</authPassword><!--授权机构地区代码-->
+	</message>
+	<!--传输内容部分-->
+	<data>
+		<start>0</start><!-- 起始页下标 -->
+		<limit>10</limit><!-- 获取条数 -->
+	</data>
+</tran>

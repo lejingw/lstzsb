@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href='/client/'>index</a>
+<br>
 <h2>${str}</h2>
 <form action="" method="post">
 <input type="submit">
