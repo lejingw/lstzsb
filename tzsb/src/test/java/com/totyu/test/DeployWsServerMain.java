@@ -1,4 +1,4 @@
-package com.lejingw.apps;
+package com.totyu.test;
 
 import javax.xml.ws.Endpoint;
 

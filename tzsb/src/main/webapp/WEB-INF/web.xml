@@ -6,7 +6,7 @@
 	id="WebApp_ID" version="2.5">
 	
 	<display-name>lstzsb</display-name>
-	<description>MCLON SCM Application</description>
+	<description>lstzsb application</description>
 	
 	<context-param>
 		<param-name>webAppRootKey</param-name>
@@ -90,26 +90,18 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/uploadServlet</url-pattern>
     </servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Hello</servlet-name>
-		<url-pattern>/HelloService</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Hello</servlet-name>
-        <url-pattern>/Hello2Service</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Hello</servlet-name>
         <url-pattern>/Hello3Service</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hello</servlet-name>
+        <url-pattern>/Hello4Service</url-pattern>
     </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Hello</servlet-name>
 		<url-pattern>/TzsbWsService</url-pattern>
 	</servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Hello</servlet-name>
-        <url-pattern>/Hello4Service</url-pattern>
-    </servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

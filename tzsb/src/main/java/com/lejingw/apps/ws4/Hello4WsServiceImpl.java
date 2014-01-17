@@ -17,7 +17,7 @@ import javax.xml.ws.soap.MTOM;
 			portName = "Hello4WsServicePort",
 			targetNamespace = "http://ws4.apps.lejingw.com",
 			endpointInterface = "com.lejingw.apps.ws4.Hello4WsService",
-			wsdlLocation="/WEB-INF/wsdl4/Hello4WsService.wsdl"
+			wsdlLocation="/WEB-INF/wsdl/Hello4WsService.wsdl"
 			)
 public class Hello4WsServiceImpl implements Hello4WsService {
 
