@@ -77,6 +77,29 @@ public class SysCommonDwr {
 		return sltList;
 	}
 	/**
+	 * 适用于树形结构的数据字典
+	 * 根据数据字典名称及父节点key
+	 * 获取数据字典项
+	 */
+	@RemoteMethod
+	public List<SelectorOption> getDictsForSlt2(String name, String parentKey){
+		List<Dict> dictList = DictCache.getInstance().getDicts(name);
+		if(null == dictList || dictList.size()<1)
+			return null;
+		List<SelectorOption> sltList = new ArrayList<SelectorOption>();
+		for(Dict dict : dictList){
+			if(null != parentKey && !"".equals(parentKey.trim())){
+				if(!dict.getParentKey().equals(parentKey))
+					continue;
+			}else{
+				if(null != dict.getParentKey() && !"".equals(dict.getParentKey()))
+					continue;
+			}
+			sltList.add(new SelectorOption(dict.getItemKey(), dict.getItemValue()));
+		}
+		return sltList;
+	}
+	/**
 	 * 获取单位信息
 	 */
 	@RemoteMethod

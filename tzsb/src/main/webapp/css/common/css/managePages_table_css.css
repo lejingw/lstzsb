@@ -56,10 +56,6 @@ caption{font-size:18px; height:50px; line-height:50px; font-family:"微软雅黑
 .uploadImgDiv span{  line-height:20px;}
 
 /***附件文件 删除******/
-/*
-.attachDiv{ background:#f5fafe url(../images/icon/attach_2.png) no-repeat 2px 4px;width:auto; height:24px; border:1px solid #e7eff5; width:250px; margin:2px; padding:0 0px 0 22px; float:left;}
-.attachDiv:hover{ background:#d2ecfd url(../images/icon/attach_2.png) no-repeat 2px 4px;width:auto; height:24px; border:1px solid #d0e5f3; width:250px; margin:2px; padding:0 0px 0 22px; float:left;}
-*/
 .attachDiv{ background:#f5fafe; width:auto; height:24px; border:1px solid #e7eff5; width:250px; margin:2px; padding:0 0px 0 5px; float:left;}
 .attachDiv:hover{ background:#d2ecfd; border:1px solid #d0e5f3;}
 .attachDiv .textDiv{ float:left; width:225px;text-overflow:ellipsis; /* for IE */ -moz-text-overflow: ellipsis; /* for Firefox,mozilla */ overflow:hidden;white-space: nowrap;}

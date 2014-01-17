@@ -8,6 +8,9 @@ public class Dict {
 	private String itemKey;
 	private String itemValue;
 	private String itemOrder;
+	
+	private String treeFlag;//是否树形结果，1是，0否
+	private String parentKey;//父节点id
 
 	public String getEntryCode() {
 		return entryCode;
@@ -55,6 +58,22 @@ public class Dict {
 
 	public void setItemOrder(String itemOrder) {
 		this.itemOrder = itemOrder;
+	}
+
+	public String getTreeFlag() {
+		return treeFlag;
+	}
+
+	public void setTreeFlag(String treeFlag) {
+		this.treeFlag = treeFlag;
+	}
+
+	public String getParentKey() {
+		return parentKey;
+	}
+
+	public void setParentKey(String parentKey) {
+		this.parentKey = parentKey;
 	}
 
 }

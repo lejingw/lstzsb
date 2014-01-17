@@ -130,7 +130,7 @@ function showUploadWin(config){
 									box.close();
 								});
 					    	}
-					    },
+					    }
 					});
 			}
 		});

@@ -7,6 +7,16 @@
         http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
         http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
 
+    
+    <wss:binding url="/TzsbWsService">
+        <wss:service>
+            <ws:service bean="#tzsbWebService">
+            	<ws:metadata><value>/WEB-INF/wsdl/tzsbWsService.xsd</value></ws:metadata>
+            </ws:service>
+        </wss:service>
+    </wss:binding>
+    <bean id="tzsbWebService" class="com.totyu.web.ws.impl.TzsbWebServiceImpl" />
+    
     <wss:binding url="/HelloService">
         <wss:service>
             <ws:service bean="#helloService" />
@@ -53,4 +63,21 @@
 		</wss:service>
 	</wss:binding>
 	<bean id="hello4WsService" class="com.lejingw.apps.ws4.Hello4WsServiceImpl" />
+
+	
+	<bean id="webServiceClient" class="com.totyu.web.ws.impl.WebServiceClientImpl">
+		<property name="zhongheWebServiceClient" ref="zhongheWebServiceClient"/>
+		<property name="postOrg" value="${zh.postOrg}"/>
+		<property name="postPass" value="${zh.postPass}"/>
+		<property name="postArea" value="${zh.postArea}"/>
+	</bean>
+	 
+	<bean id="zhongheWebServiceClient" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.web.ws.client.ZhongheWebServiceClient"/>
+	    <property name="wsdlDocumentUrl" value="${zh.wsdlDocumentUrl}"/>
+	    <property name="namespaceUri" value="http://localhost:88/scdeap/services"/>
+	    <property name="serviceName" value="tzsbService"/>
+	    <property name="portName" value="tzsbServiceHttpPort"/>
+	    <property name="lookupServiceOnStartup" value="false"/>
+	</bean>
 </beans>

@@ -1,0 +1,32 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://localhost:88/scdeap/services">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:do_TzsbTranService>
+         <ser:in0>EQU1000</ser:in0>
+         <ser:in1>SELECT</ser:in1>
+         <ser:in2>?</ser:in2>
+         <ser:in3><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<TRAN>
+	<MES>
+		<busi_type></busi_type>
+		<tran_type>EQU1000</tran_type>
+		<oper_type>SELECT</oper_type>
+		<post_org>test</post_org>
+		<post_pass>testpassword</post_pass>
+		<post_area>320000</post_area>
+		<post_condition />
+		<explain />
+	</MES>
+	<DATA>
+		<equdatasysid>1111</equdatasysid>
+		<equdatasysid2>1111</equdatasysid2>
+		<a>1111</a>
+		<b/>
+	</DATA>
+</TRAN>
+         ]]></ser:in3>
+         <ser:in4>?</ser:in4>
+      </ser:do_TzsbTranService>
+   </soapenv:Body>
+</soapenv:Envelope>

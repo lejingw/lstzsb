@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task" 
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -18,8 +19,12 @@
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.directwebremoting.org/schema/spring-dwr
-		http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
-
+		http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd 
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+	<!-- 定时器开关 -->
+	<!-- add by daiwa-sc wuqiang
+	<task:annotation-driven /> -->
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<bean class="com.totyu.spring.mvc.method.annotation.FormModelMethodArgumentResolver"/>
@@ -40,6 +45,7 @@
 			<list>
 				<value>classpath:global.properties</value>
 				<value>classpath:jdbc.properties</value>
+				<value>classpath:webservice.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -47,7 +53,6 @@
 	<!-- 从这行往下是要添加的 -->
     <context:annotation-config />
 	<dwr:annotation-config id="dwrAnnotationConfig" />
-	<dwr:annotation-scan base-package="com.totyu.dwr" scanDataTransferObject="true" scanRemoteProxy="false" />
 	<dwr:annotation-scan base-package="com.totyu.vo" scanDataTransferObject="true" scanRemoteProxy="false" />
     <dwr:url-mapping />
     <dwr:controller id="dwrController" debug="true">
@@ -125,7 +130,7 @@
 	</tx:advice>
 	<!-- 5.2、配置切入点和方面 -->
 	<aop:config>
-		<aop:pointcut id="servicePointCut" expression="execution(* com.totyu.manager.*.impl.*Service*.*(..))"/>
+		<aop:pointcut id="servicePointCut" expression="execution(* com.totyu.service.*.impl.*Service*.*(..))"/>
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	
@@ -139,4 +144,7 @@
 	<bean id="exceptionHandler" class="com.totyu.web.handler.ExceptionHandler"/>
 	
 	<import resource="classpath:conf/spring-ws.xml" />
+	<!--批处理部署配置spring-batch.xml-->
+	<!-- add by daiwa-sc wuqiang
+	<import resource="classpath:conf/spring-batch.xml" /> -->
 </beans>

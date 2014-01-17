@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tran>
+	<message>
+		<successFlag>1</successFlag>
+		<result>ok</result>
+	</message>
+	<data>
+		<row>
+			<billid>32</billid>
+			<dwId>1</dwId>
+			<sblb>2</sblb>
+			<zsbh>abcaddd222222222222222222222222222</zsbh>
+			<dwmc>盛海强TEST使用单位</dwmc>
+			<dwdz>1</dwdz>
+			<zzdz>1</zzdz>
+			<pzrq />
+			<yxrq>2014-01-16 00:00:00.0</yxrq>
+			<pzjg>af</pzjg>
+			<sfsj>0</sfsj>
+			<sfzz>1</sfzz>
+			<sfaz>0</sfaz>
+			<sfgz>0</sfgz>
+			<sfwx>0</sfwx>
+			<beizhu />
+		</row>
+	</data>
+</tran>

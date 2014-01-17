@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://ws.web.totyu.com"
+	xmlns:tns="http://ws.web.totyu.com" 
+	elementFormDefault="unqualified">
+	<!-- 异常类型 -->
+	<xsd:element name="WsException" type="tns:WsException"/>
+	<xsd:element name="tzsbTranService" type="tns:tzsbTranService"/>
+	<xsd:element name="tzsbTranServiceResponse" type="tns:tzsbTranServiceResponse"/>
+	
+	
+	<xsd:complexType name="WsException">
+		<xsd:sequence>
+			<xsd:element name="message" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="tzsbTranService">
+		<xsd:sequence>
+			<xsd:element name="businessCode" type="xsd:string"/>
+			<xsd:element name="operationCode" type="xsd:string"/>
+			<xsd:element name="inputXML" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="tzsbTranServiceResponse">
+		<xsd:sequence>
+			<xsd:element name="outputXML" type="xsd:string"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

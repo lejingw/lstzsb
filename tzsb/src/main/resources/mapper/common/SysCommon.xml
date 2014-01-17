@@ -23,10 +23,10 @@
 	</select>
 	<!-- 获取所有数据字典信息 -->
 	<select id="SysCommon.getAllDictItem" resultClass="com.totyu.vo.common.Dict">
-		select a.entry_code as 'entryCode', a.entry_name as 'entryName', a.entry_type as 'entryType', b.item_key as 'itemKey', b.item_value as 'itemValue', b.item_order as 'itemOrder'
+		select a.entry_code as 'entryCode', a.entry_name as 'entryName', a.entry_type as 'entryType', a.sfsxjg as 'treeFlag', case when a.sfsxjg = 1 then b.f_item_key else null end as 'parentKey', b.item_key as 'itemKey', b.item_value as 'itemValue', b.item_order as 'itemOrder'
 		from t_xt_sjzdlb a, t_xt_sjzdsjx b
 		where a.entry_code = b.entry_code and a.status = 1 and b.status = 1
-		order by a.entry_type, a.entry_code, b.item_order, b.item_key
+		order by a.entry_type, a.entry_code, b.f_item_key, b.item_order, b.item_key
 	</select>
 	<!-- 获取所有系统参数 -->
 	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.common.Parameter">

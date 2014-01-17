@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://ws.web.totyu.com" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Hello3WsService"
+	targetNamespace="http://ws.web.totyu.com">
+	<!-- 使用web container -->
+	<wsdl:types>
+	<!-- 
+		<xsd:schema targetNamespace="http://ws.web.totyu.com">
+			<xsd:include schemaLocation="hello.xsd"></xsd:include>
+		</xsd:schema>
+	 -->
+	 	<xsd:schema>
+			<xsd:import namespace="http://ws.web.totyu.com" schemaLocation="hello3WsService.xsd"/>
+	 	</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="WsException">
+		<wsdl:part element="tns:WsException" name="fault"/>
+	</wsdl:message>
+	
+	<wsdl:message name="sayHello">
+		<wsdl:part element="tns:sayHello" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="sayHelloResponse">
+		<wsdl:part element="tns:sayHelloResponse" name="parameters" />
+	</wsdl:message>
+	
+	
+	<wsdl:message name="getPager">
+		<wsdl:part element="tns:getPager" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getPagerResponse">
+		<wsdl:part element="tns:getPagerResponse" name="parameters" />
+	</wsdl:message>
+	
+	<wsdl:message name="getPagerStr">
+		<wsdl:part element="tns:getPagerStr" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getPagerStrResponse">
+		<wsdl:part element="tns:getPagerStrResponse" name="parameters" />
+	</wsdl:message>
+	
+	
+	<wsdl:portType name="Hello3Service">
+		<wsdl:operation name="sayHello">
+			<wsdl:input message="tns:sayHello" />
+			<wsdl:output message="tns:sayHelloResponse" />
+			<wsdl:fault message="tns:WsException" name="WsException"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getPager">
+			<wsdl:input message="tns:getPager" />
+			<wsdl:output message="tns:getPagerResponse" />
+			<wsdl:fault message="tns:WsException" name="WsException"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getPagerStr">
+			<wsdl:input message="tns:getPagerStr" />
+			<wsdl:output message="tns:getPagerStrResponse" />
+			<wsdl:fault message="tns:WsException" name="WsException"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	
+	<wsdl:binding name="Hello3ServiceBinding" type="tns:Hello3Service">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="sayHello">
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="WsException">
+				<soap:fault use="literal" name="WsException"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getPager">
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="WsException">
+				<soap:fault use="literal" name="WsException"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getPagerStr">
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="WsException">
+				<soap:fault use="literal" name="WsException"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="Hello3WsService">
+		<wsdl:port name="Hello3ServicePort" binding="tns:Hello3ServiceBinding">
+			<soap:address location="http://localhost:8888/ss" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

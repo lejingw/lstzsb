@@ -321,6 +321,17 @@ public class CommonUtil {
 		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
 		return condition;
 	}
+
+	/**
+	 * 菜单进来的时候，清空相关机能的session
+	 * @param controller
+	 * @param req
+	 */
+	public static void removeConditionForPageSession(Object controller, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.removeAttribute(getConditionSessionKey(controller));
+	}
+
 	/**
 	 * 从request获取查询条件，包含start（默认为0）、limit（默认15）参数
 	 * @param req
@@ -333,7 +344,11 @@ public class CommonUtil {
 		getRequestParameter(req, condition, keys);
 		getSessionParameter(controller, req, condition, keys);
 		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
-		return condition;
+		Map<String, String> map = new HashMap<String, String>();
+		for(String key : condition.keySet()){
+			map.put(key, condition.get(key));
+		}
+		return map;
 	}
 	private static String getConditionSessionKey(Object controller){
 		if(controller instanceof QuerySessionKeyIntf){
