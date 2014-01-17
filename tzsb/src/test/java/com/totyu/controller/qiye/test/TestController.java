@@ -55,6 +55,10 @@ public class TestController extends BaseController {
 	public String uploadFile() {
 		return "qiye/test/uploadFile";
 	}
+	@RequestMapping(value="/map/show", method=RequestMethod.GET)
+	public String map() {
+		return "qiye/test/map";
+	}
 	
 
     //ok   http://localhost:9080/springmvc-chapter6/formmodel/user?user.username=zhang&user.password=123

@@ -1,0 +1,118 @@
+#set($layout = "qiye/layout/commonLayout.vm")
+#set($cssfiles = [
+	"http://api.amap.com/Public/css/demo.Default.css"
+])
+#set($jsfiles = [
+	"http://webapi.amap.com/maps?v=1.2&key=76700bd3f350fe0ac825ed82a9f8de0d"
+])
+<style type='text/css'>
+#iCenter{
+	top:100px;
+	left:100px;
+	width:80%;
+	height:400px;
+}
+.markerContentStyle{
+	width:150px;
+}
+.markerContentStyle span{
+	color:#FF0000;
+}
+</style>
+<script language="javascript">
+var mapObj;
+//初始化地图对象，加载地图
+function mapInit(){
+    mapObj = new AMap.Map("iCenter",{
+        center:new AMap.LngLat(116.397428,39.90923), //地图中心点
+        level:13  //地图显示的比例尺级别
+    });
+	
+	mapObj.plugin(["AMap.ToolBar"], function(){
+		var toolBar = new AMap.ToolBar();
+		mapObj.addControl(toolBar);
+	});
+    
+    //添加自定义点标记
+    addMarker();
+	addMarker2();
+}
+
+//添加带文本的点标记覆盖物
+function addMarker(){
+    //自定义点标记内容
+    var markerContent = document.createElement("div");
+    markerContent.className = "markerContentStyle";
+    
+    //点标记中的图标
+    var markerImg= document.createElement("img");
+     markerImg.className="markerlnglat";
+     markerImg.src=ctxPath+"/css/qiye/test/images/icon/marker.png";
+     markerContent.appendChild(markerImg);
+     
+     //点标记中的文本
+     var markerSpan = document.createElement("span");
+     markerSpan.innerHTML = "我是自定义样式的点标记哦！";
+     markerContent.appendChild(markerSpan);
+     var marker = new AMap.Marker({
+        map:mapObj,
+        position:new AMap.LngLat(116.399267,39.925601), //基点位置
+        offset:new AMap.Pixel(-18,-36), //相对于基点的偏移位置
+        draggable:true,  //是否可拖动
+        content:markerContent   //自定义点标记覆盖物内容
+    });
+    marker.setMap(mapObj);  //在地图上添加点
+}
+
+//在地图上添加点标记函数
+function addMarker2(){
+    var marker=new AMap.Marker({
+            	icon:new AMap.Icon({    //复杂图标
+                    size:new AMap.Size(28,37),//图标大小
+                    image:ctxPath+"/css/qiye/test/images/icon/custom_a_j.png", //大图地址
+                    imageOffset:new AMap.Pixel(-28,0)//相对于大图的取图位置
+                }),
+                position:new AMap.LngLat(116.405467,39.907761)
+            });
+    marker.setMap(mapObj);  //在地图上添加点
+}
+
+var marker3 = null;
+
+function addMarder3(){
+	marker3 = new AMap.Marker({
+            icon:ctxPath+"/css/qiye/test/images/icon/marker_sprite.png",
+            position:new AMap.LngLat(116.405467,39.907761)
+        });
+    marker3.setMap(mapObj);  //在地图上添加点
+}
+function updateMarker3(){
+    //自定义点标记内容
+    var markerContent = document.createElement("div");
+    markerContent.className = "markerContentStyle";
+    
+    //点标记中的图标
+    var markerImg= document.createElement("img");
+     markerImg.className="markerlnglat";
+     markerImg.src=ctxPath+"/css/qiye/test/images/icon/3.png";
+     markerContent.appendChild(markerImg);
+     
+     //点标记中的文本
+     var markerSpan = document.createElement("span");
+     markerSpan.innerHTML = "Hi，我换新装备啦！";
+     markerContent.appendChild(markerSpan);
+     
+     marker3.setContent(markerContent);//更新点标记内容
+     marker3.setPosition(new AMap.LngLat(116.391467,39.927761)); //更新点标记位置
+}
+function deleteMarker3(){
+	marker3.setMap(null);
+}
+$(document).ready(function(){
+	mapInit();
+});
+</script>
+<input type='button' value="添加点标记覆盖物" onClick="addMarder3()"/>
+<input type="button" value="更新点标记覆盖物" onClick="updateMarker3()"/>
+<input type="button" value="删除点标记覆盖物" onClick="deleteMarker3()"/>
+<div id="iCenter"></div>

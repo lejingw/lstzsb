@@ -971,8 +971,8 @@ function msg(key){
 	var reg = eval("/^http(s)?\\:\\/\\/(\\w+\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
 	locationStr = locationStr.replace(reg, "");
 	var pathArr = locationStr.split("/");
-	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')
-		return "未找到提示信息资源";
+//	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')
+//		return "未找到提示信息资源";
 	var result = "", useGlobalFlag=false;
 	try{
 		result = eval("JSLocale."+pathArr[0]+"."+pathArr[1]+"."+key);
@@ -994,8 +994,13 @@ function msg(key){
 	}
 	if(arguments.length>1){
 		var callArgs = Array.prototype.slice.call(arguments, 1);
+		if(callArgs.length === 1 && Object.prototype.toString.call(callArgs[0]) === '[object Array]') {
+			callArgs = callArgs[0];
+		}
 		for(var i=0;i<callArgs.length;i++){
-			result = result.replace(eval("/{[" + i + "]}/g"), callArgs[i]);
+			if(callArgs[i]){
+				result = result.replace(eval("/{[" + i + "]}/g"), callArgs[i]);
+			}
 		}
 	}
 	return result;
