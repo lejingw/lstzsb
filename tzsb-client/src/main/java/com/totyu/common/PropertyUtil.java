@@ -8,8 +8,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.totyu.web.util.DateUtil;
-
 /**
  * 功能说明: 对于获取属性(针对日期类型)扩展<br>
  * 系统版本: v1.0 <br>	

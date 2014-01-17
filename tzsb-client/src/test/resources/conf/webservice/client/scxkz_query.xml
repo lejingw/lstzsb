@@ -3,8 +3,8 @@
 	<tranCode>scxkz_query</tranCode>
 	<tranType>EQU1000</tranType>
 	<operType>SELECT</operType>
-	<inputClassName>com.totyu.vo.qiye.test.TestVo</inputClassName>
-	<outputClassName>com.totyu.vo.qiye.test.TestVo</outputClassName>
+	<inputClassName>com.totyu.apps.ws.vo.TestVo</inputClassName>
+	<outputClassName>com.totyu.apps.ws.vo.TestVo</outputClassName>
 	<inputFields>
 		<field>
 			<localName>start</localName><!-- 传入对象属性名，不能为空 -->

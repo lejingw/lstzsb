@@ -12,14 +12,14 @@ import org.dom4j.Node;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.totyu.apps.ws.ZhongheWsService;
+import com.totyu.apps.ws.api.ServiceClientConfig;
+import com.totyu.apps.ws.api.ServiceConfigException;
+import com.totyu.apps.ws.api.WebServiceClientHelper;
+import com.totyu.apps.ws.api.ServiceClientConfig.ServiceClientField;
+import com.totyu.apps.ws.vo.TestVo;
+import com.totyu.apps.ws.zhonghe.ZhongheService;
 import com.totyu.common.PropertyUtil;
-import com.totyu.vo.qiye.test.TestVo;
-import com.totyu.web.ws.api.ServiceClientConfig;
-import com.totyu.web.ws.api.ServiceClientConfig.ServiceClientField;
-import com.totyu.web.ws.api.ServiceConfigException;
-import com.totyu.web.ws.api.WebServiceClientHelper;
-import com.totyu.web.ws.client.TzsbService;
-import com.totyu.web.ws.client.ZhongheWebServiceClient;
 
 public class ZhongheTest {
 	private final String POST_ORG = "test";
@@ -39,7 +39,7 @@ public class ZhongheTest {
 	@Test
 	public void test01(){
 		try{
-			ZhongheWebServiceClient zhongheWebServiceClient = new TzsbService().getTzsbServiceHttpPort();
+			ZhongheService zhongheWebServiceClient = new ZhongheWsService().getTzsbServiceHttpPort();
 			
 			final String WEB_SERVICE_CLIENT_TRAN_CODE = "scxkz_query";
 			ServiceClientConfig clientConfig = WebServiceClientHelper.getServiceClientConfig(WEB_SERVICE_CLIENT_TRAN_CODE);

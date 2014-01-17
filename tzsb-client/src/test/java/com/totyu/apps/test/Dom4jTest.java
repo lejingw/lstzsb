@@ -13,14 +13,14 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import com.totyu.apps.ws.tzsb.TzsbWebService;
-import com.totyu.apps.ws.tzsb.TzsbWsService;
+import com.totyu.apps.ws.TzsbWsService;
+import com.totyu.apps.ws.tzsb.TzsbService;
 
 public class Dom4jTest {
 	//@Test
 	public void test02(){
 		try {
-			TzsbWebService service = new TzsbWsService().getTzsbWsServicePort();
+			TzsbService service = new TzsbWsService().getTzsbWsServicePort();
 			
 			String fileName = "/Users/wanglj/workspaces/tzsb_svn_workspace/tzsb_client/src/test/resources/request_xml.xml"; // 当前路径下的demo.xml
 			SAXReader reader = new SAXReader();
