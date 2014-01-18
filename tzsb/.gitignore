@@ -2,6 +2,7 @@
 /work
 lib
 classes
+/.classpath
 /.settings
 .DS_Store
 .svn
