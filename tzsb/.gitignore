@@ -2,11 +2,11 @@
 /work
 lib
 classes
-.classpath
+/.classpath
 /.settings
 .DS_Store
 .svn
 .tomcatplugin
 /src/main/webapp/upload/
 .externalToolBuilders
-.project
+/.project
