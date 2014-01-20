@@ -3,6 +3,7 @@ package com.totyu.vo.menhu.sys;
 public class User {
 	private String id;
 	private String username;
+	private String userlabel;
 	private String password;
 	private String orgid;
 	private String status;
@@ -29,6 +30,14 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getUserlabel() {
+		return userlabel;
+	}
+
+	public void setUserlabel(String userlabel) {
+		this.userlabel = userlabel;
 	}
 
 	public String getPassword() {

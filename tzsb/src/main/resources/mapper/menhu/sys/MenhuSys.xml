@@ -3,8 +3,8 @@
 <sqlMap namespace="MenhuSys">
 	<!-- 根据用户名获取用户信息  -->
      <select id="MenhuSys.getLoginUserInfo" parameterClass="string" resultClass="com.totyu.vo.menhu.sys.User">
- 		select a.id as id, a.zhanghao as username, a.mima as password, a.dwbm_id as orgid, a.status as status
-		  from t_xt_yonghu a
-		 where a.zhanghao = #value#
+ 		select a.id as id, a.userlabel as userlabel, a.username as username, a.password as password, a.orgid as orgid, a.status as status
+		  from t_sys_user a
+		 where a.username = #value#
     </select>
 </sqlMap>

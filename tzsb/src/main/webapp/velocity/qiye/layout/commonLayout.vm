@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TZSB</title>
 	<link href="${rc.contextPath}/style/alerts1.1/jquery.alerts.css" type="text/css" rel="stylesheet" />
 	<link href="${rc.contextPath}/css/common/css/iframe_base_css.css" type="text/css" rel="stylesheet"/>
 	<link href="${rc.contextPath}/css/common/css/managePages_table_css.css" type="text/css" rel="stylesheet"/>
@@ -10,7 +11,6 @@
 	#foreach($item in $!cssfiles)
 	<link href="$item" type="text/css" rel="stylesheet" />
 	#end
-	<title>TZSB</title>
 	#set($dateParam = '20131111')
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/jquery-1.4.2-debug.js" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/script/alerts1.1/jquery.alerts.js" charset="UTF-8"></script>

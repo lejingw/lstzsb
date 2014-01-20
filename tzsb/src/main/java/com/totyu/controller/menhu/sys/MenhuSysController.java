@@ -27,12 +27,6 @@ public class MenhuSysController {
 	private String getSubSystemIndexUrl(String type) {
 		if("0".equals(type)){//企业登录
 			return "redirect:/qiye/sys/index.do";
-		}else if("1".equals(type)){//监察登录
-			return "redirect:/qiye/sys/index.do";
-		}else if("2".equals(type)){//乡镇部门登录
-			return "redirect:/qiye/sys/index.do";
-		}else if("3".equals(type)){//行业主管部门登录
-			return "redirect:/qiye/sys/index.do";
 		}else {
 			return "menhu/sys/index";
 		}
@@ -50,13 +44,6 @@ public class MenhuSysController {
 			String type = CommonUtil.getSessionLoginType(session);
 			return getSubSystemIndexUrl(type);
 		}
-		// 文章列表取得
-		model.addAttribute("tztgList", null);
-		model.addAttribute("hyxxList", null);
-		model.addAttribute("jsgfList", null);
-		model.addAttribute("zlxzList", null);
-		// 最新回答问题取得
-		model.addAttribute("wtList", null);
 		return "menhu/sys/index";
 	}
 

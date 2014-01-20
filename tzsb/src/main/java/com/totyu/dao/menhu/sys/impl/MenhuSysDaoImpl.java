@@ -1,8 +1,5 @@
 package com.totyu.dao.menhu.sys.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Repository;
 
 import com.totyu.dao.BaseDao;
@@ -15,6 +12,6 @@ public class MenhuSysDaoImpl extends BaseDao implements MenhuSysDao {
 	 * 根据用户名获取用户信息
 	 */
 	public User getLoginUserInfo(String username) {
-		return (User) executeQueryForObject("MenhuSys.getLoginUserInfo",username);
+		return (User) executeQueryForObject("MenhuSys.getLoginUserInfo", username);
 	}
 }
