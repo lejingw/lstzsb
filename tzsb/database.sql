@@ -16,6 +16,51 @@ create table `t_sys_user`(
 ) engine=innodb auto_increment=1 default charset=utf8 collate=utf8_bin row_format=compact;
 
 
+drop table if exists `t_sys_org`;
+create table `t_sys_org`(
+  `id` int(11) not null,
+  `org_name` varchar(100) collate utf8_bin not null,
+  `org_type` varchar(100) collate utf8_bin not null,
+  `parent_id` varchar(200) collate utf8_bin not null,
+  `create_id` int(11) null,
+  `create_date` datetime null,
+  `update_id` int(11) null,
+  `update_date` datetime null,
+  `status` int(11) null,
+  primary key (`id`)
+) engine=innodb auto_increment=1 default charset=utf8 collate=utf8_bin row_format=compact;
+
+drop table if exists `t_xt_sjzdlb`;
+create table `t_xt_sjzdlb` (
+  `entry_code` varchar(200) collate utf8_bin not null,
+  `entry_name` varchar(200) collate utf8_bin not null,
+  `entry_type` int(11) not null comment '0 内部不可修改 1可修改',
+  `memo` varchar(1024) collate utf8_bin default null,
+  `sfsxjg` int(11) not null default '0' comment '0 否  1是',
+  `create_id` int(11) not null,
+  `create_date` datetime not null,
+  `update_id` int(11) not null,
+  `update_date` datetime not null,
+  `status` int(11) not null,
+  primary key (`entry_code`)
+) engine=innodb default charset=utf8 collate=utf8_bin row_format=compact;
+
+drop table if exists `t_xt_sjzdsjx`;
+create table `t_xt_sjzdsjx` (
+  `item_key` varchar(200) collate utf8_bin not null,
+  `entry_code` varchar(100) collate utf8_bin not null,
+  `item_value` varchar(100) collate utf8_bin not null,
+  `item_order` int(11) default null,
+  `f_item_key` varchar(200) collate utf8_bin default null,
+  `create_id` int(11) not null,
+  `create_date` datetime not null,
+  `update_id` int(11) not null,
+  `update_date` datetime not null,
+  `status` int(11) not null,
+  primary key (`item_key`,`entry_code`)
+) engine=innodb default charset=utf8 collate=utf8_bin row_format=compact;
+
+
 drop table if exists `t_dw_tzsbxkzscwb`;
 create table `t_dw_tzsbxkzscwb` (
   `id` int(11) not null auto_increment,
@@ -39,7 +84,5 @@ create table `t_dw_tzsbxkzscwb` (
   `update_id` int(11) not null,
   `update_date` datetime not null,
   `status` int(11) not null comment '超期 正常 使用',
-  primary key (`id`),
-  key `fk_reference_356` (`dw_id`) using btree,
-  constraint `fk_reference_356` foreign key (`dw_id`) references `t_dw_dwxx` (`id`)
+  primary key (`id`)
 ) engine=innodb auto_increment=18 default charset=utf8 collate=utf8_bin row_format=compact;

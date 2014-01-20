@@ -34,7 +34,7 @@
 	</select>
 	<!-- 获取所有组织数据 -->
 	<select id="SysCommon.getAllOrg" resultClass="com.totyu.vo.common.Org">
-		select a.id as "orgId", a.name as "orgName", a.leibie as "orgType", a.parentId as "parentId" from view_dwzzjg a order by a.leibie, a.name, a.id
+		select a.id as "orgId", a.org_name as "orgName", a.org_type as "orgType", a.parent_id as "parentId" from t_sys_org a order by a.parent_id, a.id
 	</select>
 	<!-- 保存上传文件数据 -->
 	<insert id="SysCommon.saveUploadFile" parameterClass="com.totyu.vo.sys.UploadFile">

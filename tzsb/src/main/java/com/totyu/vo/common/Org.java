@@ -6,8 +6,8 @@ import org.directwebremoting.annotations.DataTransferObject;
 public class Org {
 	private String orgId;
 	private String orgName;
-	private String orgType;//0企业单位1监察单位2乡镇部门3行业主管部门
-	private String parentId;//父节点id
+	private String orgType;
+	private String parentId;
 	
 	public String getOrgId() {
 		return orgId;
