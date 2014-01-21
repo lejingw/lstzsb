@@ -350,6 +350,7 @@ public class CommonUtil {
 		}
 		return map;
 	}
+
 	private static String getConditionSessionKey(Object controller){
 		if(controller instanceof QuerySessionKeyIntf){
 			return "query_key_" + controller.getClass().getName() + "_" + ((QuerySessionKeyIntf)controller).getKey();
@@ -357,13 +358,14 @@ public class CommonUtil {
 			return "query_key_" + controller.getClass().getName();
 		}
 	}
+
 	private static boolean isUnQuerys(Map<String, String> condition){
 		if(StringUtil.isNotEmpty(condition.get("start")) || StringUtil.isNotEmpty(condition.get("limit"))){
         	 return false;
 		}
 		return true;
 	}
-	
+
 	/**
      * 从session获取值
      * @param req
@@ -408,6 +410,18 @@ public class CommonUtil {
 //		System.out.println("---------------------");
 //	}
 	
+	/**
+	 * 获取应用根目录
+	 * @param req
+	 * @return
+	 */
+	public static String getRealPath(HttpServletRequest req){
+		String realPath = req.getSession().getServletContext().getRealPath("/");
+		if(realPath.endsWith("/"))
+			realPath = realPath.substring(0, realPath.length()-1);
+		return realPath;
+	}
+	
 	public static void download(String fileName, String path, HttpServletRequest req, HttpServletResponse resp){
 		OutputStream os = null;
 	    try {
@@ -420,11 +434,8 @@ public class CommonUtil {
 	   	    	resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("GBK"), "ISO8859-1") + "\"");
 	    	}
 	        resp.setContentType("application/octet-stream; charset=utf-8");
-
-	        String realPath = req.getSession().getServletContext().getRealPath("/");
-			if(realPath.endsWith("/"))
-				realPath = realPath.substring(0, realPath.length()-1);
-	        File file = new File(realPath + path);
+	        
+	        File file = new File(getRealPath(req) + path);
 	        os.write(FileUtils.readFileToByteArray(file));
 	        os.flush();
 	    } catch(Exception e){

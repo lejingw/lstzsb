@@ -21,7 +21,8 @@ public class Global {
 	public static final String			PAGE_DEFAULT_START									= "0";//列表默认从1开始
 	public static final String			PAGE_DEFAULT_LIMIT									= "15";//列表默认每页15行
 	public static final String			PAGE_DEFAULT_LIMIT_WIN								= "10";//弹出框列表默认每页10行
-	private static String				PIC_UPLOAD_PATH										= null;
+	private static String				PIC_UPLOAD_PATH										= "pic_upload_path";
+	private static String				PRINT_CONF_PATH										= "pint_conf_path";
 
 	private static Properties properties = null;
 	public static void load(InputStream is){
@@ -46,14 +47,20 @@ public class Global {
 	}
 	
 	public static String getPicUploadPath(){
-		if(null == PIC_UPLOAD_PATH){
-			String path = properties.getProperty("pic_upload_path", "/upload/");
-			if(!path.startsWith("/"))
-				path = "/" + path;
-			if(path.endsWith("/"))
-				path = path.substring(0, path.length()-1);
-			PIC_UPLOAD_PATH = path;
-		}
-		return PIC_UPLOAD_PATH;
+		String path = properties.getProperty(PIC_UPLOAD_PATH, "/upload/");
+		if(!path.startsWith("/"))
+			path = "/" + path;
+		if(path.endsWith("/"))
+			path = path.substring(0, path.length()-1);
+		return path;
+	}
+	
+	public static String getPrintConfPath(){
+		String path = properties.getProperty(PRINT_CONF_PATH, "/print/");
+		if(!path.startsWith("/"))
+			path = "/" + path;
+		if(path.endsWith("/"))
+			path = path.substring(0, path.length()-1);
+		return path;
 	}
 }

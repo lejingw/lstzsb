@@ -10,6 +10,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.totyu.common.CommonUtil;
 import com.totyu.common.Pager;
 import com.totyu.common.excel.ExcelUtil;
 import com.totyu.common.exception.TzsbException;
@@ -52,11 +53,8 @@ public class SysCommonDwr {
 	public String saveUploadExcelData(String fileId, HttpServletRequest req){
 		try {
 			UploadFile uploadFile = sysCommonService.getUploadFile(fileId);
-			String realPath = req.getSession().getServletContext().getRealPath("/");
-			if(realPath.endsWith("/"))
-				realPath = realPath.substring(0, realPath.length()-1);
 			ExcelUtil excelUtil = new ExcelUtil(excelUtilService);
-			String seqId = excelUtil.saveExcelData(realPath + uploadFile.getPath());
+			String seqId = excelUtil.saveExcelData(CommonUtil.getRealPath(req) + uploadFile.getPath());
 			return seqId;
 		} catch (Exception e) {
 			return null;

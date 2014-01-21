@@ -25,6 +25,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
+import com.totyu.common.CommonUtil;
 import com.totyu.common.Global;
 
 public class Uploader {
@@ -250,10 +251,13 @@ public class Uploader {
 	 * @return
 	 */
 	private String getPhysicalPath(String path) {
-		String servletPath = this.request.getServletPath();
-		String realPath = this.request.getSession().getServletContext().getRealPath(servletPath);
-		return new File(realPath).getParent() + path;
+		return CommonUtil.getRealPath(this.request) + path;
 	}
+//	private String getPhysicalPath(String path) {
+//		String servletPath = this.request.getServletPath();
+//		String realPath = this.request.getSession().getServletContext().getRealPath(servletPath);
+//		return new File(realPath).getParent() + path;
+//	}
 	
 	/**
 	 * 从输入流中获取字符串数据
