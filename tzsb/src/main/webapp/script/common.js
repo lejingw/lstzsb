@@ -506,6 +506,7 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	
 	function forw(start){
 		$("#start").val(start);
+		jQuery("#"+formId).clearForm();
 		jQuery("#"+formId).submit();
 	}
 	var prePageLink = null;
