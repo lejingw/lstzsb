@@ -13,8 +13,10 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.totyu.common.PropertyUtil;
+import com.totyu.service.common.SysCommonService;
 import com.totyu.web.ws.WebServiceClient;
 import com.totyu.web.ws.api.ServiceClientConfig;
 import com.totyu.web.ws.api.ServiceClientConfig.ServiceClientField;
@@ -27,6 +29,7 @@ import com.totyu.web.ws.client.ZhongheWebServiceClient;
 
 public class WebServiceClientImpl implements WebServiceClient {
 	private ZhongheWebServiceClient zhongheWebServiceClient;
+	private boolean logEnabled;
 	private String postOrg;
 	private String postPass;
 	private String postArea;
@@ -34,7 +37,11 @@ public class WebServiceClientImpl implements WebServiceClient {
 	public void setZhongheWebServiceClient(ZhongheWebServiceClient zhongheWebServiceClient) {
 		this.zhongheWebServiceClient = zhongheWebServiceClient;
 	}
-	
+
+	public void setLogEnabled(boolean logEnabled) {
+		this.logEnabled = logEnabled;
+	}
+
 	public void setPostOrg(String postOrg) {
 		this.postOrg = postOrg;
 	}
@@ -46,6 +53,8 @@ public class WebServiceClientImpl implements WebServiceClient {
 	public void setPostArea(String postArea) {
 		this.postArea = postArea;
 	}
+	@Autowired
+	private SysCommonService sysCommonService;
 	
 	/**
 	 * 新增、修改、删除
@@ -66,11 +75,22 @@ public class WebServiceClientImpl implements WebServiceClient {
 		Document responseDoc = null;
 		try{
 			String inputXML = createInputXML(clientConfig, obj);
+
+			String reqId = null;
+			//保存发送数据
+			if(logEnabled){
+				reqId = sysCommonService.writeWebServiceLog(false, null, inputXML);
+			}
 			
 			String outputXML = zhongheWebServiceClient.doTzsbTranService(
 					clientConfig.getTranType(), clientConfig.getOperType(), "",
 					inputXML, "");
-
+			
+			//保存接收数据
+			if(logEnabled){
+				sysCommonService.writeWebServiceLog(false, reqId, outputXML);
+			}
+			
 			responseDoc = DocumentHelper.parseText(outputXML); // 将字符串转为XML
 		}catch(Exception e){
 			throw new WsException(e.getMessage());
@@ -80,7 +100,7 @@ public class WebServiceClientImpl implements WebServiceClient {
 		if(null != rtncodeNode && "1".equals(rtncodeNode.getText())){
 			try{
 				List<Object> returnDataList = analyseResponse(clientConfig, responseDoc);
-				printReturnData(responseDoc, returnDataList);
+				//printReturnData(responseDoc, returnDataList);
 				return returnDataList;
 			}catch(Exception e){
 				throw new WsException(e.getMessage());
@@ -117,16 +137,16 @@ public class WebServiceClientImpl implements WebServiceClient {
 		}
 	}
 	
-	private List<Object> analyseResponse(ServiceClientConfig config, Document doc) {
-		List<Element> nodeList = doc.selectNodes("/TRAN/DATA/ROW");
-		
-		List<Object> dataList = new ArrayList<Object>();
+	private List<Object> analyseResponse(ServiceClientConfig config, Document doc) {		
 		Class returnCls = null;
 		try {
 			returnCls = Class.forName(config.getOutputClassName());
 		} catch (ClassNotFoundException e) {
 			throw new ServiceConfigException("无法获取配置文件中输出参数类型");
 		}
+		
+		List<Element> nodeList = doc.selectNodes("/TRAN/DATA/ROW");
+		List<Object> dataList = new ArrayList<Object>();
 		try{
 			for(Element element:nodeList){
 				Object data = returnCls.newInstance();
@@ -194,8 +214,7 @@ public class WebServiceClientImpl implements WebServiceClient {
 		} catch (Exception e) {
 			throw new ServiceConfigException("创建输入XML数据出错");
 		}
-        
-        System.out.println(doc.asXML());
+        //System.out.println(doc.asXML());
         return doc.asXML();
 	}
 }

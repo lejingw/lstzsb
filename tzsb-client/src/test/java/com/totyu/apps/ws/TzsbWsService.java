@@ -20,7 +20,7 @@ import com.totyu.apps.ws.tzsb.TzsbService;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "TzsbWsService", targetNamespace = "http://ws.web.totyu.com", wsdlLocation = "http://localhost:8088/lstzsb/TzsbWsService?wsdl")
+@WebServiceClient(name = "TzsbWsService", targetNamespace = "http://ws.web.totyu.com", wsdlLocation = "http://localhost:8080/lstzsb/TzsbWsService?wsdl")
 public class TzsbWsService
     extends Service
 {
@@ -33,9 +33,9 @@ public class TzsbWsService
         try {
             URL baseUrl;
             baseUrl = com.totyu.apps.ws.TzsbWsService.class.getResource(".");
-            url = new URL(baseUrl, "http://localhost:8088/lstzsb/TzsbWsService?wsdl");
+            url = new URL(baseUrl, "http://localhost:8080/lstzsb/TzsbWsService?wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:8088/lstzsb/TzsbWsService?wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:8080/lstzsb/TzsbWsService?wsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         TZSBWSSERVICE_WSDL_LOCATION = url;

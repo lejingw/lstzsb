@@ -12,17 +12,18 @@ import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
+import org.junit.Test;
 
 import com.totyu.apps.ws.TzsbWsService;
 import com.totyu.apps.ws.tzsb.TzsbService;
 
-public class Dom4jTest {
-	//@Test
+public class TzsbTest {
+	@Test
 	public void test02(){
 		try {
 			TzsbService service = new TzsbWsService().getTzsbWsServicePort();
 			
-			String fileName = "/Users/wanglj/workspaces/tzsb_svn_workspace/tzsb_client/src/test/resources/request_xml.xml"; // 当前路径下的demo.xml
+			String fileName = "/Users/wanglj/workspaces/lstzsb_workspace/tzsb-client/src/test/resources/request_xml.xml"; // 当前路径下的demo.xml
 			SAXReader reader = new SAXReader();
 			//reader.setEncoding("GBK");
 			Document doc = reader.read(fileName);

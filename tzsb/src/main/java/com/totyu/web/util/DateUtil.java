@@ -139,20 +139,14 @@ public class DateUtil extends DateUtils {
     }
 
     /**
-     * <p/> 将日期格式化成字符串：yyyy-MM-dd HH:mm:ss
-     * </p>
-     *
+     * 将日期格式化成字符串：yyyy-MM-dd HH:mm:ss
      * @param date
      * @return
      */
     public static String formatSdf1(Date date) {
-
         if (date == null) {
-
-            return "";
-
+    		return "";
         }
-
         return sdf1.format(date);
     }
 
@@ -162,14 +156,10 @@ public class DateUtil extends DateUtils {
      * @return
      */
     public static String formatSdf1(String str) {
-
         if (StringUtil.isBlank(str)) {
-
             return "";
         }
-
         return formatSdf1(parse(str));
-
     }
 
     /**
@@ -228,11 +218,10 @@ public class DateUtil extends DateUtils {
         return formatSdf1(parse(strBuffer.toString()));
 
     }
+   
 
     /**
-     * <p/> 将日期格式化成字符串：yyyy-MM-dd
-     * </p>
-     *
+     * 将日期格式化成字符串：yyyy-MM-dd
      * @param date
      * @return
      */
@@ -241,7 +230,6 @@ public class DateUtil extends DateUtils {
     }
     /**
      * 将日期格式化成字符串：yyyyMMdd
-     *
      * @param date 参数为空默认取当前时间
      * @return
      */

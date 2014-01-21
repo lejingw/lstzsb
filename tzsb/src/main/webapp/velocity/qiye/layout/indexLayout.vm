@@ -90,7 +90,7 @@
         </li>
         <li><a href="#"><span class="ico01_10">基本信息</span></a>
           <ul class="child">
-            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/jbxx/scxkzgl/list.do')"><span>生产许可证管理</span></a></li>
+            <li><a href="#" onclick="openUrl(this, '${rc.contextPath}/qiye/jbxx/scxkzgl/init.do')"><span>生产许可证管理</span></a></li>
           </ul>
         </li>
         <li><a href="#"><span class="ico01_3">人员持证</span></a>

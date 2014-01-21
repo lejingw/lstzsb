@@ -1,6 +1,7 @@
 package com.totyu.web.ws.api;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.dom4j.io.SAXReader;
 public class WebServiceHelper {
 	private static boolean initFlag = false;
 	private static final Map<String, ServiceConfig> webServiceConfMap = new HashMap<String, ServiceConfig>();
+	private static final Map<String, ServiceAuth> webServiceAuthMap = new HashMap<String, ServiceAuth>();
 	
 	public static void init(){
 		if(initFlag)	return ;
@@ -20,9 +22,16 @@ public class WebServiceHelper {
 		File dir = new File(path);
 		for(File file : dir.listFiles()){
 			if(file.isFile()){
-				ServiceConfig conf = analyseServiceConfig(file);
-				if(null != conf){
-					webServiceConfMap.put(conf.getTranCode(), conf);
+				if("auth.xml".equals(file.getName())){
+					List<ServiceAuth> authList = analyseServiceAuth(file);
+					for(ServiceAuth auth:authList){
+						webServiceAuthMap.put(auth.getName(), auth);
+					}
+				}else{					
+					ServiceConfig conf = analyseServiceConfig(file);
+					if(null != conf){
+						webServiceConfMap.put(conf.getTranCode(), conf);
+					}
 				}
 			}
 		}
@@ -36,6 +45,35 @@ public class WebServiceHelper {
 		return webServiceConfMap.get(tranCode);
 	}
 	
+	public static ServiceAuth getServiceAuth(String name){
+		if(!initFlag){
+			throw new ServiceConfigException("WebServiceHelper have not init.");
+		}
+		return webServiceAuthMap.get(name);
+	}
+	
+	private static List<ServiceAuth> analyseServiceAuth(File file){
+		System.out.println("正在解析web service授权用户配置文件["+file.getName()+"]");
+		
+		List<ServiceAuth> list = new ArrayList<ServiceAuth>();
+		try {
+			SAXReader reader = new SAXReader();
+			//reader.setEncoding("GBK");
+			Document doc = reader.read(file);
+			List<Element> userList = doc.selectNodes("/users/user");
+			for(Element ele:userList){
+				Element name = ele.element("name");
+				Element password = ele.element("password");
+				Element org = ele.element("org");
+				list.add(new ServiceAuth(name.getText(), password.getText(), org.getText()));
+			}
+		} catch (DocumentException e) {
+			e.printStackTrace();
+			System.err.println("解析web service授权用户配置文件["+file.getName()+"]出错");
+		}
+		return list;
+		
+	}
 	private static ServiceConfig analyseServiceConfig(File file){
 		System.out.println("正在解析web service配置文件["+file.getName()+"]");
 		ServiceConfig config = new ServiceConfig();
@@ -64,7 +102,7 @@ public class WebServiceHelper {
 			}
 		} catch (DocumentException e) {
 			e.printStackTrace();
-			System.err.println("解析web service配置文件["+file.getName()+"出错");
+			System.err.println("解析web service配置文件["+file.getName()+"]出错");
 			return null;
 		}
 		return config;

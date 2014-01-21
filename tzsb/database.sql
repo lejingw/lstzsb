@@ -7,10 +7,10 @@ create table `t_sys_user`(
   `userlabel` varchar(100) collate utf8_bin not null,
   `password` varchar(200) collate utf8_bin not null,
   `orgid` int(11) not null,
-  `create_id` int(11) not null,
-  `create_date` datetime not null,
-  `update_id` int(11) not null,
-  `update_date` datetime not null,
+  `create_id` int(11) null,
+  `create_date` datetime null,
+  `update_id` int(11) null,
+  `update_date` datetime null,
   `status` int(11) not null,
   primary key (`id`)
 ) engine=innodb auto_increment=1 default charset=utf8 collate=utf8_bin row_format=compact;
@@ -21,12 +21,12 @@ create table `t_sys_org`(
   `id` int(11) not null,
   `org_name` varchar(100) collate utf8_bin not null,
   `org_type` varchar(100) collate utf8_bin not null,
-  `parent_id` varchar(200) collate utf8_bin not null,
+  `parent_id` varchar(200) collate utf8_bin null,
   `create_id` int(11) null,
   `create_date` datetime null,
   `update_id` int(11) null,
   `update_date` datetime null,
-  `status` int(11) null,
+  `status` int(11) not null,
   primary key (`id`)
 ) engine=innodb auto_increment=1 default charset=utf8 collate=utf8_bin row_format=compact;
 
@@ -86,3 +86,11 @@ create table `t_dw_tzsbxkzscwb` (
   `status` int(11) not null comment '超期 正常 使用',
   primary key (`id`)
 ) engine=innodb auto_increment=18 default charset=utf8 collate=utf8_bin row_format=compact;
+
+
+
+
+
+
+insert into t_sys_user(id, username, userlabel, password, orgid, status)values(1,'admin', '管理员', '111111', 1, 1);
+insert into t_sys_org(id, org_name, org_type, status)values(1,'杭州大酒店', 1, 1);

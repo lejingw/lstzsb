@@ -12,7 +12,7 @@ import com.totyu.apps.ws.hello4.Hello4Service;
 import com.totyu.apps.ws.vo.Customer;
 
 public class Hello4Test {
-	@Test
+	//@Test
 	public void test02() throws MalformedURLException {
 		try {
 			Hello4Service customerPort = new Hello4WsService()

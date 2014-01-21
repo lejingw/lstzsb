@@ -26,7 +26,13 @@ import com.totyu.web.util.ExportExcelUtil;
 public class ScxkzglController {
 	@Autowired
 	private ScxkzglService scxkzglService;
-
+	
+	@RequestMapping("/init")
+	public String init(Model model, HttpServletRequest req, HttpServletResponse res) {
+		CommonUtil.removeConditionForPageSession(this, req);
+		return "redirect:/qiye/jbxx/scxkzgl/list.do";
+	}
+	
 	@RequestMapping("/list")
 	public String list(Model model, HttpServletRequest req, HttpServletResponse res) {
 		Map<String, String> condition = CommonUtil.getConditionForPageSession(this, req, "zsbh", "dwmc", "sblb", "yxrq1", "yxrq2", "sfsj", "sfzz", "sfaz", "sfgz", "sfwx", "qstatus");
@@ -35,6 +41,7 @@ public class ScxkzglController {
 		model.addAttribute("condition", condition);
 		return "qiye/jbxx/scxkzgl_list";
 	}
+	
 	@RequestMapping("/toAdd")
 	public String toAdd(Model model, HttpServletRequest req, HttpServletResponse res) {
 		return "qiye/jbxx/scxkzgl_edit";

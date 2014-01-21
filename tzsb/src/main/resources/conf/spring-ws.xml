@@ -38,13 +38,16 @@
             </ws:service>
         </wss:service>
     </wss:binding>
-    <bean id="tzsbWebService" class="com.totyu.web.ws.impl.TzsbWebServiceImpl" />
+    <bean id="tzsbWebService" class="com.totyu.web.ws.impl.TzsbWebServiceImpl">
+		<property name="logEnabled" value="${webService.logEnabled}"/>
+	</bean>
     
 	<bean id="webServiceClient" class="com.totyu.web.ws.impl.WebServiceClientImpl">
 		<property name="zhongheWebServiceClient" ref="zhongheWebServiceClient"/>
 		<property name="postOrg" value="${zh.postOrg}"/>
 		<property name="postPass" value="${zh.postPass}"/>
 		<property name="postArea" value="${zh.postArea}"/>
+		<property name="logEnabled" value="${webService.logEnabled}"/>
 	</bean>
 	 
 	<bean id="zhongheWebServiceClient" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">

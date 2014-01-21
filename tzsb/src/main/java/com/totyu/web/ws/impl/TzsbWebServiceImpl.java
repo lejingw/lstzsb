@@ -17,10 +17,13 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.totyu.common.Global;
 import com.totyu.common.PropertyUtil;
+import com.totyu.service.common.SysCommonService;
 import com.totyu.web.ws.TzsbWebService;
+import com.totyu.web.ws.api.ServiceAuth;
 import com.totyu.web.ws.api.ServiceConfig;
 import com.totyu.web.ws.api.ServiceConfig.ServiceField;
 import com.totyu.web.ws.api.ServiceConfigException;
@@ -30,11 +33,20 @@ import com.totyu.web.ws.api.WsException;
 
 @WebService(endpointInterface = "com.totyu.web.ws.TzsbWebService", name = "TzsbWsService", portName = "TzsbWsServicePort", serviceName = "TzsbWsService", targetNamespace = "http://ws.web.totyu.com", wsdlLocation = "/WEB-INF/wsdl/tzsbWsService.wsdl")
 public class TzsbWebServiceImpl implements TzsbWebService, InitializingBean {
+	private boolean logEnabled = false;
 	private final String WEB_SERVICE_DEAL_SUCCESS = "1";
 	private final String WEB_SERVICE_DEAL_FAILURE = "0";
 	private Pattern numberPattern = Pattern.compile("^-?\\d+$");
 	private Pattern floatPattern = Pattern.compile("^-?\\d+\\.?\\d*$");
 	private Pattern dateTimePattern =	Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}\\s[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}$");
+	private ThreadLocal<String> requestLogId = new ThreadLocal<String>();
+
+	@Autowired
+	private SysCommonService sysCommonService;
+
+	public void setLogEnabled(boolean logEnabled) {
+		this.logEnabled = logEnabled;
+	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -43,8 +55,12 @@ public class TzsbWebServiceImpl implements TzsbWebService, InitializingBean {
 	}
 	
 	public String tzsbTranService(String businessCode, String operationCode, String inputXML) throws WsException {
+		//保存接收数据
+		if(logEnabled){
+			String reqId = sysCommonService.writeWebServiceLog(true, null, inputXML);
+			requestLogId.set(reqId);
+		}
 		try {
-			//TODO 保存接收数据
 			Document requestDoc = DocumentHelper.parseText(inputXML); // 将字符串转为XML
 			//授权验证
             authValidation(requestDoc);
@@ -170,7 +186,12 @@ public class TzsbWebServiceImpl implements TzsbWebService, InitializingBean {
         Element message = tran.addElement("message");
         message.addElement("successFlag").setText(WEB_SERVICE_DEAL_FAILURE);
         message.addElement("result").setText(errorInfo);
-        return document.asXML();
+        String result = document.asXML();
+		if(logEnabled){
+	        String reqId = requestLogId.get();
+			sysCommonService.writeWebServiceLog(true, reqId, result);
+		}
+        return result;
 	}
 	
 	private String creatResponse(Object obj){
@@ -212,23 +233,29 @@ public class TzsbWebServiceImpl implements TzsbWebService, InitializingBean {
 		        }
 	        }
         }
-		return document.asXML();
+        String result = document.asXML();
+		if(logEnabled){
+	        String reqId = requestLogId.get();
+			sysCommonService.writeWebServiceLog(true, reqId, result);
+		}
+        return result;
 	}
 	
 
 	private void authValidation(Document doc) throws ServiceConfigException {
-		String authOrg = null;
 		String authName = null;
 		String authPassword = null;
+		String authOrg = null;
 		try {
-			authOrg = doc.selectSingleNode("/tran/message/authOrg").getText();
 			authName = doc.selectSingleNode("/tran/message/authName").getText();
 			authPassword = doc.selectSingleNode("/tran/message/authPassword").getText();
+			authOrg = doc.selectSingleNode("/tran/message/authOrg").getText();
 		} catch (Exception e) {
 			throw new ServiceConfigException("获取认证信息出错");
 		}
-		if (!"1001".equals(authOrg) || !"test".equals(authName)
-				|| !"test111111".equals(authPassword)) {
+		
+		ServiceAuth auth = WebServiceHelper.getServiceAuth(authName);
+		if (null == auth || !auth.getOrg().equals(authOrg) || !auth.getPassword().equals(authPassword)) {
 			throw new ServiceConfigException("认证失败");
 		}
 	}

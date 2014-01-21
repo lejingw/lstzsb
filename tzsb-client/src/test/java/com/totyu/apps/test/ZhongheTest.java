@@ -27,7 +27,7 @@ public class ZhongheTest {
 	private final String POST_AREA = "320000";
 	private TestVo testData = null;
 	
-	@Before
+	//@Before
 	public void initConfig(){
 		WebServiceClientHelper.init();
 		
@@ -36,7 +36,7 @@ public class ZhongheTest {
 		testData.setLimit(2222);
 	}
 	
-	@Test
+	//@Test
 	public void test01(){
 		try{
 			ZhongheService zhongheWebServiceClient = new ZhongheWsService().getTzsbServiceHttpPort();

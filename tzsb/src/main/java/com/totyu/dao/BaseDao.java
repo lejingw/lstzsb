@@ -213,6 +213,7 @@ public class BaseDao extends SqlMapClientDaoSupport {
 			conn.commit();
 			return obj;
 		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				if (null != conn) {
 					conn.rollback();
@@ -229,6 +230,7 @@ public class BaseDao extends SqlMapClientDaoSupport {
 					conn.close();
 				}
 			} catch (SQLException e1) {
+				e1.printStackTrace();
 				throw new RuntimeException("关闭数据库连接失败");
 			}
 		}

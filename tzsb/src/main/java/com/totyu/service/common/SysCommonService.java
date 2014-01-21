@@ -51,6 +51,11 @@ public interface SysCommonService {
 	 * 根据 id 获取上传文件信息
 	 */
 	UploadFile getUploadFile(String id);
+
+	/**
+	 * web service调用日志
+	 */
+	String writeWebServiceLog(boolean inOutFlag, String respId, String msg);
 	/**
 	 * 获取单位信息
 	 */

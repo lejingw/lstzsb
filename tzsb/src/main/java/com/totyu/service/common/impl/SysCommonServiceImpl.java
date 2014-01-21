@@ -81,6 +81,14 @@ public class SysCommonServiceImpl implements SysCommonService {
 		return sysCommonDao.getUploadFile(id);
 	}
 	/**
+	 * web service调用日志
+	 */
+	public String writeWebServiceLog(boolean inOutFlag, String respId, String msg){
+		//t_xt_webservice_log
+		//id, inoutFlag, partIndex, msg, req_date, respId
+		return sysCommonDao.writeWebServiceLog(inOutFlag, respId, msg);
+	}
+	/**
 	 * 获取组织信息
 	 */
 	public Dwxx getDwxxById(String dwid){

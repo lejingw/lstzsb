@@ -491,14 +491,14 @@ function checkTable2(tblId, chkallId, chkName, multiSelectFlag, rowSelectFun, db
  */
 function createPagingToolbar(formId, start, limit, totalCount){
 	if(!totalCount || totalCount<=0){
-		document.write("<input type='hidden' name='start' value='" + start + "'/><input type='hidden' name='limit' value='" + limit + "'/><font color='red'>未找到记录</font>");
+		document.write("<input type='hidden' name='_query_' value='1'/><font color='red'>未找到记录</font>");
 		return ;
 	}
 	var totalPageCount = Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1:0);
 	var pageIndex = Math.floor((start+1) / limit) + ((start+1) % limit > 0 ? 1:0);
 	
 	var html = [];
-	html.push("<div class='pageNumDiv'><input type='hidden' id='start' name='start' value='"+start+"'/><input type='hidden' id='limit' name='limit' value='"+limit+"'/>");
+	html.push("<div class='pageNumDiv'><input type='hidden' name='_query_' value='1'/><input type='hidden' id='start' name='start' value='"+start+"'/><input type='hidden' id='limit' name='limit' value='"+limit+"'/>");
 	html.push("<div class='f_l mt_10 gray  lineH_40'>总共"+totalCount+"条记录，每页"+limit+"条，第"+pageIndex+"/"+totalPageCount+"页 </div>");
 	html.push("<div class='manu f_r' id='_pagingToolbar'>");
 	html.push("</div></div>");
@@ -506,14 +506,34 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	
 	function forw(start){
 		$("#start").val(start);
-		jQuery("#"+formId).clearForm();
-		jQuery("#"+formId).submit();
+		var param = parseURLParam();
+		var href = window.location.href;
+		var mark = href.indexOf('#');
+		if(mark > -1){
+			href = href.substr(0, mark);
+		}
+		mark = href.indexOf('?');
+		if(mark > 0){
+			href = href.substr(0, mark);
+		}
+		param['start'] = start;
+		var firstFlag = true;
+		for(var p in param){
+			if(!firstFlag){
+				href += "&";
+			}else{
+				href += "?";
+				firstFlag = false;
+			}
+			href += p + "=" + param[p];
+		}
+		window.location = decodeURI(href);
 	}
 	var prePageLink = null;
 	if(1>=pageIndex){
 		prePageLink = $("<span class='disabled'>&lt; 上一页</span>");
 	}else{
-		prePageLink = $("<a href='#'>&lt; 上一页</a>");
+		prePageLink = $("<a href='javascript:void(0);'>&lt; 上一页</a>");
 	}
 	prePageLink.appendTo($("#_pagingToolbar")).click(function(){
 		if(1>=pageIndex)	return ;
@@ -524,7 +544,7 @@ function createPagingToolbar(formId, start, limit, totalCount){
 		if(pageIndex == page){
 			$("<span class='current'>"+page+"</span>").appendTo($("#_pagingToolbar"));
 		}else{
-			$("<a href='#'>"+page+"</a>").appendTo($("#_pagingToolbar")).click(function(){
+			$("<a href='javascript:void(0);'>"+page+"</a>").appendTo($("#_pagingToolbar")).click(function(){
 				forw((page-1)*limit);
 			});
 		}
@@ -551,7 +571,7 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	if(pageIndex>=totalPageCount){
 		nextPageLink = $("<span class='disabled'>下一页 &gt;</span>");
 	}else{
-		nextPageLink = $("<a href='#'>下一页 &gt;</a>");
+		nextPageLink = $("<a href='javascript:void(0);'>下一页 &gt;</a>");
 	}
 	nextPageLink.appendTo($("#_pagingToolbar")).click(function(){
 		if(pageIndex>=totalPageCount)	return ;
@@ -567,7 +587,7 @@ function createPagingToolbar(formId, start, limit, totalCount){
 	$("<span class='ml_10'>转到第</span>").appendTo($("#_pagingToolbar"));
 	$("<input name='' type='text' id='_pageIndex'/>").appendTo($("#_pagingToolbar")).keypress(function(e){if(e.keyCode != 13)return ;return goToPage();});
 	$("<span class='mr_10'>页</span>").appendTo($("#_pagingToolbar"));
-	$("<a href='#'>跳转</a>").appendTo($("#_pagingToolbar")).click(goToPage);
+	$("<a href='javascript:void(0);'>跳转</a>").appendTo($("#_pagingToolbar")).click(goToPage);
 	
 }
 /**
@@ -641,13 +661,14 @@ function parseURLParam() {
 	var href = decodeURI(window.location.href);
 	var ret = {};
 	var mark = href.indexOf('?');
-	
-	var subUrl = href.substring(mark + 1);
-	var urlArray = subUrl.split('&');
-	for (var i = 0; i < urlArray.length; i++) {
-		if (urlArray[i]) {
-			var param = urlArray[i].split('=');
-	    	ret[param[0]] = param[1];
+	if(mark > -1){
+		var subUrl = href.substring(mark + 1);
+		var urlArray = subUrl.split('&');
+		for (var i = 0; i < urlArray.length; i++) {
+			if (urlArray[i]) {
+				var param = urlArray[i].split('=');
+				ret[param[0]] = param[1];
+			}
 		}
 	}
 	return ret;

@@ -62,6 +62,16 @@ public interface SysCommonDao {
 	 */
 	void updateLoadFiles(String billCode, String headid, List<String> saveIdList, List<String> deleteIdList, String userid);
 	/**
+	 * web service调用日志
+	 * @param inOutFlag
+	 * @param respId
+	 * @param msg
+	 * @param createId
+	 * @param createOrg
+	 * @return
+	 */
+	String writeWebServiceLog(final boolean inOutFlag, final String respId, final String msg);
+	/**
 	 * 获取组织信息
 	 */
 	Dwxx getDwxxById(String dwid);

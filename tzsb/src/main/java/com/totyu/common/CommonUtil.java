@@ -262,51 +262,24 @@ public class CommonUtil {
 	}
 	
 	/**
-	 * 添加start和limit key
-	 * @param keys
-	 * @return
-	 */
-	private static String[] addStartLimitKey(String[] keys){
-		if(null == keys){
-			keys = new String[0];
-		}
-	    String[] pageKeys = Arrays.copyOf(keys, keys.length + 2);
-
-		pageKeys[keys.length] = "start";
-		pageKeys[keys.length + 1] = "limit";
-		return pageKeys;
-	}
-	
-	/**
 	 * 从request获取值
 	 * @param req
 	 * @param condition
 	 * @param keys
 	 */
-	private static void getRequestParameter(HttpServletRequest req, Map<String, String> condition, String... keys) {
-		if(null == keys||keys.length<1){
-			return ;
-		}
-		try {
+	private static Map<String, String> getRequestParameter(HttpServletRequest req, String... keys) {
+		Map<String, String> condition = new HashMap<String, String>();
+		if(null != keys && keys.length > 0){
 			for(String key : keys){
 				String tmp = getParameterNull(req, key);
 				if(null != tmp){
 					condition.put(key, tmp);//new String(tmp.getBytes("ISO-8859-1"),"utf-8"));
 				}
 			}
-			condition.put("start", getParameterNull(req, "start"));
-			condition.put("limit", getParameterNull(req, "limit"));
-		} catch (Exception e) {
-			logger.error(e);
 		}
-	}
-	private static void setDefaultStartLimit(Map<String, String> condition, String startDefaultValue, String limitDefaultValue) {
-		if(StringUtil.isEmpty(condition.get("start"))){
-			condition.put("start", startDefaultValue);
-		}
-		if(StringUtil.isEmpty(condition.get("limit"))){
-			condition.put("limit", limitDefaultValue);
-		}
+		condition.put("start", getParameterNull(req, "start"));
+		condition.put("limit", getParameterNull(req, "limit"));
+		return condition;
 	}
 	/**
 	 * 从request获取查询条件，包含start（默认为0）、limit（默认15）参数
@@ -315,10 +288,8 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static Map<String, String> getConditionForPage(HttpServletRequest req, String... keys) {
-		keys = addStartLimitKey(keys);
-		Map<String, String> condition = new HashMap<String, String>();
-		getRequestParameter(req, condition, keys);
-		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
+		Map<String, String> condition = getRequestParameter(req, keys);
+		setDefaultStartLimit(condition);
 		return condition;
 	}
 
@@ -339,16 +310,43 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static Map<String, String> getConditionForPageSession(Object controller, HttpServletRequest req, String... keys) {
-		keys = addStartLimitKey(keys);
-		Map<String, String> condition = new HashMap<String, String>();
-		getRequestParameter(req, condition, keys);
-		getSessionParameter(controller, req, condition, keys);
-		setDefaultStartLimit(condition, Global.PAGE_DEFAULT_START, Global.PAGE_DEFAULT_LIMIT);
+		Map<String, String> condition = getRequestParameter(req, keys);
+		
+		String conditionSessionKey = getConditionSessionKey(controller);
+		// 检查是否进行页面查询
+		HttpSession session = req.getSession();
+		if (isQuerys(req)) {
+			//查询的话，从第一页开始
+			condition.put("start", Global.PAGE_DEFAULT_START);
+		}else{
+			// 从session获取查询条件
+			Object obj = session.getAttribute(conditionSessionKey);
+			if (null != obj && obj instanceof Map) {
+				Map<String, String> ssnCondition = (Map<String, String>) obj;
+				for (String key : ssnCondition.keySet()) {
+					if(StringUtil.isEmpty(condition.get(key))){
+						condition.put(key, ssnCondition.get(key));
+					}
+				}
+			}
+		}
+		setDefaultStartLimit(condition);
+		session.setAttribute(conditionSessionKey, condition);
+		
+		//拷贝session中的conditon对象，防止修改
 		Map<String, String> map = new HashMap<String, String>();
 		for(String key : condition.keySet()){
 			map.put(key, condition.get(key));
 		}
 		return map;
+	}
+	private static void setDefaultStartLimit(Map<String, String> condition) {
+		if(StringUtil.isEmpty(condition.get("start"))){
+			condition.put("start", Global.PAGE_DEFAULT_START);
+		}
+		if(StringUtil.isEmpty(condition.get("limit"))){
+			condition.put("limit", Global.PAGE_DEFAULT_LIMIT);
+		}
 	}
 
 	private static String getConditionSessionKey(Object controller){
@@ -359,37 +357,11 @@ public class CommonUtil {
 		}
 	}
 
-	private static boolean isUnQuerys(Map<String, String> condition){
-		if(StringUtil.isNotEmpty(condition.get("start")) || StringUtil.isNotEmpty(condition.get("limit"))){
-        	 return false;
+	private static boolean isQuerys(HttpServletRequest req){
+		if("1".equals(CommonUtil.getParameterNull(req, "_query_"))){
+			return true;
 		}
-		return true;
-	}
-
-	/**
-     * 从session获取值
-     * @param req
-     * @param condition
-     * @param keys
-     */
-	@SuppressWarnings("unchecked")
-	public static void getSessionParameter(Object controller, HttpServletRequest req, Map<String, String> condition, String... keys) {
-		if (null == keys || keys.length < 1) {
-			return;
-		}
-		String conditionSessionKey = getConditionSessionKey(controller);
-		// 检查是否进行页面查询
-		HttpSession session = req.getSession();
-		if (isUnQuerys(condition)) {// 显示页面，从session获取查询条件
-			Object obj = session.getAttribute(conditionSessionKey);
-			if (null != obj && obj instanceof Map) {
-				Map<String, String> ssnCondition = (Map<String, String>) obj;
-				for (String key : ssnCondition.keySet()) {
-					condition.put(key, ssnCondition.get(key));
-				}
-			}
-		}
-		session.setAttribute(conditionSessionKey, condition);
+		return false;
 	}
 
 //	private static void aaa(){

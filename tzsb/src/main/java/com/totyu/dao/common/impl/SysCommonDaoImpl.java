@@ -1,14 +1,18 @@
 package com.totyu.dao.common.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.ibatis.sqlmap.client.SqlMapSession;
 import com.totyu.dao.BaseDao;
 import com.totyu.dao.common.SysCommonDao;
+import com.totyu.dao.common.TransactionAction;
 import com.totyu.vo.common.Dict;
 import com.totyu.vo.common.Org;
 import com.totyu.vo.common.Parameter;
@@ -16,6 +20,7 @@ import com.totyu.vo.common.SelectorOption;
 import com.totyu.vo.common.User;
 import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
+import com.totyu.web.util.DateUtil;
 
 @Repository
 public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
@@ -98,8 +103,39 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 		executeBatchUpdate("SysCommon.updateLoadFiles", addFileList);
 		executeBatchDelete("SysCommon.deleteLoadFiles", deleteIdList);
 	}
-	private String getRelativeFilename(String fileName) {
-		return System.currentTimeMillis() + "_" + fileName;
+	/**
+	 * web service调用日志
+	 * @param inOutFlag
+	 * @param respId
+	 * @param msg
+	 * @param createId
+	 * @param createOrg
+	 * @return
+	 */
+	public String writeWebServiceLog(final boolean inOutFlag, final String respId, final String msg){
+		return (String)executeOutTransaction(new TransactionAction() {
+			public Object executeAction(SqlMapSession session) throws SQLException {
+				final int PART_LENGTH = 60000;
+				String pk = ""+System.currentTimeMillis();
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("id", pk);
+				map.put("inoutFlag", inOutFlag?"1":"0");
+				map.put("respId", respId);
+				map.put("reqDate", DateUtil.formatSdf1(new Date()));
+				for(int i=0;i<(int)Math.ceil((0.0 + msg.length())/PART_LENGTH);i++){
+					int beginIndex = i*PART_LENGTH;
+					int endIndex = beginIndex + PART_LENGTH;
+					if(endIndex>msg.length()){
+						endIndex = msg.length();
+					}
+					map.put("partIndex", ""+i);
+					map.put("msg", msg.substring(beginIndex, endIndex));
+					System.out.print(msg.substring(beginIndex, endIndex));
+					session.insert("SysCommon.saveWebServiceLog", map);
+				}
+				return pk;
+			}
+		});
 	}
 	/**
 	 * 获取单据上传文件列表
