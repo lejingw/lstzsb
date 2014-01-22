@@ -15,7 +15,7 @@
 	
 	<bean id="hello3Service" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
 	    <property name="serviceInterface" value="com.totyu.apps.ws.hello3.Hello3Service"/>
-	    <property name="wsdlDocumentUrl" value="http://localhost:8088/lstzsb/Hello3Service?wsdl"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/Hello3Service?wsdl"/>
 	    <property name="namespaceUri" value="http://ws.web.totyu.com"/>
 	    <property name="serviceName" value="Hello3WsService"/>
 	    <property name="portName" value="Hello3ServicePort"/>
@@ -23,17 +23,17 @@
 	    <property name="handlerResolver" ref="soapHandlerResolver"/>
 	</bean>
 	
-	<bean id="tzsbWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-	    <property name="serviceInterface" value="com.totyu.apps.ws.tzsb.TzsbWebService"/>
-	    <property name="wsdlDocumentUrl" value="http://localhost:8088/lstzsb/TzsbWsService?wsdl"/>
+	<bean id="tzsbService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.apps.ws.tzsb.TzsbService"/>
+	    <property name="wsdlDocumentUrl" value="http://localhost:8080/lstzsb/TzsbWsService?wsdl"/>
 	    <property name="namespaceUri" value="http://ws.web.totyu.com"/>
 	    <property name="serviceName" value="TzsbWsService"/>
 	    <property name="portName" value="TzsbWsServicePort"/>
 	    <property name="lookupServiceOnStartup" value="false"/>
 	</bean>
 	
-	<bean id="zhongheWebServiceClient" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-	    <property name="serviceInterface" value="com.totyu.apps.ws.client.ZhongheWebServiceClient"/>
+	<bean id="zhongheService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.totyu.apps.ws.zhonghe.ZhongheService"/>
 	    <property name="wsdlDocumentUrl" value="http://61.153.67.243:8080/scdeap/services/tzsbService?wsdl"/>
 	    <property name="namespaceUri" value="http://localhost:88/scdeap/services"/>
 	    <property name="serviceName" value="tzsbService"/>
