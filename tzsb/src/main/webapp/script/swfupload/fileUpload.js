@@ -234,7 +234,6 @@ function UploadFiles(config) {
 		cssNode.media = 'screen';
 		cssNode.href = ctxPath + "/style/foxibox/jquery-foxibox-0.2.css?t="+new Date().getTime();
 		document.getElementsByTagName('head')[0].appendChild(cssNode);
-		
 		//$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
 		$.getScript(ctxPath + "/script/foxibox/jquery-foxibox-0.2.js", function(data, status){
 			obj.loadFoxiboxFlag = true;

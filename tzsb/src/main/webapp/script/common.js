@@ -1033,11 +1033,23 @@ function msg(key){
 }
 /**
  * 加载图片显示框架
+ * aName 可以为空
  */
-function loadPictureFrame(tblId){
-	$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
+function loadPictureFrame(tblId, aName){
+	//兼容IE
+	var cssNode = document.createElement('link');
+	cssNode.rel = 'stylesheet';
+	cssNode.type = 'text/css';
+	cssNode.media = 'screen';
+	cssNode.href = ctxPath + "/style/foxibox/jquery-foxibox-0.2.css";
+	document.getElementsByTagName('head')[0].appendChild(cssNode);
+	//$("<link>").attr({rel:"stylesheet", type:"text/css", href:ctxPath + "/style/foxibox/jquery-foxibox-0.2.css"}).appendTo("head");
 	$.getScript(ctxPath + "/script/foxibox/jquery-foxibox-0.2.js", function(data, status){
-			$('#'+tblId+' tr td a').foxibox();
+			if(aName){				
+				$("#"+tblId+" tr td a[name='" + aName + "']").foxibox();
+			}else{				
+				$("#"+tblId+" tr td a").foxibox();
+			}
 		});
 }
 /**

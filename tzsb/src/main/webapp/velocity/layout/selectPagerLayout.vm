@@ -104,8 +104,8 @@ function PagingSelector(config){
 		return false;
 	}
     function loadPagerData(){
-    	for(var i=$i(config.tableId).rows.length-1;i>0;i--){
-    		$i(config.tableId).deleteRow(i);
+    	for(var i=$n('chk').length-1;i>0;i--){
+			deleteRowByIndex(i, config.tableId);
     	}
     	config.getPageData(startIpt.val(), limitIpt.val(), function(pager){
     		var data = pager.pageData;
@@ -146,7 +146,7 @@ function PagingSelector(config){
     function unselectRow(idx){
 		for(var i=0;i<$n("key2").length;i++){
 			if($n("key2")[i].value == $n('key')[idx].value){
-		    	$i('tbl').deleteRow(i+1);
+				deleteRowByIndex(i+1, 'tbl');
 			}
 		}
 		resetRowCSS("tbl");
