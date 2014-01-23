@@ -75,7 +75,8 @@ function initListView(){
 	       {id:'btnReset', fn:function(){$("#frm").clearForm();}},
 	       {id:'btnAdd', code:'add', fn:function(){window.location = ctxPath + "/qiye/jbxx/scxkzgl/toAdd.do";}},
 	       {id:'btnDelete',	code:'delete', fn:deleteBills},
-	       {id:'btnExport',	code:'export', fn:function(){window.location = ctxPath + "/qiye/jbxx/scxkzgl/export.do";}}
+	       {id:'btnExport',	code:'export', fn:function(){window.location = ctxPath + "/qiye/jbxx/scxkzgl/export.do";}},
+	       {id:'btnTest', fn:function(){window.location = ctxPath + "/qiye/test/localMsg/show.do";}}
 	  ]);
 }
 /*********************************************编辑页面JS*************************************************/

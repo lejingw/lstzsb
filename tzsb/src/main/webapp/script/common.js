@@ -989,19 +989,21 @@ function initRight(modelCode, btnCfgArr){
 		}
 	}
 }
-
-function msg(key){
-	if(!key)	return "";
+function getPathArr(){
 	var locationStr = window.location.href;
 	//var reg = eval("/^http(s)?\\:\\/\\/(\\w+\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
-	var reg = eval("/^http(s)?\\:\\/\\/[A-Za-z0-9-_%&\?\/.=]+(\\:\\d+)?\\" + ctxPath + "\\/(menhu|qiye|jiancha|xiangzhen|hangye)\\//gi");
+	var reg = eval("/^http(s)?\\:\\/\\/[A-Za-z0-9-_%&\?\/.=]+(\\:\\d+)?\\" + ctxPath + "\\//gi");
 	locationStr = locationStr.replace(reg, "");
-	var pathArr = locationStr.split("/");
-//	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[0]] == 'undefined' || typeof JSLocale[pathArr[0]][pathArr[1]] == 'undefined')
+	return locationStr.split("/");
+}
+function msg(key){
+	if(!key)	return "";
+	var pathArr = getPathArr();
+//	if(typeof JSLocale == 'undefined' || typeof JSLocale[pathArr[1]] == 'undefined' || typeof JSLocale[pathArr[1]][pathArr[2]] == 'undefined')
 //		return "未找到提示信息资源";
 	var result = "", useGlobalFlag=false;
 	try{
-		result = eval("JSLocale."+pathArr[0]+"."+pathArr[1]+"."+key);
+		result = eval("JSLocale."+pathArr[1]+"."+pathArr[2]+"."+key);
 		if(null == result){
 			useGlobalFlag = true;
 		}

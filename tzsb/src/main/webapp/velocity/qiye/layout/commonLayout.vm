@@ -25,11 +25,10 @@
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/engine.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/util.js?date=$!dateParam" charset="UTF-8"></script>
 	<script language="javascript" type="text/javascript" src="${rc.contextPath}/dwr/interface/SysCommonDwr.js" charset="UTF-8"></script>
-	<script language='javascript' type="text/javascript" src='${rc.contextPath}/js/common/menu.js' charset="UTF-8"></script>
-    <script>
-    var ctxPath = "${rc.contextPath}";
-    dwr.engine.setTimeout(600000);
-    dwr.engine.setErrorHandler(function(msg, err){showLayer(false);if("Timeout" == msg){alert("系统执行超时...");}else{alert(msg);}});
+	<script>
+	var ctxPath = "${rc.contextPath}";
+	dwr.engine.setTimeout(600000);
+	dwr.engine.setErrorHandler(function(msg, err){showLayer(false);if("Timeout" == msg){alert("系统执行超时...");}else{alert(msg);}});
 	
 	$(document).ready(function(){
 		$(".shrinkBtn").click(function(){
@@ -39,10 +38,16 @@
 				$(".select_div").show();
 			}
 		});
+		if(getPathArr&&parent&&parent.navigateToMenu){
+			var path = getPathArr();
+			if(path && path.length>=3){
+				parent.navigateToMenu(path[0], path[1], path[2]);
+			}
+		}
 	});
-    </script>
-    #foreach($item in $!jsfiles)
-    <script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>
+	</script>
+	#foreach($item in $!jsfiles)
+	<script language="javascript" type="text/javascript" src='$item' charset="UTF-8"></script>
 	#end
 </head>
 <body>

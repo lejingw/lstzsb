@@ -32,6 +32,7 @@
   <div class="btn num4" id='btnUploadExcel'><a href="#">上传Excel</a></div>
   <div class="btn num4" id='btnUploadFile'><a href="#">上传附件</a></div>
   <div class="btn num4" id='btnUploadPic'><a href="#">上传图片</a></div>
+  <div class="btn num4" id='btn4'><a href="#">跳转联动菜单</a></div>
 </div>
 </form>
 <script>
@@ -70,7 +71,9 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+	$("#btn4").click(function(){
+		window.location = ctxPath + "/qiye/test/localMsg/show.do";
+	});
 
 	var uploadFiles = new UploadFiles({
 			placeHolder:'uploadPicDivId',

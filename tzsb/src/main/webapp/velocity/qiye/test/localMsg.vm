@@ -10,6 +10,12 @@
 	<br>
 	<br>
 <input type='button' value='调用web service' id='btn3'>
+	<br>
+	<br>
+<input type='button' value='跳转联动菜单1' id='btn4'>
+	<br>
+	<br>
+<input type='button' value='跳转联动菜单2' id='btn5'>
 
 <script>
 function checkUrl(str) { 
@@ -39,6 +45,12 @@ $(document).ready(function(){
 		TestDwr.testWebService(function(data){
 			alert(data);
 		});
+	});
+	$("#btn4").click(function(){
+		window.location = ctxPath + "/qiye/jbxx/scxkzgl/init.do";
+	});
+	$("#btn5").click(function(){
+		window.location = ctxPath + "/qiye/test/uploadExcel/show.do";
 	});
 });
 </script>

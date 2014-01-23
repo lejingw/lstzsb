@@ -57,6 +57,7 @@
 <div class="operateBtnDiv">
   <div class="btn num2" id='btnAdd'><a href="#">添加</a></div>
   <div class="btn num2" id='btnDelete'><a href="#">删除</a></div>
+  <div class="btn num4" id='btnTest'><a href="#">跳转联动菜单</a></div>
   <div class="btn num2" id='btnExport'><a href="#">导出</a></div>
 </div>
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="tableTextCenter" id="table_tab" >
