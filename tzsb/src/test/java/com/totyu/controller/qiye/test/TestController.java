@@ -139,7 +139,7 @@ public class TestController extends BaseController {
 					}
 				}),
 				//第8列数据库key-value检查
-				new ExcelColumnCheckRule(0, 7, false, new ExcelDbrefrenceCheck("t_xt_sjzdsjx", "item_key", "item_value", "entry_code='sblx'"), true)
+				new ExcelColumnCheckRule(0, 7, false, new ExcelDbrefrenceCheck("t_sys_dict_item", "item_key", "item_value", "entry_code='sblx'"), true)
 		};
 		return Arrays.asList(excelCheckModes);
 	}

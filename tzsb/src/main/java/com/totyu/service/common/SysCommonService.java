@@ -6,9 +6,7 @@ import com.totyu.common.Pager;
 import com.totyu.vo.common.Dict;
 import com.totyu.vo.common.Org;
 import com.totyu.vo.common.Parameter;
-import com.totyu.vo.common.SelectorOption;
 import com.totyu.vo.common.User;
-import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
 
 
@@ -42,7 +40,7 @@ public interface SysCommonService {
 	/**
 	 * 获取单据上传文件列表
 	 */
-	List<UploadFile> getUploadFileList(String billCode, String headid);
+	List<UploadFile> getUploadFileList(String billCode, String billId);
 	/**
 	 * 获取最新的50张图片
 	 */
@@ -57,25 +55,7 @@ public interface SysCommonService {
 	 */
 	String writeWebServiceLog(boolean inOutFlag, String respId, String msg);
 	/**
-	 * 获取单位信息
-	 */
-	Dwxx getDwxxById(String dwid);
-	/**
 	 * 获取单位分页信息
 	 */
 	Pager getOrgPagerData(String orgType, String start, String limit, String queryName);
-
-	/**
-	 * 获取设备种类下拉列表数据
-	 * 
-	 * @return 设备类型一览数据
-	 */
-	List<SelectorOption> getSbzl();
-	
-	/**
-	 * 获取设备类别下拉列表数据
-	 * 
-	 * @return 设备类别一览数据
-	 */
-	List<SelectorOption> getSblb(String fjdm, String dmjb);
 }

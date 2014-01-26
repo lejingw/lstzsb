@@ -33,10 +33,7 @@ function selectRow(checked, curId, idxArr){
 	}
 }
 function toEditPage(index){
-//	if("9" == $n("status")[index].value)
-//		window.location = ctxPath + "/qiye/jbxx/scxkzgl/toView.do?billid=" + $n("billid")[index].value;
-//	else
-		window.location = ctxPath + "/qiye/jbxx/scxkzgl/toEdit.do?billid=" + $n("billid")[index].value;
+	window.location = ctxPath + "/qiye/jbxx/scxkzgl/toEdit.do?billid=" + $n("billid")[index].value;
 }
 function deleteBills(){
 	var idxArr = getSelectIndexs("chk");

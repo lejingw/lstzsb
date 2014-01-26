@@ -14,9 +14,7 @@ import com.totyu.service.common.SysCommonService;
 import com.totyu.vo.common.Dict;
 import com.totyu.vo.common.Org;
 import com.totyu.vo.common.Parameter;
-import com.totyu.vo.common.SelectorOption;
 import com.totyu.vo.common.User;
-import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
 import com.totyu.web.cache.OrgCache;
 
@@ -65,8 +63,8 @@ public class SysCommonServiceImpl implements SysCommonService {
 	/**
 	 * 获取单据上传文件列表
 	 */
-	public List<UploadFile> getUploadFileList(String billCode, String headid){
-		return sysCommonDao.getUploadFileList(billCode, headid);
+	public List<UploadFile> getUploadFileList(String billCode, String billId){
+		return sysCommonDao.getUploadFileList(billCode, billId);
 	}
 	/**
 	 * 获取最新的50张图片
@@ -88,13 +86,6 @@ public class SysCommonServiceImpl implements SysCommonService {
 		//id, inoutFlag, partIndex, msg, req_date, respId
 		return sysCommonDao.writeWebServiceLog(inOutFlag, respId, msg);
 	}
-	/**
-	 * 获取组织信息
-	 */
-	public Dwxx getDwxxById(String dwid){
-		return sysCommonDao.getDwxxById(dwid);
-	}
-
 	/**
 	 * 获取单位分页信息
 	 */
@@ -123,24 +114,4 @@ public class SysCommonServiceImpl implements SysCommonService {
 		pager.setPageData(list);
 		return pager;
 	}
-
-	/**
-	 * 获取设备类型下拉列表数据
-	 * 
-	 * @return 设备类型一览数据
-	 */
-	@Override
-	public List<SelectorOption> getSbzl() {
-		return sysCommonDao.getSbzl();
-	}
-	
-	/**
-	 * 获取设备类别下拉列表数据
-	 * 
-	 * @return 设备类别一览数据
-	 */
-	@Override
-	public List<SelectorOption> getSblb(String fjdm, String dmjb) {
-		return sysCommonDao.getSblb(fjdm, dmjb);
-	}	
 }

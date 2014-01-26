@@ -7,7 +7,6 @@ import com.totyu.vo.common.Org;
 import com.totyu.vo.common.Parameter;
 import com.totyu.vo.common.SelectorOption;
 import com.totyu.vo.common.User;
-import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
 
 
@@ -43,7 +42,7 @@ public interface SysCommonDao {
 	/**
 	 * 获取单据上传文件列表
 	 */
-	List<UploadFile> getUploadFileList(String billCode, String headid);
+	List<UploadFile> getUploadFileList(String billCode, String billId);
 	/**
 	 * 获取最新的50张图片
 	 * @return
@@ -60,7 +59,7 @@ public interface SysCommonDao {
 	/**
 	 * 更新上传文件
 	 */
-	void updateLoadFiles(String billCode, String headid, List<String> saveIdList, List<String> deleteIdList, String userid);
+	void updateLoadFiles(String billCode, String billId, List<String> saveIdList, List<String> deleteIdList, String userid);
 	/**
 	 * web service调用日志
 	 * @param inOutFlag
@@ -71,10 +70,6 @@ public interface SysCommonDao {
 	 * @return
 	 */
 	String writeWebServiceLog(final boolean inOutFlag, final String respId, final String msg);
-	/**
-	 * 获取组织信息
-	 */
-	Dwxx getDwxxById(String dwid);
 
 	/**
 	 * 获取设备种类下拉列表数据

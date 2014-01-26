@@ -13,12 +13,10 @@ import org.springframework.stereotype.Controller;
 import com.totyu.common.CommonUtil;
 import com.totyu.common.Pager;
 import com.totyu.common.excel.ExcelUtil;
-import com.totyu.common.exception.TzsbException;
 import com.totyu.service.common.ExcelUtilService;
 import com.totyu.service.common.SysCommonService;
 import com.totyu.vo.common.Dict;
 import com.totyu.vo.common.Org;
-import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
 import com.totyu.vo.common.SelectorOption;
 import com.totyu.web.cache.DictCache;
@@ -45,8 +43,8 @@ public class SysCommonDwr {
 	 * 获取单据上传文件
 	 */
 	@RemoteMethod
-	public List<UploadFile> getUploadFileList(String billCode, String headid){
-		List<UploadFile> list = sysCommonService.getUploadFileList(billCode, headid);
+	public List<UploadFile> getUploadFileList(String billCode, String billId){
+		List<UploadFile> list = sysCommonService.getUploadFileList(billCode, billId);
 		return list;
 	}
 	@RemoteMethod
@@ -97,13 +95,6 @@ public class SysCommonDwr {
 		}
 		return sltList;
 	}
-	/**
-	 * 获取单位信息
-	 */
-	@RemoteMethod
-	public Dwxx getDwxxById(String dwid){
-		return sysCommonService.getDwxxById(dwid);
-	}
 
 	/**
 	 * 获取单位分页信息
@@ -112,36 +103,5 @@ public class SysCommonDwr {
 	public Pager<Org> getOrgPagerData(String orgType, String start, String limit, String queryName){
 		Pager pager = sysCommonService.getOrgPagerData(orgType, start, limit, queryName);
 		return pager;
-	}
-	
-	/**
-	 * 获取设备种类下拉列表数据
-	 * 
-	 * @return 设备种类一览数据
-	 */
-	@RemoteMethod
-	public List<SelectorOption> getSbzl() {
-		try{
-			return sysCommonService.getSbzl();
-		} catch(Exception e){
-			throw new TzsbException(e.getMessage());
-		}
-	}
-	
-	/**
-	 * 根据设备类别获取设备品种options
-	 * 
-	 * @param sblb:设备类别
-	 * @param dmjb:代码级别
-	 * HtmlUtil.printOptions(
-	 * @return 设配品种options
-	 */
-	@RemoteMethod
-	public List<SelectorOption> getSbpz(String daima, String dmjb) {
-		try{
-			return sysCommonService.getSblb(daima, dmjb);
-		} catch(Exception e){
-			throw new TzsbException(e.getMessage());
-		}
 	}
 }

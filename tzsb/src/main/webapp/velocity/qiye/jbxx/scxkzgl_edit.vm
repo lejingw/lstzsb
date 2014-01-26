@@ -102,9 +102,7 @@ function setAddInitValues(){
 	$("#dwId").val('$!StringUtil.getOrgId($session)');
 	$("#dwmc").val('$!StringUtil.getOrgName($session)');
 	$("#txtStatus").val("保存");
-	SysCommonDwr.getDwxxById('$!StringUtil.getOrgId($session)', function(data){
-    	$("#dwdz").val(data.dwzcdzxx);
-    	$("#zzdz").val(data.dwzcdzxx);
-	});
+	$("#dwdz").val('dwzcdzxx');
+	$("#zzdz").val('dwzcdzxx');
 }
 </script>

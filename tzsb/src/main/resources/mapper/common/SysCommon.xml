@@ -6,7 +6,7 @@
 		$value$
 	</select>
 	
-	<!-- 获取当前特定单据编号的下标 -->
+	<!-- 获取当前特定单据编号的下标
 	<select id="SysCommon.getCurrentBillnoIndex" resultClass="string" parameterClass="map">
 		select concat(c.biz_index) as "bizIndex" from jat_sys_index c where c.biz_type = #bizType# and c.biz_code = #bizCode# and c.biz_date = #bizDate#
 	</select>
@@ -16,17 +16,18 @@
 	<update id="SysCommon.increaseIndex" parameterClass="map">
 		update jat_sys_index a set a.biz_index = a.biz_index + 1 where a.biz_type = #bizType# and a.biz_code = #bizCode# and a.biz_date = #bizDate#
 	</update>
-		
+	 -->
+	
 	<!-- 获取所有用户信息 -->
 	<select id="SysCommon.getAllUser" resultClass="com.totyu.vo.common.User">
-		select a.id as userid, a.zhanghao as usercode, a.xingming as username from t_xt_yonghu a
+ 		select a.id as id, a.userlabel as userlabel, a.username as username, a.password as password, a.orgid as orgid, a.status as status from t_sys_user a
 	</select>
 	<!-- 获取所有数据字典信息 -->
 	<select id="SysCommon.getAllDictItem" resultClass="com.totyu.vo.common.Dict">
-		select a.entry_code as 'entryCode', a.entry_name as 'entryName', a.entry_type as 'entryType', a.sfsxjg as 'treeFlag', case when a.sfsxjg = 1 then b.f_item_key else null end as 'parentKey', b.item_key as 'itemKey', b.item_value as 'itemValue', b.item_order as 'itemOrder'
-		from t_xt_sjzdlb a, t_xt_sjzdsjx b
+		select a.entry_code as 'entryCode', a.entry_name as 'entryName', a.entry_type as 'entryType', a.tree_flag as 'treeFlag', case when a.tree_flag = 1 then b.parent_key else null end as 'parentKey', b.item_key as 'itemKey', b.item_value as 'itemValue', b.item_order as 'itemOrder'
+		from t_sys_dict a, t_sys_dict_item b
 		where a.entry_code = b.entry_code and a.status = 1 and b.status = 1
-		order by a.entry_type, a.entry_code, b.f_item_key, b.item_order, b.item_key
+		order by a.entry_type, a.entry_code, b.parent_key, b.item_order, b.item_key
 	</select>
 	<!-- 获取所有系统参数 -->
 	<select id="SysCommon.getAllParameters" resultClass="com.totyu.vo.common.Parameter">
@@ -38,52 +39,31 @@
 	</select>
 	<!-- 保存上传文件数据 -->
 	<insert id="SysCommon.saveUploadFile" parameterClass="com.totyu.vo.sys.UploadFile">
-		insert into t_xt_fujian(laiyuan, lyid, shunxu, mingcheng, path, status)
-		values(#laiyuan#, #lyid#, #shunxu#, #mingcheng#, #path#, 1)
+		insert into t_sys_attachment(bill_code, bill_id, sort, file_name, path, status)
+		values(#billCode#, #billId#, #sort#, #fileName#, #path#, 1)
         <selectKey keyProperty="id">
-        	SELECT last_insert_id() as id
+        	select last_insert_id() as id
         </selectKey>
 	</insert>
 	<select id="SysCommon.getUploadFileList" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="map">
-		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.laiyuan=#billCode# and a.lyid=#headid# order by a.id
+		select a.id, a.file_name as 'fileName', a.path from t_sys_attachment a where a.bill_code=#billCode# and a.bill_id=#billId# order by a.id
 	</select>
 	<select id="SysCommon.getLatest50Pics" resultClass="com.totyu.vo.sys.UploadFile">
-		select a.id, a.mingcheng, a.path from t_xt_fujian a where a.shunxu=-1 and (lower(a.path) like '%.jpg' or lower(a.path) like '%.png'
+		select a.id, a.file_name as 'fileName', a.path from t_sys_attachment a where a.sort=-1 and (lower(a.path) like '%.jpg' or lower(a.path) like '%.png'
 			 or lower(a.path) like '%.jpeg' or lower(a.path) like '%.gif' or lower(a.path) like '%.bmp') order by a.id desc limit 0, 50
 	</select>
 	<select id="SysCommon.getUploadFile" resultClass="com.totyu.vo.sys.UploadFile" parameterClass="string">
-		select a.mingcheng, a.path from t_xt_fujian a where a.id=#value#
+		select a.file_name as 'fileName', a.path from t_sys_attachment a where a.id=#value#
 	</select>
 	<update id="SysCommon.updateLoadFiles" parameterClass="map">
-		update t_xt_fujian set laiyuan = #billCode#, lyid = #headid#, create_id = #userid#, create_date = now() where id = #id#
+		update t_sys_attachment set bill_code = #billCode#, bill_id = #billId#, create_id = #userid#, create_date = now() where id = #id#
 	</update>
 	<delete id="SysCommon.deleteLoadFiles" parameterClass="string">
-		delete from t_xt_fujian where id = #value#
+		delete from t_sys_attachment where id = #value#
 	</delete>
+	
 	<insert id='SysCommon.saveWebServiceLog' parameterClass="map">
 		insert into t_xt_webservice_log(id, inout_flag, part_index, msg, req_date, resp_id)
 		values(#id#, #inoutFlag#, #partIndex#, #msg#, #reqDate#, #respId#)
 	</insert>
-	<select id='SysCommon.getDwxxById' resultClass="com.totyu.vo.qiye.jbxx.Dwxx">
-		select * from (select d.id as 'orgId', d.mchxm as 'orgName', 0 as 'orgType', 0 as 'secondLevelFlag', d.dwzcdzxx as 'dwzcdzxx' from t_dw_dwxx d
-				union ALL
-				select e.id as 'orgId', e.xsdwmc as 'orgName', 0 as 'orgType', 1 as 'secondLevelFlag', f.dwzcdzxx as 'dwzcdzxx' from t_dw_ejdw e inner join t_dw_dwxx f on e.yjdw_id = f.id) aa
-		where aa.orgId = #value#
-	</select>
-	
-   	<!-- 获取特种设备种类-->
-    <select id="SysCommon.getSbzl" resultClass="com.totyu.vo.common.SelectorOption">
-			select dmb.daima as "value",
-				   dmb.mingcheng as "text"
-			from t_xt_tzsbfldmb dmb 
-			where (dmb.fjdm is null or dmb.fjdm ='') and dmb.dmjb = 1			
-    </select>
-    
-    <!-- 获取特种设备种类-->
-    <select id="SysCommon.getSblb" parameterClass="map" resultClass="com.totyu.vo.common.SelectorOption">
-			select dmb.daima as "value",
-				   dmb.mingcheng as "text"
-			from t_xt_tzsbfldmb dmb 
-			where dmb.fjdm= #fjdm# and dmb.dmjb = #dmjb#	
-    </select>   
 </sqlMap>

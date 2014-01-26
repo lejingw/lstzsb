@@ -186,7 +186,7 @@ function UploadFiles(config) {
 				if(obj.previewFlag){
 					fileUrl = ctxPath + file.path;
 				}
-				new UploadFileItem(PREFIX + file.id, file.mingcheng, fileUrl, true);
+				new UploadFileItem(PREFIX + file.id, file.fileName, fileUrl, true);
 			}
 			if(obj.previewFlag){
 				obj.reloadPicFrame();

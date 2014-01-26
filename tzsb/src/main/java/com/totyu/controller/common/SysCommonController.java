@@ -21,7 +21,7 @@ public class SysCommonController {
 	@RequestMapping("/download")
 	public void download(String id, Model model, HttpServletRequest req, HttpServletResponse res) {
 		UploadFile uploadFile = sysCommonService.getUploadFile(id);
-	    String fileName = uploadFile.getMingcheng();
+	    String fileName = uploadFile.getFileName();
 	    CommonUtil.download(fileName, uploadFile.getPath(), req, res);
 	}
 	

@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,9 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 				if (row == null) {
 					continue;
 				}
+				if(rowIndex>2){
+					System.out.println("----------");
+				}
 				ExcelRowData excelRow = new ExcelRowData(sheetIndex, rowIndex);
 				int firstCellIndex = row.getFirstCellNum();
 				int lastCellIndex = row.getLastCellNum();
@@ -42,6 +46,9 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 					HSSFCell cell = row.getCell(cellIndex);
 					if(cell == null){
 						continue;
+					}
+					if(cellIndex>2){
+						System.out.println("----------");
 					}
 					String value = getCellStringValue(cell);
 					excelRow.setColValue(cellIndex, value);
@@ -111,13 +118,13 @@ public class ExcelUtilServiceImpl implements ExcelUtilService{
 			if (DateUtil.isCellDateFormatted(cell)) {
 				// 读取日期格式
 				if(null != cell.getDateCellValue()){
-					res = com.totyu.web.util.DateUtil.formatSdf2(cell.getDateCellValue());
+					res = com.totyu.web.util.DateUtil.formatSdf1(cell.getDateCellValue());
 				}else{
 					res = "";
 				}
 			} else {
 				// 读取数字
-				res = cell.getNumericCellValue() + "";
+				res = NumberToTextConverter.toText(cell.getNumericCellValue());
 				if(res.endsWith(".0")){
 					res = res.substring(0, res.length() - 2);
 				}

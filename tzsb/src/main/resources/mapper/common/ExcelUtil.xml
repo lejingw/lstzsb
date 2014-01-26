@@ -7,7 +7,7 @@
 	</select>
 	 -->
 	<insert id="ExcelUtil.saveExcelData" parameterClass="com.totyu.common.excel.ExcelRowData">
-		insert into t_xt_excel_tmp_data(seq_id, sheetindex, rowindex, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9,
+		insert into t_sys_excel_tmp_data(seq_id, sheetindex, rowindex, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9,
 			col10, col11, col12, col13, col14, col15, col16, col17, col18, col19, col20, col21, col22, col23, col24, col25, col26, col27, 
 			col28, col29, col30, col31, col32, col33, col34, col35, col36, col37, col38, col39, col40, col41, col42, col43, col44, col45, 
 			col46, col47, col48, col49, col50, col51, col52, col53, col54, col55, col56, col57, col58, col59, col60, col61, col62, col63, 
@@ -125,13 +125,13 @@
 		       col97      as "col97",
 		       col98      as "col98",
 		       col99      as "col99"
-		  from t_xt_excel_tmp_data
+		  from t_sys_excel_tmp_data
 		 where seq_id = #value#
 		 order by sheetindex, rowindex
 	</select>
 	<select id="ExcelUtil.getCheckDbrefrenceResult" parameterClass="map" resultClass="com.totyu.common.excel.ExcelRowData">
 		select a.rowindex as "rowIndex", a.col$columnIndex$ as "result"
-		  from t_xt_excel_tmp_data a
+		  from t_sys_excel_tmp_data a
 		 where a.seq_id = #seqId#
 		   and a.sheetindex = #sheetIndex#
 		   and a.rowindex >= #startCheckIndex#
@@ -142,7 +142,7 @@
 		   )
 	</select>
 	<update id="ExcelUtil.convertDbrefrenceToId" parameterClass="map">
-		update t_xt_excel_tmp_data a
+		update t_sys_excel_tmp_data a
 		   set a.col$columnIndex$ = (
 		   		select b.$idFieldName$ from $tableName$ b where b.$nameFieldName$ = a.col$columnIndex$
 				<isNotEmpty property="queryCondition"> and $queryCondition$</isNotEmpty>
@@ -152,12 +152,12 @@
 		   and a.rowindex >= #startCheckIndex#
 	</update>
 	<delete id="ExcelUtil.deleteTitleRows" parameterClass="map">
-		<![CDATA[delete from t_xt_excel_tmp_data where seq_id = #seqId# and rowindex < #startCheckIndex#]]>
+		<![CDATA[delete from t_sys_excel_tmp_data where seq_id = #seqId# and rowindex < #startCheckIndex#]]>
 	</delete>
 	<delete id="ExcelUtil.deleteExcelData" parameterClass="string">
-		delete from t_xt_excel_tmp_data where seq_id = #value#
+		delete from t_sys_excel_tmp_data where seq_id = #value#
 	</delete>
 	<select id="ExcelUtil.printExcelData" parameterClass="string" resultClass="java.util.HashMap">
-		select * from t_xt_excel_tmp_data a where a.seq_id = #value#
+		select * from t_sys_excel_tmp_data a where a.seq_id = #value#
 	</select>
 </sqlMap>

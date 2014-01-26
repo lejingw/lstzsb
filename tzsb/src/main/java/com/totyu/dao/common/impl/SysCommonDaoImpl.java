@@ -18,7 +18,6 @@ import com.totyu.vo.common.Org;
 import com.totyu.vo.common.Parameter;
 import com.totyu.vo.common.SelectorOption;
 import com.totyu.vo.common.User;
-import com.totyu.vo.qiye.jbxx.Dwxx;
 import com.totyu.vo.sys.UploadFile;
 import com.totyu.web.util.DateUtil;
 
@@ -90,12 +89,12 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 	/**
 	 * 更新上传文件
 	 */
-	public void updateLoadFiles(String billCode, String headid, List<String> saveIdList, List<String> deleteIdList, String userid){
+	public void updateLoadFiles(String billCode, String billId, List<String> saveIdList, List<String> deleteIdList, String userid){
 		List<Map<String, String>> addFileList = new ArrayList<Map<String,String>>();
 		for(String saveId : saveIdList){
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("billCode", billCode);
-			map.put("headid", headid);
+			map.put("billId", billId);
 			map.put("id", saveId);
 			map.put("userid", userid);
 			addFileList.add(map);
@@ -140,10 +139,10 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 	/**
 	 * 获取单据上传文件列表
 	 */
-	public List<UploadFile> getUploadFileList(String billCode, String headid){
+	public List<UploadFile> getUploadFileList(String billCode, String billId){
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("billCode", billCode);
-		map.put("headid", headid);
+		map.put("billId", billId);
 		return executeQueryForList("SysCommon.getUploadFileList", map);
 	}
 	/**
@@ -164,16 +163,10 @@ public class SysCommonDaoImpl extends BaseDao implements SysCommonDao {
 	 */
 	public String saveUploadFile(String filename, String order, String filepath){
 		UploadFile uf = new UploadFile();
-		uf.setMingcheng(filename);
-		uf.setShunxu(order);
+		uf.setFileName(filename);
+		uf.setSort(order);
 		uf.setPath(filepath);
 		return (String)executeInsert("SysCommon.saveUploadFile", uf);
-	}
-	/**
-	 * 获取单位信息
-	 */
-	public Dwxx getDwxxById(String dwid){
-		return (Dwxx) executeQueryForObject("SysCommon.getDwxxById", dwid);
 	}
 	
 	/**

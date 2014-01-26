@@ -4,12 +4,11 @@ import org.directwebremoting.annotations.DataTransferObject;
 
 @DataTransferObject
 public class UploadFile {
-
 	private String id;
-	private String laiyuan;
-	private String lyid;
-	private String shunxu;
-	private String mingcheng;
+	private String billCode;
+	private String billId;
+	private String sort;
+	private String fileName;
 	private String path;
 	private String createId;
 	private String createDate;
@@ -23,36 +22,36 @@ public class UploadFile {
 		this.id = id;
 	}
 
-	public String getLaiyuan() {
-		return laiyuan;
+	public String getBillCode() {
+		return billCode;
 	}
 
-	public void setLaiyuan(String laiyuan) {
-		this.laiyuan = laiyuan;
+	public void setBillCode(String billCode) {
+		this.billCode = billCode;
 	}
 
-	public String getLyid() {
-		return lyid;
+	public String getBillId() {
+		return billId;
 	}
 
-	public void setLyid(String lyid) {
-		this.lyid = lyid;
+	public void setBillId(String billId) {
+		this.billId = billId;
 	}
 
-	public String getShunxu() {
-		return shunxu;
+	public String getSort() {
+		return sort;
 	}
 
-	public void setShunxu(String shunxu) {
-		this.shunxu = shunxu;
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 
-	public String getMingcheng() {
-		return mingcheng;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setMingcheng(String mingcheng) {
-		this.mingcheng = mingcheng;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public String getPath() {
