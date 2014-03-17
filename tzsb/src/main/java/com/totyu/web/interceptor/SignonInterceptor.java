@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.totyu.common.CommonUtil;
 
-public class SignonInterceptor extends HandlerInterceptorAdapter {
+public class SignonInterceptor implements HandlerInterceptor {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -19,7 +19,7 @@ public class SignonInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler) throws Exception {
 		if (CommonUtil.isLogined(request)) {
 			logger.debug(handler.getClass().getName() + " 开始执行...");
-			return super.preHandle(request, response, handler);
+			return true;
 		}
 		PrintWriter out = response.getWriter();
 		StringBuilder builder = new StringBuilder();

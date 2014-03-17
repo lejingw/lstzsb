@@ -117,7 +117,16 @@ CREATE TABLE `t_sys_excel_tmp_data` (
 	`col49`	varchar(128) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
-
+DROP TABLE IF EXISTS `t_xt_webservice_log`;
+CREATE TABLE `t_xt_webservice_log` (
+  `id` bigint(20) NOT NULL,
+  `inout_flag` int(11) DEFAULT NULL,
+  `part_index` int(11) NOT NULL,
+  `msg` text COLLATE utf8_bin,
+  `req_date` datetime DEFAULT NULL,
+  `Resp_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`part_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='WebService日志';
 
 DROP TABLE IF EXISTS `t_sys_attachment`;
 

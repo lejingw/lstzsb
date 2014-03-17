@@ -25,12 +25,7 @@
 	<!-- 定时器开关 -->
 	<!-- add by daiwa-sc wuqiang
 	<task:annotation-driven /> -->
-	<mvc:annotation-driven>
-		<mvc:argument-resolvers>
-			<bean class="com.totyu.spring.mvc.method.annotation.FormModelMethodArgumentResolver"/>
-		</mvc:argument-resolvers>
- 	</mvc:annotation-driven>
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
 	<context:component-scan base-package="com.totyu.dao,com.totyu.service,com.totyu.controller,com.totyu.dwr"/>
 	<!-- 
 	<context:component-scan base-package="com.totyu" use-default-filters="false">
@@ -63,7 +58,40 @@
     	<dwr:convert type="exception" class="java.lang.RuntimeException"></dwr:convert>
     	<dwr:convert type="bean" class="com.totyu.common.Pager"></dwr:convert>
     </dwr:configuration>
-	
+    
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="com.totyu.spring.mvc.method.annotation.FormModelMethodArgumentResolver"/>
+		</mvc:argument-resolvers>
+ 	</mvc:annotation-driven>
+ 	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+    
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/qiye/**/*.do"/>
+			<bean class="com.totyu.web.interceptor.SignonInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 
+	<mvc:default-servlet-handler>
+	当在web.xml 中DispatcherServlet使用<url-pattern>/</url-pattern> 映射时，能映射静态资源
+	(当Spring Web MVC框架没有处理请求对应的控制器时（如一些静态资源），转交给默认的Servlet来响应静态文件，否则报404找不到资源错误）
+	 -->
+    <!-- 
+    mvc:annotation-driven自动注册以下两个bean 和
+    org.springframework.core.convert.ConversionService
+    org.springframework.http.converter.HttpMessageConverter<T>（用于支持@RequestBody  和 @ResponseBody）
+    
+    Spring3.1之前的注解 HandlerMapping
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="order" value="1" />
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+     -->
+    <!--Spring3.1开始的注解 HandlerMapping -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<!--Spring3.1开始的注解 HandlerAdapter -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<!--线程安全的访问session-->
 		<property name="synchronizeOnSession" value="true"/>
@@ -74,12 +102,12 @@
 			</list>
 		</property>
      </bean>
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="order" value="1" />
-    </bean>
+    <!-- 
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
         <property name="order" value="2" />
     </bean>
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>  
+     -->
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="order" value="3" />
 		<property value="true" name="alwaysUseFullPath"></property>
@@ -125,21 +153,28 @@
 	<!-- 5.1、配置事务通知 -->
 	<tx:advice id="transactionManagerAdivice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="merge*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="put*" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="count*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
 	<!-- 5.2、配置切入点和方面 -->
 	<aop:config>
-		<aop:pointcut id="servicePointCut" expression="execution(* com.totyu.service.*.impl.*Service*.*(..))"/>
+		<aop:pointcut id="servicePointCut" expression="execution(* com.totyu.service..impl.*Service*.*(..))"/>
 		<aop:advisor advice-ref="transactionManagerAdivice" pointcut-ref="servicePointCut"/>
 	</aop:config>
 	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/qiye/**/*.do"/>
-			<bean class="com.totyu.web.interceptor.SignonInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
 	
 	<bean id="exceptionHandler" class="com.totyu.web.handler.ExceptionHandler"/>
 	
